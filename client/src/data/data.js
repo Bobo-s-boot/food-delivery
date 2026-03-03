@@ -31,4 +31,37 @@ export const restaurants = [
     price: 15.99,
     image: "./img/china_ma.jpg",
   },
+
+  {
+    id: 4,
+    name: "Burger Restaurant",
+    description:
+      "Restaurant specializing in burgers, offering a variety of styles and toppings.",
+    category: "Burger",
+    rating: 4.3,
+    price: 9.99,
+    image: "./img/burger.jpg",
+  },
+
+  {
+    id: 5,
+    name: "Pasta Restaurant",
+    description:
+      "Restaurant specializing in pasta, offering a variety of styles and sauces.",
+    category: "Pasta",
+    rating: 4.6,
+    price: 11.99,
+    image: "./img/pasta.jpg",
+  },
+
+  {
+    id: 6,
+    name: "Salad Restaurant",
+    description:
+      "Restaurant specializing in salads, offering a variety of fresh ingredients and dressings.",
+    category: "Salad",
+    rating: 4.4,
+    price: 7.99,
+    image: "./img/salad.jpg",
+  },
 ];
