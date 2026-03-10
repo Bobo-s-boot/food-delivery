@@ -1,18 +1,30 @@
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import { RestaurantList } from "./components/cardListRestaurant/RestaurantList";
 import { Footer } from "./components/footer/Footer";
 import { Header } from "./components/header/Header";
 import { restaurants } from "./data/data";
+import { About } from "./pages/about/About"; // Створимо цей файл нижче
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <Header />
+    <Router>
+      <>
+        <Header />
 
-      <RestaurantList items={restaurants} />
+        <Routes>
+          <Route path="/" element={<RestaurantList items={restaurants} />} />
+          <Route
+            path="/catalog"
+            element={<RestaurantList items={restaurants} />}
+          />
 
-      <Footer />
-    </div>
+          <Route path="/about" Component={About} />
+        </Routes>
+
+        <Footer />
+      </>
+    </Router>
   );
 }
 
