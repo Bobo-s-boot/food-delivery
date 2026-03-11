@@ -1,29 +1,21 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import { RestaurantList } from "./components/cardListRestaurant/RestaurantList";
-import { Footer } from "./components/footer/Footer";
-import { Header } from "./components/header/Header";
+import { Layout } from "./components/Layout/Layout";
 import { restaurants } from "./data/data";
-import { About } from "./pages/about/About"; // Створимо цей файл нижче
+import { About } from "./pages/about/About";
+import { Catalog } from "./pages/catalog/Catalog";
 
 function App() {
   return (
     <Router>
-      <>
-        <Header />
-
+      <Layout>
         <Routes>
           <Route path="/" element={<RestaurantList items={restaurants} />} />
-          <Route
-            path="/catalog"
-            element={<RestaurantList items={restaurants} />}
-          />
-
+          <Route path="/catalog" Component={Catalog} />
           <Route path="/about" Component={About} />
         </Routes>
-
-        <Footer />
-      </>
+      </Layout>
     </Router>
   );
 }
