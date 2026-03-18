@@ -11,7 +11,7 @@ export function RestaurantCard({ data }) {
       />
       <div className="p-4">
         <div className="flex justify-between items-center mb-2">
-          <h2 className="text-xl font-semibold">{data.name}</h2>
+          <h2 className="text-xl font-semibold text-gray-500">{data.name}</h2>
           <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-sm">
             ⭐ {data.rating}
           </span>

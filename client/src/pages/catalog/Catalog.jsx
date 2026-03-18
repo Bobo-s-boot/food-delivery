@@ -1,7 +1,28 @@
+import { useEffect, useState } from "react";
+import { getRestauranst } from "../../api/restaurantService";
+import { RestaurantList } from "../../components/cardListRestaurant/RestaurantList";
 import { CatalogTab } from "./CatalogTab";
 import { CATEGORIES } from "./const";
 
 export function Catalog() {
+  const [restaurants, setRestaurants] = useState([]);
+  const [isloading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getRestauranst();
+        setRestaurants(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching restaurants:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="space-y-8">
       <div className="relative max-w-xl mx-auto">
@@ -15,6 +36,14 @@ export function Catalog() {
       </div>
 
       <CatalogTab catregorys={CATEGORIES} />
+
+      {isloading ? (
+        <div className="text-center text-gray-500 text-xl mt-10">
+          Завантаження ресторанів з сервера...
+        </div>
+      ) : (
+        <RestaurantList items={restaurants} />
+      )}
     </div>
   );
 }
