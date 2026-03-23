@@ -1,9 +1,10 @@
 import fs from "fs";
 import path from "path";
-import { SERVER_ERORR_MESSAGE } from "../../errors/erorr.js";
+import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 
 export const logger = (req, res, next) => {
   const logDir = "/logs";
+  const fileName = "server.log";
 
   if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
@@ -12,7 +13,7 @@ export const logger = (req, res, next) => {
   const time = new Date().toISOString();
   const logMessage = `[${time}] ${req.method}, ${req.url}`;
 
-  fs.appendFile(path.join(logDir, "server.log"), logMessage + "\n", (err) => {
+  fs.appendFile(path.join(logDir, fileName), logMessage + "\n", (err) => {
     if (err) console.error(SERVER_ERORR_MESSAGE.FIELD_TO_LOG, err);
   });
 

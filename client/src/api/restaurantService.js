@@ -1,7 +1,7 @@
 import axios from "axios";
 import { CLIENT_ERORR_MESSAGE } from "../errors/error";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL + "/restaurants";
 
 export const getRestauranst = async () => {
   try {

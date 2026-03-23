@@ -1,7 +1,6 @@
 import fs from "fs/promises";
-import { SERVER_ERORR_MESSAGE } from "../../errors/erorr.js";
-
-const DATA_PATH = "./data/restaurants.json";
+import { RESTAURANTS_DATA_PATH as DATA_PATH } from "../config/config.js";
+import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 
 export const getAllRestaurants = async (req, res) => {
   try {

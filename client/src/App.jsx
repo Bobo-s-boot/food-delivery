@@ -3,6 +3,7 @@ import { getRestauranst } from "./api/restaurantService";
 import "./App.css";
 import { Layout } from "./components/Layout/Layout";
 import { About } from "./pages/about/About";
+import { Auth } from "./pages/auth/Auth";
 import { Catalog } from "./pages/catalog/Catalog";
 import { Home } from "./pages/home/Home";
 
@@ -11,6 +12,7 @@ function App() {
     <Router>
       <Layout>
         <Routes>
+          <Route path="/auth" element={<Auth />} />
           <Route path="/" element={<Home items={getRestauranst} />} />
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/about" element={<About />} />
