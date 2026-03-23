@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { getRestauranst } from "../../api/restaurantService";
 import { RestaurantList } from "../../components/cardListRestaurant/RestaurantList";
 import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
-import { CatalogTab } from "./CatalogTab";
-import { CATEGORIES } from "./const";
 
-export function Catalog() {
+export function Home() {
   const [restaurants, setRestaurants] = useState([]);
   const [isloading, setLoading] = useState(true);
 
@@ -35,8 +33,6 @@ export function Catalog() {
         />
         <span className="absolute left-4 top-4">🔍</span>
       </div>
-
-      <CatalogTab catregorys={CATEGORIES} />
 
       {isloading ? (
         <div className="text-center text-gray-500 text-xl mt-10">
