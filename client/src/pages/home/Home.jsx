@@ -42,47 +42,41 @@ export function Home() {
       )} */}
 
       {/* === СЕКЦИЯ 1: HERO БАННЕР === */}
-      {/* Замени URL в backgroundImage на свою картинку из Figma */}
       <section className="max-w-450 mx-auto px-4 pt-4">
         <div
           className="relative w-full h-150 rounded-4xl overflow-hidden flex flex-col justify-center px-12"
           style={{
-            backgroundImage: 'url("client/public/img/backgroundImage.png")',
+            backgroundImage: 'url("/img/backgroundImage.png")',
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          {/* Темный оверлей для читаемости текста */}
-          <div className="absolute inset-0 bg-black/40"></div>
-
-          {/* Контент баннера */}
-          <div className="relative z-10 flex flex-col items-center  columns-1 text-white">
-            <h1 className="text-6xl font-bold leading-tight mb-6">
+        
+          <div className="relative z-10 flex flex-col items-center  columns-1 text-white mb-48">
+            <h1 className="text- font-normal leading-tight mb-5">
               Explore Remarkable Restaurants Today
+              All In Once Place
             </h1>
             <p className="text-xl text-gray-200 mb-8 max-w-3xl text-center mx-auto">
               Join the ultimate dining experience - where taste meets
-              convenience. Your next culinary adventure is just a click away.
+              convenience. 
+              Your next culinary adventure is just a click away.
             </p>
-            <button className="bg-gray-900 text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-gray-800 transition-colors">
+            <button className="bg-gray-900 text-white px-4 py-3 rounded-full font-normal text-base hover:bg-gray-800 transition-colors">
               Start your culinary journey
             </button>
           </div>
-
-          {/* Соцсети (справа) */}
-          <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-6 z-10">
+          
+          <div className="absolute right-3 top-1/13 -translate-y-12/20 flex gap-6 z-10">
             <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/40">
-              <span className="text-white">In</span>
-            </div>
-            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/40">
-              <span className="text-white">Fb</span>
-            </div>
-            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center cursor-pointer hover:bg-white/40">
-              <span className="text-white">Tw</span>
+              <span className="text-white">Instagram</span>
+              <span className="text-white">Facebook</span>
+              <span className="text-white">Tik Tok</span>
             </div>
           </div>
         </div>
       </section>
+    
 
       {/* === СЕКЦИЯ 2: ПРЕИМУЩЕСТВА И СТАТИСТИКА === */}
       <section className="max-w-300 mx-auto px-4 py-20">
