@@ -7,6 +7,8 @@ import headphonesIcon from "../../assets/headphones.svg";
 import mapIcon from "../../assets/map.svg";
 import arrowLeftIcon from "../../assets/chevron-left.svg";
 import arrowRightIcon from "../../assets/chevron-right.svg";
+import ratingIcon from "../../assets/rating.svg";
+import locationIcon from "../../assets/location.svg";
 
 export function Home() {
   // const [restaurants, setRestaurants] = useState([]);
@@ -74,7 +76,7 @@ export function Home() {
 
           <div className="absolute right-3 bottom-3 flex gap-2 z-10">
             <div className="flex items-center gap-3 justify-end ">
-              <span className="px-4 py-2 text-white text-sm  bg-white/20 backdrop-blur-sm cursor-pointer hover:bg-white/40 rounded-lg">
+              <span className="px-4 py-2 text-white text-sm bg-white/20 backdrop-blur-sm cursor-pointer hover:bg-white/40 rounded-lg">
                 Instagram
               </span>
               <span className="px-4 py-2 text-white text-sm bg-white/20 backdrop-blur-sm cursor-pointer hover:bg-white/40 rounded-lg">
@@ -214,102 +216,120 @@ export function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="rounded-2xl border-[#EDECF1] group relative">
-            <span className="absolute top-4 right-4 z-10 w-24 h-8 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow">
-              <p className="text-sm text-white">Free Delivery</p>
+            <span className="absolute top-4 right-4 z-10 w-24 h-8 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-lg">
+              <p className="text-sm text-slate-100">Free Delivery</p>
             </span>
 
-            <div className="w-full h-full bg-[#EDECF1] overflow-hidden rounded-3xl">
+            <div className="relative w-full h-full bg-[#EDECF1] overflow-hidden rounded-3xl">
               <img
                 src="./img/card-1.png"
                 alt="restaurant"
-                className="object-fill transition-transform group-hover:scale-105 duration-300 "
+                className="object-fill transition-transform group-hover:scale-105 duration-300"
               />
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
             </div>
 
             <div className="absolute bottom-4 left-4 z-10  flex items-center justify-center shadow">
-              <div className="flex flex-col col-1 items-start">
-                <h3 className="text-white font-semibold text-xl">
+              <div className="flex flex-col col-1 items-start gap-1">
+                <h3 className="text-slate-100 font-semibold text-xl">
                   The Burger Joint
                 </h3>
-                <p className="text-sm text-white">
-                  American • Fast Food | 4.8 (1.2k)
+                <p className="flex flex-row text-sm text-slate-200 gap-2">
+                  American • Fast Food | <img src={ratingIcon} alt="Rating" />{" "}
+                  4.8 (1.2k)
                 </p>
-                <address>Downtown District</address>
+                <address className="flex flex-row text-slate-200 text-sm gap-2">
+                  <img src={locationIcon} alt="Location" /> Downtown District
+                </address>
               </div>
             </div>
           </div>
 
           <div className="bg-[#EDECF1] rounded-2xl overflow-hidden  border-[#EDECF1] group relative">
-            <span className="absolute top-4 right-4 z-10 w-24 h-8 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow">
-              <p className="text-sm text-white">20-30 min</p>
+            <span className="absolute top-4 right-4 z-10 w-24 h-8 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-lg">
+              <p className="text-sm text-slate-100">20-30 min</p>
             </span>
-            <div className="w-full h-full bg-[#EDECF1] overflow-hidden rounded-3xl">
+            <div className="relative w-full h-full bg-[#EDECF1] overflow-hidden rounded-3xl">
               <img
                 src="./img/card-2.png"
                 alt="restaurant"
                 className="object-fill transition-transform group-hover:scale-105 duration-300"
               />
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
             </div>
 
             <div className="absolute bottom-4 left-4 z-10  flex items-center justify-center shadow">
-              <div className="flex flex-col col-1 items-start">
-                <h3 className="text-white font-semibold text-xl">
+              <div className="flex flex-col col-1 items-start gap-1">
+                <h3 className="text-slate-100 font-semibold text-xl">
                   Kyoto Sushi & Wok
                 </h3>
-                <p className="text-sm text-white">
-                  Japanese • Asian | 4.9 (950k)
+                <p className="flex flex-row text-sm text-slate-200 gap-2">
+                  Japanese • Asian | <img src={ratingIcon} alt="Rating" /> 4.9
+                  (950k)
                 </p>
-                <address>Westside Boulevard</address>
+                <address className="flex flex-row text-slate-200 text-sm gap-2">
+                  <img src={locationIcon} alt="Location" /> Westside Boulevard
+                </address>
               </div>
             </div>
           </div>
 
           <div className="bg-[#EDECF1] rounded-2xl overflow-hidden  border-[#EDECF1] group relative">
-            <span className="absolute top-4 right-4 z-10 w-24 h-8 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow">
-              <p className="text-sm text-white">15-20 min</p>
+            <span className="absolute top-4 right-4 z-10 w-24 h-8 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-lg">
+              <p className="text-sm text-slate-100">15-20 min</p>
             </span>
-            <div className="w-full h-full bg-[#EDECF1] overflow-hidden rounded-3xl">
+            <div className="relative w-full h-full bg-[#EDECF1] overflow-hidden rounded-3xl">
               <img
                 src="./img/card-3.png"
                 alt="restaurant"
                 className="object-fill transition-transform group-hover:scale-105 duration-300"
               />
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
             </div>
 
             <div className="absolute bottom-4 left-4 z-10  flex items-center justify-center shadow">
-              <div className="flex flex-col col-1 items-start">
-                <h3 className="text-white font-semibold text-xl">
+              <div className="flex flex-col col-1 items-start gap-1">
+                <h3 className="text-slate-100 font-semibold text-xl">
                   Fresh Poke Bowls
                 </h3>
-                <p className="text-sm text-white">
-                  Healthy • Vegan | 4.7 (430)
+                <p className="flex flex-row text-sm text-slate-200 gap-2">
+                  Healthy • Vegan | <img src={ratingIcon} alt="Rating" /> 4.7
+                  (430)
                 </p>
-                <address>Green Park Area</address>
+                <address className="flex flex-row text-slate-200 text-sm gap-2">
+                  <img src={locationIcon} alt="Location" /> Green Park Area
+                </address>
               </div>
             </div>
           </div>
 
           <div className="bg-[#EDECF1] rounded-2xl overflow-hidden  border-[#EDECF1] group relative">
-            <span className="absolute top-4 right-4 z-10 w-24 h-8 rounded-3xl flex items-center justify-center shadow bg-white/20 backdrop-blur-sm">
-              <p className="text-sm text-white">-20% Today</p>
+            <span className="absolute top-4 right-4 z-10 w-24 h-8 rounded-3xl flex items-center justify-center shadow-lg bg-white/20 backdrop-blur-sm">
+              <p className="text-sm text-slate-100">-20% Today</p>
             </span>
-            <div className="w-full h-full bg-[#EDECF1] overflow-hidden rounded-3xl">
+            <div className="relative w-full h-full bg-[#EDECF1] overflow-hidden rounded-3xl">
               <img
                 src="./img/card-4.png"
                 alt="restaurant"
                 className="object-fill transition-transform group-hover:scale-105 duration-300"
               />
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
             </div>
 
             <div className="absolute bottom-4 left-4 z-10  flex items-center justify-center shadow">
-              <div className="flex flex-col col-1 items-start">
-                <h3 className="text-white font-semibold text-xl">
+              <div className="flex flex-col col-1 items-start gap-1">
+                <h3 className="text-slate-100 font-semibold text-xl">
                   Luigi's Woodfire
                 </h3>
-                <p className="text-sm text-white">
-                  Italian • Fast Pizza | 4.6 (2.1k)
+                <p className="flex flex-row text-sm text-slate-200 gap-2">
+                  Italian • Fast Pizza | <img src={ratingIcon} alt="Rating" />
+                  4.6 (2.1k)
                 </p>
-                <address>Little Italy</address>
+                <div>
+                  <address className="flex flex-row text-slate-200 text-sm gap-2">
+                    <img src={locationIcon} alt="Location" /> Little Italy
+                  </address>
+                </div>
               </div>
             </div>
           </div>
