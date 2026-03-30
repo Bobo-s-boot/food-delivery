@@ -203,7 +203,7 @@ export function Home() {
       <section className="max-w-274 mx-auto px-4 py-10 bg-[#EDECF1] rounded-4xl">
         <div className="flex justify-between items-end mb-8">
           <div className="flex flex-row items-center justify-between w-full mb-8 gap-8">
-            <h2 className="text-3xl font-bold text-gray-900 shrink-0">
+            <h2 className="text-3xl font-medium text-gray-900 shrink-0">
               Trending Near You
             </h2>
 
