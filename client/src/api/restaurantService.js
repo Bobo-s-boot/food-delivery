@@ -3,7 +3,7 @@ import { CLIENT_ERORR_MESSAGE } from "../errors/error";
 
 const API_URL = import.meta.env.VITE_API_URL + "/restaurants";
 
-export const getRestauranst = async () => {
+export const getRestaurants = async () => {
   try {
     const response = await axios.get(API_URL);
     return response.data;
