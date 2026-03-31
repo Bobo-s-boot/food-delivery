@@ -63,7 +63,7 @@ export function Home() {
           }}
         >
           <div className="relative z-10 flex flex-col items-center  columns-1 text-white/90 mb-72">
-            <h1 className="text- font-normal leading-tight mb-5">
+            <h1 className="text-center font-normal leading-tight mb-5">
               Explore Remarkable Restaurants Today <br />
               All In Once Place
             </h1>
