@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import fs from "fs/promises";
-import { USERS_DATA_PATH } from "../config/config.js";
+import { USERS_DATA_PATH as DATA_PATH } from "../config/config.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 
 export const register = async (req, res) => {
@@ -13,7 +13,7 @@ export const register = async (req, res) => {
         .json({ message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY });
     }
 
-    const data = await fs.readFile(USERS_DATA_PATH, "utf-8");
+    const data = await fs.readFile(DATA_PATH, "utf-8");
     const users = JSON.parse(data);
 
     if (users.find((user) => user.username === username)) {
@@ -29,7 +29,7 @@ export const register = async (req, res) => {
 
     users.push(newUser);
 
-    await fs.writeFile(USERS_DATA_PATH, JSON.stringify(users, null, 2));
+    await fs.writeFile(DATA_PATH, JSON.stringify(users, null, 2));
 
     res.status(201).json({
       user: { username },
@@ -51,7 +51,7 @@ export const login = async (req, res) => {
         .json({ message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY });
     }
 
-    const data = await fs.readFile(USERS_DATA_PATH, "utf-8");
+    const data = await fs.readFile(DATA_PATH, "utf-8");
     const users = JSON.parse(data);
 
     const user = users.find((user) => user.username === username);

@@ -29,7 +29,6 @@ export function Auth() {
       } else {
         response = await registerUser(formData);
       }
-      console.log("Успіх!", response);
 
       localStorage.setItem("user", JSON.stringify(response.user));
       navigate("/");
