@@ -1,4 +1,5 @@
 import { dataForFooter } from "./consts";
+import { dataSmallLinksForFooter } from "./consts";
 
 export function Footer() {
   return (
@@ -41,23 +42,20 @@ export function Footer() {
               className="w-full align-center rounded-full px-2 py-2 bg-[#EFEFF1] text-base xl:text-lg text-[#0F131680] placeholder:text-[#0F131680] outline-none tracking-[-0.04em] truncate"
             />
           </div>
+        </div>
 
-          <div className="flex flex-row w-full justify-between items-center mt-10 gap-2">
-            <small>© 2023 Defilicious. All rights reserved</small>
-
-            <div className="flex flex-row items-center gap-3">
-              <a href="/privacy" className="hover:text-white transition-colors">
-                Privacy Policy
+        <div className="flex flex-row w-full justify-between items-center mt-10  gap-2">
+          <small>© 2026 Defilicious. All rights reserved.</small>
+          <div className="flex flex-row items-center gap-3">
+            {dataSmallLinksForFooter.links.map((link, index) => (
+              <a
+                key={index}
+                href={link.href}
+                className="hover:text-white transition-colors text-xs"
+              >
+                {link.name}
               </a>
-              <span className="text-[#8F9BB1]/50">•</span>
-              <a href="/terms" className="hover:text-white transition-colors">
-                Terms of Service
-              </a>
-              <span className="text-[#8F9BB1]/50">•</span>
-              <a href="/cookies" className="hover:text-white transition-colors">
-                Cookie Policy
-              </a>
-            </div>
+            ))}
           </div>
         </div>
       </div>

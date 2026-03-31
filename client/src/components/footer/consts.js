@@ -1,4 +1,4 @@
-export const dataForFooter = [
+export const dataLinksForFooter = [
   {
     links: [
       { name: "Restaurants", href: "#" },
@@ -23,3 +23,11 @@ export const dataForFooter = [
     ],
   },
 ];
+
+export const dataSmallLinksForFooter = {
+  links: [
+    { name: "Privacy Policy", href: "#" },
+    { name: "Terms of Service", href: "#" },
+    { name: "Cookie Policy", href: "#" },
+  ],
+};
