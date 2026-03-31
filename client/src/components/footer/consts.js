@@ -1,11 +1,33 @@
-export const dataForFooter = [
-  "© 2026 Food Delivery Project",
-  "Developed by Bohdan & Denis",
-  "Виконано в рамках курсу ІПЗ",
-  "Кафедра ЕОМ, ХНУРЕ, 2026",
-  "Методологія: Incremental",
-  "Варіант 1: Доставка їжі",
-  "Інфраструктура: GitHub & Trello",
-  "Цільова аудиторія: 18-35 років",
-  "Status: Planning & Design Phase",
+export const dataLinksForFooter = [
+  {
+    links: [
+      { name: "Restaurants", href: "#" },
+      { name: "Menu", href: "#" },
+      { name: "Specials", href: "#" },
+      { name: "Delivery", href: "#" },
+    ],
+  },
+  {
+    links: [
+      { name: "Help & Support", href: "#" },
+      { name: "Track Order", href: "#" },
+      { name: "Student Discounts", href: "#" },
+      { name: "FAQ", href: "#" },
+    ],
+  },
+  {
+    links: [
+      { name: "Add your restaurant", href: "#" },
+      { name: "Become a courier", href: "#" },
+      { name: "Partner portal", href: "#" },
+    ],
+  },
 ];
+
+export const dataSmallLinksForFooter = {
+  links: [
+    { name: "Privacy Policy", href: "#" },
+    { name: "Terms of Service", href: "#" },
+    { name: "Cookie Policy", href: "#" },
+  ],
+};

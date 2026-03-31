@@ -11,7 +11,6 @@ export function Header() {
 
   return (
     <header className="bg-white h-22.5 px-4 lg:px-9.75 flex justify-between items-center w-full shrink-0">
-      {/* 1. ИСПРАВЛЕНИЕ: Оставили gap-8 для ноутбуков, а гигантский gap-44.5 перенесли на 2xl (большие мониторы) */}
       <div className="flex items-center gap-8 2xl:gap-44.5 shrink-0">
         <div
           className="text-[32px] font-medium text-[#000811] tracking-[0.02em] cursor-pointer"
@@ -20,7 +19,6 @@ export function Header() {
           Defilicious
         </div>
 
-        {/* Слегка уменьшили gap между ссылками для lg/xl экранов, чтобы точно все влезло */}
         <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-[20px] text-[#0F1316] tracking-[-0.04em]">
           <Link
             to="/catalog"
@@ -50,8 +48,7 @@ export function Header() {
       </div>
 
       <div className="flex items-center gap-4 xl:gap-6">
-        {/* 2. ИСПРАВЛЕНИЕ: Сделали ширину поиска гибкой. На xl она w-80 (320px), а на больших экранах w-[454px] */}
-        <div className="relative hidden xl:flex items-center justify-between w-80 2xl:w-[454px] h-13.5 bg-[#EFEFF1] rounded-[100px] px-6 shrink">
+        <div className="relative hidden xl:flex items-center justify-between w-80 2xl:w-113.5 h-13.5 bg-[#EFEFF1] rounded-[100px] px-6 shrink">
           <input
             type="text"
             placeholder="Search for dishes..."
