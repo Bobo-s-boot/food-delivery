@@ -1,5 +1,4 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { getRestauranst } from "./api/restaurantService";
 import "./App.css";
 import { Layout } from "./components/Layout/Layout";
 import { About } from "./pages/about/About";
@@ -13,7 +12,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/auth" element={<Auth />} />
-          <Route path="/" element={<Home items={getRestauranst} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/about" element={<About />} />
         </Routes>

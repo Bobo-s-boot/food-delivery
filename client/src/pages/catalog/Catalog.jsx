@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getRestauranst } from "../../api/restaurantService";
+import { getRestaurants } from "../../api/restaurantService";
 import { RestaurantList } from "../../components/cardListRestaurant/RestaurantList";
 import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
 import { CatalogTab } from "./CatalogTab";
@@ -12,7 +12,7 @@ export function Catalog() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getRestauranst();
+        const data = await getRestaurants();
         setRestaurants(data);
         setLoading(false);
       } catch (error) {

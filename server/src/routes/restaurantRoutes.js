@@ -8,7 +8,6 @@ import {
 const router = express.Router();
 
 router.get("/", getAllRestaurants);
-router.get("/", getRestaurantById);
 router.get("/:id", getRestaurantById);
 
 export default router;

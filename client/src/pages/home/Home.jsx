@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { getRestaurants } from "../../api/restaurantService";
+import { RestaurantList } from "../../components/cardListRestaurant/RestaurantList";
 import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
 import smileIcon from "../../assets/smile.svg";
 import clockIcon from "../../assets/clock.svg";
@@ -11,23 +14,23 @@ import ratingIcon from "../../assets/rating.svg";
 import locationIcon from "../../assets/location.svg";
 
 export function Home() {
-  // const [restaurants, setRestaurants] = useState([]);
-  // const [isloading, setLoading] = useState(true);
+  const [restaurants, setRestaurants] = useState([]);
+  const [isloading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await getRestauranst();
-  //       setRestaurants(data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
-  //       setLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getRestaurants();
+        setRestaurants(data);
+        setLoading(false);
+      } catch (error) {
+        console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
+        setLoading(false);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full min-h-screen bg-gray-50 pb-20 space-y-8">
