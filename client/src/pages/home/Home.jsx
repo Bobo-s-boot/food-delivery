@@ -33,27 +33,8 @@ export function Home() {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 pb-20 space-y-8">
-      {/* <div className="relative max-w-xl mx-auto">
-        <input
-          type="text"
-          name="search"
-          placeholder="Шукайте ресторани..."
-          className="w-full p-4 pl-12 rounded-2xl border border-green-200 shadow-sm focus:ring-2 focus:ring-green-500 outline-none bg-white text-black"
-        />
-        <span className="absolute left-4 top-4">🔍</span>
-      </div> */}
-
-      {/* {isloading ? (
-        <div className="text-center text-gray-500 text-xl mt-10">
-          Завантаження ресторанів з сервера...
-        </div>
-      ) : (
-        <RestaurantList items={restaurants} />
-      )} */}
-
-      {/* === СЕКЦИЯ 1: HERO БАННЕР === */}
-      <section className="max-w-450 mx-auto px-4 pt-4">
+    <div className="w-full min-h-screen bg-gray-50 pb-20 space-y-8 flex flex-col">
+      <section className="w-full px-4 pt-4">
         <div
           className="relative w-full h-150 rounded-4xl overflow-hidden flex flex-col justify-center px-12"
           style={{
@@ -109,7 +90,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="max-w-300 mx-auto px-4 py-20">
+      <section className="w-full px-4 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-[32px] text-left font-bold text-gray-900 mb-6">
@@ -123,7 +104,7 @@ export function Home() {
               flavors with seamless delivery and round-the-clock support.
             </p>
 
-            <div className="flex justify-between max-w-115">
+            <div className="flex flex-wrap justify-between gap-6 w-full">
               <div className="flex flex-col items-center justify-center gap-2">
                 <div className="flex justify-center items-center w-12 h-12 rounded-full bg-black">
                   <img src={smileIcon} alt="smile" width={32} height={32} />
@@ -203,7 +184,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="max-w-274 mx-auto px-4 py-10 bg-[#EDECF1] rounded-4xl">
+      <section className="w-full px-4 py-10 bg-[#EDECF1] rounded-4xl">
         <div className="flex justify-between items-end mb-8">
           <div className="flex flex-row items-center justify-between w-full mb-8 gap-8">
             <h2 className="text-3xl font-medium text-gray-900 shrink-0">
