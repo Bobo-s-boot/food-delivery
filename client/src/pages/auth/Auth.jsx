@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser, registerUser } from "../../api/authService";
 
@@ -19,6 +19,7 @@ export function Auth({ onLogin }) {
 
   const navigate = useNavigate();
 
+  // Функция для плавного переключения
   const toggleMode = () => {
     setIsAnimating(true);
     setTimeout(() => {
@@ -69,10 +70,12 @@ export function Auth({ onLogin }) {
   };
 
   return (
-    <div className="w-full flex justify-center items-start pb-6 px-4 lg:px-10 font-sans">
+    <div className="w-full flex justify-center items-start pt-0 pb-6 px-4 lg:px-[39px] font-['Inter']">
+      {/* Контейнер карточки с плавным переходом сторон (transition-all) */}
       <div
-        className={`relative w-full max-w-[460.25px] h-[calc(100vh-90px)] min-h-[212.5px] max-h-56.25 rounded-4xl lg:rounded-[64px] shadow-[0px_20px_40px_rgba(0,0,0,0.1)] overflow-hidden flex transition-all duration-700 ${isLogin ? "flex-row" : "flex-row-reverse"}`}
+        className={`relative w-full max-w-[1841px] h-[calc(100vh-90px)] min-h-[850px] max-h-[900px] rounded-[32px] lg:rounded-[64px] shadow-[0px_20px_40px_rgba(0,0,0,0.1)] overflow-hidden flex transition-all duration-700 ${isLogin ? "flex-row" : "flex-row-reverse"}`}
       >
+        {/* Фоновое изображение */}
         <img
           src={
             isLogin ? "/img/login_background.jpg" : "/img/singup_background.png"
@@ -83,27 +86,30 @@ export function Auth({ onLogin }) {
 
         <div className="hidden lg:block w-1/2 relative z-10 h-full"></div>
 
-        <div className="relative z-20 w-full lg:w-1/2 h-full bg-[rgba(255,255,255,0.06)] backdrop-blur-[20px] rounded-4xl lg:rounded-[64px] border border-white/10 flex flex-col items-center justify-center px-4 py-8 gap-10 lg:gap-16">
+        {/* Стеклянная панель */}
+        <div className="relative z-20 w-full lg:w-1/2 h-full bg-[rgba(255,255,255,0.06)] backdrop-blur-[20px] rounded-[32px] lg:rounded-[64px] border border-white/10 flex flex-col items-center justify-center px-4 py-8 gap-[40px] lg:gap-[64px]">
+          {/* Контент с анимацией прозрачности */}
           <div
-            className={`w-full flex flex-col items-center gap-10 lg:gap-16 transition-all duration-300 ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+            className={`w-full flex flex-col items-center gap-[40px] lg:gap-[64px] transition-all duration-300 ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
           >
-            <div className="w-full max-w-102.5">
-              <h1 className="text-white text-4xl lg:text-5xl font-medium leading-[1.2] tracking-[-0.02em] w-full text-left mb-6 lg:mb-8 whitespace-nowrap">
+            {/* Увеличенная ширина до 410px для заголовока */}
+            <div className="w-full max-w-[410px]">
+              <h1 className="text-white text-[36px] lg:text-[48px] font-medium leading-[120%] tracking-[-0.02em] w-full text-left mb-[24px] lg:mb-[32px] whitespace-nowrap">
                 {isLogin ? "Welcome back!" : "Create an account"}
               </h1>
 
               {error && (
-                <div className="w-full mb-4 p-3 bg-red-500/20 border border-red-500 text-white rounded-2xl text-center text-sm">
+                <div className="w-full mb-[16px] p-3 bg-red-500/20 border border-red-500 text-white rounded-[16px] text-center text-[14px]">
                   {error}
                 </div>
               )}
 
               <form
                 onSubmit={handleSubmit}
-                className="w-full flex flex-col gap-4"
+                className="w-full flex flex-col gap-[16px]"
               >
                 {!isLogin && (
-                  <div className="w-full h-14">
+                  <div className="w-full h-[54px]">
                     <input
                       type="text"
                       name="fullName"
@@ -111,12 +117,12 @@ export function Auth({ onLogin }) {
                       onChange={handleChange}
                       required
                       placeholder="Full Name"
-                      className="w-full h-full bg-[#EFEFF1] rounded-full px-6 text-base lg:text-lg text-[#0F1316] placeholder:text-[#0F1316]/50 tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
+                      className="w-full h-full bg-[#EFEFF1] rounded-[100px] px-[24px] text-[16px] lg:text-[18px] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
                     />
                   </div>
                 )}
 
-                <div className="w-full h-14">
+                <div className="w-full h-[54px]">
                   <input
                     type="email"
                     name="username"
@@ -124,11 +130,11 @@ export function Auth({ onLogin }) {
                     onChange={handleChange}
                     required
                     placeholder="Email"
-                    className="w-full h-full bg-[#EFEFF1] rounded-full px-6 text-base lg:text-lg text-[#0F1316] placeholder:text-[#0F1316]/50 tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
+                    className="w-full h-full bg-[#EFEFF1] rounded-[100px] px-[24px] text-[16px] lg:text-[18px] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
                   />
                 </div>
 
-                <div className="relative w-full h-14">
+                <div className="relative w-full h-[54px]">
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
@@ -136,15 +142,15 @@ export function Auth({ onLogin }) {
                     onChange={handleChange}
                     required
                     placeholder="Password"
-                    className="w-full h-full bg-[#EFEFF1] rounded-full px-6 text-base lg:text-lg text-[#0F1316] placeholder:text-[#0F1316]/50 tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
+                    className="w-full h-full bg-[#EFEFF1] rounded-[100px] px-[24px] text-[16px] lg:text-[18px] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-6 top-1/2 -translate-y-1/2 opacity-50 hover:opacity-100 transition-opacity"
+                    className="absolute right-[24px] top-1/2 -translate-y-1/2 opacity-50 hover:opacity-100 transition-opacity"
                   >
                     <svg
-                      className="w-5 h-5"
+                      className="w-[20px] h-[20px]"
                       fill="none"
                       stroke="#0F1316"
                       viewBox="0 0 24 24"
@@ -166,7 +172,7 @@ export function Auth({ onLogin }) {
                 </div>
 
                 {!isLogin && (
-                  <div className="relative w-full h-14">
+                  <div className="relative w-full h-[54px]">
                     <input
                       type={showPassword ? "text" : "password"}
                       name="retryPassword"
@@ -174,7 +180,7 @@ export function Auth({ onLogin }) {
                       onChange={handleChange}
                       required
                       placeholder="Retry password"
-                      className="w-full h-full bg-[#EFEFF1] rounded-full px-6 text-base lg:text-lg text-[#0F1316] placeholder:text-[#0F1316]/50 tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
+                      className="w-full h-full bg-[#EFEFF1] rounded-[100px] px-[24px] text-[16px] lg:text-[18px] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
                     />
                   </div>
                 )}
@@ -183,7 +189,7 @@ export function Auth({ onLogin }) {
                   <div className="w-full text-left">
                     <a
                       href="#"
-                      className="text-white text-xs lg:text-sm font-medium leading-[130%] tracking-[0.02em] underline decoration-white decoration-1 underline-offset-2 hover:text-gray-200 transition-colors"
+                      className="text-white text-[12px] font-medium leading-[130%] tracking-[0.02em] !underline decoration-solid decoration-1 underline-offset-2 hover:text-gray-200 transition-colors"
                     >
                       Forgot password? Click here
                     </a>
@@ -193,77 +199,79 @@ export function Auth({ onLogin }) {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full h-14 mt-4 lg:mt-8 bg-[#0D1A2D] rounded-full text-white text-xl lg:text-2xl font-normal leading-7 tracking-[-0.04em] hover:bg-opacity-90 transition-all disabled:opacity-70 flex items-center justify-center"
+                  className="w-full h-[57px] mt-[16px] lg:mt-[32px] bg-[#0D1A2D] rounded-[100px] text-white text-[20px] lg:text-[24px] font-normal leading-[29px] tracking-[-0.04em] hover:bg-opacity-90 transition-all disabled:opacity-70 flex items-center justify-center"
                 >
                   {isLoading ? "Wait..." : isLogin ? "Log In" : "Sign Up"}
                 </button>
               </form>
             </div>
 
-            <div className="w-full max-w-150.5 flex flex-wrap gap-y-4 gap-x-6 justify-center lg:justify-between px-2 lg:px-0">
+            {/* Соцсети */}
+            <div className="w-full max-w-[602px] flex flex-wrap gap-y-[16px] gap-x-[24px] justify-center lg:justify-between px-2 lg:px-0">
               <button
                 type="button"
-                className="w-[47%] lg:w-72.25 h-12 rounded-full border-2 border-white flex items-center justify-start px-3 lg:px-6 gap-2 hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
+                className="w-[47%] lg:w-[289px] h-[48px] box-border rounded-[100px] border-[2px] border-white flex items-center justify-start px-[12px] lg:px-[24px] gap-[8px] hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
               >
                 <img
                   src="/img/google.png"
                   alt="Google"
-                  className="w-5 h-5 object-contain shrink-0"
+                  className="w-[20px] h-[20px] object-contain shrink-0"
                 />
-                <span className="text-white text-sm lg:text-xl font-normal leading-6 tracking-[-0.04em] overflow-hidden text-ellipsis">
+                <span className="text-white text-[14px] lg:text-[20px] font-normal leading-[24px] tracking-[-0.04em] overflow-hidden text-ellipsis">
                   Continue with Google
                 </span>
               </button>
 
               <button
                 type="button"
-                className="w-[47%] lg:w-72.25 h-12 rounded-full border-2 border-white flex items-center justify-start px-3 lg:px-6 gap-2 hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
+                className="w-[47%] lg:w-[289px] h-[48px] box-border rounded-[100px] border-[2px] border-white flex items-center justify-start px-[12px] lg:px-[24px] gap-[8px] hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
               >
                 <img
                   src="/img/apple.png"
                   alt="Apple"
-                  className="w-5 h-5 object-contain shrink-0"
+                  className="w-[20px] h-[20px] object-contain shrink-0"
                 />
-                <span className="text-white text-sm lg:text-xl font-normal leading-6 tracking-[-0.04em] overflow-hidden text-ellipsis">
+                <span className="text-white text-[14px] lg:text-[20px] font-normal leading-[24px] tracking-[-0.04em] overflow-hidden text-ellipsis">
                   Continue with Apple
                 </span>
               </button>
 
               <button
                 type="button"
-                className="w-[47%] lg:w-72.25 h-12 rounded-full border-2 border-white flex items-center justify-start px-3 lg:px-6 gap-2 hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
+                className="w-[47%] lg:w-[289px] h-[48px] box-border rounded-[100px] border-[2px] border-white flex items-center justify-start px-[12px] lg:px-[24px] gap-[8px] hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
               >
                 <img
                   src="/img/facebook.png"
                   alt="Facebook"
-                  className="w-5 h-5 object-contain shrink-0"
+                  className="w-[20px] h-[20px] object-contain shrink-0"
                 />
-                <span className="text-white text-sm lg:text-xl font-normal leading-6 tracking-[-0.04em] overflow-hidden text-ellipsis">
+                <span className="text-white text-[14px] lg:text-[20px] font-normal leading-[24px] tracking-[-0.04em] overflow-hidden text-ellipsis">
                   Continue with Facebook
                 </span>
               </button>
 
               <button
                 type="button"
-                className="w-[47%] lg:w-72.25 h-12 rounded-full border-2 border-white flex items-center justify-start px-3 lg:px-6 gap-2 hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
+                className="w-[47%] lg:w-[289px] h-[48px] box-border rounded-[100px] border-[2px] border-white flex items-center justify-start px-[12px] lg:px-[24px] gap-[8px] hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
               >
                 <img
                   src="/img/xcom.png"
                   alt="X"
-                  className="w-5 h-5 object-contain shrink-0"
+                  className="w-[20px] h-[20px] object-contain shrink-0"
                 />
-                <span className="text-white text-sm lg:text-xl font-normal leading-6 tracking-[-0.04em] overflow-hidden text-ellipsis">
+                <span className="text-white text-[14px] lg:text-[20px] font-normal leading-[24px] tracking-[-0.04em] overflow-hidden text-ellipsis">
                   Continue with X
                 </span>
               </button>
             </div>
 
+            {/* Нижняя ссылка */}
             <div className="pb-4">
-              <p className="text-white text-sm lg:text-base font-normal leading-[140%]">
+              <p className="text-white text-[14px] lg:text-[16px] font-normal leading-[140%]">
                 {isLogin ? "New to Defilicious?" : "Already have an account?"}
                 <button
                   onClick={toggleMode}
-                  className="underline decoration-white decoration-1 underline-offset-2 hover:text-gray-300 ml-1 font-medium"
+                  className="!underline decoration-solid decoration-1 underline-offset-2 hover:text-gray-300 ml-1 font-medium"
                 >
                   {isLogin ? "Sign Up" : "Log In"}
                 </button>
