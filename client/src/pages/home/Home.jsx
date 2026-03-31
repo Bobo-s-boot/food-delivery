@@ -1,7 +1,8 @@
-import { HeroBlock } from "../../components/heroBlock/HeroBlock";
-import { heroData } from "./homeConstants";
-import { HomeHighlights } from "../../components/home/HomeHighlights";
-import { HomeTrending } from "../../components/home/HomeTrending";
+import { HeroBlock as HomeHero } from "../../components/heroBlock/HeroBlock";
+import { Highlights as HomeHighlights } from "../../components/highlights/Highlights";
+import { Trending as HomeTrending } from "../../components/trending/Trending";
+import { Cards as HomeCardRestaurants } from "../../components/cards/Cards";
+import { heroData, highlightCards, trendingSection } from "./homeConstants";
 
 export function Home() {
   // const [restaurants, setRestaurants] = useState([]);
@@ -24,10 +25,11 @@ export function Home() {
 
   return (
     <div className="w-full min-h-screen bg-gray-50 pb-20 space-y-8 flex flex-col">
-      <HeroBlock {...heroData} />
-      <HomeHighlights />
-      <HomeTrending />
-      {/* <HomeRestaurants restaurants={restaurants} isLoading={isloading} /> вернуться и сделать подобный функционал для  HomeTrending */}
+      <HomeHero {...heroData} />
+      <HomeHighlights {...highlightCards} />
+      <HomeTrending {...trendingSection} />
+      {/* <HomeCardRestaurants {...restaurantCards} /> */}
+      {/* <HomeRestaurants restaurants={restaurants} isLoading={isloading} /> вернуться и сделать подобный функционал на беке для  HomeCardRestaurants */}
     </div>
   );
 }

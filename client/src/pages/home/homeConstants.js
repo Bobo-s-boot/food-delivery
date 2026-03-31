@@ -9,16 +9,6 @@ import locationIcon from "../../assets/location.svg";
 import arrowLeftIcon from "../../assets/chevron-left.svg";
 import arrowRightIcon from "../../assets/chevron-right.svg";
 
-export const heroData = {
-  titleLines: ["Explore Remarkable Restaurants Today", "All In Once Place"],
-  description:
-    "Join the ultimate dining experience - where taste meets convenience. Your next culinary adventure is just a click away.",
-  actionLabel: "Start your own culinary journey",
-  backgroundImage: "/img/backgroundImage.png",
-  socialLinks: ["Instagram", "Facebook", "Tik Tok"],
-  noteLines: ["Highly rated by local foodies.", "Get real results."],
-};
-
 export const statsData = [
   {
     icon: smileIcon,
@@ -37,7 +27,7 @@ export const statsData = [
   },
 ];
 
-export const highlightCards = [
+const highlightCardsList = [
   {
     icon: maskIcon,
     title: "Handpicked Selection",
@@ -58,18 +48,7 @@ export const highlightCards = [
   },
 ];
 
-export const trendingSection = {
-  heading: "Trending Near You",
-  description:
-    "From cozy local cafes to premium dining spots, discover the best places to satisfy your cravings right now.",
-  buttonLabel: "View all restaurants",
-  pagination: {
-    previousIcon: arrowLeftIcon,
-    nextIcon: arrowRightIcon,
-  },
-};
-
-export const trendingCards = [
+const restaurantItems = [
   {
     id: "1",
     badge: "Free Delivery",
@@ -108,7 +87,53 @@ export const trendingCards = [
   },
 ];
 
-export const trendingCardMeta = {
-  ratingIcon,
-  locationIcon,
+export const heroData = {
+  titleLines: ["Explore Remarkable Restaurants Today", "All In Once Place"],
+  description:
+    "Join the ultimate dining experience - where taste meets convenience. Your next culinary adventure is just a click away.",
+  actionLabel: "Start your own culinary journey",
+  backgroundImage: "/img/backgroundImage.png",
+  socialLinks: ["Instagram", "Facebook", "Tik Tok"],
+  noteLines: ["Highly rated by local foodies.", "Get real results."],
+};
+
+export const highlightCards = {
+  sectionData: {
+    headingLines: [
+      "Why Thousands of Foodies Choose",
+      "Defilicious Every Single Day",
+    ],
+    description:
+      "From local hidden gems to top-rated restaurants, we make ordering your favorite meals fast, fresh, and hassle-free. Discover new flavors with seamless delivery and round-the-clock support.",
+  },
+  statsData,
+  cards: highlightCardsList,
+};
+
+export const restaurantCards = {
+  title: "Popular Restaurants",
+  description:
+    "Discover top-rated local favorites and trending hotspots handpicked for your next meal.",
+  restaurants: restaurantItems,
+  isLoading: false,
+  loadingMessage: "Loading restaurants...",
+  emptyMessage: "No restaurants found.",
+};
+
+export const trendingSection = {
+  sectionData: {
+    heading: "Trending Near You",
+    description:
+      "From cozy local cafes to premium dining spots, discover the best places to satisfy your cravings right now.",
+    buttonLabel: "View all restaurants",
+    pagination: {
+      previousIcon: arrowLeftIcon,
+      nextIcon: arrowRightIcon,
+    },
+  },
+  cards: restaurantItems,
+  cardMeta: {
+    ratingIcon,
+    locationIcon,
+  },
 };

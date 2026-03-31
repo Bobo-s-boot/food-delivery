@@ -1,5 +1,5 @@
-import { dataForFooter } from "./consts";
-import { dataSmallLinksForFooter } from "./consts";
+import { dataLinksForFooter } from "./consts.js";
+import { dataSmallLinksForFooter } from "./consts.js";
 
 export function Footer() {
   return (
@@ -12,7 +12,7 @@ export function Footer() {
             </span>
           </div>
 
-          {dataForFooter.map((column, index) => (
+          {dataLinksForFooter.map((column, index) => (
             <div key={index} className=" flex flex-col gap-4">
               <ul className="grid grid-cols-1 gap-y-2">
                 {column.links.map((link, linkIndex) => (

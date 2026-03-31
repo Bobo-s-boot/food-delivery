@@ -1,19 +1,28 @@
-import { highlightCards, statsData } from "../../pages/home/homeConstants";
+export function Highlights({
+  sectionData = {
+    headingLines: ["", ""],
+    description: "",
+  },
+  statsData = [],
+  cards = [],
+  className = "",
+}) {
+  const { headingLines, description } = sectionData;
 
-export function HomeHighlights() {
   return (
-    <section className="w-full px-4 py-20">
+    <section className={`w-full px-4 py-20 ${className}`.trim()}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
           <h2 className="text-[32px] text-left font-bold text-gray-900 mb-6">
-            Why Thousands of Foodies Choose
-            <br />
-            Defilicious Every Single Day
+            {headingLines.map((line, index) => (
+              <span key={`${line}-${index}`}>
+                {line}
+                {index < headingLines.length - 1 ? <br /> : null}
+              </span>
+            ))}
           </h2>
           <p className="text-gray-600 text-left text-base mb-10">
-            From local hidden gems to top-rated restaurants, we make ordering
-            your favorite meals fast, fresh, and hassle-free. Discover new
-            flavors with seamless delivery and round-the-clock support.
+            {description}
           </p>
 
           <div className="flex flex-wrap justify-between gap-6 w-full">
@@ -40,7 +49,7 @@ export function HomeHighlights() {
         </div>
 
         <div className="space-y-4">
-          {highlightCards.map((card) => (
+          {cards.map((card) => (
             <div
               key={card.title}
               className="flex items-center gap-6 p-6 bg-[#8F9BB1] rounded-2xl shadow-sm border border-[#8F9BB1]"
