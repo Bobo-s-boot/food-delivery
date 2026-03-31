@@ -57,7 +57,7 @@ export function HeroBlock({
         }
       >
         <div
-          className={`relative z-10 flex flex-col items-center columns-1 text-white/90 mb-72 ${contentClassName}`.trim()}
+          className={`relative z-10 flex flex-col items-center text-white/90 mb-72 ${contentClassName}`.trim()}
         >
           <h1 className="text-center font-normal leading-tight mb-5">
             {renderLines(titleLines)}

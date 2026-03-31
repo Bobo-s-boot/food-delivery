@@ -54,7 +54,7 @@ export function Highlights({
               key={card.title}
               className="flex items-center gap-6 p-6 bg-[#8F9BB1] rounded-2xl shadow-sm border border-[#8F9BB1]"
             >
-              <div className="w-64 h-32 bg-white rounded-lg flex items-center justify-center py-8 px-3">
+              <div className="shrink-0 w-32 h-32 bg-white rounded-lg flex items-center justify-center py-8 px-3">
                 <img src={card.icon} alt={card.title} />
               </div>
               <div className="flex flex-col gap-4">
