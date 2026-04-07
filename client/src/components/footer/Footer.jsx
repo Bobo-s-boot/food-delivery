@@ -1,7 +1,10 @@
+import { NavLink } from "react-router-dom";
 import { dataLinksForFooter } from "./consts.js";
 import { dataSmallLinksForFooter } from "./consts.js";
 
-export function Footer({ currentPath = window.location.pathname }) {
+const isInternalLink = (to) => typeof to === "string" && to.startsWith("/");
+
+export function Footer() {
   return (
     <footer className="w-full bg-[#0D1A2D] text-white py-12 px-10 mt-10">
       <div className="w-full max-w-400 mx-auto">
@@ -16,22 +19,28 @@ export function Footer({ currentPath = window.location.pathname }) {
             <div key={index} className="flex flex-col gap-4">
               <ul className="grid grid-cols-1 gap-y-2">
                 {column.links.map((link, linkIndex) => {
-                  const isActive = currentPath === link.to;
+                  const linkClasses =
+                    "text-xl transition-all h-10 flex items-center font-normal border-b-2 w-max";
 
                   return (
                     <li key={linkIndex}>
-                      <a
-                        href={link.to}
-                        className={`text-xl text-white transition-all h-10 flex items-center font-normal border-b-2 w-max
-                          ${
-                            isActive
-                              ? "box-border px-4 py-2 border border-[#EEEEEE] rounded-full hover:bg-[#EEEEEE] transition-colors"
-                              : "text-[#8F9BB1] border-transparent hover:text-white"
+                      {isInternalLink(link.to) ? (
+                        <NavLink
+                          to={link.to}
+                          end={link.to === "/"}
+                          className={({ isActive }) =>
+                            `${linkClasses} ${
+                              isActive
+                                ? "text-white box-border px-4 py-2 border border-[#EEEEEE] rounded-full hover:bg-[#EEEEEE] transition-colors"
+                                : "text-[#8F9BB1] border-transparent hover:text-white"
+                            }`
                           }
-                        `.trim()}
-                      >
-                        {link.name}
-                      </a>
+                        >
+                          {link.name}
+                        </NavLink>
+                      ) : (
+                        ""
+                      )}
                     </li>
                   );
                 })}
@@ -64,7 +73,7 @@ export function Footer({ currentPath = window.location.pathname }) {
             {dataSmallLinksForFooter.links.map((link, index) => (
               <a
                 key={index}
-                href={link.href}
+                href={link.to}
                 className="text-[#8F9BB1] hover:text-white transition-colors text-xs"
               >
                 {link.name}
