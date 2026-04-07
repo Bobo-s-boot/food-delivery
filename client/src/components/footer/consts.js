@@ -1,33 +1,33 @@
 export const dataLinksForFooter = [
   {
     links: [
-      { name: "Restaurants", href: "#" },
-      { name: "Menu", href: "#" },
-      { name: "Specials", href: "#" },
-      { name: "Delivery", href: "#" },
+      { name: "Restaurants", to: "/catalog" },
+      { name: "Menu", to: "/menu" },
+      { name: "Specials", to: "#" },
+      { name: "Delivery", to: "#" },
     ],
   },
   {
     links: [
-      { name: "Help & Support", href: "#" },
-      { name: "Track Order", href: "#" },
-      { name: "Student Discounts", href: "#" },
-      { name: "FAQ", href: "#" },
+      { name: "Help & Support", to: "#" },
+      { name: "Track Order", to: "#" },
+      { name: "Student Discounts", to: "#" },
+      { name: "FAQ", to: "#" },
     ],
   },
   {
     links: [
-      { name: "Add your restaurant", href: "#" },
-      { name: "Become a courier", href: "#" },
-      { name: "Partner portal", href: "#" },
+      { name: "Add your restaurant", to: "#" },
+      { name: "Become a courier", to: "#" },
+      { name: "Partner portal", to: "#" },
     ],
   },
 ];
 
 export const dataSmallLinksForFooter = {
   links: [
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms of Service", href: "#" },
-    { name: "Cookie Policy", href: "#" },
+    { name: "Privacy Policy", to: "#" },
+    { name: "Terms of Service", to: "#" },
+    { name: "Cookie Policy", to: "#" },
   ],
 };

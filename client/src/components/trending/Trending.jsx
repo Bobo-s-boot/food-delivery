@@ -73,7 +73,7 @@ export function Trending({
       </div>
 
       <div className="flex justify-between items-center w-full mt-10">
-        <button className="bg-[#0D1A2D] text-white py-2 px-4 rounded-3xl hover:bg-[#5f5d5d] transition-colors duration-300">
+        <button className="bg-[#0D1A2D] text-white text-2xl font-normal py-2 px-4 rounded-3xl hover:bg-[#5f5d5d] transition-colors duration-300">
           {buttonLabel}
         </button>
 
