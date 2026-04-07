@@ -21,10 +21,12 @@ export function Trending({
     >
       <div className="flex justify-between items-end mb-8">
         <div className="flex flex-row items-center justify-between w-full mb-8 gap-8">
-          <h2 className="text-3xl font-medium text-gray-900 shrink-0">
+          <h2 className="text-4xl font-medium text-gray-900 shrink-0">
             {heading}
           </h2>
-          <p className="text-gray-500 text-right max-w-md">{description}</p>
+          <p className="text-gray-500 text-lg text-right max-w-md">
+            {description}
+          </p>
         </div>
       </div>
 
@@ -63,7 +65,7 @@ export function Trending({
                   )}
                 </p>
                 <address className="flex flex-row text-slate-200 text-sm gap-2">
-                  {locationIcon && <img src={locationIcon} alt="Location" />}{" "}
+                  {locationIcon && <img src={locationIcon} alt="Location" />}
                   {card.location}
                 </address>
               </div>
