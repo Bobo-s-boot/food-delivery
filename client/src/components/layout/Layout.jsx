@@ -4,15 +4,23 @@ import { Header } from "../header/Header";
 
 export function Layout({ children }) {
   const location = useLocation();
-  // Проверяем, находимся ли мы на странице авторизации
+
+  // Проверяем страницы, на которых контент должен быть во всю ширину без ограничений контейнера
   const isAuthPage = location.pathname === "/auth";
+  const isHomePage = location.pathname === "/";
+  const isMenuPage = location.pathname === "/menu";
+
+  const shouldRemoveContainer = isAuthPage || isHomePage || isMenuPage;
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center">
       <Header />
-      
-      {/* Если это Auth - даем 100% ширины без паддингов. Если нет - оставляем max-w-6xl и p-8 */}
-      <main className={`w-full grow mx-auto ${isAuthPage ? "" : "max-w-6xl p-8"}`}>
+
+      <main
+        className={`w-full grow mx-auto flex flex-col items-center ${
+          shouldRemoveContainer ? "" : "max-w-6xl p-8"
+        }`}
+      >
         {children}
       </main>
 
