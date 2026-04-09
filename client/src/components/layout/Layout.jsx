@@ -13,7 +13,7 @@ export function Layout({ children }) {
   const shouldRemoveContainer = isAuthPage || isHomePage || isMenuPage;
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center">
+    <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center w-full">
       <Header />
 
       <main
@@ -24,7 +24,6 @@ export function Layout({ children }) {
         {children}
       </main>
 
-      {/* Показываем Footer ТОЛЬКО если мы НЕ на странице авторизации */}
       {!isAuthPage && <Footer />}
     </div>
   );
