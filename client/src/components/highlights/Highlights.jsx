@@ -13,7 +13,7 @@ export function Highlights({
     <section className={`w-full px-4 py-20 ${className}`.trim()}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
-          <h2 className="text-[32px] text-left font-bold text-gray-900 mb-6">
+          <h2 className="text-3xl text-left  text-gray-900 mb-6 font-medium">
             {headingLines.map((line, index) => (
               <span key={`${line}-${index}`}>
                 {line}
@@ -21,7 +21,7 @@ export function Highlights({
               </span>
             ))}
           </h2>
-          <p className="text-gray-600 text-left text-base mb-10">
+          <p className="text-gray-600 text-left text-2xl mb-10">
             {description}
           </p>
 

@@ -24,7 +24,7 @@ export function Home() {
   // }, []);
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 pb-20 space-y-8 flex flex-col">
+    <div className="w-full min-h-screen bg-gray-50 pb-20 space-y-8 flex flex-col gap-45">
       <HomeHero {...heroData} />
       <HomeHighlights {...highlightCards} />
       <HomeTrending {...trendingSection} />

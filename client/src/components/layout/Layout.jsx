@@ -4,6 +4,8 @@ import { Header } from "../header/Header";
 
 export function Layout({ children }) {
   const location = useLocation();
+
+  // Проверяем страницы, на которых контент должен быть во всю ширину без ограничений контейнера
   const isAuthPage = location.pathname === "/auth";
   const isHomePage = location.pathname === "/";
   const isCatalogPage = location.pathname === "/catalog"; // Добавляем проверку на каталог
@@ -15,7 +17,9 @@ export function Layout({ children }) {
       <Header />
 
       <main
-        className={`w-full grow mx-auto ${shouldRemoveContainer ? "" : "max-w-6xl p-8"}`}
+        className={`w-full grow mx-auto flex flex-col items-center ${
+          shouldRemoveContainer ? "" : "max-w-6xl p-8"
+        }`}
       >
         {children}
       </main>

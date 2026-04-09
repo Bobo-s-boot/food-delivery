@@ -62,8 +62,8 @@ export function HeroBlock({
           <h1 className="text-center font-normal leading-tight mb-5">
             {renderLines(titleLines)}
           </h1>
-          <p className="text-base text-white/90 mb-8 w-full text-center mx-auto">
-            {description}
+          <p className="text-xl text-white/90 mb-8 w-full text-center mx-auto">
+            {renderLines(description)}
           </p>
           {actionElement}
         </div>
