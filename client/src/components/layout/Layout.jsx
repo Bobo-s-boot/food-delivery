@@ -6,8 +6,9 @@ export function Layout({ children }) {
   const location = useLocation();
   const isAuthPage = location.pathname === "/auth";
   const isHomePage = location.pathname === "/";
+  const isCatalogPage = location.pathname === "/catalog"; // Добавляем проверку на каталог
 
-  const shouldRemoveContainer = isAuthPage || isHomePage;
+  const shouldRemoveContainer = isAuthPage || isHomePage || isCatalogPage;
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center w-full">
