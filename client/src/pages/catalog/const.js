@@ -1,4 +1,3 @@
-// src/pages/catalog/const.js
 export const CATEGORIES = [
   "Top Rated",
   "Fast Delivery",
