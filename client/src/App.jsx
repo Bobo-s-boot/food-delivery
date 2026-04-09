@@ -5,6 +5,7 @@ import { About } from "./pages/about/About";
 import { Auth } from "./pages/auth/Auth";
 import { Catalog } from "./pages/catalog/Catalog";
 import { Home } from "./pages/home/Home";
+import { Menu } from "./Menu";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="/" element={<Home />} />
           <Route path="/catalog" element={<Catalog />} />
+          <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
         </Routes>
       </Layout>
