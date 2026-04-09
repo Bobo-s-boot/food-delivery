@@ -8,9 +8,9 @@ export function Layout({ children }) {
   // Проверяем страницы, на которых контент должен быть во всю ширину без ограничений контейнера
   const isAuthPage = location.pathname === "/auth";
   const isHomePage = location.pathname === "/";
-  const isMenuPage = location.pathname === "/menu";
+  const isCatalogPage = location.pathname === "/catalog"; // Добавляем проверку на каталог
 
-  const shouldRemoveContainer = isAuthPage || isHomePage || isMenuPage;
+  const shouldRemoveContainer = isAuthPage || isHomePage || isCatalogPage;
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center w-full">
