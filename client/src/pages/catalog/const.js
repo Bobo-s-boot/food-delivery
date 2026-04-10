@@ -1,7 +1,8 @@
 export const CATEGORIES = [
-  "🍕 Піца",
-  "🍔 Бургери",
-  "🍣 Суші",
-  "🥗 Салати",
-  "🍰 Десерти",
+  "Top Rated",
+  "Fast Delivery",
+  "Offers",
+  "New Arrivals",
+  "Best Sellers",
+  "Limited Time",
 ];

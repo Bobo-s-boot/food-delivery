@@ -6,7 +6,8 @@
     "category": "Pizza",
     "rating": 4.5,
     "price": 8.99,
-    "image": "./img/bella-margherita.jpg"
+    "image": "./img/bella-margherita.jpg",
+    "location": "Downtown District"
   },
 
   {
@@ -16,7 +17,8 @@
     "category": "Steak",
     "rating": 4.7,
     "price": 12.99,
-    "image": "./img/steakehouse.jpg"
+    "image": "./img/steakehouse.jpg",
+    "location": "Westside Boulevard"
   },
 
   {
@@ -26,7 +28,8 @@
     "category": "Sushi",
     "rating": 4.8,
     "price": 15.99,
-    "image": "./img/china_ma.jpg"
+    "image": "./img/china_ma.jpg",
+    "location": "Green Park Area"
   },
 
   {
@@ -36,7 +39,8 @@
     "category": "Burger",
     "rating": 4.3,
     "price": 9.99,
-    "image": "./img/burger.jpg"
+    "image": "./img/burger.jpg",
+    "location": "Little Italy"
   },
 
   {
@@ -46,7 +50,8 @@
     "category": "Pasta",
     "rating": 4.6,
     "price": 11.99,
-    "image": "./img/pasta.jpg"
+    "image": "./img/pasta.jpg",
+    "location": "Old Town"
   },
 
   {
@@ -56,6 +61,7 @@
     "category": "Salad",
     "rating": 4.4,
     "price": 7.99,
-    "image": "./img/salad.jpg"
+    "image": "./img/salad.jpg",
+    "location": "City Center"
   }
 ]

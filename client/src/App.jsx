@@ -5,7 +5,7 @@ import { About } from "./pages/about/About";
 import { Auth } from "./pages/auth/Auth";
 import { Catalog } from "./pages/catalog/Catalog";
 import { Home } from "./pages/home/Home";
-import { Menu } from "./Menu";
+import { Menu } from "./pages/menu/Menu";
 
 function App() {
   return (
