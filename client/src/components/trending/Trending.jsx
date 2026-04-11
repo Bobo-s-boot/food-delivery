@@ -1,3 +1,6 @@
+import { motion } from "motion/react";
+import { useLandingMotion } from "../../motion/safeMotion";
+
 export function Trending({
   sectionData = {
     heading: "",
@@ -14,25 +17,49 @@ export function Trending({
 }) {
   const { heading, description, buttonLabel, pagination } = sectionData;
   const { ratingIcon, locationIcon } = cardMeta;
+  const lm = useLandingMotion();
 
   return (
     <section
       className={`w-full px-4 py-10 bg-[#EDECF1] rounded-4xl ${className}`.trim()}
     >
-      <div className="flex justify-between items-end mb-8">
+      <motion.div
+        className="flex justify-between items-end mb-8"
+        variants={lm.highlightsLeft}
+        initial="hidden"
+        whileInView="visible"
+        viewport={lm.viewport}
+      >
         <div className="flex flex-row items-center justify-between w-full mb-8 gap-8">
-          <h2 className="text-3xl font-medium text-gray-900 shrink-0">
+          <motion.h2
+            className="text-3xl font-medium text-gray-900 shrink-0"
+            variants={lm.highlightsLeftChild}
+          >
             {heading}
-          </h2>
-          <p className="text-gray-500 text-right max-w-md">{description}</p>
+          </motion.h2>
+          <motion.p
+            className="text-gray-500 text-right max-w-md"
+            variants={lm.highlightsLeftChild}
+          >
+            {description}
+          </motion.p>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        variants={lm.gridContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={lm.viewport}
+      >
         {cards.map((card) => (
-          <div
+          <motion.div
             key={card.id}
             className="rounded-2xl border-[#EDECF1] group relative"
+            variants={lm.gridItem}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            whileHover={lm.reduced ? undefined : { y: -6 }}
           >
             <span className="absolute top-4 right-4 z-10 w-24 h-8 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-lg">
               <p className="text-sm text-slate-100">{card.badge}</p>
@@ -68,32 +95,56 @@ export function Trending({
                 </address>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      <div className="flex justify-between items-center w-full mt-10">
-        <button className="bg-[#0D1A2D] text-white py-2 px-4 rounded-3xl hover:bg-[#5f5d5d] transition-colors duration-300">
+      <motion.div
+        className="flex justify-between items-center w-full mt-10"
+        variants={lm.footerRow}
+        initial="hidden"
+        whileInView="visible"
+        viewport={lm.viewport}
+      >
+        <motion.button
+          type="button"
+          className="bg-[#0D1A2D] text-white py-2 px-4 rounded-3xl hover:bg-[#5f5d5d] transition-colors duration-300"
+          whileHover={lm.reduced ? undefined : { scale: 1.03 }}
+          whileTap={lm.reduced ? undefined : { scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 450, damping: 22 }}
+        >
           {buttonLabel}
-        </button>
+        </motion.button>
 
         <div className="flex flex-row gap-4">
-          <button className="w-12 h-12 rounded-full border border-gray-900 text-[#0F1316] flex items-center justify-center hover:bg-white/20 transition-colors duration-300">
+          <motion.button
+            type="button"
+            className="w-12 h-12 rounded-full border border-gray-900 text-[#0F1316] flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
+            whileHover={lm.reduced ? undefined : { scale: 1.08 }}
+            whileTap={lm.reduced ? undefined : { scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 500, damping: 22 }}
+          >
             {pagination.previousIcon ? (
               <img src={pagination.previousIcon} alt="Previous" />
             ) : (
               "<"
             )}
-          </button>
-          <button className="w-12 h-12 rounded-full border border-gray-900 text-[#0F1316] flex items-center justify-center hover:bg-white/20 transition-colors duration-300">
+          </motion.button>
+          <motion.button
+            type="button"
+            className="w-12 h-12 rounded-full border border-gray-900 text-[#0F1316] flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
+            whileHover={lm.reduced ? undefined : { scale: 1.08 }}
+            whileTap={lm.reduced ? undefined : { scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 500, damping: 22 }}
+          >
             {pagination.nextIcon ? (
               <img src={pagination.nextIcon} alt="Next" />
             ) : (
               ">"
             )}
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
