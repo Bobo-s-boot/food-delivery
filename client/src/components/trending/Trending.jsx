@@ -90,7 +90,7 @@ export function Trending({
                   )}
                 </p>
                 <address className="flex flex-row text-slate-200 text-sm gap-2">
-                  {locationIcon && <img src={locationIcon} alt="Location" />}{" "}
+                  {locationIcon && <img src={locationIcon} alt="Location" />}
                   {card.location}
                 </address>
               </div>

@@ -89,8 +89,10 @@ const restaurantItems = [
 
 export const heroData = {
   titleLines: ["Explore Remarkable Restaurants Today", "All In Once Place"],
-  description:
-    "Join the ultimate dining experience - where taste meets convenience. Your next culinary adventure is just a click away.",
+  description: [
+    "Join the ultimate dining experience - where taste meets convenience. Your next",
+    "culinary adventure is just a click away.",
+  ],
   actionLabel: "Start your own culinary journey",
   backgroundImage: "/img/backgroundImage.png",
   socialLinks: ["Instagram", "Facebook", "Tik Tok"],
