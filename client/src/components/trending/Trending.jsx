@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useState } from "react";
 import { useLandingMotion } from "../../motion/safeMotion";
 
 export function Trending({
@@ -18,6 +19,25 @@ export function Trending({
   const { heading, description, buttonLabel, pagination } = sectionData;
   const { ratingIcon, locationIcon } = cardMeta;
   const lm = useLandingMotion();
+
+  const VISIBLE_CARDS = 4;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  const handleNext = () => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % cards.length);
+  };
+
+  const handlePrevious = () => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev - 1 + cards.length) % cards.length);
+  };
+
+  const visibleCards = [];
+  for (let i = 0; i < VISIBLE_CARDS; i++) {
+    visibleCards.push(cards[(currentIndex + i) % cards.length]);
+  }
 
   return (
     <section
@@ -47,17 +67,20 @@ export function Trending({
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-hidden"
         variants={lm.gridContainer}
         initial="hidden"
         whileInView="visible"
         viewport={lm.viewport}
       >
-        {cards.map((card) => (
+        {visibleCards.map((card, index) => (
           <motion.div
-            key={card.id}
+            key={`${card.id}-${index}`}
             className="rounded-2xl border-[#EDECF1] group relative"
             variants={lm.gridItem}
+            initial={{ opacity: 0, x: direction * 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -direction * 100 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
             whileHover={lm.reduced ? undefined : { y: -6 }}
           >
@@ -119,6 +142,7 @@ export function Trending({
         <div className="flex flex-row gap-4">
           <motion.button
             type="button"
+            onClick={handlePrevious}
             className="w-12 h-12 rounded-full border border-gray-900 text-[#0F1316] flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
             whileHover={lm.reduced ? undefined : { scale: 1.08 }}
             whileTap={lm.reduced ? undefined : { scale: 0.95 }}
@@ -132,6 +156,7 @@ export function Trending({
           </motion.button>
           <motion.button
             type="button"
+            onClick={handleNext}
             className="w-12 h-12 rounded-full border border-gray-900 text-[#0F1316] flex items-center justify-center hover:bg-white/20 transition-colors duration-300"
             whileHover={lm.reduced ? undefined : { scale: 1.08 }}
             whileTap={lm.reduced ? undefined : { scale: 0.95 }}

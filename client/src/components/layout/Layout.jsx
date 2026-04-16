@@ -1,18 +1,18 @@
 import { useLocation } from "react-router-dom";
 import { Footer } from "../footer/Footer";
 import { Header } from "../header/Header";
+import { PATH_PAGE } from "./const";
 
 export function Layout({ children }) {
   const location = useLocation();
 
-  // Проверяем страницы, на которых контент должен быть во всю ширину
-  const isAuthPage = location.pathname === "/auth";
-  const isHomePage = location.pathname === "/";
-  const isCatalogPage = location.pathname === "/catalog";
-  // ДОБАВЛЕНО: Проверка для твоей страницы меню
-  const isMenuPage = location.pathname === "/menu"; 
+  const isAuthPage = location.pathname === PATH_PAGE.AUTH;
+  const isHomePage = location.pathname === PATH_PAGE.HOME;
+  const isCatalogPage = location.pathname === PATH_PAGE.CATALOG;
+  const isMenuPage = location.pathname === PATH_PAGE.MENU;
 
-  const shouldRemoveContainer = isAuthPage || isHomePage || isCatalogPage || isMenuPage;
+  const shouldRemoveContainer =
+    isAuthPage || isHomePage || isCatalogPage || isMenuPage;
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center w-full">
