@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useState } from "react";
 import { useLandingMotion } from "../../motion/safeMotion";
+import { useNavigate } from "react-router-dom";
 
 export function Trending({
   sectionData = {
@@ -19,6 +20,7 @@ export function Trending({
   const { heading, description, buttonLabel, pagination } = sectionData;
   const { ratingIcon, locationIcon } = cardMeta;
   const lm = useLandingMotion();
+  const navigate = useNavigate();
 
   const VISIBLE_CARDS = 4;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -89,7 +91,7 @@ export function Trending({
         variants={carouselGridVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 [grid-template-columns:repeat(1,minmax(0,1fr))] md:[grid-template-columns:repeat(2,minmax(0,1fr))] lg:[grid-template-columns:repeat(4,minmax(0,1fr))]"
+        className="grid grid-cols-1 gap-4 md:grid-cols-2 gap-6md:grid-cols-2 lg:grid-cols-4"
       >
         {visibleCards.map((card) => (
           <motion.div
@@ -103,7 +105,7 @@ export function Trending({
               <p className="text-sm text-slate-100">{card.badge}</p>
             </span>
 
-            <div className="relative w-full aspect-[3/4] shrink-0 bg-[#EDECF1] overflow-hidden rounded-3xl">
+            <div className="relative w-full aspect-3/4 shrink-0 bg-[#EDECF1] overflow-hidden rounded-3xl">
               <img
                 src={card.image}
                 alt={card.title}
@@ -150,6 +152,7 @@ export function Trending({
           whileHover={lm.reduced ? undefined : { scale: 1.03 }}
           whileTap={lm.reduced ? undefined : { scale: 0.98 }}
           transition={{ type: "spring", stiffness: 450, damping: 22 }}
+          onClick={() => navigate("/catalog")}
         >
           {buttonLabel}
         </motion.button>
@@ -169,7 +172,7 @@ export function Trending({
               "<"
             )}
           </motion.button>
-          
+
           <motion.button
             type="button"
             onClick={handleNext}
