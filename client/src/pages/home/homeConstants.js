@@ -88,7 +88,7 @@ const restaurantItems = [
   {
     id: "5",
     badge: "Fast Delivery",
-    image: "/img/card-1.png",
+    image: "/img/card-5.png",
     title: "Dragon's Fire Grill",
     category: "Chinese • Asian",
     rating: "4.7 (1.8k)",
@@ -97,7 +97,7 @@ const restaurantItems = [
   {
     id: "6",
     badge: "15-25 min",
-    image: "/img/card-2.png",
+    image: "/img/card-6.png",
     title: "La Bella Pasta",
     category: "Italian • Authentic",
     rating: "4.9 (2.3k)",
@@ -106,7 +106,7 @@ const restaurantItems = [
   {
     id: "7",
     badge: "-15% Today",
-    image: "/img/card-3.png",
+    image: "/img/card-7.png",
     title: "Spice Route Curry",
     category: "Indian • Vegetarian",
     rating: "4.8 (890)",
@@ -115,7 +115,7 @@ const restaurantItems = [
   {
     id: "8",
     badge: "Free Delivery",
-    image: "/img/card-4.png",
+    image: "/img/card-8.png",
     title: "Seoul Kitchen",
     category: "Korean • BBQ",
     rating: "4.8 (1.5k)",
