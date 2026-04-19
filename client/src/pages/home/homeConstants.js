@@ -85,6 +85,42 @@ const restaurantItems = [
     rating: "4.6 (2.1k)",
     location: "Little Italy",
   },
+  {
+    id: "5",
+    badge: "Fast Delivery",
+    image: "/img/card-5.png",
+    title: "Dragon's Fire Grill",
+    category: "Chinese • Asian",
+    rating: "4.7 (1.8k)",
+    location: "East Side Market",
+  },
+  {
+    id: "6",
+    badge: "15-25 min",
+    image: "/img/card-6.png",
+    title: "La Bella Pasta",
+    category: "Italian • Authentic",
+    rating: "4.9 (2.3k)",
+    location: "Historic District",
+  },
+  {
+    id: "7",
+    badge: "-15% Today",
+    image: "/img/card-7.png",
+    title: "Spice Route Curry",
+    category: "Indian • Vegetarian",
+    rating: "4.8 (890)",
+    location: "Cultural Quarter",
+  },
+  {
+    id: "8",
+    badge: "Free Delivery",
+    image: "/img/card-8.png",
+    title: "Seoul Kitchen",
+    category: "Korean • BBQ",
+    rating: "4.8 (1.5k)",
+    location: "Food Street",
+  },
 ];
 
 export const heroData = {
