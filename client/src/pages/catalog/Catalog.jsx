@@ -21,6 +21,7 @@ export function Catalog() {
           <h1 className="text-[36px] md:text-[48px] font-normal tracking-[-0.04em] leading-11">
             Free Delivery Weekend
           </h1>
+
           <p className="text-[16px] font-normal leading-[140%]">
             Stay in and treat yourself. Enjoy $0 delivery fees on all orders
             from top-rated restaurants this weekend.
@@ -57,10 +58,12 @@ export function Catalog() {
             <h3 className="text-[24px] font-normal tracking-[-0.04em] leading-7.25 mb-3">
               Meet Our New Partner: Luigi's Woodfire
             </h3>
+
             <p className="text-[16px] font-normal leading-[140%] text-gray-100 mb-6">
               Authentic Neapolitan pizza is finally here. Taste the crisp, smoky
               crust baked in a real wood-fired oven.
             </p>
+
             <div>
               <button className="border border-white text-white px-5 py-1.5 rounded-[100px] text-[16px] hover:bg-white hover:text-black transition duration-300">
                 Explore Menu

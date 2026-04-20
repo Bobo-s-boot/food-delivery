@@ -8,11 +8,13 @@ export function Trending({
     heading: "",
     description: "",
     buttonLabel: "",
+
     pagination: {
       previousIcon: "",
       nextIcon: "",
     },
   },
+
   cards = [],
   cardMeta = {},
   className = "",
@@ -41,6 +43,7 @@ export function Trending({
       x: lm.reduced ? 0 : (d ?? 1) * 36,
       opacity: lm.reduced ? 1 : 0.9,
     }),
+
     visible: {
       x: 0,
       opacity: 1,
@@ -76,6 +79,7 @@ export function Trending({
           >
             {heading}
           </motion.h2>
+
           <motion.p
             className="text-gray-500 text-right max-w-md"
             variants={lm.highlightsLeftChild}
@@ -119,16 +123,18 @@ export function Trending({
                 <h3 className="text-slate-100 font-semibold text-xl">
                   {card.title}
                 </h3>
+
                 <p className="flex flex-row text-sm text-slate-200 gap-2">
-                  {card.category}
+                  {card.category} |
                   {ratingIcon ? (
                     <>
-                      | <img src={ratingIcon} alt="Rating" /> {card.rating}
+                      <img src={ratingIcon} alt="Rating" /> {card.rating}
                     </>
                   ) : (
                     ` | ${card.rating}`
                   )}
                 </p>
+
                 <address className="flex flex-row text-slate-200 text-sm gap-2">
                   {locationIcon && <img src={locationIcon} alt="Location" />}
                   {card.location}

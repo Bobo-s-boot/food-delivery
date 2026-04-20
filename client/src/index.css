@@ -17,12 +17,12 @@
 }
 
 a {
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: inherit;
 }
 
 a:hover {
-  color: oklch(62.7% 0.194 149.214);
+  color: #0f1316;
 }
 
 body {

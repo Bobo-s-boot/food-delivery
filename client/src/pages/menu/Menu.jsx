@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MENU_CATEGORIES, MOCK_MENU_ITEMS } from "../../const";
+import { MENU_CATEGORIES, MOCK_MENU_ITEMS } from "./const.js";
 import { ProductCard } from "./ProductCard";
 import searchIcon from "../../assets/search.svg";
 

@@ -32,7 +32,7 @@ export function Header() {
               className={({ isActive }) =>
                 `px-4 py-2 transition-colors flex items-center justify-center ${link.defaultClasses} ${
                   isActive
-                    ? "bg-gray-50 border border-[#EEEEEE]"
+                    ? "bg-[#000000] text-[#FFFFFF] border border-[#000000]"
                     : "text-[#0F1316]"
                 }`
               }

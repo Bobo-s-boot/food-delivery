@@ -2,7 +2,7 @@ import { HeroBlock as HomeHero } from "../../components/heroBlock/HeroBlock";
 import { Highlights as HomeHighlights } from "../../components/highlights/Highlights";
 import { Trending as HomeTrending } from "../../components/trending/Trending";
 import { Cards as HomeCardRestaurants } from "../../components/cards/Cards";
-import { heroData, highlightCards, trendingSection } from "./homeConstants";
+import { heroData, highlightCards, trendingSection } from "./const";
 
 export function Home() {
   // const [restaurants, setRestaurants] = useState([]);

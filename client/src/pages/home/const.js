@@ -164,12 +164,15 @@ export const trendingSection = {
     description:
       "From cozy local cafes to premium dining spots, discover the best places to satisfy your cravings right now.",
     buttonLabel: "View all restaurants",
+
     pagination: {
       previousIcon: arrowLeftIcon,
       nextIcon: arrowRightIcon,
     },
   },
+
   cards: restaurantItems,
+
   cardMeta: {
     ratingIcon,
     locationIcon,
