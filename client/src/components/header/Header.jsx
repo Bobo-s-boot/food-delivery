@@ -1,4 +1,5 @@
 import { useNavigate, NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { headerLinks } from "./consts.js";
 import searchIcon from "../../assets/search.svg";
 import handbagIcon from "../../assets/handbag.svg";
@@ -6,6 +7,7 @@ import userIcon from "../../assets/user.svg";
 
 export function Header() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const user = JSON.parse(localStorage.getItem("user"));
 
   const handleLogout = () => {
@@ -37,7 +39,7 @@ export function Header() {
                 }`
               }
             >
-              {link.name}
+              {t(`nav.${link.key}`)}
             </NavLink>
           ))}
         </nav>
@@ -47,7 +49,7 @@ export function Header() {
         <div className="relative hidden xl:flex items-center justify-between w-80 2xl:w-113.5 h-13.5 bg-[#EFEFF1] rounded-[100px] px-6 shrink">
           <input
             type="text"
-            placeholder="Search for dishes..."
+            placeholder={t("nav.searchPlaceholder")}
             className="w-full bg-transparent text-[16px] xl:text-[18px] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] outline-none tracking-[-0.04em] truncate"
           />
           <img
@@ -65,11 +67,13 @@ export function Header() {
           <button
             onClick={user ? handleLogout : () => navigate("/auth")}
             className="w-13.5 h-13.5 bg-[#0D1A2D] rounded-[100px] flex items-center justify-center text-white hover:bg-gray-800 transition-colors shrink-0"
-            title={user ? `Logout (${user.username})` : "Login"}
+            title={
+              user ? `${t("nav.logout")} (${user.username})` : t("nav.login")
+            }
           >
             <img
               src={userIcon}
-              alt={user ? "Logout" : "Login"}
+              alt={user ? t("nav.logout") : t("nav.login")}
               className="w-6 h-6"
             />
           </button>

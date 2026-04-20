@@ -111,11 +111,7 @@ export function HeroBlock({
                   <motion.span
                     key={`${label}-${index}`}
                     className="px-4 py-2 text-white text-sm bg-white/20 backdrop-blur-sm cursor-pointer hover:bg-white/40 rounded-lg"
-                    whileHover={
-                      lm.reduced
-                        ? undefined
-                        : { scale: 1.04, y: -2 }
-                    }
+                    whileHover={lm.reduced ? undefined : { scale: 1.04, y: -2 }}
                     whileTap={lm.reduced ? undefined : { scale: 0.98 }}
                     transition={{ type: "spring", stiffness: 400, damping: 22 }}
                   >

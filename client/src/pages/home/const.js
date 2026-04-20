@@ -14,16 +14,19 @@ export const statsData = [
     icon: smileIcon,
     value: "50k+",
     label: "Happy Foodies",
+    key: "happyFoodies",
   },
   {
     icon: clockIcon,
     value: "< 30 Min",
     label: "Average Delivery Time",
+    key: "averageDeliveryTime",
   },
   {
     icon: starIcon,
     value: "150+",
     label: "Top-Rated Restaurants",
+    key: "topRatedRestaurants",
   },
 ];
 
@@ -129,6 +132,7 @@ export const heroData = {
     "Join the ultimate dining experience - where taste meets convenience. Your next",
     "culinary adventure is just a click away.",
   ],
+
   actionLabel: "Start your own culinary journey",
   backgroundImage: "/img/backgroundImage.png",
   socialLinks: ["Instagram", "Facebook", "Tik Tok"],
@@ -144,6 +148,7 @@ export const highlightCards = {
     description:
       "From local hidden gems to top-rated restaurants, we make ordering your favorite meals fast, fresh, and hassle-free. Discover new flavors with seamless delivery and round-the-clock support.",
   },
+
   statsData,
   cards: highlightCardsList,
 };
