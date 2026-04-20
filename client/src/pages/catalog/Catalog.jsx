@@ -2,10 +2,13 @@ import { useState } from "react";
 import { CatalogTab } from "./CatalogTab";
 import { CATEGORIES } from "./const";
 import { RestaurantList } from "../../components/cardListRestaurant/RestaurantList";
+import { useDebounce } from "../../hooks/useDebounce";
 
 export function Catalog() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   return (
     <div className="w-full max-w-460 mx-auto px-4 md:px-8 pb-12">
@@ -110,7 +113,7 @@ export function Catalog() {
         <div className="w-full flex justify-center mt-32 mb-25">
           <div className="w-full max-w-423">
             <RestaurantList
-              searchQuery={searchQuery}
+              searchQuery={debouncedSearchQuery}
               activeCategory={activeCategory}
             />
           </div>
