@@ -20,6 +20,7 @@ export const dataLinksForFooter = [
       { name: "Add your restaurant", to: "/add-restaurant" },
       { name: "Become a courier", to: "/become-courier" },
       { name: "Partner portal", to: "/partner-portal" },
+      { name: "About Us", to: "/about" },
     ],
   },
 ];

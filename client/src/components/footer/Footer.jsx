@@ -7,7 +7,7 @@ const isInternalLink = (to) => typeof to === "string" && to.startsWith("/");
 export function Footer() {
   return (
     <footer className="w-full bg-[#0D1A2D] text-white py-12 px-10 mt-10">
-      <div className="w-full max-w-400 mx-auto">
+      <div className="max-w-400 mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
           <div className="flex flex-col">
             <span className="text-[32px] font-medium text-white tracking-wide ">

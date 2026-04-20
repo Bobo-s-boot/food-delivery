@@ -14,7 +14,7 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
         const formattedData = data.map((restaurant, index) => ({
           ...restaurant,
           id: restaurant.id || `rest-${index}`,
-          title: restaurant.title || restaurant.name,
+          title: restaurant.name,
           badge:
             restaurant.badge ||
             (index % 2 === 0 ? "Free Delivery" : "20-30 min"),
@@ -22,6 +22,7 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
           location: restaurant.location,
           rating: restaurant.rating || (4 + (index % 10) / 10).toFixed(1),
         }));
+
         setRestaurants(formattedData);
         setLoading(false);
       } catch (error) {
@@ -29,6 +30,7 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
@@ -36,14 +38,15 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
     const matchesSearch = restaurant.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
+
     const matchesCategory =
-      activeCategory === "All" || restaurant.category?.includes(activeCategory);
+      activeCategory === "All" || restaurant.tags?.includes(activeCategory);
     return matchesSearch && matchesCategory;
   });
 
   if (isLoading) {
     return (
-      <div className="text-center text-gray-500 text-[20px] mt-20">
+      <div className="text-center text-gray-500 text-xl mt-20">
         Download restaurants...
       </div>
     );
@@ -51,7 +54,7 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
 
   if (filteredRestaurants.length === 0) {
     return (
-      <div className="text-center text-gray-500 text-[20px] mt-20">
+      <div className="text-center text-gray-500 text-xl mt-20">
         Nothing found 😔
       </div>
     );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CatalogTab } from "./CatalogTab";
 import { CATEGORIES } from "./const";
 import { RestaurantList } from "../../components/cardListRestaurant/RestaurantList";
+import searchIcon from "../../assets/search.svg";
 
 export function Catalog() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,10 +43,13 @@ export function Catalog() {
           </h2>
         </div>
 
-        <div
-          className="relative w-full max-w-181.75 h-67.5 rounded-4xl overflow-hidden bg-cover bg-center shrink-0"
-          style={{ backgroundImage: `url('/img/ImageRest2.png')` }}
-        >
+        <div className="relative w-full max-w-181.75 h-67.5 rounded-4xl overflow-hidden shrink-0">
+          <img
+            src="/img/ImageRest2.png"
+            alt="New partner restaurant"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+
           <div className="absolute inset-0 bg-black/20 z-10"></div>
 
           <div className="absolute top-6 right-6 z-20">
@@ -95,9 +99,11 @@ export function Catalog() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full h-full px-6 py-4 rounded-[100px] bg-[#EFEFF1] border-none outline-none text-center text-[18px] tracking-[-0.04em] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)]"
                 />
-                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[20px] text-black">
-                  🔍
-                </span>
+                <img
+                  src={searchIcon}
+                  alt="Search"
+                  className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 "
+                />
               </div>
             </div>
 
