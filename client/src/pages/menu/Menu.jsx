@@ -51,16 +51,20 @@ export function Menu() {
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-linear-to-r from-black/40 to-transparent z-0" />
+
           <div className="absolute right-6 top-6 px-4 py-2 bg-white/25 backdrop-blur-[10px] rounded-[100px] z-10 border border-white/20 flex items-center justify-center text-white text-[12px] font-medium tracking-[0.02em]">
             New Arrival
           </div>
+
           <div className="absolute left-8.75 top-[50%] -translate-y-1/2 w-full max-w-103.25 flex flex-col items-start gap-3 z-10 text-left">
             <h3 className="text-white text-[24px] font-normal tracking-[-0.04em] leading-7.25 m-0">
               Meet Our New Partner: Luigi's Woodfire
             </h3>
+
             <p className="text-white text-[16px] font-normal leading-[140%] opacity-100 w-67.25 m-0">
               {t("menu.authenticPizza")}
             </p>
+
             <button className="w-32.75 h-7.75 border-2 border-white rounded-[100px] flex items-center justify-center text-white text-[16px] hover:bg-white hover:text-[#0D1A2D] transition-colors cursor-pointer mt-1">
               {t("menu.exploreMenu")}
             </button>

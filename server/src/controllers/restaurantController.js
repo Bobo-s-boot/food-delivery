@@ -1,12 +1,14 @@
 import fs from "fs/promises";
 import { RESTAURANTS_DATA_PATH as DATA_PATH } from "../config/config.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
+import Restaurant from "../models/Restaurant.js";
 
 export const getAllRestaurants = async (req, res) => {
   try {
+    const restaurants = await Restaurant.find();
     const data = await fs.readFile(DATA_PATH, "utf-8");
 
-    res.json(JSON.parse(data));
+    res.status(200).json(restaurants);
   } catch (error) {
     res
       .status(500)

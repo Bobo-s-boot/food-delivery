@@ -1,12 +1,34 @@
+import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { HeroBlock as HomeHero } from "../../components/heroBlock/HeroBlock";
 import { Highlights as HomeHighlights } from "../../components/highlights/Highlights";
 import { Trending as HomeTrending } from "../../components/trending/Trending";
 import { Cards as HomeCardRestaurants } from "../../components/cards/Cards";
 import { heroData, highlightCards, trendingSection } from "./const";
+import { useEffect, useState } from "react";
+import { getRestaurants } from "../../api/restaurantService";
+import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
 
 export function Home() {
   const { t } = useTranslation();
+  const [restaurants, setRestaurants] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      try {
+        const response = await axios.get(getRestaurants());
+
+        setRestaurants(response.data);
+      } catch (error) {
+        console.error("Ошибка сети:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRestaurants();
+  }, []);
 
   const translatedHeroData = {
     ...heroData,
@@ -59,6 +81,14 @@ export function Home() {
       description: t("home.trending.description"),
       buttonLabel: t("home.trending.buttonLabel"),
     },
+
+    cards: restaurants.map((card) => ({
+      ...card,
+      // Подставляем данные из нашей базы (как мы делали в прошлый раз)
+      title: card.name,
+      badge: card.tags && card.tags.length > 0 ? card.tags[0] : "",
+      image: card.image || "",
+    })),
   };
 
   return (
