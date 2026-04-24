@@ -1,7 +1,16 @@
 import bcrypt from "bcryptjs";
 import fs from "fs/promises";
+import jwt from "jsonwebtoken";
 import { USERS_DATA_PATH as DATA_PATH } from "../config/config.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
+
+const generateToken = (user) => {
+  return jwt.sign(
+    { id: user.id, username: user.username },
+    process.env.SESSION_SECRET || "super_secret_jwt_key",
+    { expiresIn: "30d" }
+  );
+};
 
 export const register = async (req, res) => {
   try {
@@ -26,13 +35,13 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = { id: Date.now(), username, password: hashedPassword };
-
     users.push(newUser);
-
     await fs.writeFile(DATA_PATH, JSON.stringify(users, null, 2));
 
+    const token = generateToken(newUser);
+
     res.status(201).json({
-      user: { username },
+      user: { username, token },
     });
   } catch (error) {
     res
@@ -70,7 +79,9 @@ export const login = async (req, res) => {
         .json({ message: SERVER_ERORR_MESSAGE.INVALID_CREDENTIALS });
     }
 
-    res.status(200).json({ user: { username: user.username } });
+    const token = generateToken(user);
+
+    res.status(200).json({ user: { username: user.username, token } });
   } catch (error) {
     res
       .status(500)

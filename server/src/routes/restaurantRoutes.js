@@ -1,4 +1,5 @@
 import express from "express";
+import { protect } from "../middleware/authMiddleware.js";
 
 import {
   getAllRestaurants,
@@ -7,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllRestaurants);
-router.get("/:id", getRestaurantById);
+router.get("/", protect, getAllRestaurants);
+router.get("/:id", protect, getRestaurantById);
 
 export default router;

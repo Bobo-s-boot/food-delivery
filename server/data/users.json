@@ -28,5 +28,17 @@
     "id": 1775561972605,
     "username": "officedencripta@gmail",
     "password": "$2b$10$F6uFv/MGYJWJ9cs7xjvuweR9Yxunr6nxiq6HEbi/Nu.8OUx2E.qV6"
+  },
+  {
+    "id": 1776681194720,
+    "username": "top.dragon1999@gmail.com",
+    "provider": "google",
+    "providerId": "102985867625272326921",
+    "fullName": "Артем Гребенюк"
+  },
+  {
+    "id": 1776681927458,
+    "username": "artem.hrebeniuk@nure.ua",
+    "password": "$2b$10$ucsAU25mBx2fugkNVoOKqeIspHA0MSP8RUt6plhEfGX/kVZEHbbjS"
   }
 ]
