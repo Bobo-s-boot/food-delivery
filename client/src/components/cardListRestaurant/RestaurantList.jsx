@@ -7,6 +7,22 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
   const [restaurants, setRestaurants] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
+  const normalizeImage = (image, index) => {
+    if (typeof image !== "string" || image.trim() === "") {
+      return `/img/card-${(index % 8) + 1}.png`;
+    }
+
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image;
+    }
+
+    if (image.startsWith("/img/")) {
+      return image;
+    }
+
+    return `/img/card-${(index % 8) + 1}.png`;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -14,12 +30,13 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
         const formattedData = data.map((restaurant, index) => ({
           ...restaurant,
           id: restaurant.id || `rest-${index}`,
-          title: restaurant.name,
+          title: restaurant.name || restaurant.title || "Restaurant",
           badge:
             restaurant.badge ||
             (index % 2 === 0 ? "Free Delivery" : "20-30 min"),
-          image: restaurant.image || `/img/card-${(index % 4) + 1}.png`,
-          location: restaurant.location,
+          image: normalizeImage(restaurant.image, index),
+          location: restaurant.location || "Unknown location",
+          category: restaurant.category || "Category",
           rating: restaurant.rating || (4 + (index % 10) / 10).toFixed(1),
         }));
 

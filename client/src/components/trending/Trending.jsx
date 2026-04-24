@@ -27,15 +27,19 @@ export function Trending({
   const VISIBLE_CARDS = 4;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const safeCards = Array.isArray(cards) ? cards.filter(Boolean) : [];
+  const hasCards = safeCards.length > 0;
 
   const handleNext = () => {
+    if (!hasCards) return;
     setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % cards.length);
+    setCurrentIndex((prev) => (prev + 1) % safeCards.length);
   };
 
   const handlePrevious = () => {
+    if (!hasCards) return;
     setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + cards.length) % cards.length);
+    setCurrentIndex((prev) => (prev - 1 + safeCards.length) % safeCards.length);
   };
 
   const carouselGridVariants = {
@@ -57,8 +61,10 @@ export function Trending({
   };
 
   const visibleCards = [];
-  for (let i = 0; i < VISIBLE_CARDS; i++) {
-    visibleCards.push(cards[(currentIndex + i) % cards.length]);
+  if (hasCards) {
+    for (let i = 0; i < VISIBLE_CARDS; i++) {
+      visibleCards.push(safeCards[(currentIndex + i) % safeCards.length]);
+    }
   }
 
   return (
@@ -95,11 +101,11 @@ export function Trending({
         variants={carouselGridVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 gap-4 md:grid-cols-2 gap-6md:grid-cols-2 lg:grid-cols-4"
+        className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
       >
-        {visibleCards.map((card) => (
+        {visibleCards.map((card, index) => (
           <motion.div
-            key={card?.id}
+            key={card.id ? `${card.id}-${index}` : `trending-card-${index}`}
             className="rounded-2xl border-[#EDECF1] group relative flex min-h-0 flex-col"
             variants={lm.gridItem}
             transition={{ type: "spring", stiffness: 400, damping: 26 }}
@@ -111,8 +117,8 @@ export function Trending({
 
             <div className="relative w-full aspect-3/4 shrink-0 bg-[#EDECF1] overflow-hidden rounded-3xl">
               <img
-                src={card?.image}
-                alt={card?.title}
+                src={card.image}
+                alt={card.title}
                 className="h-full w-full object-cover transition-transform group-hover:scale-105 duration-300"
               />
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
@@ -121,23 +127,23 @@ export function Trending({
             <div className="absolute bottom-4 left-4 z-10 flex items-center justify-center shadow">
               <div className="flex flex-col col-1 items-start gap-1">
                 <h3 className="text-slate-100 font-semibold text-xl">
-                  {card?.title}
+                  {card.title}
                 </h3>
 
                 <p className="flex flex-row text-sm text-slate-200 gap-2">
-                  {card?.category} |
+                  {card.category} |
                   {ratingIcon ? (
                     <>
-                      <img src={ratingIcon} alt="Rating" /> {card?.rating}
+                      <img src={ratingIcon} alt="Rating" /> {card.rating}
                     </>
                   ) : (
-                    ` | ${card?.rating}`
+                    ` | ${card.rating}`
                   )}
                 </p>
 
                 <address className="flex flex-row text-slate-200 text-sm gap-2">
                   {locationIcon && <img src={locationIcon} alt="Location" />}
-                  {card?.location}
+                  {card.location}
                 </address>
               </div>
             </div>

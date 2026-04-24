@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { HeroBlock as HomeHero } from "../../components/heroBlock/HeroBlock";
 import { Highlights as HomeHighlights } from "../../components/highlights/Highlights";
@@ -17,11 +16,11 @@ export function Home() {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await axios.get(getRestaurants());
-
-        setRestaurants(response.data);
+        const data = await getRestaurants();
+        setRestaurants(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Ошибка сети:", error);
+        console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
+        setRestaurants([]);
       } finally {
         setLoading(false);
       }
@@ -82,12 +81,15 @@ export function Home() {
       buttonLabel: t("home.trending.buttonLabel"),
     },
 
-    cards: restaurants.map((card) => ({
+    cards: (Array.isArray(restaurants) ? restaurants : []).map((card, index) => ({
       ...card,
-      // Подставляем данные из нашей базы (как мы делали в прошлый раз)
-      title: card.name,
+      id: card.id || `home-rest-${index}`,
+      title: card.name || card.title || "Restaurant",
       badge: card.tags && card.tags.length > 0 ? card.tags[0] : "",
-      image: card.image || "",
+      image:
+        typeof card.image === "string" && card.image.startsWith("/img/")
+          ? card.image
+          : `/img/card-${(index % 8) + 1}.png`,
     })),
   };
 

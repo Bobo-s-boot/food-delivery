@@ -8,17 +8,14 @@ import searchIcon from "../../assets/search.svg";
 export function Catalog() {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState(
-    t("catalog.categories.all"),
-  );
+  const [activeCategory, setActiveCategory] = useState("All");
 
   const translatedCategories = CATEGORIES.map((cat) => ({
-    key: cat,
-    label: t(`catalog.categories.${cat.toLowerCase().replace(/\s+/g, "")}`),
+    key: cat.key,
+    label: t(`catalog.categories.${cat.translationKey}`),
   }));
 
-  const allCategory = { key: "All", label: t("catalog.categories.all") };
-  const categories = [allCategory, ...translatedCategories];
+  const categories = [...translatedCategories];
 
   return (
     <div className="w-full mx-auto px-4 md:px-8 pb-12 flex flex-col items-center font-['Inter'] bg-[#FFFFFF]">

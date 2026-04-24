@@ -51,81 +51,6 @@ const highlightCardsList = [
   },
 ];
 
-const restaurantItems = [
-  {
-    id: "1",
-    badge: "Free Delivery",
-    image: "/img/card-1.png",
-    title: "The Burger Joint",
-    category: "American • Fast Food",
-    rating: "4.8 (1.2k)",
-    location: "Downtown District",
-  },
-  {
-    id: "2",
-    badge: "20-30 min",
-    image: "/img/card-2.png",
-    title: "Kyoto Sushi & Wok",
-    category: "Japanese • Asian",
-    rating: "4.9 (950k)",
-    location: "Westside Boulevard",
-  },
-  {
-    id: "3",
-    badge: "15-20 min",
-    image: "/img/card-3.png",
-    title: "Fresh Poke Bowls",
-    category: "Healthy • Vegan",
-    rating: "4.7 (430)",
-    location: "Green Park Area",
-  },
-  {
-    id: "4",
-    badge: "-20% Today",
-    image: "/img/card-4.png",
-    title: "Luigi's Woodfire",
-    category: "Italian • Fast Pizza",
-    rating: "4.6 (2.1k)",
-    location: "Little Italy",
-  },
-  {
-    id: "5",
-    badge: "Fast Delivery",
-    image: "/img/card-5.png",
-    title: "Dragon's Fire Grill",
-    category: "Chinese • Asian",
-    rating: "4.7 (1.8k)",
-    location: "East Side Market",
-  },
-  {
-    id: "6",
-    badge: "15-25 min",
-    image: "/img/card-6.png",
-    title: "La Bella Pasta",
-    category: "Italian • Authentic",
-    rating: "4.9 (2.3k)",
-    location: "Historic District",
-  },
-  {
-    id: "7",
-    badge: "-15% Today",
-    image: "/img/card-7.png",
-    title: "Spice Route Curry",
-    category: "Indian • Vegetarian",
-    rating: "4.8 (890)",
-    location: "Cultural Quarter",
-  },
-  {
-    id: "8",
-    badge: "Free Delivery",
-    image: "/img/card-8.png",
-    title: "Seoul Kitchen",
-    category: "Korean • BBQ",
-    rating: "4.8 (1.5k)",
-    location: "Food Street",
-  },
-];
-
 export const heroData = {
   titleLines: ["Explore Remarkable Restaurants Today", "All In Once Place"],
   description: [
@@ -157,7 +82,7 @@ export const restaurantCards = {
   title: "Popular Restaurants",
   description:
     "Discover top-rated local favorites and trending hotspots handpicked for your next meal.",
-  restaurants: restaurantItems,
+  restaurants: [],
   isLoading: false,
   loadingMessage: "Loading restaurants...",
   emptyMessage: "No restaurants found.",
@@ -176,7 +101,7 @@ export const trendingSection = {
     },
   },
 
-  cards: restaurantItems,
+  cards: [],
 
   cardMeta: {
     ratingIcon,

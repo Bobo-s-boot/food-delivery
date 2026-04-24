@@ -53,12 +53,12 @@ export function Menu() {
           <div className="absolute inset-0 bg-linear-to-r from-black/40 to-transparent z-0" />
 
           <div className="absolute right-6 top-6 px-4 py-2 bg-white/25 backdrop-blur-[10px] rounded-[100px] z-10 border border-white/20 flex items-center justify-center text-white text-[12px] font-medium tracking-[0.02em]">
-            New Arrival
+            {t("menu.newArrival")}
           </div>
 
           <div className="absolute left-8.75 top-[50%] -translate-y-1/2 w-full max-w-103.25 flex flex-col items-start gap-3 z-10 text-left">
             <h3 className="text-white text-[24px] font-normal tracking-[-0.04em] leading-7.25 m-0">
-              Meet Our New Partner: Luigi's Woodfire
+              {t("menu.meetNewPartner")}
             </h3>
 
             <p className="text-white text-[16px] font-normal leading-[140%] opacity-100 w-67.25 m-0">
@@ -107,7 +107,7 @@ export function Menu() {
         <div className="relative flex items-center justify-center">
           <input
             type="text"
-            placeholder="What are you craving today?"
+            placeholder={t("menu.searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1 bg-transparent text-[18px] xl:text-[20px] tracking-[-0.04em] text-center text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] focus:outline-none"
