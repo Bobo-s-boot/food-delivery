@@ -22,7 +22,7 @@ a {
 }
 
 a:hover {
-  color: oklch(62.7% 0.194 149.214);
+  color: darken(#747bff, 10%);
 }
 
 body {
