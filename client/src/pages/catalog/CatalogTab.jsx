@@ -4,14 +4,14 @@ export function CatalogTab({ categories, activeCategory, onCategorySelect }) {
       {categories.map((category, index) => (
         <button
           key={index}
-          onClick={() => onCategorySelect(category)}
-          className={`px-4 py-2 text-[16px] tracking-[0.01em] leading-none font-medium font-sans rounded-lg border border-black transition-all duration-200 ${
-            activeCategory === category
+          onClick={() => onCategorySelect(category.key)}
+          className={`px-4 py-2 text-base tracking-[0.01em] leading-none font-medium font-sans rounded-lg border border-black transition-all duration-200 ${
+            activeCategory === category.key
               ? "bg-black text-white"
               : "bg-white text-black hover:bg-gray-100"
           }`}
         >
-          {category}
+          {category.label}
         </button>
       ))}
     </div>

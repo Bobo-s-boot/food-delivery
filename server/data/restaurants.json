@@ -1,67 +1,90 @@
 [
   {
     "id": 1,
-    "name": "Pizza Restaurant",
-    "description": "Restaurant specializing in pizza, offering a variety of toppings and styles.",
-    "category": "Pizza",
-    "rating": 4.5,
-    "price": 8.99,
-    "image": "./img/bella-margherita.jpg",
-    "location": "Downtown District"
+    "name": "The Burger Joint",
+    "title": "The Burger Joint",
+    "badge": "Free Delivery",
+    "image": "/img/card-1.png",
+    "category": "American - Fast Food",
+    "rating": "4.8 (1.2k)",
+    "location": "Downtown District",
+    "tags": ["Top Rated", "Fast Delivery"]
   },
-
   {
     "id": 2,
-    "name": "Stake Restaurant",
-    "description": "Restaurant specializing in steaks, offering a variety of cuts and cooking styles.",
-    "category": "Steak",
-    "rating": 4.7,
-    "price": 12.99,
-    "image": "./img/steakehouse.jpg",
-    "location": "Westside Boulevard"
+    "name": "Kyoto Sushi & Wok",
+    "title": "Kyoto Sushi & Wok",
+    "badge": "20-30 min",
+    "image": "/img/card-2.png",
+    "category": "Japanese - Asian",
+    "rating": "4.9 (950k)",
+    "location": "Westside Boulevard",
+    "tags": ["Top Rated", "Best Sellers"]
   },
-
   {
     "id": 3,
-    "name": "Sushi Restaurant",
-    "description": "Restaurant specializing in sushi, offering a variety of rolls and sashimi.",
-    "category": "Sushi",
-    "rating": 4.8,
-    "price": 15.99,
-    "image": "./img/china_ma.jpg",
-    "location": "Green Park Area"
+    "name": "Fresh Poke Bowls",
+    "title": "Fresh Poke Bowls",
+    "badge": "15-20 min",
+    "image": "/img/card-3.png",
+    "category": "Healthy - Vegan",
+    "rating": "4.7 (430)",
+    "location": "Green Park Area",
+    "tags": ["New Arrivals", "Offers"]
   },
-
   {
     "id": 4,
-    "name": "Burger Restaurant",
-    "description": "Restaurant specializing in burgers, offering a variety of styles and toppings.",
-    "category": "Burger",
-    "rating": 4.3,
-    "price": 9.99,
-    "image": "./img/burger.jpg",
-    "location": "Little Italy"
+    "name": "Luigi's Woodfire",
+    "title": "Luigi's Woodfire",
+    "badge": "-20% Today",
+    "image": "/img/card-4.png",
+    "category": "Italian - Fast Pizza",
+    "rating": "4.6 (2.1k)",
+    "location": "Little Italy",
+    "tags": ["Offers", "Limited Time"]
   },
-
   {
     "id": 5,
-    "name": "Pasta Restaurant",
-    "description": "Restaurant specializing in pasta, offering a variety of styles and sauces.",
-    "category": "Pasta",
-    "rating": 4.6,
-    "price": 11.99,
-    "image": "./img/pasta.jpg",
-    "location": "Old Town"
+    "name": "Dragon's Fire Grill",
+    "title": "Dragon's Fire Grill",
+    "badge": "Fast Delivery",
+    "image": "/img/card-5.png",
+    "category": "Chinese - Asian",
+    "rating": "4.7 (1.8k)",
+    "location": "East Side Market",
+    "tags": ["Fast Delivery", "Best Sellers"]
   },
-
   {
     "id": 6,
-    "name": "Salad Restaurant",
-    "description": "Restaurant specializing in salads, offering a variety of fresh ingredients and dressings.",
-    "category": "Salad",
-    "rating": 4.4,
-    "price": 7.99,
-    "image": "./img/salad.jpg",
-    "location": "City Center"
+    "name": "La Bella Pasta",
+    "title": "La Bella Pasta",
+    "badge": "15-25 min",
+    "image": "/img/card-6.png",
+    "category": "Italian - Authentic",
+    "rating": "4.9 (2.3k)",
+    "location": "Historic District",
+    "tags": ["Top Rated", "Best Sellers"]
+  },
+  {
+    "id": 7,
+    "name": "Spice Route Curry",
+    "title": "Spice Route Curry",
+    "badge": "-15% Today",
+    "image": "/img/card-7.png",
+    "category": "Indian - Vegetarian",
+    "rating": "4.8 (890)",
+    "location": "Cultural Quarter",
+    "tags": ["Offers", "Limited Time"]
+  },
+  {
+    "id": 8,
+    "name": "Seoul Kitchen",
+    "title": "Seoul Kitchen",
+    "badge": "Free Delivery",
+    "image": "/img/card-8.png",
+    "category": "Korean - BBQ",
+    "rating": "4.8 (1.5k)",
+    "location": "Food Street",
+    "tags": ["Top Rated", "Fast Delivery"]
   }
 ]

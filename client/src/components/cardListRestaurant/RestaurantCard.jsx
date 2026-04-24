@@ -1,5 +1,5 @@
 export function RestaurantCard({ data }) {
-  const { image, badge, title, category, rating, location } = data;
+  const { image, badge, name, category, rating, location } = data;
 
   return (
     <div className="rounded-3xl border-[#EDECF1] group relative w-full h-120">
@@ -10,7 +10,7 @@ export function RestaurantCard({ data }) {
       <div className="relative w-full h-full bg-[#EDECF1] overflow-hidden rounded-3xl">
         <img
           src={image}
-          alt={title}
+          alt={name}
           className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-300"
         />
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
@@ -18,7 +18,7 @@ export function RestaurantCard({ data }) {
 
       <div className="absolute bottom-6 left-6 z-10 flex items-center justify-center">
         <div className="flex flex-col items-start gap-1">
-          <h3 className="text-slate-100 font-semibold text-xl">{title}</h3>
+          <h3 className="text-slate-100 font-semibold text-xl">{name}</h3>
           <p className="flex flex-row text-sm text-slate-200 gap-2 items-center">
             {category} | <span className="text-[#FBBF24] text-xs">★</span>
             {rating}

@@ -1,0 +1,176 @@
+{
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "about": "About",
+    "menu": "Menu",
+    "restaurants": "Restaurants",
+    "specials": "Specials",
+    "delivery": "Delivery",
+    "aboutUs": "About Us",
+    "searchPlaceholder": "Search for dishes...",
+    "login": "Login",
+    "logout": "Logout"
+  },
+
+  "catalog": {
+    "freeDeliveryWeekend": "Free Delivery Weekend",
+    "stayInTreatYourself": "Stay in and treat yourself. Enjoy $0 delivery fees on all orders from top-rated restaurants this weekend.",
+    "orderNow": "Order Now",
+    "exploreLocalFlavors": "Explore Local Flavors",
+    "meetNewPartner": "Meet Our New Partner: Luigi's Woodfire",
+    "authenticPizza": "Authentic Neapolitan pizza is finally here. Taste the crisp, smoky crust baked in a real wood-fired oven.",
+    "exploreMenu": "Explore Menu",
+    "exploreLocalRestaurants": "Explore Local Restaurants",
+    "cravingPlaceholder": "What are you craving right now?",
+    "browseDescription": "Browse our carefully curated list of top-rated local spots. Whether you are looking for a quick bite, a healthy lunch, or a premium dinner, we deliver the best food in the city straight to your door, fast and fresh.",
+    "categories": {
+      "all": "All",
+      "topRated": "Top Rated",
+      "fastDelivery": "Fast Delivery",
+      "offers": "Offers",
+      "newArrivals": "New Arrivals",
+      "bestSellers": "Best Sellers",
+      "limitedTime": "Limited Time"
+    }
+  },
+
+  "home": {
+    "hero": {
+      "titleLine1": "Explore Remarkable Restaurants Today",
+      "titleLine2": "All In Once Place",
+      "descriptionLine1": "Join the ultimate dining experience - where taste meets convenience. Your next",
+      "descriptionLine2": "culinary adventure is just a click away.",
+      "actionLabel": "Start your own culinary journey",
+      "noteLine1": "Highly rated by local foodies.",
+      "noteLine2": "Get real results."
+    },
+
+    "highlights": {
+      "handpickedselection": {
+        "title": "Handpicked Selection",
+        "description": "We partner only with the best local kitchens and highly-rated chefs to guarantee a premium and delicious experience every time."
+      },
+
+      "real-timetracking": {
+        "title": "Real-Time Tracking",
+        "description": "Track your order from the kitchen straight to your door. Fast, seamless, and perfectly tailored to your cravings."
+      },
+
+      "24/7customersupport": {
+        "title": "24/7 Customer Support",
+        "description": "Hungry at 2 AM? We’ve got you covered. Our support team is always online to resolve any issues and ensure your food arrives hot."
+      },
+
+      "sectionData": {
+        "headingLine1": "Why Thousands of Foodies Choose",
+        "headingLine2": "Defilicious Every Single Day?",
+        "description": "From local hidden gems to top-rated restaurants, we make ordering your favorite meals fast, fresh, and hassle-free. Discover new flavors with seamless delivery and round-the-clock support."
+      },
+
+      "stats": {
+        "happyFoodies": "Happy Foodies",
+        "averageDeliveryTime": "Average Delivery Time",
+        "topRatedRestaurants": "Top-Rated Restaurants"
+      }
+    },
+
+    "trending": {
+      "heading": "Trending Now",
+      "description": "From cozy local cafes to premium dining spots, discover the best places to satisfy your cravings right now.",
+      "buttonLabel": "View all restaurants"
+    }
+  },
+
+  "about": {
+    "content": "# About the FoodExpress Project\n\nThis application is developed as part of **Laboratory Works** for the discipline \"Software Engineering\" (SE)[cite: 4].\n\n## Our Goal\nProviding convenient food search and ordering, satisfying the needs of modern users for speed and service quality[cite: 35, 108].\n\n## Development Team\nAccording to the requirements for the composition of a small project[cite: 15], we distributed roles as follows:\n* **Project Manager** — Denis (planning and coordination)[cite: 16].\n* **Developer** — Bohdan (direct software development in JS)[cite: 17, 75].\n* **UI/UX Designer** — formation of the graphic interface concept[cite: 18].\n\n## Our User Profile\nWe focus on active people:\n1. **Age**: 18-35 years[cite: 81].\n2. **Location**: Ukraine[cite: 83].\n3. **Goal**: quick satisfaction of nutritional needs[cite: 85].\n\n## Technology Stack and Methodology\n* **Language**: JavaScript (React + Vite)[cite: 75, 98].\n* **Infrastructure**: GitHub, Trello, Google Drive[cite: 100, 102].\n* **Development Methodology**: Incremental model[cite: 101]."
+  },
+
+  "bages": {
+    "freeDeliveryWeekend": "Free Delivery Weekend",
+    "stayInTreatYourself": "Stay in and treat yourself. Enjoy $0 delivery fees on all orders from top-rated restaurants this weekend.",
+    "orderNow": "Order Now",
+    "whatAreYouInTheMoodFor": "What are you in the mood for?",
+    "meetNewPartner": "Meet Our New Partner: Luigi's Woodfire",
+    "authenticPizza": "Authentic Neapolitan pizza is finally here. Taste the crisp, smoky crust baked in a real wood-fired oven.",
+    "exploreMenu": "Explore Menu",
+    "searchPlaceholder": "Search for dishes...",
+    "categories": {
+      "fastFood": "Fast Food",
+      "asianCuisine": "Asian Cuisine",
+      "european": "European",
+      "healthyDiet": "Healthy & Diet",
+      "comfortFood": "Comfort Food",
+      "bakerySweets": "Bakery & Sweets",
+      "beverages": "Beverages"
+    }
+  },
+
+  "auth": {
+    "welcomeBack": "Welcome back!",
+    "createAccount": "Create an account",
+    "username": "Username",
+    "password": "Password",
+    "fullName": "Full Name",
+    "retryPassword": "Retry Password",
+    "login": "Login",
+    "register": "Register",
+    "switchToRegister": "Don't have an account? Register",
+    "switchToLogin": "Already have an account? Login",
+    "passwordsDoNotMatch": "Passwords do not match!",
+    "loading": "Wait...",
+    "forgotPassword": "Forgot password? Click here",
+    "continueWithApple": "Continue with Apple",
+    "continueWithFacebook": "Continue with Facebook",
+    "continueWithGoogle": "Continue with Google",
+    "or": "or",
+    "switchMode": "Switch to {mode}"
+  },
+
+  "menu": {
+    "title": "Menu",
+    "description": "Choose your meal",
+    "freeDeliveryWeekend": "Free Delivery Weekend",
+    "stayInTreatYourself": "Stay in and treat yourself. Enjoy $0 delivery fees on all orders from top-rated restaurants this weekend.",
+    "orderNow": "Order Now",
+    "whatAreYouInTheMoodFor": "What are you in the mood for?",
+    "newArrival": "New Arrival",
+    "meetNewPartner": "Meet Our New Partner: Luigi's Woodfire",
+    "authenticPizza": "Authentic Neapolitan pizza is finally here. Taste the crisp, smoky crust baked in a real wood-fired oven.",
+    "exploreMenu": "Explore Menu",
+    "searchPlaceholder": "What are you craving today?",
+    "categories": {
+      "fastFood": "Fast Food",
+      "asianCuisine": "Asian Cuisine",
+      "european": "European",
+      "healthyDiet": "Healthy & Diet",
+      "comfortFood": "Comfort Food",
+      "bakerySweets": "Bakery & Sweets",
+      "beverages": "Beverages"
+    }
+  },
+
+  "footer": {
+    "dealsTitle": "Get exclusive deals & student discounts",
+    "dealsDescription": "Subscribe to our newsletter and get 15% off your next order.",
+    "emailPlaceholder": "Enter your email...",
+    "copyright": "© 2026 Defilicious. All rights reserved.",
+    "links": {
+      "restaurants": "Restaurants",
+      "menu": "Menu",
+      "specials": "Specials",
+      "delivery": "Delivery",
+      "helpSupport": "Help & Support",
+      "trackOrder": "Track Order",
+      "studentDiscounts": "Student Discounts",
+      "faq": "FAQ",
+      "addRestaurant": "Add your restaurant",
+      "becomeCourier": "Become a courier",
+      "partnerPortal": "Partner portal",
+      "aboutUs": "About Us",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service",
+      "cookiePolicy": "Cookie Policy"
+    }
+  }
+}

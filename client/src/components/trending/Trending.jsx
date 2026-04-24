@@ -8,11 +8,13 @@ export function Trending({
     heading: "",
     description: "",
     buttonLabel: "",
+
     pagination: {
       previousIcon: "",
       nextIcon: "",
     },
   },
+
   cards = [],
   cardMeta = {},
   className = "",
@@ -25,15 +27,19 @@ export function Trending({
   const VISIBLE_CARDS = 4;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const safeCards = Array.isArray(cards) ? cards.filter(Boolean) : [];
+  const hasCards = safeCards.length > 0;
 
   const handleNext = () => {
+    if (!hasCards) return;
     setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % cards.length);
+    setCurrentIndex((prev) => (prev + 1) % safeCards.length);
   };
 
   const handlePrevious = () => {
+    if (!hasCards) return;
     setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + cards.length) % cards.length);
+    setCurrentIndex((prev) => (prev - 1 + safeCards.length) % safeCards.length);
   };
 
   const carouselGridVariants = {
@@ -41,6 +47,7 @@ export function Trending({
       x: lm.reduced ? 0 : (d ?? 1) * 36,
       opacity: lm.reduced ? 1 : 0.9,
     }),
+
     visible: {
       x: 0,
       opacity: 1,
@@ -54,8 +61,10 @@ export function Trending({
   };
 
   const visibleCards = [];
-  for (let i = 0; i < VISIBLE_CARDS; i++) {
-    visibleCards.push(cards[(currentIndex + i) % cards.length]);
+  if (hasCards) {
+    for (let i = 0; i < VISIBLE_CARDS; i++) {
+      visibleCards.push(safeCards[(currentIndex + i) % safeCards.length]);
+    }
   }
 
   return (
@@ -76,6 +85,7 @@ export function Trending({
           >
             {heading}
           </motion.h2>
+
           <motion.p
             className="text-gray-500 text-right max-w-md"
             variants={lm.highlightsLeftChild}
@@ -91,24 +101,27 @@ export function Trending({
         variants={carouselGridVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 gap-4 md:grid-cols-2 gap-6md:grid-cols-2 lg:grid-cols-4"
+        className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
       >
-        {visibleCards.map((card) => (
-          <motion.div
-            key={card.id}
+        {visibleCards.map((card, index) => {
+          const cardName = card.name || card.title || "";
+
+          return (
+            <motion.div
+            key={card.id ? `${card.id}-${index}` : `trending-card-${index}`}
             className="rounded-2xl border-[#EDECF1] group relative flex min-h-0 flex-col"
             variants={lm.gridItem}
             transition={{ type: "spring", stiffness: 400, damping: 26 }}
             whileHover={lm.reduced ? undefined : { y: -6 }}
           >
             <span className="absolute top-4 right-4 z-10 w-24 h-8 bg-white/20 backdrop-blur-sm rounded-3xl flex items-center justify-center shadow-lg">
-              <p className="text-sm text-slate-100">{card.badge}</p>
+              <p className="text-sm text-slate-100">{card?.badge}</p>
             </span>
 
             <div className="relative w-full aspect-3/4 shrink-0 bg-[#EDECF1] overflow-hidden rounded-3xl">
               <img
                 src={card.image}
-                alt={card.title}
+                alt={cardName}
                 className="h-full w-full object-cover transition-transform group-hover:scale-105 duration-300"
               />
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
@@ -117,26 +130,29 @@ export function Trending({
             <div className="absolute bottom-4 left-4 z-10 flex items-center justify-center shadow">
               <div className="flex flex-col col-1 items-start gap-1">
                 <h3 className="text-slate-100 font-semibold text-xl">
-                  {card.title}
+                  {cardName}
                 </h3>
+
                 <p className="flex flex-row text-sm text-slate-200 gap-2">
-                  {card.category}
+                  {card.category} |
                   {ratingIcon ? (
                     <>
-                      | <img src={ratingIcon} alt="Rating" /> {card.rating}
+                      <img src={ratingIcon} alt="Rating" /> {card.rating}
                     </>
                   ) : (
                     ` | ${card.rating}`
                   )}
                 </p>
+
                 <address className="flex flex-row text-slate-200 text-sm gap-2">
                   {locationIcon && <img src={locationIcon} alt="Location" />}
                   {card.location}
                 </address>
               </div>
             </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </motion.div>
 
       <motion.div
