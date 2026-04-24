@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { loginUser, registerUser } from "../../api/authService";
 
 export function Auth({ onLogin }) {
@@ -20,6 +19,30 @@ export function Auth({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const userParam = params.get("user");
+    const errorParam = params.get("error");
+    if (userParam) {
+      try {
+        const user = JSON.parse(decodeURIComponent(userParam));
+        if (onLogin) onLogin(user);
+        localStorage.setItem("user", JSON.stringify(user));
+        navigate("/");
+      } catch (err) {
+        setError("Failed to parse user from OAuth callback.");
+      }
+    } else if (errorParam) {
+      setError(decodeURIComponent(errorParam));
+      navigate("/auth", { replace: true });
+    }
+  }, [location, navigate, onLogin]);
+
+  const handleSocialLogin = (provider) => {
+    window.location.href = `http://127.0.0.1:5000/api/auth/${provider}`;
+  };
 
   const toggleMode = () => {
     setIsAnimating(true);
@@ -209,6 +232,7 @@ export function Auth({ onLogin }) {
             <div className="w-full max-w-150.5 flex flex-wrap gap-y-4 gap-x-6 justify-center lg:justify-between px-2 lg:px-0">
               <button
                 type="button"
+                onClick={() => handleSocialLogin('google')}
                 className="w-[47%] lg:w-72.25 h-12 box-border rounded-[100px] border-2 border-white flex items-center justify-start px-3 lg:px-6 gap-2 hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
               >
                 <img
@@ -223,6 +247,7 @@ export function Auth({ onLogin }) {
 
               <button
                 type="button"
+                onClick={() => handleSocialLogin('apple')}
                 className="w-[47%] lg:w-72.25 h-12 box-border rounded-[100px] border-2 border-white flex items-center justify-start px-3 lg:px-6 gap-2 hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
               >
                 <img
@@ -237,6 +262,7 @@ export function Auth({ onLogin }) {
 
               <button
                 type="button"
+                onClick={() => handleSocialLogin('facebook')}
                 className="w-[47%] lg:w-72.25 h-12 box-border rounded-[100px] border-2 border-white flex items-center justify-start px-3 lg:px-6 gap-2 hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
               >
                 <img
@@ -251,6 +277,7 @@ export function Auth({ onLogin }) {
 
               <button
                 type="button"
+                onClick={() => handleSocialLogin('x')}
                 className="w-[47%] lg:w-72.25 h-12 box-border rounded-[100px] border-2 border-white flex items-center justify-start px-3 lg:px-6 gap-2 hover:bg-white/10 transition-colors whitespace-nowrap overflow-hidden"
               >
                 <img

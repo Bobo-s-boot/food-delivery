@@ -3,18 +3,21 @@ import { useTranslation } from "react-i18next";
 import { MENU_CATEGORIES, MOCK_MENU_ITEMS } from "./const.js";
 import { ProductCard } from "./ProductCard";
 import searchIcon from "../../assets/search.svg";
+import { useDebounce } from "../../hooks/useDebounce";
 
 export function Menu() {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState("fastFood");
   const [searchQuery, setSearchQuery] = useState("");
+  
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   const filteredItems = MOCK_MENU_ITEMS.filter((item) => {
     const matchesCategory =
       activeCategory === "All" || item.category === activeCategory;
     const matchesSearch = item.title
       .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+      .includes(debouncedSearchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
