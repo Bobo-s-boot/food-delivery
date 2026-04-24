@@ -3,10 +3,20 @@ import { RESTAURANTS_DATA_PATH as DATA_PATH } from "../config/config.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 import Restaurant from "../models/Restaurant.js";
 
+export const initializeRestaurantsFromFile = async () => {
+  const restaurantsCount = await Restaurant.countDocuments();
+  if (restaurantsCount > 0) {
+    return;
+  }
+
+  const data = await fs.readFile(DATA_PATH, "utf-8");
+  const restaurants = JSON.parse(data);
+  await Restaurant.insertMany(restaurants);
+};
+
 export const getAllRestaurants = async (req, res) => {
   try {
-    const restaurants = await Restaurant.find();
-    const data = await fs.readFile(DATA_PATH, "utf-8");
+    const restaurants = await Restaurant.find().sort({ id: 1 });
 
     res.status(200).json(restaurants);
   } catch (error) {
@@ -18,18 +28,13 @@ export const getAllRestaurants = async (req, res) => {
 
 export const getRestaurantById = async (req, res) => {
   try {
-    const data = await fs.readFile(DATA_PATH, "utf-8");
-    const restaurants = JSON.parse(data);
-
-    const restaurant = restaurants.find(
-      (r) => r.id === parseInt(req.params.id),
-    );
+    const restaurant = await Restaurant.findOne({ id: parseInt(req.params.id) });
 
     if (!restaurant) {
       return res.status(404).json({ message: SERVER_ERORR_MESSAGE.NOT_FOUND });
     }
 
-    res.status(201).json(restaurant);
+    res.status(200).json(restaurant);
   } catch (error) {
     res
       .status(500)
@@ -39,17 +44,9 @@ export const getRestaurantById = async (req, res) => {
 
 export const addRestaurant = async (req, res) => {
   try {
-    const data = await fs.readFile(DATA_PATH, "utf-8");
-    const restaurants = JSON.parse(data);
-
-    const newRestaurant = { id: Date.now(), ...req.body };
-    restaurants.push(newRestaurant);
-
-    await fs.writeFile(
-      DATA_PATH,
-      JSON.stringify(restaurants, null, 2),
-      "utf-8",
-    );
+    const lastRestaurant = await Restaurant.findOne().sort({ id: -1 });
+    const nextId = lastRestaurant ? lastRestaurant.id + 1 : 1;
+    const newRestaurant = await Restaurant.create({ id: nextId, ...req.body });
 
     res.status(201).json(newRestaurant);
   } catch (error) {

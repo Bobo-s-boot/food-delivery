@@ -30,7 +30,7 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
         const formattedData = data.map((restaurant, index) => ({
           ...restaurant,
           id: restaurant.id || `rest-${index}`,
-          title: restaurant.name || restaurant.title || "Restaurant",
+          name: restaurant.name || restaurant.title || "Restaurant",
           badge:
             restaurant.badge ||
             (index % 2 === 0 ? "Free Delivery" : "20-30 min"),
@@ -52,7 +52,7 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
   }, []);
 
   const filteredRestaurants = restaurants.filter((restaurant) => {
-    const matchesSearch = restaurant.title
+    const matchesSearch = restaurant.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
 

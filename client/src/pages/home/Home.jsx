@@ -84,7 +84,7 @@ export function Home() {
     cards: (Array.isArray(restaurants) ? restaurants : []).map((card, index) => ({
       ...card,
       id: card.id || `home-rest-${index}`,
-      title: card.name || card.title || "Restaurant",
+      name: card.name || card.title || "Restaurant",
       badge: card.tags && card.tags.length > 0 ? card.tags[0] : "",
       image:
         typeof card.image === "string" && card.image.startsWith("/img/")
