@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { loginUser, registerUser } from "../../api/authService";
 
 export function Auth({ onLogin }) {
+  const { t } = useTranslation();
   const [isLogin, setIsLogin] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -39,7 +41,7 @@ export function Auth({ onLogin }) {
     setError("");
 
     if (!isLogin && formData.password !== formData.retryPassword) {
-      setError("Passwords do not match!");
+      setError(t("auth.passwordsDoNotMatch"));
       setIsLoading(false);
       return;
     }
@@ -89,7 +91,7 @@ export function Auth({ onLogin }) {
           >
             <div className="w-full max-w-102.5">
               <h1 className="text-white text-[36px] lg:text-[48px] font-medium leading-[120%] tracking-[-0.02em] w-full text-left mb-6 lg:mb-8 whitespace-nowrap">
-                {isLogin ? "Welcome back!" : "Create an account"}
+                {isLogin ? t("auth.welcomeBack") : t("auth.createAccount")}
               </h1>
 
               {error && (
@@ -123,7 +125,7 @@ export function Auth({ onLogin }) {
                     value={formData.username}
                     onChange={handleChange}
                     required
-                    placeholder="Email"
+                    placeholder={t("auth.username")}
                     className="w-full h-full bg-[#EFEFF1] rounded-[100px] px-6 text-[16px] lg:text-[18px] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
                   />
                 </div>
@@ -135,7 +137,7 @@ export function Auth({ onLogin }) {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    placeholder="Password"
+                    placeholder={t("auth.password")}
                     className="w-full h-full bg-[#EFEFF1] rounded-[100px] px-6 text-[16px] lg:text-[18px] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
                   />
                   <button
@@ -173,7 +175,7 @@ export function Auth({ onLogin }) {
                       value={formData.retryPassword}
                       onChange={handleChange}
                       required
-                      placeholder="Retry password"
+                      placeholder={t("auth.retryPassword")}
                       className="w-full h-full bg-[#EFEFF1] rounded-[100px] px-6 text-[16px] lg:text-[18px] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] tracking-[-0.04em] focus:outline-none focus:ring-2 focus:ring-[#0D1A2D]"
                     />
                   </div>
@@ -185,7 +187,7 @@ export function Auth({ onLogin }) {
                       href="#"
                       className="text-white text-[12px] font-medium leading-[130%] tracking-[0.02em] underline! decoration-solid decoration-1 underline-offset-2 hover:text-gray-200 transition-colors"
                     >
-                      Forgot password? Click here
+                      {t("auth.forgotPassword")}
                     </a>
                   </div>
                 )}
@@ -195,7 +197,11 @@ export function Auth({ onLogin }) {
                   disabled={isLoading}
                   className="w-full h-14.25 mt-4 lg:mt-8 bg-[#0D1A2D] rounded-[100px] text-white text-[20px] lg:text-[24px] font-normal leading-7.25 tracking-[-0.04em] hover:bg-opacity-90 transition-all disabled:opacity-70 flex items-center justify-center"
                 >
-                  {isLoading ? "Wait..." : isLogin ? "Log In" : "Sign Up"}
+                  {isLoading
+                    ? t("auth.loading")
+                    : isLogin
+                      ? t("auth.login")
+                      : t("auth.register")}
                 </button>
               </form>
             </div>
@@ -225,7 +231,7 @@ export function Auth({ onLogin }) {
                   className="w-5 h-5 object-contain shrink-0"
                 />
                 <span className="text-white text-[14px] lg:text-[20px] font-normal leading-6 tracking-[-0.04em] overflow-hidden text-ellipsis">
-                  Continue with Apple
+                  {t("auth.continueWithApple")}
                 </span>
               </button>
 
@@ -259,14 +265,11 @@ export function Auth({ onLogin }) {
             </div>
 
             <div className="pb-4">
-              <p className="text-white text-[14px] lg:text-[16px] font-normal leading-[140%]">
-                {isLogin ? "New to Defilicious?" : "Already have an account?"}
-                <button
-                  onClick={toggleMode}
-                  className="underline! decoration-solid decoration-1 underline-offset-2 hover:text-gray-300 ml-1 font-medium"
-                >
-                  {isLogin ? "Sign Up" : "Log In"}
-                </button>
+              <p
+                className="text-white text-[14px] lg:text-[16px] font-normal leading-[140%] cursor-pointer hover:text-gray-300 transition-colors"
+                onClick={toggleMode}
+              >
+                {isLogin ? t("auth.switchToRegister") : t("auth.switchToLogin")}
               </p>
             </div>
           </div>

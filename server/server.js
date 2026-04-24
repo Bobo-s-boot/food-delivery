@@ -1,8 +1,11 @@
+import "dotenv/config";
 import cors from "cors";
 import express from "express";
+import mongoose from "mongoose";
 import { logger } from "./src/middleware/logger.js";
 import authRoutes from "./src/routes/authRoutes.js";
 import restaurantRoutes from "./src/routes/restaurantRoutes.js";
+import { connectDB } from "./db/connection.js";
 
 const app = express();
 const PORT = 5000;
@@ -14,6 +17,9 @@ app.use(logger);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/auth", authRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port http://localhost:${PORT}`);
+connectDB().then(() => {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Сервер запущен на порту http://localhost:${PORT}`);
+  });
 });

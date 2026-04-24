@@ -7,7 +7,8 @@
     "rating": 4.5,
     "price": 8.99,
     "image": "./img/bella-margherita.jpg",
-    "location": "Downtown District"
+    "location": "Downtown District",
+    "tags": ["Top Rated", "Offers"]
   },
 
   {
@@ -18,7 +19,8 @@
     "rating": 4.7,
     "price": 12.99,
     "image": "./img/steakehouse.jpg",
-    "location": "Westside Boulevard"
+    "location": "Westside Boulevard",
+    "tags": ["Top Rated", "Best Sellers"]
   },
 
   {
@@ -29,7 +31,8 @@
     "rating": 4.8,
     "price": 15.99,
     "image": "./img/china_ma.jpg",
-    "location": "Green Park Area"
+    "location": "Green Park Area",
+    "tags": ["Top Rated", "Best Sellers", "New Arrivals"]
   },
 
   {
@@ -40,7 +43,8 @@
     "rating": 4.3,
     "price": 9.99,
     "image": "./img/burger.jpg",
-    "location": "Little Italy"
+    "location": "Little Italy",
+    "tags": ["Offers"]
   },
 
   {
@@ -51,7 +55,8 @@
     "rating": 4.6,
     "price": 11.99,
     "image": "./img/pasta.jpg",
-    "location": "Old Town"
+    "location": "Old Town",
+    "tags": ["Top Rated", "Fast Delivery"]
   },
 
   {
@@ -62,6 +67,7 @@
     "rating": 4.4,
     "price": 7.99,
     "image": "./img/salad.jpg",
-    "location": "City Center"
+    "location": "City Center",
+    "tags": ["Offers", "Limited Time"]
   }
 ]
