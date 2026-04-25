@@ -19,9 +19,8 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "exrpess": "^0.0.1-security",
-    "mongoose": "^9.5.0"
+    "mongoose": "^9.5.0",
     "express-session": "^1.19.0",
-    "exrpess": "^0.0.1-security",
     "jsonwebtoken": "^9.0.3",
     "passport": "^0.7.0",
     "passport-apple": "^2.0.2",

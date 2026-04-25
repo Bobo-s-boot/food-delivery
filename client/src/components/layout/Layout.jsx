@@ -10,9 +10,10 @@ export function Layout({ children }) {
   const isHomePage = location.pathname === PATH_PAGE.HOME;
   const isCatalogPage = location.pathname === PATH_PAGE.CATALOG;
   const isMenuPage = location.pathname === PATH_PAGE.MENU;
+  const isAboutPage = location.pathname === PATH_PAGE.ABOUT;
 
   const shouldRemoveContainer =
-    isAuthPage || isHomePage || isCatalogPage || isMenuPage;
+    isAuthPage || isHomePage || isCatalogPage || isMenuPage || isAboutPage;
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center w-full">
@@ -26,7 +27,7 @@ export function Layout({ children }) {
         {children}
       </main>
 
-      {!isAuthPage && <Footer />}
+      <Footer />
     </div>
   );
 }

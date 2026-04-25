@@ -1,25 +1,70 @@
-export const aboutContent = `
-# Про проєкт FoodExpress
+export const audienceNeeds = [
+  "quickFind",
+  "trackOrder",
+  "paymentOptions",
+  "repeatOrder",
+  "ecoOptions",
+  "honestInfo",
+];
 
-Цей додаток розробляється в рамках **Лабораторних робіт** з дисципліни "Інженерія програмного забезпечення" (ІПЗ)[cite: 4].
+export const restaurantNeeds = [
+  "editMenu",
+  "stableWork",
+  "kitchenQueue",
+  "automation",
+  "salesAnalytics",
+  "peakHours",
+];
 
-## Наша мета
-Забезпечення зручного пошуку та замовлення їжі, задовольняючи потреби сучасних користувачів у швидкості та якості сервісу[cite: 35, 108].
+export const teamMembers = [
+  {
+    key: "denis",
+    image: "/img/Product Designer.png",
+  },
+  {
+    key: "bohdan",
+    image: "/img/Senior Developer.png",
+  },
+  {
+    key: "artem",
+    image: "/img/Developer.png",
+  },
+  {
+    key: "mykola",
+    image: "/img/Lead Engineer.png",
+  },
+];
 
-## Команда розробки
-Згідно з вимогами до складу невеликого проєкту[cite: 15], ми розподілили ролі таким чином:
-* **Project Manager** — Денис (планування та координація)[cite: 16].
-* **Developer** — Богдан (безпосередня розробка ПЗ на JS)[cite: 17, 75].
-* **UI/UX Designer** — формування концепту графічного інтерфейсу[cite: 18].
-
-## Профіль нашого користувача
-Ми орієнтуємося на активних людей:
-1. **Вік**: 18-35 років[cite: 81].
-2. **Локація**: Україна[cite: 83].
-3. **Мета**: швидке задоволення потреб у харчуванні[cite: 85].
-
-## Технологічний стек та методологія
-* **Мова**: JavaScript (React + Vite)[cite: 75, 98].
-* **Інфраструктура**: GitHub, Trello, Google Drive[cite: 100, 102].
-* **Методологія розробки**: Incremental model[cite: 101].
-`;
+export const techStack = [
+  {
+    key: "frontend",
+    items: [
+      "javascript",
+      "react",
+      "vite",
+      "reactRouter",
+      "tailwind",
+      "i18next",
+      "axios",
+      "motion",
+    ],
+  },
+  {
+    key: "backend",
+    items: [
+      "node",
+      "express",
+      "mongodb",
+      "jwt",
+      "bcrypt",
+      "passport",
+      "expressSession",
+      "cors",
+      "dotenv",
+    ],
+  },
+  {
+    key: "tools",
+    items: ["eslint", "npm", "git", "docker"],
+  },
+];
