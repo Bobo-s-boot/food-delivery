@@ -6,6 +6,7 @@ import { RestaurantList } from "../../components/cardListRestaurant/RestaurantLi
 import { PageHero } from "../../components/pageHero/PageHero";
 import { PromoFeature } from "../../components/promoFeature/PromoFeature";
 import { useDebounce } from "../../hooks/useDebounce";
+import searchIcon from "../../assets/search.svg";
 
 
 export function Catalog() {
