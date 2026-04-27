@@ -19,6 +19,7 @@
     "orderNow": "Order Now",
     "exploreLocalFlavors": "Explore Local Flavors",
     "meetNewPartner": "Meet Our New Partner: Luigi's Woodfire",
+    "newArrival": "New Arrival",
     "authenticPizza": "Authentic Neapolitan pizza is finally here. Taste the crisp, smoky crust baked in a real wood-fired oven.",
     "exploreMenu": "Explore Menu",
     "exploreLocalRestaurants": "Explore Local Restaurants",
@@ -83,7 +84,147 @@
   },
 
   "about": {
-    "content": "# About the FoodExpress Project\n\nThis application is developed as part of **Laboratory Works** for the discipline \"Software Engineering\" (SE)[cite: 4].\n\n## Our Goal\nProviding convenient food search and ordering, satisfying the needs of modern users for speed and service quality[cite: 35, 108].\n\n## Development Team\nAccording to the requirements for the composition of a small project[cite: 15], we distributed roles as follows:\n* **Project Manager** — Denis (planning and coordination)[cite: 16].\n* **Developer** — Bohdan (direct software development in JS)[cite: 17, 75].\n* **UI/UX Designer** — formation of the graphic interface concept[cite: 18].\n\n## Our User Profile\nWe focus on active people:\n1. **Age**: 18-35 years[cite: 81].\n2. **Location**: Ukraine[cite: 83].\n3. **Goal**: quick satisfaction of nutritional needs[cite: 85].\n\n## Technology Stack and Methodology\n* **Language**: JavaScript (React + Vite)[cite: 75, 98].\n* **Infrastructure**: GitHub, Trello, Google Drive[cite: 100, 102].\n* **Development Methodology**: Incremental model[cite: 101]."
+    "hero": {
+      "label": "About service",
+      "aside": "Defilicious helps customers order food quickly, while restaurants manage delivery, menus, and orders in one place.",
+      "title": "About Defilicious",
+      "lead": "Defilicious is a digital food ordering service that connects customers, restaurants, and delivery in one clear system.",
+      "description": "We are building more than a restaurant catalog. Defilicious makes ordering faster, more transparent, and more convenient: from choosing a dish to payment and real-time delivery tracking.",
+      "clientsTitle": "For customers",
+      "clientsText": "Fast dish selection, convenient payment, repeat favorite orders, and real-time delivery control.",
+      "restaurantsTitle": "For restaurants",
+      "restaurantsText": "Menu, stop-list, order, kitchen process, and sales analytics management."
+    },
+    "mission": {
+      "label": "OUR MISSION",
+      "title": "Our goal is to remove chaos from food ordering.",
+      "firstText": "<strong>Defilicious</strong> was created to make delivery clear for every participant: the customer sees what is happening with the order, the restaurant quickly manages the menu and kitchen, and the system helps avoid unnecessary mistakes.",
+      "secondText": "We want users to avoid wasting time on long choices, stop worrying about delivery status, and order food in the most convenient way. For businesses, this means less chaos in operations, faster menu updates, and transparent performance analytics."
+    },
+    "audience": {
+      "label": "Audience",
+      "title": "Who Defilicious is made for",
+      "intro": "Defilicious is created for two key audiences: people who want to order food quickly and without stress, and restaurants that need a convenient tool for managing orders, menus, and kitchen processes.",
+      "usersTitle": "Customer needs",
+      "restaurantsTitle": "Restaurant tasks",
+      "users": {
+        "items": {
+          "quickFind": "Find a dish quickly without browsing menus for too long",
+          "trackOrder": "See order status and courier movement",
+          "paymentOptions": "Choose a convenient payment method: card, Apple Pay, Google Pay, or cash",
+          "repeatOrder": "Repeat a favorite order in one click",
+          "ecoOptions": "Use eco-friendly options, such as refusing extra cutlery",
+          "honestInfo": "Get quality photos, dish ingredients, and honest information about the restaurant"
+        }
+      },
+      "restaurants": {
+        "items": {
+          "editMenu": "Quickly edit the menu and stop-list",
+          "stableWork": "Work reliably even during power or internet interruptions",
+          "kitchenQueue": "Manage the kitchen order queue",
+          "automation": "Automate part of operational processes",
+          "salesAnalytics": "See transparent analytics for sales, popular dishes, and real profit",
+          "peakHours": "Reduce chaos during peak working hours"
+        }
+      }
+    },
+    "team": {
+      "label": "Team",
+      "title": "Development team",
+      "members": {
+        "denis": {
+          "name": "Denis Korzhyk",
+          "role": "Product Designer | UI/UX Designer",
+          "summary": "Responsible for product logic, user experience, interface structure, and the visual system of Defilicious.",
+          "details": [
+            "Has 6 years of design experience and works at the intersection of UX/UI, business analysis, and product strategy. Specializes in creating clear user flows, optimizing funnels, automating processes, and improving business metrics through design."
+          ]
+        },
+        "bohdan": {
+          "name": "Bohdan Shevchenko",
+          "role": "Senior Developer",
+          "summary": "Responsible for technical implementation, project architecture, and stability of the core service features.",
+          "details": [
+            "Has 4 years of experience creating websites and web applications, worked with commercial products and large companies. Understands the full development cycle: from application structure to feature implementation, code optimization, and preparing the product for scaling."
+          ]
+        },
+        "artem": {
+          "name": "Artem Hrebeniuk",
+          "role": "Developer",
+          "summary": "Responsible for functional modules, application logic integration, and stable work of separate system parts.",
+          "details": [
+            "Has experience with different types of projects, from dynamic web services to systems connected with transactions, analytics, and high reliability requirements. Understands the importance of security, data accuracy, and stable interaction between product components."
+          ]
+        },
+        "mykola": {
+          "name": "Mykola Hitis",
+          "role": "Lead Engineer | QA Engineer",
+          "summary": "Responsible for engineering quality, testing, security, bug detection, and application stability.",
+          "details": [
+            "Focuses on checking the system in real and complex scenarios: incorrect user actions, data errors, authorization issues, access problems, or potential security risks."
+          ]
+        }
+      }
+    },
+    "stack": {
+      "label": "Stack",
+      "title": "Technology stack",
+      "description": "To build Defilicious, we use a modern JavaScript stack that helps us develop the interface quickly, build server logic, work with the database, and support project scalability.",
+      "groups": {
+        "frontend": {
+          "title": "Frontend",
+          "items": {
+            "javascript": "JavaScript",
+            "react": "React",
+            "vite": "Vite",
+            "reactRouter": "React Router",
+            "tailwind": "Tailwind CSS",
+            "i18next": "i18next / react-i18next",
+            "axios": "Axios",
+            "motion": "Motion"
+          }
+        },
+        "backend": {
+          "title": "Backend",
+          "items": {
+            "node": "Node.js",
+            "express": "Express",
+            "mongodb": "MongoDB / Mongoose",
+            "jwt": "JWT",
+            "bcrypt": "bcrypt / bcryptjs",
+            "passport": "Passport.js",
+            "expressSession": "express-session",
+            "cors": "CORS",
+            "dotenv": "dotenv"
+          }
+        },
+        "tools": {
+          "title": "Tools",
+          "items": {
+            "eslint": "ESLint",
+            "npm": "npm",
+            "git": "Git / GitHub",
+            "docker": "Docker"
+          }
+        }
+      }
+    },
+    "methodology": {
+      "label": "Methodology",
+      "buildTitle": "How we build",
+      "buildTextFirst": "Defilicious is developed incrementally. We build the product step by step: implement separate parts of the functionality, test them early, improve them, and then move on to the next stage.",
+      "buildTextSecond": "This approach helps us see results faster, reduce risks, and maintain quality while the product grows.",
+      "worksTitle": "Why it works",
+      "worksTextFirst": "The incremental model allows the team to work with more control and clarity. Instead of building everything at once, we focus on smaller parts, validate decisions early, and improve the product continuously.",
+      "worksTextSecond": "This makes development more flexible, helps us react faster to issues, and keeps the product stable as it evolves.",
+      "benefits": [
+        "Faster feedback",
+        "Better quality control",
+        "Lower development risks",
+        "Easier product scaling"
+      ],
+      "statement": "Build. Test. Improve. Repeat."
+    }
   },
 
   "bages": {
@@ -123,6 +264,9 @@
     "continueWithApple": "Continue with Apple",
     "continueWithFacebook": "Continue with Facebook",
     "continueWithGoogle": "Continue with Google",
+    "continueWithX": "Continue with X",
+    "oauthParseError": "Failed to parse user from OAuth callback.",
+    "genericError": "Something went wrong",
     "or": "or",
     "switchMode": "Switch to {mode}"
   },

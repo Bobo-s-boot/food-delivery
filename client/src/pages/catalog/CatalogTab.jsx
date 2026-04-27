@@ -1,9 +1,9 @@
 export function CatalogTab({ categories, activeCategory, onCategorySelect }) {
   return (
     <div className="flex flex-wrap items-center gap-3.25 w-full">
-      {categories.map((category, index) => (
+      {categories.map((category) => (
         <button
-          key={index}
+          key={category.key}
           onClick={() => onCategorySelect(category.key)}
           className={`px-4 py-2 text-base tracking-[0.01em] leading-none font-medium font-sans rounded-lg border border-black transition-all duration-200 ${
             activeCategory === category.key

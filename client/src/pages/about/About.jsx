@@ -1,12 +1,19 @@
-import ReactMarkdown from "react-markdown";
-import { useTranslation } from "react-i18next";
+import { AboutAudience } from "./sections/AboutAudience";
+import { AboutHero } from "./sections/AboutHero";
+import { AboutMethodology } from "./sections/AboutMethodology";
+import { AboutMission } from "./sections/AboutMission";
+import { AboutTeam } from "./sections/AboutTeam";
+import { AboutTechStack } from "./sections/AboutTechStack";
 
 export function About() {
-  const { t } = useTranslation();
-
   return (
-    <div className="bg-white p-8 rounded-xl shadow-md prose prose-green max-w-none text-left">
-      <ReactMarkdown>{t("about.content")}</ReactMarkdown>
+    <div className="w-full bg-[#FFFFFF] font-['Inter'] text-[#0D1A2D]">
+      <AboutHero />
+      <AboutMission />
+      <AboutAudience />
+      <AboutTeam />
+      <AboutTechStack />
+      <AboutMethodology />
     </div>
   );
 }

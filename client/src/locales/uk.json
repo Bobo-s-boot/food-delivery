@@ -19,6 +19,7 @@
     "orderNow": "Замовити",
     "exploreLocalFlavors": "Досліджуй місцеві смаки",
     "meetNewPartner": "Зустрінь нашого нового партнера: Luigi's Woodfire",
+    "newArrival": "Нове надходження",
     "authenticPizza": "Автентична неаполітанська піца нарешті тут. Спробуй хрустку, димну скоринку, запечену в справжній дров'яній печі.",
     "exploreMenu": "Mеню",
     "exploreLocalRestaurants": "Досліджуй місцеві ресторани",
@@ -84,7 +85,147 @@
   },
 
   "about": {
-    "content": "# Про проєкт FoodExpress\n\nЦей додаток розробляється в рамках **Лабораторних робіт** з дисципліни \"Інженерія програмного забезпечення\" (ІПЗ)[cite: 4].\n\n## Наша мета\nЗабезпечення зручного пошуку та замовлення їжі, задовольняючи потреби сучасних користувачів у швидкості та якості сервісу[cite: 35, 108].\n\n## Команда розробки\nЗгідно з вимогами до складу невеликого проєкту[cite: 15], ми розподілили ролі таким чином:\n* **Project Manager** — Денис (планування та координація)[cite: 16].\n* **Developer** — Богдан (безпосередня розробка ПЗ на JS)[cite: 17, 75].\n* **UI/UX Designer** — формування концепту графічного інтерфейсу[cite: 18].\n\n## Профіль нашого користувача\nМи орієнтуємося на активних людей:\n1. **Вік**: 18-35 років[cite: 81].\n2. **Локація**: Україна[cite: 83].\n3. **Мета**: швидке задоволення потреб у харчуванні[cite: 85].\n\n## Технологічний стек та методологія\n* **Мова**: JavaScript (React + Vite)[cite: 75, 98].\n* **Інфраструктура**: GitHub, Trello, Google Drive[cite: 100, 102].\n* **Методологія розробки**: Incremental model[cite: 101]."
+    "hero": {
+      "label": "Про сервіс",
+      "aside": "Defilicious допомагає клієнтам швидко замовляти їжу, а ресторанам - керувати доставкою, меню та замовленнями в одному місці.",
+      "title": "Про Defilicious",
+      "lead": "Defilicious - це цифровий сервіс для замовлення їжі, який поєднує клієнтів, ресторани та доставку в одній зрозумілій системі.",
+      "description": "Ми створюємо не просто каталог закладів, а продукт, який робить замовлення швидшим, прозорішим і зручнішим: від вибору страви до оплати та відстеження доставки в реальному часі.",
+      "clientsTitle": "Для клієнтів",
+      "clientsText": "Швидкий вибір страв, зручна оплата, повтор улюбленого замовлення та контроль доставки в реальному часі.",
+      "restaurantsTitle": "Для ресторанів",
+      "restaurantsText": "Керування меню, стоп-листом, замовленнями, кухонними процесами та аналітикою продажів."
+    },
+    "mission": {
+      "label": "OUR MISSION",
+      "title": "Наша мета - прибрати хаос із замовлення їжі.",
+      "firstText": "<strong>Defilicious</strong> створений для того, щоб процес доставки був зрозумілим для кожного учасника: клієнт бачить, що відбувається із замовленням, ресторан швидко керує меню та кухнею, а система допомагає уникати зайвих помилок.",
+      "secondText": "Ми хочемо, щоб користувач не витрачав час на довгий вибір, не хвилювався через статус доставки та міг замовити їжу зручним способом. Для бізнесу це означає менше хаосу в операційних процесах, швидке оновлення меню та прозору аналітику роботи."
+    },
+    "audience": {
+      "label": "Audience",
+      "title": "Для кого створений Defilicious",
+      "intro": "Defilicious створений для двох ключових аудиторій: людей, які хочуть швидко та без стресу замовляти їжу, і ресторанів, яким потрібен зручний інструмент для керування замовленнями, меню та кухонними процесами.",
+      "usersTitle": "Потреби користувачів",
+      "restaurantsTitle": "Задачі ресторанів",
+      "users": {
+        "items": {
+          "quickFind": "Швидко знаходити страву без довгого перегляду меню",
+          "trackOrder": "Бачити статус замовлення та рух кур'єра",
+          "paymentOptions": "Обирати зручний спосіб оплати: картка, Apple Pay, Google Pay або готівка",
+          "repeatOrder": "Повторювати улюблене замовлення в один клік",
+          "ecoOptions": "Користуватися екологічними опціями, наприклад відмовою від зайвих приборів",
+          "honestInfo": "Отримувати якісні фото, склад страв і чесну інформацію про заклад"
+        }
+      },
+      "restaurants": {
+        "items": {
+          "editMenu": "Швидко редагувати меню та стоп-лист",
+          "stableWork": "Працювати стабільно навіть при перебоях зі світлом або інтернетом",
+          "kitchenQueue": "Керувати чергою замовлень для кухні",
+          "automation": "Автоматизувати частину операційних процесів",
+          "salesAnalytics": "Бачити прозору аналітику продажів, популярних страв і реального прибутку",
+          "peakHours": "Зменшувати хаос у пікові години роботи"
+        }
+      }
+    },
+    "team": {
+      "label": "Team",
+      "title": "Команда розробки",
+      "members": {
+        "denis": {
+          "name": "Коржик Денис",
+          "role": "Product Designer | UI/UX Designer",
+          "summary": "Відповідає за продуктову логіку, користувацький досвід, структуру інтерфейсу та візуальну систему Defilicious.",
+          "details": [
+            "Має 6 років досвіду в дизайні та працює на перетині UX/UI, бізнес-аналізу й продуктової стратегії. Спеціалізується на створенні зрозумілих користувацьких сценаріїв, оптимізації воронок, автоматизації процесів і покращенні бізнес-показників через дизайн."
+          ]
+        },
+        "bohdan": {
+          "name": "Шевченко Богдан",
+          "role": "Senior Developer",
+          "summary": "Відповідає за технічну реалізацію, архітектуру проєкту та стабільність основних функцій сервісу.",
+          "details": [
+            "Має 4 роки досвіду у створенні сайтів і вебзастосунків, працював із комерційними продуктами та великими компаніями. Добре розуміє повний цикл розробки: від структури застосунку до реалізації функціоналу, оптимізації коду та підготовки продукту до масштабування."
+          ]
+        },
+        "artem": {
+          "name": "Гребенюк Артем",
+          "role": "Developer",
+          "summary": "Відповідає за розробку функціональних модулів, інтеграцію логіки застосунку та стабільну роботу окремих частин системи.",
+          "details": [
+            "Має досвід участі в різних типах проєктів - від динамічних вебсервісів до систем, пов'язаних із транзакціями, аналітикою та підвищеними вимогами до надійності. Добре розуміє важливість безпеки, точності даних і стабільної взаємодії між компонентами продукту."
+          ]
+        },
+        "mykola": {
+          "name": "Гітіс Микола",
+          "role": "Lead Engineer | QA Engineer",
+          "summary": "Відповідає за інженерну якість продукту, тестування, безпеку, пошук помилок і контроль стабільності роботи застосунку.",
+          "details": [
+            "Фокусується на перевірці системи в реальних і складних сценаріях: некоректні дії користувача, помилки в даних, проблеми з авторизацією, доступом або потенційні ризики для безпеки."
+          ]
+        }
+      }
+    },
+    "stack": {
+      "label": "Stack",
+      "title": "Технологічний стек",
+      "description": "Для реалізації Defilicious ми використовуємо сучасний JavaScript-стек, який дозволяє швидко розробляти інтерфейс, будувати серверну логіку, працювати з базою даних і підтримувати масштабованість проєкту.",
+      "groups": {
+        "frontend": {
+          "title": "Frontend",
+          "items": {
+            "javascript": "JavaScript",
+            "react": "React",
+            "vite": "Vite",
+            "reactRouter": "React Router",
+            "tailwind": "Tailwind CSS",
+            "i18next": "i18next / react-i18next",
+            "axios": "Axios",
+            "motion": "Motion"
+          }
+        },
+        "backend": {
+          "title": "Backend",
+          "items": {
+            "node": "Node.js",
+            "express": "Express",
+            "mongodb": "MongoDB / Mongoose",
+            "jwt": "JWT",
+            "bcrypt": "bcrypt / bcryptjs",
+            "passport": "Passport.js",
+            "expressSession": "express-session",
+            "cors": "CORS",
+            "dotenv": "dotenv"
+          }
+        },
+        "tools": {
+          "title": "Інструменти",
+          "items": {
+            "eslint": "ESLint",
+            "npm": "npm",
+            "git": "Git / GitHub",
+            "docker": "Docker"
+          }
+        }
+      }
+    },
+    "methodology": {
+      "label": "Methodology",
+      "buildTitle": "How we build",
+      "buildTextFirst": "Defilicious is developed incrementally. We build the product step by step: implement separate parts of the functionality, test them early, improve them, and then move on to the next stage.",
+      "buildTextSecond": "This approach helps us see results faster, reduce risks, and maintain quality while the product grows.",
+      "worksTitle": "Why it works",
+      "worksTextFirst": "The incremental model allows the team to work with more control and clarity. Instead of building everything at once, we focus on smaller parts, validate decisions early, and improve the product continuously.",
+      "worksTextSecond": "This makes development more flexible, helps us react faster to issues, and keeps the product stable as it evolves.",
+      "benefits": [
+        "Faster feedback",
+        "Better quality control",
+        "Lower development risks",
+        "Easier product scaling"
+      ],
+      "statement": "Build. Test. Improve. Repeat."
+    }
   },
 
   "bages": {
@@ -125,6 +266,9 @@
     "continueWithApple": "Продовжити з Apple",
     "continueWithFacebook": "Продовжити з Facebook",
     "continueWithGoogle": "Продовжити з Google",
+    "continueWithX": "Продовжити з X",
+    "oauthParseError": "Не вдалося обробити користувача з OAuth callback.",
+    "genericError": "Щось пішло не так",
     "or": "або",
     "switchMode": "Переключити на {mode}"
   },
