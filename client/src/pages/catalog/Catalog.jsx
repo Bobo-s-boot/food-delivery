@@ -4,6 +4,7 @@ import { CatalogTab } from "./CatalogTab";
 import { CATEGORIES } from "./const";
 import { RestaurantList } from "../../components/cardListRestaurant/RestaurantList";
 import { useDebounce } from "../../hooks/useDebounce";
+import searchIcon from "../../assets/search.svg";
 
 export function Catalog() {
   const { t } = useTranslation();

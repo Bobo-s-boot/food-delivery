@@ -1,7 +1,8 @@
 import axios from "axios";
 import { CLIENT_ERORR_MESSAGE } from "../errors/error";
 
-const API_URL = import.meta.env.VITE_API_URL + "/auth";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = `${API_BASE_URL}/auth`;
 
 export const registerUser = async (userData) => {
   try {
