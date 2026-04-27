@@ -7,6 +7,7 @@ import { heroData, highlightCards, trendingSection } from "./const";
 import { useEffect, useState } from "react";
 import { getRestaurants } from "../../api/restaurantService";
 import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
+import { Loading } from "../../components/loading/Loading";
 
 export function Home() {
   const { t } = useTranslation();
@@ -81,23 +82,33 @@ export function Home() {
       buttonLabel: t("home.trending.buttonLabel"),
     },
 
-    cards: (Array.isArray(restaurants) ? restaurants : []).map((card, index) => ({
-      ...card,
-      id: card.id || `home-rest-${index}`,
-      name: card.name || card.title || "Restaurant",
-      badge: card.tags && card.tags.length > 0 ? card.tags[0] : "",
-      image:
-        typeof card.image === "string" && card.image.startsWith("/img/")
-          ? card.image
-          : `/img/card-${(index % 8) + 1}.png`,
-    })),
+    cards: (Array.isArray(restaurants) ? restaurants : []).map(
+      (card, index) => ({
+        ...card,
+        id: card.id || `home-rest-${index}`,
+        name: card.name || card.title || "Restaurant",
+        badge: card.tags && card.tags.length > 0 ? card.tags[0] : "",
+        image:
+          typeof card.image === "string" && card.image.startsWith("/img/")
+            ? card.image
+            : `/img/card-${(index % 8) + 1}.png`,
+      }),
+    ),
   };
 
   return (
     <div className="w-full min-h-screen bg-gray-50 pb-20 space-y-8 flex flex-col gap-45">
       <HomeHero {...translatedHeroData} />
       <HomeHighlights {...translatedHighlightCards} />
-      <HomeTrending {...translatedTrendingSection} />
+
+      <>
+        {isLoading ? (
+          <Loading message={"restourants"} />
+        ) : (
+          <HomeTrending {...translatedTrendingSection} />
+        )}
+      </>
+
       {/* <HomeCardRestaurants {...restaurantCards} /> */}
       {/* <HomeRestaurants restaurants={restaurants} isLoading={isloading} /> вернуться и сделать подобный функционал на беке для  HomeCardRestaurants */}
     </div>

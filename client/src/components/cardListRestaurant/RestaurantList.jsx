@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { RestaurantCard } from "./RestaurantCard";
 import { getRestaurants } from "../../api/restaurantService";
 import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
+import { Loading } from "../loading/Loading";
 
 export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -62,11 +63,7 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
   });
 
   if (isLoading) {
-    return (
-      <div className="text-center text-gray-500 text-xl mt-20">
-        Download restaurants...
-      </div>
-    );
+    return <Loading message={"restaurants"} />;
   }
 
   if (filteredRestaurants.length === 0) {

@@ -101,8 +101,6 @@ export const trendingSection = {
     },
   },
 
-  cards: [],
-
   cardMeta: {
     ratingIcon,
     locationIcon,

@@ -7,8 +7,8 @@ export function AboutHero() {
 
   return (
     <section className="pb-24 pt-0">
-      <div className="relative min-h-160 overflow-hidden border-y border-[#DDE3EA] bg-[#F7F8FA] px-0 py-8 md:min-h-180 lg:min-h-200">
-        <div className="pointer-events-none absolute -left-6 -top-10 whitespace-nowrap text-[112px] font-semibold leading-[0.78] tracking-[-0.08em] text-[#0D1A2D] md:-left-10 md:-top-16 md:text-[220px] xl:-left-14 xl:-top-22 xl:text-[330px] 2xl:text-[390px]">
+      <div className="relative min-h-160 max-w-full overflow-hidden border-y border-[#DDE3EA] bg-[#F7F8FA] px-0 py-8 md:min-h-180 lg:min-h-200">
+        <div className=" flex justify-center items-center pt-7.5 pointer-events-none whitespace-nowrap text-[235px] font-semibold leading-[0.78] tracking-[-0.08em] text-[#0D1A2D]">
           DEFILICIOUS
         </div>
 
@@ -61,7 +61,7 @@ export function AboutHero() {
             <div className="relative h-40 overflow-hidden rounded-4xl bg-[#0D1A2D] md:h-52">
               <img
                 src="/img/backgroundImage.png"
-                alt=""
+                alt="backgroundImage"
                 className="h-full w-full object-cover opacity-80"
               />
             </div>

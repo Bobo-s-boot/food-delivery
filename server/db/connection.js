@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 import dns from "node:dns";
+import { SERVER_ERORR_MESSAGE } from "../src/errors/erorr.js";
 
 export const connectDB = async () => {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);
   const mongoUri = process.env.MONGO_URI;
 
   if (!mongoUri) {
-    throw new Error("MONGO_URI is not set");
+    throw new Error(SERVER_ERORR_MESSAGE.DB_URI_ERROR);
   }
 
   try {
@@ -16,7 +17,7 @@ export const connectDB = async () => {
     console.log("✅ Успешно подключились к MongoDB");
     return mongoose.connection;
   } catch (error) {
-    console.error("❌ Ошибка подключения к MongoDB:", error.message);
+    console.error(SERVER_ERORR_MESSAGE.DB_CONNECTION_ERROR, error.message);
     throw error;
   }
 };

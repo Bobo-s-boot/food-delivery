@@ -6,17 +6,20 @@ import passport from "./src/config/passport.js";
 import { logger } from "./src/middleware/logger.js";
 import authRoutes from "./src/routes/authRoutes.js";
 import restaurantRoutes from "./src/routes/restaurantRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
 import { connectDB } from "./db/connection.js";
 import { initializeRestaurantsFromFile } from "./src/controllers/restaurantController.js";
-
+import { SERVER_ERORR_MESSAGE } from "./src/errors/erorr.js";
 
 const app = express();
 
-// Need credentials for session cookies and OAuth callbacks to work cleanly, but simple cors is OK if redirecting.
-app.use(cors({
-  origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 app.use(logger);
 
@@ -25,8 +28,8 @@ app.use(
     secret: process.env.SESSION_SECRET || "fallback_secret_key",
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }
-  })
+    cookie: { secure: false },
+  }),
 );
 
 app.use(passport.initialize());
@@ -34,6 +37,7 @@ app.use(passport.session());
 
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 const startServer = async () => {
   try {
@@ -44,7 +48,7 @@ const startServer = async () => {
       console.log(`🚀 Сервер запущен на порту http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.error("❌ Не удалось запустить сервер:", error.message);
+    console.error(error.message || SERVER_ERORR_MESSAGE.DB_CONNECTION_ERROR);
     process.exit(1);
   }
 };

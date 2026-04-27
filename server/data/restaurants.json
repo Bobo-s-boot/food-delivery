@@ -10,6 +10,7 @@
     "location": "Downtown District",
     "tags": ["Top Rated", "Fast Delivery"]
   },
+
   {
     "id": 2,
     "name": "Kyoto Sushi & Wok",
@@ -21,6 +22,7 @@
     "location": "Westside Boulevard",
     "tags": ["Top Rated", "Best Sellers"]
   },
+
   {
     "id": 3,
     "name": "Fresh Poke Bowls",
@@ -32,6 +34,7 @@
     "location": "Green Park Area",
     "tags": ["New Arrivals", "Offers"]
   },
+
   {
     "id": 4,
     "name": "Luigi's Woodfire",
@@ -43,6 +46,7 @@
     "location": "Little Italy",
     "tags": ["Offers", "Limited Time"]
   },
+
   {
     "id": 5,
     "name": "Dragon's Fire Grill",
@@ -54,6 +58,7 @@
     "location": "East Side Market",
     "tags": ["Fast Delivery", "Best Sellers"]
   },
+
   {
     "id": 6,
     "name": "La Bella Pasta",
@@ -65,6 +70,7 @@
     "location": "Historic District",
     "tags": ["Top Rated", "Best Sellers"]
   },
+
   {
     "id": 7,
     "name": "Spice Route Curry",
@@ -76,6 +82,7 @@
     "location": "Cultural Quarter",
     "tags": ["Offers", "Limited Time"]
   },
+  
   {
     "id": 8,
     "name": "Seoul Kitchen",
