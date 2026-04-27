@@ -6,9 +6,9 @@ import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 
 const generateToken = (user) => {
   return jwt.sign(
-    { id: user.id, username: user.username },
+    { id: user.id, username: user.username, role: user.role },
     process.env.SESSION_SECRET || "super_secret_jwt_key",
-    { expiresIn: "30d" }
+    { expiresIn: "30d" },
   );
 };
 

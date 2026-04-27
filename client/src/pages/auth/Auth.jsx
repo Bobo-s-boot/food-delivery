@@ -24,6 +24,7 @@ export function Auth({ onLogin }) {
     const params = new URLSearchParams(location.search);
     const userParam = params.get("user");
     const errorParam = params.get("error");
+
     if (userParam) {
       try {
         const user = JSON.parse(decodeURIComponent(userParam));
@@ -158,7 +159,6 @@ export function Auth({ onLogin }) {
           </div>
         </div>
       </div>
-
     </div>
   );
 }

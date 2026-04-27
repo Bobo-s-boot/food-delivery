@@ -95,12 +95,14 @@
       "restaurantsTitle": "For restaurants",
       "restaurantsText": "Menu, stop-list, order, kitchen process, and sales analytics management."
     },
+
     "mission": {
       "label": "OUR MISSION",
       "title": "Our goal is to remove chaos from food ordering.",
       "firstText": "<strong>Defilicious</strong> was created to make delivery clear for every participant: the customer sees what is happening with the order, the restaurant quickly manages the menu and kitchen, and the system helps avoid unnecessary mistakes.",
       "secondText": "We want users to avoid wasting time on long choices, stop worrying about delivery status, and order food in the most convenient way. For businesses, this means less chaos in operations, faster menu updates, and transparent performance analytics."
     },
+
     "audience": {
       "label": "Audience",
       "title": "Who Defilicious is made for",

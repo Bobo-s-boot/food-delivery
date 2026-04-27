@@ -1,11 +1,11 @@
 import { RestaurantList } from "../cardListRestaurant/RestaurantList";
+import { Loading } from "../loading/Loading";
 
 export function Cards({
   title = "",
   description = "",
   restaurants = [],
   isLoading = false,
-  loadingMessage = "Loading restaurants...",
   emptyMessage = "",
   className = "",
 }) {
@@ -17,7 +17,7 @@ export function Cards({
       </div>
 
       {isLoading ? (
-        <p className="text-gray-500">{loadingMessage}</p>
+        <Loading message={"restaurants"} />
       ) : restaurants.length > 0 ? (
         <RestaurantList items={restaurants} />
       ) : (
