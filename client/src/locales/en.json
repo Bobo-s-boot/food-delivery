@@ -296,6 +296,217 @@
     }
   },
 
+  "specials": {
+    "hero": {
+      "imageAlt": "Special food deals",
+      "badge": "Weekend Specials",
+      "title": "Today's best food deals in one place",
+      "description": "Discover limited-time offers, free delivery, student discounts and exclusive restaurant deals near you.",
+      "button": "Explore deals"
+    },
+    "filtersTitle": "Find the right offer",
+    "filtersDescription": "Browse delivery promos, restaurant discounts and meal bundles designed for busy days.",
+    "filters": {
+      "all": "All",
+      "freeDelivery": "Free Delivery",
+      "studentDeals": "Student Deals",
+      "lunchCombos": "Lunch Combos",
+      "familySets": "Family Sets",
+      "newRestaurants": "New Restaurants",
+      "limitedTime": "Limited Time",
+      "bestValue": "Best Value"
+    },
+    "featured": {
+      "imageAlt": "Free delivery weekend",
+      "badge": "Limited Time",
+      "title": "Free Delivery Weekend",
+      "description": "Order from selected restaurants this weekend and enjoy delivery with no extra fees.",
+      "conditions": "Valid until Sunday - Selected restaurants only",
+      "button": "Order now"
+    },
+    "student": {
+      "label": "Student deals",
+      "title": "Student deals made for busy days",
+      "description": "Get exclusive discounts on selected meals, lunch combos and delivery offers with your student account.",
+      "button": "Browse student deals"
+    },
+    "deals": {
+      "burgers": {
+        "title": "Free Delivery on Burgers",
+        "description": "No delivery fee on all burger orders over $15.",
+        "category": "Free Delivery",
+        "restaurant": "The Burger Joint"
+      },
+      "sushi": {
+        "title": "20% Off Sushi Sets",
+        "description": "Save on selected sushi sets, rolls and combo boxes today.",
+        "category": "Limited Time",
+        "restaurant": "Kyoto Sushi & Wok"
+      },
+      "student": {
+        "title": "Student Lunch Combo",
+        "description": "Healthy bowl, drink and dessert at a special student price.",
+        "category": "Student Deal",
+        "restaurant": "Green Bowl Oasis"
+      },
+      "pizza": {
+        "title": "Pizza Night Special",
+        "description": "Buy one wood-fired pizza and get the second one 50% off.",
+        "category": "Limited Time",
+        "restaurant": "Luigi's Woodfire"
+      },
+      "family": {
+        "title": "Family Dinner Set",
+        "description": "A full dinner set for 3-4 people with curry, rice, naan and drinks.",
+        "category": "Family Sets",
+        "restaurant": "Tikka Masala House"
+      },
+      "sweet": {
+        "title": "Sweet Weekend Box",
+        "description": "Fresh cookies, tiramisu and pastries in one weekend dessert box.",
+        "category": "Best Value",
+        "restaurant": "Bakery & Sweets"
+      }
+    },
+    "stepsTitle": "How specials work",
+    "steps": {
+      "choose": {
+        "title": "Choose a deal",
+        "text": "Pick from limited-time offers, free delivery options or restaurant discounts."
+      },
+      "cart": {
+        "title": "Add to cart",
+        "text": "The discount is applied automatically or with a promo code."
+      },
+      "enjoy": {
+        "title": "Enjoy your order",
+        "text": "Track your delivery and get your food fresh and on time."
+      }
+    }
+  },
+
+  "delivery": {
+    "hero": {
+      "imageAlt": "Food delivery",
+      "badge": "Delivery",
+      "title": "Fast delivery with full control",
+      "description": "Track your order from the restaurant kitchen to your door with clear statuses, estimated time and delivery updates.",
+      "primaryButton": "Track order",
+      "secondaryButton": "How it works"
+    },
+    "stats": {
+      "averageTime": "Average delivery time",
+      "liveTrackingValue": "Live tracking",
+      "liveTrackingLabel": "Real-time order updates",
+      "paymentValue": "Flexible payment",
+      "paymentLabel": "Card, Apple Pay, Google Pay or cash"
+    },
+    "timeline": {
+      "label": "Order status",
+      "title": "How delivery works",
+      "description": "Every step has a clear status, so customers know where the order is and restaurants can prepare without rush."
+    },
+    "steps": {
+      "orderPlaced": {
+        "title": "Order placed",
+        "text": "Choose your dishes, confirm your order and select a payment method."
+      },
+      "restaurantConfirms": {
+        "title": "Restaurant confirms",
+        "text": "The restaurant accepts the order and starts preparing your food."
+      },
+      "preparing": {
+        "title": "Preparing",
+        "text": "The kitchen prepares your meal and updates the order status."
+      },
+      "courierPickup": {
+        "title": "Courier pickup",
+        "text": "A courier picks up the order when the food is almost ready."
+      },
+      "delivered": {
+        "title": "Delivered",
+        "text": "Your order arrives fresh, warm and ready to enjoy."
+      }
+    },
+    "optionsTitle": "Choose the delivery mode that fits your day",
+    "optionsDescription": "From everyday delivery to pickup, Defilicious keeps timing and fees clear before checkout.",
+    "options": {
+      "standard": {
+        "title": "Standard Delivery",
+        "text": "Everyday delivery from local restaurants.",
+        "meta": "25-40 min"
+      },
+      "priority": {
+        "title": "Priority Delivery",
+        "text": "Faster delivery from selected restaurants.",
+        "meta": "15-25 min"
+      },
+      "scheduled": {
+        "title": "Scheduled Delivery",
+        "text": "Choose a delivery time in advance.",
+        "meta": "Selected restaurants"
+      },
+      "pickup": {
+        "title": "Pickup",
+        "text": "Order online and pick up yourself.",
+        "meta": "No delivery fee"
+      }
+    },
+    "zonesTitle": "Delivery zones and fees",
+    "zones": {
+      "downtown": {
+        "area": "Downtown District",
+        "time": "15-25 min",
+        "fee": "From $1.99"
+      },
+      "greenPark": {
+        "area": "Green Park Area",
+        "time": "20-35 min",
+        "fee": "From $2.49"
+      },
+      "westside": {
+        "area": "Westside Boulevard",
+        "time": "25-40 min",
+        "fee": "From $2.99"
+      },
+      "littleItaly": {
+        "area": "Little Italy",
+        "time": "20-30 min",
+        "fee": "From $1.99"
+      }
+    },
+    "restaurantLogic": {
+      "imageAlt": "Restaurant operations",
+      "label": "Restaurant side",
+      "title": "Built for restaurants too",
+      "description": "Defilicious helps restaurants avoid delivery chaos. Couriers are requested when the order is almost ready, so food does not wait too long and arrives fresher.",
+      "items": {
+        "kitchen": "Kitchen status updates",
+        "pickup": "Courier pickup timing",
+        "queue": "Clear order queue"
+      }
+    },
+    "faqTitle": "Delivery FAQ",
+    "faq": {
+      "track": {
+        "question": "How can I track my order?",
+        "answer": "You can track your order status in real time after checkout."
+      },
+      "cash": {
+        "question": "Can I pay with cash?",
+        "answer": "Yes. Defilicious supports card payments, Apple Pay, Google Pay and cash."
+      },
+      "delayed": {
+        "question": "What happens if the restaurant is delayed?",
+        "answer": "The estimated delivery time updates automatically, so you always see the latest status."
+      },
+      "schedule": {
+        "question": "Can I schedule delivery?",
+        "answer": "Yes, selected restaurants support scheduled delivery."
+      }
+    }
+  },
+
   "footer": {
     "dealsTitle": "Get exclusive deals & student discounts",
     "dealsDescription": "Subscribe to our newsletter and get 15% off your next order.",
