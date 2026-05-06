@@ -3,5 +3,8 @@ export const PATH_PAGE = {
   AUTH: "/auth",
   CATALOG: "/catalog",
   MENU: "/menu",
+  SPECIALS: "/specials",
+  DELIVERY: "/delivery",
+  ADMIN: "/admin",
   ABOUT: "/about",
 };
