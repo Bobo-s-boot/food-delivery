@@ -15,6 +15,7 @@ export function RevenueBreakdown({ data }) {
               <span className="text-[#5E6A7A]">{item.label}</span>
               <span className="font-medium">{item.value}%</span>
             </div>
+            
             <div className="h-3 overflow-hidden rounded-full bg-[#E8EDF4]">
               <motion.div
                 className="h-full rounded-full bg-[#0D1A2D]"
