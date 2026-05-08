@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // Чтобы достать ID ресторана из URL
 import { getDishesByRestaurant } from "../../api/dishService";
+import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
 
 export function Restaurant() {
   const { id } = useParams(); // Получаем ID ресторана из адресной строки
@@ -15,7 +16,7 @@ export function Restaurant() {
         const menuData = await getDishesByRestaurant(id);
         setDishes(menuData);
       } catch (error) {
-        console.error("Не удалось загрузить меню", error);
+        console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH_MENU, error);
       } finally {
         setIsLoading(false);
       }

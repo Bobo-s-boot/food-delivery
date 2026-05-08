@@ -37,7 +37,7 @@ export const isAdmin = (req, res, next) => {
     next();
   } else {
     res.status(403).json({
-      message: "Доступ запрещен. Требуются права администратора.",
+      message: SERVER_ERORR_MESSAGE.ADMIN_ACCESS_REQUIRED,
     });
   }
 };
