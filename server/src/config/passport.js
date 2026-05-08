@@ -3,41 +3,34 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
 import AppleStrategy from "passport-apple";
 import TwitterStrategy from "@superfaceai/passport-twitter-oauth2";
-import fs from "fs/promises";
-import { USERS_DATA_PATH } from "./config.js";
+import User from "../models/User.js";
 
 // Helper function to find or create user
 const findOrCreateUser = async (provider, profile, done) => {
   try {
-    const data = await fs.readFile(USERS_DATA_PATH, "utf-8");
-    const users = JSON.parse(data);
-
-    // Look for user by provider ID
-    let user = users.find((u) => u.provider === provider && u.providerId === profile.id);
+    let user = await User.findOne({ provider, providerId: profile.id });
 
     if (!user) {
-      // Look for user by email if available to link accounts, or just create new
       const email = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : null;
       if (email) {
-        user = users.find((u) => u.username === email);
+        user = await User.findOne({ username: email });
       }
 
       if (!user) {
         const username = email || `${provider}_user_${profile.id}`;
-        user = {
+        user = await User.create({
           id: Date.now(),
-          username: username,
-          provider: provider,
+          username,
+          provider,
           providerId: profile.id,
-          fullName: profile.displayName || profile.username || username
-        };
-        users.push(user);
-        await fs.writeFile(USERS_DATA_PATH, JSON.stringify(users, null, 2));
+          fullName: profile.displayName || profile.username || username,
+          role: "user",
+          password: null,
+        });
       } else {
-        // Link provider info to existing user
         user.provider = provider;
         user.providerId = profile.id;
-        await fs.writeFile(USERS_DATA_PATH, JSON.stringify(users, null, 2));
+        await user.save();
       }
     }
     return done(null, user);

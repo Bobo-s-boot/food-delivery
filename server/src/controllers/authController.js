@@ -1,8 +1,7 @@
 import bcrypt from "bcryptjs";
-import fs from "fs/promises";
 import jwt from "jsonwebtoken";
-import { USERS_DATA_PATH as DATA_PATH } from "../config/config.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
+import User from "../models/User.js";
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -22,10 +21,8 @@ export const register = async (req, res) => {
         .json({ message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY });
     }
 
-    const data = await fs.readFile(DATA_PATH, "utf-8");
-    const users = JSON.parse(data);
-
-    if (users.find((user) => user.username === username)) {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
       return res
         .status(400)
         .json({ message: SERVER_ERORR_MESSAGE.USERER_ALREADY_EXISTS });
@@ -34,9 +31,14 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = { id: Date.now(), username, password: hashedPassword };
-    users.push(newUser);
-    await fs.writeFile(DATA_PATH, JSON.stringify(users, null, 2));
+    const newUser = await User.create({
+      id: Date.now(),
+      username,
+      password: hashedPassword,
+      role: "user",
+      provider: "local",
+      fullName: username,
+    });
 
     const token = generateToken(newUser);
 
@@ -60,10 +62,7 @@ export const login = async (req, res) => {
         .json({ message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY });
     }
 
-    const data = await fs.readFile(DATA_PATH, "utf-8");
-    const users = JSON.parse(data);
-
-    const user = users.find((user) => user.username === username);
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res
@@ -71,7 +70,9 @@ export const login = async (req, res) => {
         .json({ message: SERVER_ERORR_MESSAGE.INVALID_CREDENTIALS });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = user.password
+      ? await bcrypt.compare(password, user.password)
+      : false;
 
     if (!isPasswordValid) {
       return res

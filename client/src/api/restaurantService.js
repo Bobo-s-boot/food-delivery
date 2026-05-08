@@ -20,3 +20,24 @@ export const getRestaurants = async () => {
     return [];
   }
 };
+
+export const searchRestaurants = async (query, limit = 5) => {
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const config = {
+      headers: {
+        Authorization: user?.token ? `Bearer ${user.token}` : "",
+      },
+      params: {
+        q: query,
+        limit,
+      },
+    };
+
+    const response = await axios.get(API_URL, config);
+    return response.data;
+  } catch (error) {
+    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
+    return [];
+  }
+};

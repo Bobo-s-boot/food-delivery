@@ -2,10 +2,13 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    id: { type: Number, require: true },
-    name: { type: String, require: true },
-    email: { type: String, require: true },
-    password: { type: String, require: true },
+    id: { type: Number, required: true, unique: true, index: true },
+    username: { type: String, required: true, unique: true, trim: true },
+    password: { type: String, default: null },
+    role: { type: String, default: "user" },
+    fullName: { type: String, default: "" },
+    provider: { type: String, default: "local" },
+    providerId: { type: String, default: null },
   },
 
   {

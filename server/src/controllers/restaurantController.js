@@ -16,7 +16,28 @@ export const initializeRestaurantsFromFile = async () => {
 
 export const getAllRestaurants = async (req, res) => {
   try {
-    const restaurants = await Restaurant.find().sort({ id: 1 });
+    const { q, limit } = req.query;
+    const parsedLimit = Number(limit);
+    const search = typeof q === "string" ? q.trim() : "";
+    const hasSearch = Boolean(search);
+    const filter = hasSearch
+      ? {
+          $or: [
+            { name: { $regex: search, $options: "i" } },
+            { title: { $regex: search, $options: "i" } },
+            { description: { $regex: search, $options: "i" } },
+            { category: { $regex: search, $options: "i" } },
+            { tags: { $regex: search, $options: "i" } },
+          ],
+        }
+      : {};
+
+    let query = Restaurant.find(filter).sort({ id: 1 });
+    if (Number.isFinite(parsedLimit) && parsedLimit > 0) {
+      query = query.limit(parsedLimit);
+    }
+
+    const restaurants = await query;
 
     res.status(200).json(restaurants);
   } catch (error) {
