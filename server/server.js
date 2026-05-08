@@ -5,6 +5,7 @@ import session from "express-session";
 import passport from "./src/config/passport.js";
 import { logger } from "./src/middleware/logger.js";
 import authRoutes from "./src/routes/authRoutes.js";
+import dishRoutes from "./src/routes/dishRoutes.js";
 import restaurantRoutes from "./src/routes/restaurantRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import { connectDB } from "./db/connection.js";
@@ -38,6 +39,7 @@ app.use(passport.session());
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/dishes", dishRoutes);
 
 const startServer = async () => {
   try {
