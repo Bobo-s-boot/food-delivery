@@ -6,14 +6,12 @@ import { RestaurantList } from "../../components/cardListRestaurant/RestaurantLi
 import { PageHero } from "../../components/pageHero/PageHero";
 import { PromoFeature } from "../../components/promoFeature/PromoFeature";
 import { useDebounce } from "../../hooks/useDebounce";
-import searchIcon from "../../assets/search.svg";
-
 
 export function Catalog() {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
-  
+
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   const translatedCategories = CATEGORIES.map((cat) => ({

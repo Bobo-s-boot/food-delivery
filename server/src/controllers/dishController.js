@@ -1,4 +1,5 @@
 import Dish from "../models/Dish.js";
+import Restaurant from "../models/Restaurant.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 
 export const getDishes = async (req, res) => {
@@ -10,7 +11,17 @@ export const getDishes = async (req, res) => {
     const filter = {};
 
     if (restaurantId) {
-      filter.restaurantId = restaurantId;
+      const numericRestaurantId = Number(restaurantId);
+      if (Number.isFinite(numericRestaurantId)) {
+        const restaurant = await Restaurant.findOne({ id: numericRestaurantId });
+        if (restaurant) {
+          filter.restaurantId = restaurant._id;
+        } else {
+          return res.status(200).json([]);
+        }
+      } else {
+        filter.restaurantId = restaurantId;
+      }
     }
 
     if (hasSearch) {
