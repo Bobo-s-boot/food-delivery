@@ -74,12 +74,11 @@ export const peakHours = [
 
 export const orderFilters = [
   "All",
-  "New",
-  "Preparing",
-  "Ready",
-  "On the way",
-  "Delivered",
-  "Cancelled",
+  "pending",
+  "preparing",
+  "delivering",
+  "delivered",
+  "cancelled",
 ];
 
 export const liveOrders = [

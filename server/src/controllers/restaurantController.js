@@ -14,6 +14,30 @@ export const initializeRestaurantsFromFile = async () => {
   await Restaurant.insertMany(restaurants);
 };
 
+export const createRestaurant = async (req, res) => {
+  try {
+    const newRestaurant = await Restaurant.create(req.body);
+    res.status(201).json(newRestaurant);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ message: "Ошибка при создании ресторана", error: error.message });
+  }
+};
+
+export const deleteRestaurant = async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findByIdAndDelete(req.params.id);
+
+    if (!restaurant)
+      return res.status(404).json({ message: "Ресторан не найден" });
+
+    res.json({ message: "Ресторан успешно удален из базы" });
+  } catch (error) {
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+};
+
 export const getAllRestaurants = async (req, res) => {
   try {
     const { q, limit } = req.query;
@@ -49,7 +73,9 @@ export const getAllRestaurants = async (req, res) => {
 
 export const getRestaurantById = async (req, res) => {
   try {
-    const restaurant = await Restaurant.findOne({ id: parseInt(req.params.id) });
+    const restaurant = await Restaurant.findOne({
+      id: parseInt(req.params.id),
+    });
 
     if (!restaurant) {
       return res.status(404).json({ message: SERVER_ERORR_MESSAGE.NOT_FOUND });

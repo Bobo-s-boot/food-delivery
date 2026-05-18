@@ -12,6 +12,9 @@ function getOrderBarColor(orders) {
 
 export function OrderAnalytics({ data }) {
   const reduceMotion = useReducedMotion();
+  const totalOrders = data.reduce((sum, item) => sum + (item.orders || 0), 0);
+  const totalRevenue = data.reduce((sum, item) => sum + (item.revenue || 0), 0);
+  const maxOrders = Math.max(...data.map((item) => item.orders || 0), 1);
 
   return (
     <AdminCard className="flex flex-col p-5 md:p-6">
@@ -36,39 +39,48 @@ export function OrderAnalytics({ data }) {
         </div>
       </div>
       <div className="mt-8 flex min-h-96 flex-1 items-end gap-3">
-        {data.map((item, index) => {
-          const barHeight = `${(item.orders / 156) * 100}%`;
+        {data.length > 0 ? (
+          data.map((item, index) => {
+            const barHeight = `${Math.max(
+              ((item.orders || 0) / maxOrders) * 100,
+              16,
+            )}%`;
 
-          return (
-          <div
-            key={item.day}
-            className="flex h-full min-w-0 flex-1 flex-col justify-end gap-3"
-          >
-            <motion.div
-              className="rounded-t-[18px]"
-              initial={
-                reduceMotion
-                  ? { height: barHeight, opacity: 1 }
-                  : { height: "18%", opacity: 0.55 }
-              }
-              animate={{ height: barHeight, opacity: 1 }}
-              transition={{
-                duration: 0.55,
-                delay: index * 0.05,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              style={{
-                background: `linear-gradient(180deg, ${getOrderBarColor(
-                  item.orders,
-                )} 0%, #F8ED8C 100%)`,
-              }}
-            />
-            <span className="text-center text-xs text-[#7B8794]">
-              {item.day}
-            </span>
+            return (
+              <div
+                key={item.day}
+                className="flex h-full min-w-0 flex-1 flex-col justify-end gap-3"
+              >
+                <motion.div
+                  className="rounded-t-[18px]"
+                  initial={
+                    reduceMotion
+                      ? { height: barHeight, opacity: 1 }
+                      : { height: "18%", opacity: 0.55 }
+                  }
+                  animate={{ height: barHeight, opacity: 1 }}
+                  transition={{
+                    duration: 0.55,
+                    delay: index * 0.05,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  style={{
+                    background: `linear-gradient(180deg, ${getOrderBarColor(
+                      item.orders,
+                    )} 0%, #F8ED8C 100%)`,
+                  }}
+                />
+                <span className="text-center text-xs text-[#7B8794]">
+                  {item.day}
+                </span>
+              </div>
+            );
+          })
+        ) : (
+          <div className="min-h-48 flex-1 text-center text-[#5E6A7A]">
+            Нет данных для отображения графика заказов.
           </div>
-          );
-        })}
+        )}
       </div>
       <motion.div
         className="mt-4 flex flex-wrap gap-4 text-xs text-[#6B7788]"
@@ -78,15 +90,15 @@ export function OrderAnalytics({ data }) {
       >
         <span className="inline-flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-full bg-[#EA7A32]" />
-          Orders: 822
+          Orders: {totalOrders}
         </span>
         <span className="inline-flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-full bg-[#0D1A2D]" />
-          Revenue: $4,280
+          Revenue: ${totalRevenue.toFixed(2)}
         </span>
         <span className="inline-flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-full bg-[#C9D3DF]" />
-          Cancelled: 14
+          Cancelled: 0
         </span>
       </motion.div>
     </AdminCard>
