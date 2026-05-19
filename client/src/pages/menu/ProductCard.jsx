@@ -1,6 +1,24 @@
+import { useCart } from "../../features/cart/useCart";
+import { useNavigate } from "react-router-dom";
+
 export function ProductCard({ item }) {
+  const { addItem } = useCart();
+  const navigate = useNavigate();
+
+  const openDish = () => {
+    navigate(`/dish/${item.id}`, { state: { dish: item } });
+  };
+
+  const handleAdd = (event) => {
+    event.stopPropagation();
+    addItem(item);
+  };
+
   return (
-    <div className="relative w-full aspect-442/552 rounded-4xl overflow-hidden group font-['Inter'] cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 bg-[#0D1A2D]">
+    <article
+      onClick={openDish}
+      className="relative w-full aspect-442/552 rounded-4xl overflow-hidden group font-['Inter'] cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 bg-[#0D1A2D]"
+    >
       <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
         style={{ backgroundImage: `url(${item.imageUrl})` }}
@@ -13,6 +31,14 @@ export function ProductCard({ item }) {
           {item.price} $
         </span>
       </div>
+
+      <button
+        type="button"
+        onClick={handleAdd}
+        className="absolute left-6 top-5.75 z-10 flex h-10 items-center justify-center rounded-full bg-white px-5 text-sm font-medium text-[#0D1A2D] shadow-sm transition hover:bg-[#E9EE5D]"
+      >
+        Add
+      </button>
 
       <div className="absolute bottom-0 left-0 w-full p-6 flex flex-col gap-3 z-10">
         <h3 className="text-[24px] font-semibold text-white leading-[140%] m-0 truncate">
@@ -49,6 +75,6 @@ export function ProductCard({ item }) {
           {item.description}
         </p>
       </div>
-    </div>
+    </article>
   );
 }

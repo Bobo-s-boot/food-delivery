@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { headerLinks } from "./consts.js";
 import { useDebounce } from "../../hooks/useDebounce";
 import { searchRestaurants } from "../../api/restaurantService";
 import { searchDishes } from "../../api/dishService";
+import { useCart } from "../../features/cart/useCart";
 import searchIcon from "../../assets/search.svg";
 import handbagIcon from "../../assets/handbag.svg";
 import userIcon from "../../assets/user.svg";
 
 export function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
+  const { openCart, totals } = useCart();
   const user = JSON.parse(localStorage.getItem("user"));
   const [searchValue, setSearchValue] = useState("");
   const [results, setResults] = useState([]);
@@ -28,8 +31,6 @@ export function Header() {
   useEffect(() => {
     const query = debouncedSearchValue.trim();
     if (!query) {
-      setResults([]);
-      setIsLoading(false);
       return;
     }
 
@@ -110,7 +111,9 @@ export function Header() {
               end={link.to === "/"}
               className={({ isActive }) =>
                 `px-4 py-2 transition-colors flex items-center justify-center ${link.defaultClasses} ${
-                  isActive
+                  isActive ||
+                  (link.to === "/catalog" &&
+                    location.pathname.startsWith("/dish/"))
                     ? "bg-[#000000] text-[#FFFFFF] border border-[#000000]"
                     : "text-[#0F1316]"
                 }`
@@ -170,8 +173,18 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-4 shrink-0">
-          <button className="w-13.5 h-13.5 bg-[#0D1A2D] rounded-[100px] flex items-center justify-center text-white hover:bg-gray-800 transition-colors shrink-0">
+          <button
+            type="button"
+            onClick={openCart}
+            className="relative w-13.5 h-13.5 bg-[#0D1A2D] rounded-[100px] flex items-center justify-center text-white hover:bg-gray-800 transition-colors shrink-0"
+            aria-label="Open cart"
+          >
             <img src={handbagIcon} alt="Shop" className="w-6 h-6" />
+            {totals.itemCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-[#E9EE5D] px-1.5 text-xs font-semibold text-[#0D1A2D] shadow-sm">
+                {totals.itemCount}
+              </span>
+            )}
           </button>
 
           <button

@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { Footer } from "../footer/Footer";
 import { Header } from "../header/Header";
 import { PATH_PAGE } from "./const";
+import { CartDrawer } from "../../features/cart/CartDrawer";
 
 export function Layout({ children }) {
   const location = useLocation();
@@ -12,6 +13,8 @@ export function Layout({ children }) {
   const isMenuPage = location.pathname === PATH_PAGE.MENU;
   const isSpecialsPage = location.pathname === PATH_PAGE.SPECIALS;
   const isDeliveryPage = location.pathname === PATH_PAGE.DELIVERY;
+  const isCheckoutPage = location.pathname === PATH_PAGE.CHECKOUT;
+  const isDishPage = location.pathname.startsWith(PATH_PAGE.DISH);
   const isAdminPage = location.pathname === PATH_PAGE.ADMIN;
   const isAboutPage = location.pathname === PATH_PAGE.ABOUT;
 
@@ -22,6 +25,8 @@ export function Layout({ children }) {
     isMenuPage ||
     isSpecialsPage ||
     isDeliveryPage ||
+    isCheckoutPage ||
+    isDishPage ||
     isAboutPage;
 
   if (isAdminPage) {
@@ -41,6 +46,7 @@ export function Layout({ children }) {
       </main>
 
       <Footer />
+      <CartDrawer />
     </div>
   );
 }
