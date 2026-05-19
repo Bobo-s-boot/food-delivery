@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { AuthInput } from "./AuthInput";
+import "./Auth.scss";
 
 export function AuthForm({
   isLogin,
@@ -14,18 +15,14 @@ export function AuthForm({
   const { t } = useTranslation();
 
   return (
-    <div className="w-full max-w-102.5">
-      <h1 className="text-white text-[36px] lg:text-[48px] font-medium leading-[120%] tracking-[-0.02em] w-full text-left mb-6 lg:mb-8 whitespace-nowrap">
+    <div className="auth-form">
+      <h1 className="auth-form__title">
         {isLogin ? t("auth.welcomeBack") : t("auth.createAccount")}
       </h1>
 
-      {error && (
-        <div className="w-full mb-4 p-3 bg-red-500/20 border border-red-500 text-white rounded-2xl text-center text-[14px]">
-          {error}
-        </div>
-      )}
+      {error && <div className="auth-form__error">{error}</div>}
 
-      <form onSubmit={onSubmit} className="w-full flex flex-col gap-4">
+      <form onSubmit={onSubmit} className="auth-form__body">
         {!isLogin && (
           <AuthInput
             type="text"
@@ -65,11 +62,8 @@ export function AuthForm({
         )}
 
         {isLogin && (
-          <div className="w-full text-left">
-            <a
-              href="#"
-              className="text-white text-[12px] font-medium leading-[130%] tracking-[0.02em] underline! decoration-solid decoration-1 underline-offset-2 hover:text-gray-200 transition-colors"
-            >
+          <div className="auth-form__forgot-wrapper">
+            <a href="#" className="auth-form__forgot-link">
               {t("auth.forgotPassword")}
             </a>
           </div>
@@ -78,7 +72,7 @@ export function AuthForm({
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full h-14.25 mt-4 lg:mt-8 bg-[#0D1A2D] rounded-[100px] text-white text-[20px] lg:text-[24px] font-normal leading-7.25 tracking-[-0.04em] hover:bg-opacity-90 transition-all disabled:opacity-70 flex items-center justify-center"
+          className="auth-form__submit-btn"
         >
           {isLoading
             ? t("auth.loading")

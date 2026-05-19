@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // Чтобы достать ID ресторана из URL
+import { useParams } from "react-router-dom";
 import { getDishesByRestaurant } from "../../api/dishService";
 import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
+import "./Restaurant.scss";
 
 export function Restaurant() {
-  const { id } = useParams(); // Получаем ID ресторана из адресной строки
+  const { id } = useParams();
   const [dishes, setDishes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -12,7 +13,6 @@ export function Restaurant() {
     const fetchMenu = async () => {
       try {
         setIsLoading(true);
-        // Вызываем нашу функцию из сервиса, передавая ID ресторана
         const menuData = await getDishesByRestaurant(id);
         setDishes(menuData);
       } catch (error) {
@@ -28,44 +28,38 @@ export function Restaurant() {
   }, [id]);
 
   if (isLoading)
-    return <div className="text-amber-300">Загружаем вкусное меню... 🍕</div>;
+    return (
+      <div className="restaurant-menu__loading">
+        Загружаем вкусное меню... 🍕
+      </div>
+    );
 
   return (
-    <div className="mt-8">
-      <h2 className="text-2xl font-bold mb-6">Меню</h2>
+    <div className="restaurant-menu">
+      <h2 className="restaurant-menu__title">Меню</h2>
 
       {dishes.length === 0 ? (
-        <p className="text-gray-500">
+        <p className="restaurant-menu__empty-text">
           В этом ресторане пока нет добавленных блюд.
         </p>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="restaurant-menu__grid">
           {dishes.map((dish) => (
-            <div
-              key={dish._id}
-              className="border rounded-xl p-4 shadow-sm bg-white flex flex-col"
-            >
-              {/* Если у блюда есть картинка, выводим её */}
+            <div key={dish._id} className="dish-card">
               {dish.image && (
                 <img
                   src={dish.image}
                   alt={dish.name}
-                  className="w-full h-40 object-cover rounded-lg mb-4"
+                  className="dish-card__image"
                 />
               )}
 
-              <h3 className="text-lg font-bold">{dish.name}</h3>
-              <p className="text-gray-600 text-sm mt-1 flex-grow">
-                {dish.description}
-              </p>
+              <h3 className="dish-card__name">{dish.name}</h3>
+              <p className="dish-card__description">{dish.description}</p>
 
-              <div className="mt-4 flex justify-between items-center">
-                <span className="text-xl font-bold text-green-600">
-                  {dish.price} ₴
-                </span>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                  В корзину
-                </button>
+              <div className="dish-card__footer">
+                <span className="dish-card__price">{dish.price} ₴</span>
+                <button className="dish-card__btn">В корзину</button>
               </div>
             </div>
           ))}

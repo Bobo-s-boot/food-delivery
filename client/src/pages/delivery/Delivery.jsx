@@ -14,11 +14,13 @@ import {
   RESTAURANT_OPERATION_ITEMS,
 } from "./const";
 
+import "./Delivery.scss";
+
 export function Delivery() {
   const { t } = useTranslation();
 
   return (
-    <div className="w-full bg-white font-['Inter'] text-[#0D1A2D] px-4 md:px-8 pb-24 flex flex-col items-center">
+    <div className="delivery-page">
       <DeliveryHero t={t} />
       <DeliveryStats t={t} stats={DELIVERY_STATS} />
       <DeliveryTimeline t={t} steps={DELIVERY_STEPS} />

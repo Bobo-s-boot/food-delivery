@@ -6,6 +6,7 @@ import { SpecialsHero } from "./components/SpecialsHero";
 import { SpecialsHowItWorks } from "./components/SpecialsHowItWorks";
 import { SpecialsPromo } from "./components/SpecialsPromo";
 import { DEALS, SPECIAL_FILTERS, SPECIAL_STEPS } from "./const";
+import "./Specials.scss";
 
 export function Specials() {
   const { t } = useTranslation();
@@ -20,15 +21,15 @@ export function Specials() {
   }, [activeFilter]);
 
   return (
-    <div className="w-full bg-white font-['Inter'] text-[#0D1A2D] px-4 md:px-8 pb-24 flex flex-col items-center">
+    <div className="specials-page">
       <SpecialsHero t={t} />
+      <SpecialsPromo t={t} />
       <SpecialsFilters
         t={t}
         filters={SPECIAL_FILTERS}
         activeFilter={activeFilter}
         onFilterChange={setActiveFilter}
       />
-      <SpecialsPromo t={t} />
       <SpecialsGrid t={t} deals={filteredDeals} />
       <SpecialsHowItWorks t={t} steps={SPECIAL_STEPS} />
     </div>

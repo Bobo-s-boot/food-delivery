@@ -4,10 +4,11 @@ import { AboutMethodology } from "./sections/AboutMethodology";
 import { AboutMission } from "./sections/AboutMission";
 import { AboutTeam } from "./sections/AboutTeam";
 import { AboutTechStack } from "./sections/AboutTechStack";
+import "./About.scss";
 
 export function About() {
   return (
-    <div className="w-full bg-[#FFFFFF] font-['Inter'] text-[#0D1A2D]">
+    <div className="about-page">
       <AboutHero />
       <AboutMission />
       <AboutAudience />

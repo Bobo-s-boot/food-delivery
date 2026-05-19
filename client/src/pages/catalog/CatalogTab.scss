@@ -1,0 +1,29 @@
+.catalog-tab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.catalog-tab__button {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  font-weight: 500;
+  border-radius: 0.75rem;
+  border: 1px solid #0f172a;
+  background: #ffffff;
+  color: #0f172a;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.catalog-tab__button:hover {
+  background: #f3f4f6;
+}
+
+.catalog-tab__button--active {
+  background: #0f172a;
+  color: #ffffff;
+}
