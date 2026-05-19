@@ -13,6 +13,9 @@ export function Header() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const user = JSON.parse(localStorage.getItem("user"));
+  const userBasePath = user?.username
+    ? `/${encodeURIComponent(user.username)}`
+    : "";
   const [searchValue, setSearchValue] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,11 +30,7 @@ export function Header() {
 
   useEffect(() => {
     const query = debouncedSearchValue.trim();
-    if (!query) {
-      setResults([]);
-      setIsLoading(false);
-      return;
-    }
+    if (!query) return;
 
     const fetchResults = async () => {
       setIsLoading(true);
@@ -45,7 +44,7 @@ export function Header() {
         id: restaurant.id,
         title: restaurant.name,
         subtitle: restaurant.category,
-        route: `/restaurant/${restaurant.id}`,
+        route: `${userBasePath}/restaurant/${restaurant.id}`,
       }));
 
       const dishResults = dishes
@@ -55,7 +54,7 @@ export function Header() {
           title: dish.name,
           subtitle: dish.restaurantId?.name || "",
           route: dish.restaurantId?.id
-            ? `/restaurant/${dish.restaurantId.id}`
+            ? `${userBasePath}/restaurant/${dish.restaurantId.id}`
             : null,
         }))
         .filter((dish) => dish.route);
@@ -65,6 +64,15 @@ export function Header() {
     };
 
     fetchResults();
+  }, [debouncedSearchValue, userBasePath]);
+
+  useEffect(() => {
+    if (!debouncedSearchValue.trim()) {
+      Promise.resolve().then(() => {
+        setResults([]);
+        setIsLoading(false);
+      });
+    }
   }, [debouncedSearchValue]);
 
   useEffect(() => {
@@ -97,28 +105,33 @@ export function Header() {
       <div className="flex items-center gap-8 2xl:gap-44.5 shrink-0">
         <div
           className="text-[32px] font-medium text-[#000811] tracking-[0.02em] cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(userBasePath || "/")}
         >
           Defilicious
         </div>
 
         <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-xl text-[#0F1316] tracking-[-0.04em]">
-          {headerLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === "/"}
-              className={({ isActive }) =>
-                `px-4 py-2 transition-colors flex items-center justify-center ${link.defaultClasses} ${
-                  isActive
-                    ? "bg-[#000000] text-[#FFFFFF] border border-[#000000]"
-                    : "text-[#0F1316]"
-                }`
-              }
-            >
-              {t(`nav.${link.key}`)}
-            </NavLink>
-          ))}
+          {headerLinks.map((link) => {
+            const linkPath = userBasePath
+              ? `${userBasePath}${link.to}`
+              : link.to;
+            return (
+              <NavLink
+                key={link.to}
+                to={linkPath}
+                end={link.to === "/"}
+                className={({ isActive }) =>
+                  `px-4 py-2 transition-colors flex items-center justify-center ${link.defaultClasses} ${
+                    isActive
+                      ? "bg-[#000000] text-[#FFFFFF] border border-[#000000]"
+                      : "text-[#0F1316]"
+                  }`
+                }
+              >
+                {t(`nav.${link.key}`)}
+              </NavLink>
+            );
+          })}
         </nav>
       </div>
 
@@ -143,7 +156,9 @@ export function Header() {
           {showDropdown && (
             <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-white border border-[#E5E7EB] rounded-2xl shadow-lg z-50 max-h-80 overflow-y-auto">
               {isLoading ? (
-                <div className="px-4 py-3 text-sm text-[#6B7280]">Loading...</div>
+                <div className="px-4 py-3 text-sm text-[#6B7280]">
+                  Loading...
+                </div>
               ) : results.length > 0 ? (
                 results.map((item) => (
                   <button

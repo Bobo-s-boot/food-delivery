@@ -30,7 +30,12 @@ export function Auth({ onLogin }) {
         const user = JSON.parse(decodeURIComponent(userParam));
         if (onLogin) onLogin(user);
         localStorage.setItem("user", JSON.stringify(user));
-        navigate("/");
+
+        if (user?.role === "admin") {
+          navigate(`/${user.username}/admin`, { replace: true });
+        } else {
+          navigate(`/${user.username}`, { replace: true });
+        }
       } catch {
         setError(t("auth.oauthParseError"));
       }
@@ -71,6 +76,7 @@ export function Auth({ onLogin }) {
 
     try {
       let response;
+
       if (isLogin) {
         response = await loginUser({
           username: formData.username,
@@ -85,7 +91,12 @@ export function Auth({ onLogin }) {
 
       if (onLogin) onLogin(response.user);
       localStorage.setItem("user", JSON.stringify(response.user));
-      navigate("/");
+
+      if (response.user?.role === "admin") {
+        navigate(`/${response.user.username}/admin`, { replace: true });
+      } else {
+        navigate(`/${response.user.username}`, { replace: true });
+      }
     } catch (error) {
       setError(
         typeof error === "string"
@@ -98,63 +109,61 @@ export function Auth({ onLogin }) {
   };
 
   return (
-    <div className="w-full flex flex-col items-center pt-0 pb-14 font-['Inter']">
-      <div className="w-full flex justify-center px-4 lg:px-9.75">
-        <div
-          className={`relative w-full max-w-460.25 h-[calc(100vh-90px)] min-h-212.5 max-h-225 rounded-4xl lg:rounded-[64px] shadow-[0px_20px_40px_rgba(0,0,0,0.1)] overflow-hidden flex transition-all duration-700 ${isLogin ? "flex-row" : "flex-row-reverse"}`}
-        >
-          <img
-            src={
-              isLogin
-                ? "/img/login_background.jpg"
-                : "/img/singup_background.png"
-            }
-            alt="background"
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-          />
+    <div className="w-full min-h-[calc(100vh-90px)] flex items-center justify-center font-['Inter'] px-4 py-6 lg:px-9.75 lg:py-8">
+      <div
+        className={`relative w-full max-w-460.25 h-[calc(100vh-90px)] max-h-[calc(100vh-90px)] rounded-4xl lg:rounded-[64px] shadow-[0px_20px_40px_rgba(0,0,0,0.1)] overflow-hidden flex transition-all duration-700 ${
+          isLogin ? "flex-row" : "flex-row-reverse"
+        }`}
+      >
+        <img
+          src={
+            isLogin ? "/img/login_background.jpg" : "/img/singup_background.png"
+          }
+          alt="background"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+        />
 
-          <div className="hidden lg:block w-1/2 relative z-10 h-full"></div>
+        <div className="hidden lg:block w-1/2 relative z-10 h-full"></div>
 
-          <div className="relative z-20 w-full lg:w-1/2 h-full bg-[rgba(255,255,255,0.06)] backdrop-blur-[20px] rounded-4xl lg:rounded-[64px] border border-white/10 flex flex-col items-center justify-center px-4 py-8 gap-10 lg:gap-16">
-            <div
-              className={`w-full flex flex-col items-center gap-10 lg:gap-16 transition-all duration-300 ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
-            >
-              <AuthForm
-                isLogin={isLogin}
-                formData={formData}
-                error={error}
-                isLoading={isLoading}
-                showPassword={showPassword}
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-                onTogglePassword={() => setShowPassword(!showPassword)}
-              />
+        <div className="relative z-20 w-full lg:w-1/2 h-full bg-[rgba(255,255,255,0.06)] backdrop-blur-[20px] rounded-4xl lg:rounded-[64px] border border-white/10 flex flex-col items-center justify-center px-4 py-6 gap-8 lg:gap-12">
+          <div
+            className={`w-full flex flex-col items-center gap-8 lg:gap-12 transition-all duration-300 ${
+              isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
+            }`}
+          >
+            <AuthForm
+              isLogin={isLogin}
+              formData={formData}
+              error={error}
+              isLoading={isLoading}
+              showPassword={showPassword}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+              onTogglePassword={() => setShowPassword(!showPassword)}
+            />
 
-              <div className="w-full max-w-150.5 flex flex-wrap gap-y-4 gap-x-6 justify-center lg:justify-between px-2 lg:px-0">
-                {SOCIAL_PROVIDERS.map((socialProvider) => (
-                  <SocialLoginButton
-                    key={socialProvider.provider}
-                    {...socialProvider}
-                    label={
-                      socialProvider.labelKey
-                        ? t(socialProvider.labelKey)
-                        : socialProvider.label
-                    }
-                    onLogin={handleSocialLogin}
-                  />
-                ))}
-              </div>
+            <div className="w-full max-w-150.5 flex flex-wrap gap-y-4 gap-x-6 justify-center lg:justify-between px-2 lg:px-0">
+              {SOCIAL_PROVIDERS.map((socialProvider) => (
+                <SocialLoginButton
+                  key={socialProvider.provider}
+                  {...socialProvider}
+                  label={
+                    socialProvider.labelKey
+                      ? t(socialProvider.labelKey)
+                      : socialProvider.label
+                  }
+                  onLogin={handleSocialLogin}
+                />
+              ))}
+            </div>
 
-              <div className="pb-4">
-                <p
-                  className="text-white text-[14px] lg:text-[16px] font-normal leading-[140%] cursor-pointer hover:text-gray-300 transition-colors"
-                  onClick={toggleMode}
-                >
-                  {isLogin
-                    ? t("auth.switchToRegister")
-                    : t("auth.switchToLogin")}
-                </p>
-              </div>
+            <div className="pb-4">
+              <p
+                className="text-white text-[14px] lg:text-[16px] font-normal leading-[140%] cursor-pointer hover:text-gray-300 transition-colors"
+                onClick={toggleMode}
+              >
+                {isLogin ? t("auth.switchToRegister") : t("auth.switchToLogin")}
+              </p>
             </div>
           </div>
         </div>

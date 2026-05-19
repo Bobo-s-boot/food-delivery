@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ActiveSpecialsTable } from "./components/ActiveSpecialsTable";
 import { AdminHeader } from "./components/AdminHeader";
 import { AdminIntro } from "./components/AdminIntro";
@@ -16,6 +17,7 @@ import {
   adminGetRestaurants,
   adminDeleteRestaurant,
 } from "../../api/restaurantService";
+import { isTokenActive } from "../../api/authService";
 import {
   adminGetOrders,
   adminGetOrderStats,
@@ -44,6 +46,7 @@ export function Admin() {
   });
   const [topDishes, setTopDishes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const formatOrderTime = (createdAt) => {
     const createdTime = new Date(createdAt).getTime();
@@ -110,8 +113,14 @@ export function Admin() {
   };
 
   useEffect(() => {
+    if (!isTokenActive()) {
+      localStorage.removeItem("user");
+      navigate("/auth", { replace: true });
+      return;
+    }
+
     loadAdminData();
-  }, []);
+  }, [navigate]);
 
   const liveOrdersData = orders.map((order) => ({
     id: order._id || order.id,

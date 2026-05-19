@@ -1,4 +1,4 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import { Layout } from "./components/Layout/Layout";
 import { Admin } from "./pages/admin/Admin";
@@ -13,7 +13,7 @@ import { Restaurant } from "./pages/restaurant/Restaurant";
 
 function App() {
   return (
-    <Router>
+    <Router hashType="noslash">
       <Layout>
         <Routes>
           <Route path="/auth" element={<Auth />} />
@@ -22,7 +22,14 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/specials" element={<Specials />} />
           <Route path="/delivery" element={<Delivery />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/:username/admin" element={<Admin />} />
+          <Route path="/:username" element={<Home />} />
+          <Route path="/:username/catalog" element={<Catalog />} />
+          <Route path="/:username/menu" element={<Menu />} />
+          <Route path="/:username/specials" element={<Specials />} />
+          <Route path="/:username/delivery" element={<Delivery />} />
+          <Route path="/:username/about" element={<About />} />
+          <Route path="/:username/restaurant/:id" element={<Restaurant />} />
           <Route path="/about" element={<About />} />
           <Route path="/restaurant/:id" element={<Restaurant />} />
         </Routes>
