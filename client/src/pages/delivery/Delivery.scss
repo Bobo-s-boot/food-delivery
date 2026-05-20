@@ -22,87 +22,68 @@
   }
 }
 
-/* --- 1. Hero Section (Главный баннер) --- */
 .delivery-hero {
   position: relative;
   width: 100%;
-  min-height: 28rem;
-  border-radius: 2.5rem;
+  min-height: 28.125rem; // min-h-112.5
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  display: flex;
-  align-items: flex-end; // Весь контент прижат к низу
-  padding: 2rem;
-  margin-top: 1rem;
+  border-radius: 40px; // rounded-[40px]
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); // shadow-sm
 
   @media (min-width: 1024px) {
-    padding: 3.5rem;
+    border-radius: 64px; // lg:rounded-[64px]
   }
 
   &__bg {
     position: absolute;
     inset: 0;
-    width: 100%;
     height: 100%;
+    width: 100%;
     object-fit: cover;
-    z-index: 1;
   }
 
   &__overlay {
     position: absolute;
     inset: 0;
-    z-index: 2;
-    background: linear-gradient(
-      90deg,
-      rgba(13, 26, 45, 0.95) 0%,
-      rgba(13, 26, 45, 0.5) 50%,
-      transparent 100%
-    );
+    background-color: rgba(13, 26, 45, 0.55); // bg-[#0D1A2D]/55
   }
 
-  // Обертка для текста и кнопок
   &__content {
     position: relative;
     z-index: 10;
-    width: 100%;
-    height: 100%;
     display: flex;
+    min-height: 28.125rem; // min-h-112.5
     flex-direction: column;
     justify-content: flex-end;
-  }
-
-  // Бейджик жестко привязан к углу баннера
-  &__badge {
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
-    z-index: 10;
-
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5rem 1.25rem;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    gap: 2rem; // gap-8
+    padding: 2rem; // p-8
     color: #ffffff;
-    font-size: 0.875rem;
-    font-weight: 500;
-    width: max-content;
+
+    @media (min-width: 768px) {
+      padding: 3.5rem; // md:p-14
+    }
 
     @media (min-width: 1024px) {
-      top: 3.5rem;
-      left: 3.5rem;
+      padding: 5rem; // lg:p-20
     }
   }
 
-  // Группа, расталкивающая текст влево, а кнопки вправо
+  &__badge {
+    width: max-content;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.4); // border-white/40
+    background-color: rgba(255, 255, 255, 0.15); // bg-white/15
+    padding: 0.5rem 1.25rem; // py-2 px-5
+    font-size: 0.875rem; // text-sm
+    backdrop-filter: blur(12px); // backdrop-blur-md
+    -webkit-backdrop-filter: blur(12px);
+  }
+
   &__group {
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
     width: 100%;
+    flex-direction: column;
+    gap: 2rem; // gap-8
 
     @media (min-width: 1024px) {
       flex-direction: row;
@@ -112,73 +93,75 @@
   }
 
   &__text {
-    flex: 1;
-    max-width: 42rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    max-width: 50rem; // max-w-200
+  }
 
-    h1 {
-      margin: 0;
-      color: #ffffff;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 500;
-      line-height: 1.1;
-      letter-spacing: -0.04em;
-    }
+  &__title {
+    margin: 0;
+    font-size: 42px; // text-[42px]
+    font-weight: 400; // font-normal
+    line-height: 1; // leading-none
+    letter-spacing: -0.04em; // tracking-[-0.04em]
 
-    p {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 1.125rem;
-      line-height: 1.6;
+    @media (min-width: 768px) {
+      font-size: 64px; // md:text-[64px]
     }
   }
 
-  // Контейнер с кнопками: больше не растягивается!
+  &__description {
+    margin: 1.25rem 0 0 0; // mt-5
+    max-width: 47.5rem; // max-w-190
+    font-size: 1rem; // text-base
+    line-height: 1.5; // leading-[150%]
+    color: rgba(255, 255, 255, 0.9); // text-white/90
+
+    @media (min-width: 768px) {
+      font-size: 1.125rem; // md:text-lg
+    }
+  }
+
   &__actions {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-
-    @media (min-width: 1024px) {
-      width: 15rem; // Фиксированная ширина для блока с кнопками на ПК
-      flex-shrink: 0; // Запрещаем блоку сужаться или растягиваться
-    }
-
-    button {
-      width: 100%;
-      height: 3.5rem;
-      border-radius: 9999px;
-      font-size: 1.125rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    flex-wrap: wrap;
+    gap: 0.75rem; // gap-3
   }
 
   &__btn-primary {
-    background: #ffffff;
-    color: #0d1a2d;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem; // h-12
+    border-radius: 9999px; // rounded-full
+    background-color: #ffffff; // bg-white
+    padding: 0 1.75rem; // px-7
+    font-size: 1.125rem; // text-lg
+    color: #0d1a2d; // text-[#0D1A2D]
     border: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
 
     &:hover {
-      background: #e5e7eb;
+      background-color: #f3f4f6; // hover:bg-[#F3F4F6]
     }
   }
 
   &__btn-secondary {
-    background: transparent;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem; // h-12
+    border-radius: 9999px; // rounded-full
+    border: 2px solid #ffffff; // border-2 border-white
+    background-color: transparent;
+    padding: 0 1.75rem; // px-7
+    font-size: 1.125rem; // text-lg
+    color: #ffffff; // text-white
+    cursor: pointer;
+    transition: all 0.15s ease;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: #ffffff;
+      background-color: #ffffff; // hover:bg-white
+      color: #000000; // hover:text-black
     }
   }
 }
@@ -187,8 +170,11 @@
 .delivery-stats {
   margin-top: 4rem;
   display: grid;
-  grid-template-columns: 1fr;
+  width: 100%;
+  flex: 1;
   gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -220,55 +206,66 @@
 }
 
 /* --- 3. Timeline Section (ОБНОВЛЕНО) --- */
+/* =========================================
+   3. Timeline Section (How delivery works)
+   ========================================= */
 .delivery-timeline {
   margin-top: 6rem;
-  width: 100%;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: 2.5rem;
+  width: 100%;
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1280px) {
     grid-template-columns: 0.8fr 1.2fr;
-    align-items: start;
+    align-items: stretch; // Растягивает обе колонки на одинаковую высоту
   }
 
   &__intro {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-self: flex-start;
 
+    .subtitle,
     p:first-child {
-      margin: 0 0 1.25rem 0;
+      display: block;
       font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #6b7280;
+      margin-bottom: 1rem;
     }
 
     h2 {
       margin: 0;
-      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
       line-height: 1.1;
       letter-spacing: -0.04em;
       color: #0d1a2d;
     }
 
     p:last-child {
-      margin: 1.5rem 0 0;
+      margin: 1.25rem 0 0;
+      max-width: 35rem;
       color: #4b5563;
       line-height: 1.6;
       font-size: 1.125rem;
-      max-width: 32rem;
     }
   }
 
+  /* 🌟 ПРАВАЯ ТЕМНАЯ КАРТОЧКА С ШАГАМИ 🌟 */
   &__steps {
     border-radius: 2.5rem;
-    background: #0d1a2d;
+    background: #0d1a2d; // Тот самый глубокий темно-синий цвет из Figma
     padding: 2.5rem 2rem;
     display: flex;
     flex-direction: column;
+    justify-content: space-between; // Равномерно распределяет шаги по всей высоте
     gap: 2rem;
+
+    /* Устанавливаем высоту как на макете */
+    min-height: 28.75rem; // Соответствует соседним карточкам (около 460px)
 
     @media (min-width: 768px) {
       padding: 3.5rem;
@@ -276,23 +273,32 @@
   }
 }
 
+/* 🌟 ЭЛЕМЕНТЫ ШАГОВ (ВНУТРИ КАРТОЧКИ) 🌟 */
 .delivery-step {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1.25rem;
+  gap: 1.5rem;
   color: #ffffff;
   align-items: start;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
 
   &__marker {
-    width: 3rem;
-    height: 3rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 9999px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background: #ffffff;
     color: #0d1a2d;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     flex-shrink: 0;
   }
@@ -301,21 +307,23 @@
     margin: 0 0 0.5rem 0;
     font-size: 1.25rem;
     font-weight: 500;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.03em;
     color: #ffffff;
+    line-height: 1.2;
   }
 
   &__text {
-    margin: 0;
+    margin: 0.5rem 0 0;
     color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
-    font-size: 1rem;
+    line-height: 1.5;
+    font-size: 0.875rem;
   }
 }
 
 /* --- 4. Options Section --- */
 .delivery-options {
   margin-top: 6rem;
+  width: 100%;
 
   &__intro {
     display: flex;
@@ -330,7 +338,7 @@
 
     h2 {
       margin: 0;
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: 78px;
       letter-spacing: -0.04em;
     }
 
@@ -392,69 +400,86 @@
 /* --- 5. Zones & Fees Section --- */
 .delivery-zones {
   margin-top: 6rem;
-
-  &__title {
-    margin: 0;
-    font-size: clamp(2rem, 4vw, 3rem);
-    letter-spacing: -0.04em;
-  }
-}
-
-.delivery-zones__wrapper {
-  margin-top: 2.5rem;
   display: grid;
+  width: 100%;
   grid-template-columns: 1fr;
   gap: 1.5rem;
 
-  @media (min-width: 1024px) {
-    grid-template-columns: 1fr 1fr;
+  @media (min-width: 1280px) {
+    grid-template-columns: 1fr 0.85fr;
   }
 }
 
+.delivery-zones__left {
+  border-radius: 2.5rem;
+  background: #f3f4f6;
+  padding: 1.5rem;
+
+  @media (min-width: 768px) {
+    padding: 2.5rem;
+  }
+}
+
+.delivery-zones__title {
+  margin: 0;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #000000;
+}
+
 .delivery-zones__grid {
-  border-radius: 2rem;
+  margin-top: 2rem;
   overflow: hidden;
+  border-radius: 1.75rem;
   background: #ffffff;
-  border: 1px solid #edecef;
-  height: max-content;
 }
 
 .delivery-zones__row {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.75rem;
-  border-bottom: 1px solid #edecef;
-  padding: 1.5rem;
+  border-bottom: 1px solid #edecf1;
+  padding: 1.25rem;
 
   &:last-child {
     border-bottom: none;
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: 768px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: center;
+    gap: 0;
+    padding: 1.25rem;
   }
 
-  span {
+  span:first-child {
+    font-weight: 500;
+    color: #000000;
+  }
+
+  span:nth-child(2) {
     color: #4b5563;
   }
-  strong {
-    color: #0d1a2d;
+
+  span:last-child {
     font-weight: 500;
+    color: #0d1a2d;
   }
 }
 
-.delivery-restaurant-card {
+.delivery-zones__right {
   position: relative;
-  min-height: 28rem;
-  border-radius: 2.5rem;
+  min-height: 28.75rem;
   overflow: hidden;
+  border-radius: 2.5rem;
   background: #0d1a2d;
   padding: 2rem;
   color: #ffffff;
 
   @media (min-width: 768px) {
-    padding: 3rem;
+    padding: 2.5rem;
   }
 
   img {
@@ -463,6 +488,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0.3;
     z-index: 1;
   }
 
@@ -471,64 +497,62 @@
     position: absolute;
     inset: 0;
     z-index: 2;
-    background: linear-gradient(
-      to top,
-      rgba(13, 26, 45, 0.95) 0%,
-      rgba(13, 26, 45, 0.4) 50%,
-      rgba(13, 26, 45, 0.1) 100%
-    );
-  }
-
-  &__content {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100%;
+    background: rgba(13, 26, 45, 0.55);
   }
 }
 
-.delivery-restaurant-label {
+.delivery-zones__content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.delivery-zones__label {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.delivery-zones__subtitle {
+  margin: 1.25rem 0 0;
+  font-size: clamp(2.25rem, 3.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+}
+
+.delivery-zones__text {
+  margin: 1.25rem 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.8);
-  font-weight: 600;
 }
 
-.delivery-restaurant-title {
-  margin: 1rem 0 0;
-  font-size: clamp(2rem, 3.5vw, 2.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  font-weight: 500;
-}
-
-.delivery-restaurant-text {
-  margin: 1rem 0 0;
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 1.6;
-}
-
-.delivery-restaurant-tags {
-  margin-top: 1.5rem;
+.delivery-zones__tags {
+  margin: 2rem 0 0;
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
 }
 
-.delivery-restaurant-tag {
+.delivery-zones__tag {
   display: inline-flex;
+  align-items: center;
   padding: 0.5rem 1rem;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: #ffffff;
   font-size: 0.875rem;
+  font-weight: 400;
 }
 
 /* --- 6. FAQ Section --- */

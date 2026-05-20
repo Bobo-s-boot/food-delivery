@@ -1,11 +1,12 @@
 import { motion, useReducedMotion } from "motion/react";
 import { AdminCard } from "./AdminCard";
+import "../Admin.scss";
 
 export function KpiGrid({ cards }) {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="grid min-w-0 grid-cols-1 gap-4 xl:col-span-2 md:grid-cols-2 xl:grid-cols-5">
+    <section className="kpi-grid">
       {cards.map((card, index) => (
         <motion.div
           key={card.label}
@@ -17,17 +18,13 @@ export function KpiGrid({ cards }) {
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <AdminCard className="p-5">
-            <p className="text-sm font-medium text-[#6B7788]">{card.label}</p>
-            <div className="mt-4 flex min-w-0 items-end justify-between gap-3">
-              <strong className="shrink-0 text-4xl font-normal tracking-[-0.05em] text-[#0D1A2D]">
-                {card.value}
-              </strong>
+          <AdminCard className="kpi-card">
+            <p className="kpi-card__label">{card.label}</p>
+            <div className="kpi-card__content">
+              <strong className="kpi-card__value">{card.value}</strong>
               <span
-                className={`min-w-0 truncate rounded-full px-3 py-1 text-xs ${
-                  card.tone === "warning"
-                    ? "bg-amber-100 text-amber-700"
-                    : "bg-emerald-100 text-emerald-700"
+                className={`kpi-card__trend kpi-card__trend--${
+                  card.tone === "warning" ? "warning" : "success"
                 }`}
                 title={card.trend}
               >

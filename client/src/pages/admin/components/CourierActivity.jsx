@@ -1,34 +1,31 @@
 import { AdminCard } from "./AdminCard";
 import { SectionHeader } from "./SectionHeader";
 import { StatusBadge } from "./StatusBadge";
+import "../Admin.scss";
 
 export function CourierActivity({ couriers }) {
   return (
-    <AdminCard className="p-5 md:p-6">
+    <AdminCard className="courier-activity">
       <SectionHeader
         title="Courier Activity"
         description="Track courier availability, active deliveries and estimated arrival time."
       />
-      <div className="mt-5 space-y-3">
+      <div className="courier-activity__list">
         {couriers.map((courier) => (
-          <div
-            key={courier.courier}
-            className="rounded-2xl bg-[#F7F9FC] p-4 transition hover:bg-[#EEF2F7]"
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="truncate font-medium">{courier.courier}</p>
-                <p className="truncate text-sm text-[#6B7788]">
+          <div key={courier.courier} className="courier-card">
+            <div className="courier-card__header">
+              <div className="courier-card__info">
+                <p className="courier-card__name">{courier.courier}</p>
+                <p className="courier-card__details">
                   {courier.order} - {courier.area}
                 </p>
               </div>
               <StatusBadge value={courier.status} />
             </div>
-            <div className="mt-4 flex items-center justify-between text-sm">
-              <span className="text-[#5E6A7A]">ETA {courier.eta}</span>
-              <button className="rounded-full bg-[#0D1A2D] px-4 py-2 text-xs text-white">
-                {courier.action}
-              </button>
+
+            <div className="courier-card__footer">
+              <span className="courier-card__eta">ETA {courier.eta}</span>
+              <button className="courier-card__btn">{courier.action}</button>
             </div>
           </div>
         ))}

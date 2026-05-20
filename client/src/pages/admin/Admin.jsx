@@ -34,6 +34,7 @@ import {
   orderFilters,
   topDishes as topDishesFallback,
 } from "./const";
+import "./Admin.scss";
 
 export function Admin() {
   const [restaurants, setRestaurants] = useState([]);
@@ -153,37 +154,39 @@ export function Admin() {
     if (!window.confirm("Удалить этот ресторан и всё его меню?")) return;
     try {
       await adminDeleteRestaurant(id);
-
       setRestaurants((prev) => prev.filter((rest) => rest._id !== id));
     } catch (error) {
       alert("Ошибка при удалении. Проверьте права доступа.", error);
     }
   };
 
-  if (isLoading)
-    return <div className="p-6 text-center">Загрузка панели управления...</div>;
+  if (isLoading) {
+    return (
+      <div className="admin-layout__loading">Загрузка панели управления...</div>
+    );
+  }
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-[#F4F7FB] px-4 py-4 font-['Inter'] text-[#0D1A2D] md:px-6">
-      <div className="mx-auto flex w-full max-w-440 flex-col gap-4">
-        <div className="space-y-4">
+    <div className="admin-layout">
+      <div className="admin-layout__container">
+        <div className="admin-layout__header-group">
           <AdminHeader navItems={adminNavItems} createActions={createActions} />
-          <div className="flex justify-end">
+          <div className="admin-layout__actions">
             <button
               onClick={handleGenerateOrders}
-              className="inline-flex items-center justify-center rounded-full bg-[#0D1A2D] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#162635]"
+              className="admin-layout__btn-generate"
             >
               Создать тестовый заказ
             </button>
           </div>
         </div>
 
-        <main className="grid min-w-0 grid-cols-1 gap-4 xl:grid-cols-[1.12fr_0.88fr]">
+        <main className="admin-layout__main-grid">
           <AdminIntro />
           <KpiGrid cards={kpiData.length ? kpiData : kpiCards} />
           <OrderAnalytics data={analyticsData.orderAnalytics} />
 
-          <div className="grid min-w-0 grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-1">
+          <div className="admin-layout__sub-grid">
             <RevenueBreakdown data={analyticsData.revenueBreakdown} />
             <PeakHours data={analyticsData.peakHours} />
           </div>
@@ -197,7 +200,6 @@ export function Admin() {
           <TopSellingDishes
             dishes={topDishes.length ? topDishes : topDishesFallback}
           />
-          {/* ... остальные компоненты ... */}
         </main>
       </div>
     </div>

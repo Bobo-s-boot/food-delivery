@@ -6,15 +6,13 @@
 }
 
 .catalog-filters__container {
-  max-width: 1692px;
-  margin: 0 auto;
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 
   @media (min-width: 1024px) {
-    flex-direction: row; /* Слева контролы, справа текст */
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
