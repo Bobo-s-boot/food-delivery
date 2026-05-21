@@ -460,7 +460,6 @@
   &__name {
     margin: 0;
     font-weight: 500; // font-medium
-    /* Tailwind 'truncate' */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -470,7 +469,6 @@
     margin: 0;
     font-size: 0.875rem; // text-sm
     color: #6b7788;
-    /* Tailwind 'truncate' */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -619,7 +617,6 @@
     padding: 0.25rem 0.75rem; // px-3 py-1
     font-size: 0.75rem; // text-xs
 
-    /* Tailwind 'truncate' */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -998,7 +995,6 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    /* Клетчатый фон из Tailwind bg-[linear-gradient...] */
     background-image:
       linear-gradient(to right, #e8edf4 1px, transparent 1px),
       linear-gradient(to bottom, #e8edf4 1px, transparent 1px);
@@ -1391,7 +1387,6 @@
   &__name {
     margin: 0;
     font-weight: 500; // font-medium
-    /* Tailwind 'truncate' */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

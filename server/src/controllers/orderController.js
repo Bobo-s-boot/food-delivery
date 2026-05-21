@@ -1,7 +1,7 @@
 import Order from "../models/Order.js";
-import User from "../models/User.js";
-import Restaurant from "../models/Restaurant.js";
-import Dish from "../models/Dish.js";
+import User from "../models/user.js";
+import Restaurant from "../models/restaurant.js";
+import Dish from "../models/dish.js";
 
 const WEEK_DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 

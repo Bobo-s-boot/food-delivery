@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CLIENT_ERORR_MESSAGE } from "../errors/error";
+import { getAuthToken } from "./authConfig";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000/api";
@@ -18,8 +19,8 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (userData) => {
   try {
-    const repsonse = await axios.post(`${API_URL}/login`, userData);
-    return repsonse.data;
+    const response = await axios.post(`${API_URL}/login`, userData);
+    return response.data;
   } catch (error) {
     throw error.response?.data?.message || CLIENT_ERORR_MESSAGE.FIELD_TO_LOGIN;
   }
@@ -27,8 +28,7 @@ export const loginUser = async (userData) => {
 
 export const isTokenActive = () => {
   try {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = user?.token;
+    const token = getAuthToken();
     if (!token) return false;
 
     const parts = token.split(".");

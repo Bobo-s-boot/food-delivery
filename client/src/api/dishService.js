@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CLIENT_ERORR_MESSAGE } from "../errors/error";
+import { createAuthConfig } from "./authConfig";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000/api";
@@ -19,12 +20,7 @@ export const getDishesByRestaurant = async (restaurantId) => {
 
 export const createDish = async (dishData) => {
   try {
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    const response = await axios.post(API_URL, dishData, config);
+    const response = await axios.post(API_URL, dishData, createAuthConfig());
     return response.data;
   } catch (error) {
     console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_CREATE_DISH, error);
@@ -34,12 +30,7 @@ export const createDish = async (dishData) => {
 
 export const deleteDish = async (dishId) => {
   try {
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    const response = await axios.delete(`${API_URL}/${dishId}`, config);
+    const response = await axios.delete(`${API_URL}/${dishId}`, createAuthConfig());
     return response.data;
   } catch (error) {
     console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_DELETE_DISH, error);

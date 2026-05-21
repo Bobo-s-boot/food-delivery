@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import { RESTAURANTS_DATA_PATH as DATA_PATH } from "../config/config.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
-import Restaurant from "../models/Restaurant.js";
+import Restaurant from "../models/restaurant.js";
 
 export const initializeRestaurantsFromFile = async () => {
   const restaurantsCount = await Restaurant.countDocuments();

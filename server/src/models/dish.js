@@ -1,6 +1,6 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
-const dishShema = new mongoose.Schema(
+const dishSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     description: { type: String },
@@ -17,4 +17,4 @@ const dishShema = new mongoose.Schema(
   { timestamps: true },
 );
 
-export default mongoose.model("Dish", dishShema);
+export default mongoose.model("Dish", dishSchema);

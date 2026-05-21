@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
-import User from "../models/User.js";
+import User from "../models/user.js";
 
 const generateToken = (user) => {
   return jwt.sign(
