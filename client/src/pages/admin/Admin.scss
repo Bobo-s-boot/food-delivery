@@ -1102,7 +1102,7 @@
    Restaurant Status (Admin)
    ========================================= */
 
-.restaurant-status {
+.restaurant-status-admin {
   padding: 1.25rem; // p-5
 
   @media (min-width: 768px) {
@@ -1122,7 +1122,7 @@
 }
 
 /* --- Карточка ресторана --- */
-.restaurant-card {
+.restaurant-card_adminStatus-admin {
   border-radius: 1rem; // rounded-2xl
   background-color: #f7f9fc; // bg-[#F7F9FC]
   padding: 1rem; // p-4
