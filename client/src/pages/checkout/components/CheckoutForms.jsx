@@ -3,12 +3,12 @@ import { deliveryOptions, paymentOptions } from "../const";
 
 export function ContactForm({ onContinue }) {
   return (
-    <div className="space-y-5">
-      <div className="grid gap-4 md:grid-cols-2">
+    <div className="checkout-form">
+      <div className="checkout-form__grid">
         <CheckoutField label="First name" placeholder="Denys" />
         <CheckoutField label="Last name" placeholder="Korzhyk" />
       </div>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="checkout-form__grid">
         <CheckoutField label="Phone number" placeholder="+38 (067) 573-57-30" />
         <CheckoutField
           label="Email"
@@ -18,24 +18,22 @@ export function ContactForm({ onContinue }) {
       </div>
 
       <div>
-        <p className="mb-3 text-sm font-medium text-[#5F6878]">
-          Отримувач замовлення
-        </p>
-        <div className="grid gap-3 md:grid-cols-2">
-          <label className="flex h-12 items-center gap-3 rounded-2xl border border-[#E8EAF0] px-4 text-sm font-medium text-[#0F1316]">
+        <p className="checkout-form__subtitle">Отримувач замовлення</p>
+        <div className="checkout-form__grid checkout-form__grid--half">
+          <label className="checkout-toggle">
             <input
               type="radio"
               name="recipient"
               defaultChecked
-              className="h-4 w-4 accent-[#0D1A2D]"
+              className="checkout-toggle__input"
             />
             Я отримувач замовлення
           </label>
-          <label className="flex h-12 items-center gap-3 rounded-2xl border border-[#E8EAF0] px-4 text-sm font-medium text-[#0F1316]">
+          <label className="checkout-toggle">
             <input
               type="radio"
               name="recipient"
-              className="h-4 w-4 accent-[#0D1A2D]"
+              className="checkout-toggle__input"
             />
             Інший отримувач замовлення
           </label>
@@ -45,7 +43,7 @@ export function ContactForm({ onContinue }) {
       <button
         type="button"
         onClick={onContinue}
-        className="h-12 rounded-full bg-[#0D1A2D] px-7 text-base font-medium text-white transition hover:bg-black"
+        className="checkout-button checkout-button--primary"
       >
         Continue
       </button>
@@ -55,40 +53,39 @@ export function ContactForm({ onContinue }) {
 
 export function DeliveryForm({ selectedDelivery, onSelect, onContinue }) {
   return (
-    <div className="space-y-6">
-      <div className="grid gap-4 md:grid-cols-2">
+    <div className="checkout-form checkout-form--spaced">
+      <div className="checkout-form__grid">
         <CheckoutField
           label="Delivery address"
           placeholder="Street, building, apartment"
-          className="md:col-span-2"
+          className="checkout-form__wide"
         />
         <CheckoutField label="City" placeholder="Kyiv" />
-        <CheckoutField label="Entrance / floor" placeholder="Entrance 2, floor 6" />
+        <CheckoutField
+          label="Entrance / floor"
+          placeholder="Entrance 2, floor 6"
+        />
       </div>
 
-      <div className="grid gap-3">
+      <div className="checkout-form__grid checkout-form__grid--stacked">
         {deliveryOptions.map((option) => (
           <button
             key={option.id}
             type="button"
             onClick={() => onSelect(option.id)}
-            className={`flex items-center justify-between gap-4 rounded-3xl border p-4 text-left transition ${
+            className={`checkout-option ${
               selectedDelivery === option.id
-                ? "border-[#0D1A2D] bg-[#F8FAFC]"
-                : "border-[#E8EAF0] hover:border-[#B7C0CE]"
+                ? "checkout-option--selected"
+                : "checkout-option--default"
             }`}
           >
             <div>
-              <h3 className="text-base font-medium text-[#0F1316]">
-                {option.title}
-              </h3>
-              <p className="mt-1 text-sm text-[#5F6878]">
+              <h3 className="checkout-option__title">{option.title}</h3>
+              <p className="checkout-option__description">
                 {option.description}
               </p>
             </div>
-            <span className="rounded-full bg-[#EEF2F7] px-4 py-2 text-sm font-medium text-[#0D1A2D]">
-              {option.meta}
-            </span>
+            <span className="checkout-option__meta">{option.meta}</span>
           </button>
         ))}
       </div>
@@ -96,7 +93,7 @@ export function DeliveryForm({ selectedDelivery, onSelect, onContinue }) {
       <button
         type="button"
         onClick={onContinue}
-        className="h-12 rounded-full bg-[#0D1A2D] px-7 text-base font-medium text-white transition hover:bg-black"
+        className="checkout-button checkout-button--primary"
       >
         Continue
       </button>
@@ -106,25 +103,20 @@ export function DeliveryForm({ selectedDelivery, onSelect, onContinue }) {
 
 export function DetailsForm({ onContinue }) {
   return (
-    <div className="space-y-5">
-      <label className="flex flex-col gap-2">
-        <span className="text-sm font-medium text-[#5F6878]">
-          Order notes
-        </span>
+    <div className="checkout-form">
+      <label className="checkout-field checkout-field--textarea">
+        <span className="checkout-field__label">Order notes</span>
         <textarea
           rows={4}
           placeholder="Gate code, leave at door, no onion, extra napkins..."
-          className="resize-none rounded-3xl border border-[#DDE2EB] bg-white px-4 py-3 text-base text-[#0F1316] outline-none transition placeholder:text-[#A3ACBA] focus:border-[#0D1A2D] focus:ring-4 focus:ring-[#0D1A2D]/10"
+          className="checkout-textarea"
         />
       </label>
 
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="checkout-form__grid checkout-form__grid--stacked">
         {["Add cutlery", "Call before arrival"].map((label) => (
-          <label
-            key={label}
-            className="flex h-12 items-center gap-3 rounded-2xl border border-[#E8EAF0] px-4 text-sm font-medium text-[#0F1316]"
-          >
-            <input type="checkbox" className="h-4 w-4 accent-[#0D1A2D]" />
+          <label key={label} className="checkout-toggle">
+            <input type="checkbox" className="checkout-toggle__input" />
             {label}
           </label>
         ))}
@@ -133,7 +125,7 @@ export function DetailsForm({ onContinue }) {
       <button
         type="button"
         onClick={onContinue}
-        className="h-12 rounded-full bg-[#0D1A2D] px-7 text-base font-medium text-white transition hover:bg-black"
+        className="checkout-button checkout-button--primary"
       >
         Continue
       </button>
@@ -143,29 +135,29 @@ export function DetailsForm({ onContinue }) {
 
 export function PaymentForm() {
   return (
-    <div className="space-y-5">
-      <div className="grid gap-3">
+    <div className="checkout-form">
+      <div className="checkout-form__grid checkout-form__grid--row-gap">
         {paymentOptions.map((option, index) => (
           <label
             key={option}
-            className="flex h-13 items-center gap-3 rounded-2xl border border-[#E8EAF0] px-4 text-sm font-medium text-[#0F1316]"
+            className="checkout-toggle checkout-toggle--radio"
           >
             <input
               type="radio"
               name="payment"
               defaultChecked={index === 0}
-              className="h-4 w-4 accent-[#0D1A2D]"
+              className="checkout-toggle__input"
             />
             {option}
           </label>
         ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="checkout-form__grid">
         <CheckoutField
           label="Card number"
           placeholder="1234 5678 9012 3456"
-          className="md:col-span-2"
+          className="checkout-form__wide"
         />
         <CheckoutField label="Expiry date" placeholder="MM / YY" />
         <CheckoutField label="CVC" placeholder="123" />

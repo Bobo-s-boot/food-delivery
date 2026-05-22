@@ -41,33 +41,31 @@ export function Restaurant() {
           This restaurant does not have dishes yet.
         </p>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="restaurant-menu__grid">
           {dishes.map((dish) => (
-            <div
-              key={dish._id}
-              className="flex flex-col rounded-3xl border border-[#EDECF1] bg-white p-4 shadow-sm"
-            >
+            <div key={dish._id} className="dish-card">
               {dish.image && (
                 <img
                   src={dish.image}
                   alt={dish.name}
-                  className="mb-4 h-40 w-full rounded-2xl object-cover"
+                  className="dish-card__image"
                 />
               )}
 
-              <h3 className="text-lg font-bold text-[#0F1316]">{dish.name}</h3>
-              <p className="mt-1 flex-grow text-sm text-gray-600">
-                {dish.description}
-              </p>
+              <h3 className="dish-card__name">{dish.name}</h3>
+              <p className="dish-card__description">{dish.description}</p>
 
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-xl font-bold text-[#0D1A2D]">
+              <div className="dish-card__footer">
+                {/* Возвращаем твое форматирование цены */}
+                <span className="dish-card__price">
                   ${Number(dish.price || 0).toFixed(2)}
                 </span>
+
+                {/* Возвращаем onClick и твой текст на кнопку */}
                 <button
                   type="button"
                   onClick={() => addItem(dish)}
-                  className="rounded-full bg-[#0D1A2D] px-5 py-2 text-white transition hover:bg-black"
+                  className="dish-card__btn"
                 >
                   Add
                 </button>

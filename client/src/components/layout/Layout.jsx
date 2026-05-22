@@ -1,51 +1,65 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, matchPath } from "react-router-dom";
 import { Footer } from "../footer/Footer";
 import { Header } from "../header/Header";
 import { PATH_PAGE } from "./const";
 import { CartDrawer } from "../../features/cart/CartDrawer";
+import "./Layout.scss";
+
+const routePatterns = [
+  PATH_PAGE.AUTH,
+  PATH_PAGE.HOME,
+  "/:username",
+  PATH_PAGE.CATALOG,
+  "/:username/catalog",
+  PATH_PAGE.MENU,
+  "/:username/menu",
+  PATH_PAGE.SPECIALS,
+  "/:username/specials",
+  PATH_PAGE.DELIVERY,
+  "/:username/delivery",
+  PATH_PAGE.ABOUT,
+  "/:username/about",
+  PATH_PAGE.CHECKOUT,
+  "/:username/checkout",
+];
 
 export function Layout({ children }) {
   const location = useLocation();
 
-  const isAuthPage = location.pathname === PATH_PAGE.AUTH;
-  const isHomePage = location.pathname === PATH_PAGE.HOME;
-  const isCatalogPage = location.pathname === PATH_PAGE.CATALOG;
-  const isMenuPage = location.pathname === PATH_PAGE.MENU;
-  const isSpecialsPage = location.pathname === PATH_PAGE.SPECIALS;
-  const isDeliveryPage = location.pathname === PATH_PAGE.DELIVERY;
-  const isCheckoutPage = location.pathname === PATH_PAGE.CHECKOUT;
-  const isDishPage = location.pathname.startsWith(PATH_PAGE.DISH);
-  const isAdminPage = location.pathname === PATH_PAGE.ADMIN;
-  const isAboutPage = location.pathname === PATH_PAGE.ABOUT;
+  const matchesRoute = (path) =>
+    path === location.pathname ||
+    !!matchPath({ path, end: true }, location.pathname);
 
-  const shouldRemoveContainer =
-    isAuthPage ||
-    isHomePage ||
-    isCatalogPage ||
-    isMenuPage ||
-    isSpecialsPage ||
-    isDeliveryPage ||
-    isCheckoutPage ||
-    isDishPage ||
-    isAboutPage;
+  // Оставляем твою логику для страницы блюда (так как там динамический ID в конце)
+  const isDishPage = location.pathname.startsWith(PATH_PAGE.DISH);
+
+  // Объединяем проверки из master и твои изменения
+  const shouldRemoveContainer = routePatterns.some(matchesRoute) || isDishPage;
+
+  const isAdminPage = !!matchPath(
+    { path: PATH_PAGE.ADMIN, end: true },
+    location.pathname,
+  );
+  const showFooter = location.pathname !== PATH_PAGE.AUTH;
 
   if (isAdminPage) {
     return children;
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] flex flex-col items-center w-full">
+    <div className="layout-shell">
       <Header />
 
       <main
-        className={`w-full grow mx-auto flex flex-col items-center ${
-          shouldRemoveContainer ? "" : "max-w-6xl p-8"
-        }`}
+        className={`layout-main ${shouldRemoveContainer ? "" : "layout-container"}`}
       >
         {children}
       </main>
 
-      <Footer />
+      {/* Footer не показывается на странице авторизации (логика из master) */}
+      {showFooter && <Footer />}
+
+      {/* Твоя корзина */}
       <CartDrawer />
     </div>
   );

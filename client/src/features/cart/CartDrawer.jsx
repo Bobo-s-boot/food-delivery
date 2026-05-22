@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CartItem } from "./CartItem";
 import { CartSummary } from "./CartSummary";
 import { useCart } from "./useCart";
+import "./Features.scss"; // Подключаем наши стили!
 
 export function CartDrawer() {
   const navigate = useNavigate();
@@ -36,35 +37,22 @@ export function CartDrawer() {
 
   return (
     <div
-      className={`fixed inset-0 z-50 transition ${
-        isCartOpen ? "pointer-events-auto" : "pointer-events-none"
-      }`}
+      className={`cart-drawer ${isCartOpen ? "cart-drawer--open" : ""}`}
       aria-hidden={!isCartOpen}
     >
       <button
         type="button"
         aria-label="Close cart"
         onClick={closeCart}
-        className={`absolute inset-0 h-full w-full bg-[#07101D]/45 backdrop-blur-sm transition-opacity ${
-          isCartOpen ? "opacity-100" : "opacity-0"
-        }`}
+        className="cart-drawer__overlay"
       />
 
-      <aside
-        className={`fixed bottom-0 right-0 top-0 flex h-dvh w-full max-w-150 flex-col bg-white shadow-[-24px_0_60px_rgba(13,26,45,0.18)] transition-transform duration-300 ${
-          isCartOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-        aria-label="Shopping cart"
-      >
-        <header className="flex items-start justify-between border-b border-[#E8EAF0] px-6 py-6 sm:px-8">
+      <aside className="cart-drawer__panel" aria-label="Shopping cart">
+        <header className="cart-drawer__header">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#8F9BB1]">
-              Your order
-            </p>
-            <h2 className="mt-1 text-3xl font-medium tracking-[-0.03em] text-[#0F1316]">
-              Cart ({totals.itemCount})
-            </h2>
-            <p className="mt-3 max-w-105 text-sm leading-[145%] text-[#5F6878]">
+            <p className="cart-drawer__eyebrow">Your order</p>
+            <h2 className="cart-drawer__title">Cart ({totals.itemCount})</h2>
+            <p className="cart-drawer__description">
               Delivery from selected restaurants. Add more dishes or adjust
               portions before checkout.
             </p>
@@ -73,14 +61,14 @@ export function CartDrawer() {
           <button
             type="button"
             onClick={closeCart}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#D8DDE7] text-2xl leading-none text-[#0D1A2D] transition hover:bg-[#EEF2F7]"
+            className="cart-drawer__close"
             aria-label="Close cart"
           >
             x
           </button>
         </header>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-6 sm:px-8">
+        <div className="cart-drawer__content">
           {items.length > 0 ? (
             items.map((item) => (
               <CartItem
@@ -92,14 +80,10 @@ export function CartDrawer() {
               />
             ))
           ) : (
-            <div className="flex h-full flex-col items-center justify-center py-14 text-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#EEF2F7] text-2xl font-medium text-[#0D1A2D]">
-                0
-              </div>
-              <h3 className="mt-6 text-2xl font-medium tracking-[-0.03em] text-[#0F1316]">
-                Your cart is empty
-              </h3>
-              <p className="mt-3 max-w-80 text-sm leading-[150%] text-[#6B7280]">
+            <div className="cart-drawer__empty">
+              <div className="cart-drawer__empty-icon">0</div>
+              <h3 className="cart-drawer__empty-title">Your cart is empty</h3>
+              <p className="cart-drawer__empty-text">
                 Add a burger, sushi set, dessert, or anything else that looks
                 dangerously good.
               </p>

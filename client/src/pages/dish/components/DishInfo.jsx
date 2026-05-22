@@ -35,6 +35,7 @@ export function DishInfo({ dish, onAddToCart }) {
       items.includes(id) ? items.filter((item) => item !== id) : [...items, id],
     );
   };
+
   const toggleSection = (section) => {
     setOpenSections((sections) => ({
       ...sections,
@@ -43,87 +44,54 @@ export function DishInfo({ dish, onAddToCart }) {
   };
 
   return (
-    <section className="sticky top-24 flex h-full min-h-[620px] flex-col rounded-[28px] border border-[#E1E7F0] bg-white p-6 shadow-[0_16px_40px_rgba(7,20,38,0.06)] md:p-8">
-      <div>
-        <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-[#8A96A8]">
-          {dish.restaurant}
-        </p>
-        <h1 className="mt-2 text-[40px] font-medium leading-[1.05] tracking-[-0.04em] text-[#071426] md:text-[52px]">
-          {dish.name}
-        </h1>
+    <section className="dish-info">
+      <div className="dish-info__head">
+        <p className="dish-info__restaurant">{dish.restaurant}</p>
+        <h1 className="dish-info__title">{dish.name}</h1>
 
-        <div className="mt-5 flex flex-wrap items-center gap-2 text-sm text-[#6B7890]">
-          <span className="rounded-full bg-[#EAF24D] px-3 py-1.5 font-semibold text-[#071426]">
-            {dish.rating.toFixed(1)} ★
-          </span>
-          <span className="rounded-full border border-[#E1E7F0] bg-[#F5F7FA] px-3 py-1.5">
-            {dish.reviews} reviews
-          </span>
-          <span className="rounded-full border border-[#E1E7F0] bg-[#F5F7FA] px-3 py-1.5">
-            25-35 min
-          </span>
-          {dish.weight && (
-            <span className="rounded-full border border-[#E1E7F0] bg-[#F5F7FA] px-3 py-1.5">
-              {dish.weight}
-            </span>
-          )}
-          {dish.calories && (
-            <span className="rounded-full border border-[#E1E7F0] bg-[#F5F7FA] px-3 py-1.5">
-              {dish.calories}
-            </span>
-          )}
+        <div className="dish-info__tags">
+          <span className="dish-tag dish-tag--highlight">{dish.rating.toFixed(1)} ★</span>
+          <span className="dish-tag dish-tag--pill">{dish.reviews} reviews</span>
+          <span className="dish-tag dish-tag--pill">25-35 min</span>
+          {dish.weight && <span className="dish-tag dish-tag--pill">{dish.weight}</span>}
+          {dish.calories && <span className="dish-tag dish-tag--pill">{dish.calories}</span>}
         </div>
 
-        <p className="mt-5 text-base leading-[150%] text-[#39445A]">
+        <p className="dish-info__description">
           Black Angus beef patty with aged cheddar, smoked bacon, fresh lettuce,
           pickles, tomato, red onion and creamy truffle mayo in a toasted
           brioche bun.
         </p>
 
-        <div className="mt-5 flex flex-wrap gap-2">
-          <span className="rounded-full bg-[#EAF24D] px-3 py-1.5 text-sm font-medium text-[#071426]">
-            Bestseller
-          </span>
-          <span className="rounded-full bg-[#EDF4D8] px-3 py-1.5 text-sm font-medium text-[#071426]">
-            Student deal
-          </span>
-          <span className="rounded-full border border-[#E1E7F0] bg-[#F5F7FA] px-3 py-1.5 text-sm font-medium text-[#071426]">
-            Packed for delivery
-          </span>
+        <div className="dish-info__badges">
+          <span className="dish-info__badge dish-info__badge--success">Bestseller</span>
+          <span className="dish-info__badge dish-info__badge--soft">Student deal</span>
+          <span className="dish-info__badge dish-info__badge--pill">Packed for delivery</span>
         </div>
       </div>
 
-      <div className="mt-7 grid gap-3 border-t border-[#E1E7F0] pt-5">
-        <section className="overflow-hidden rounded-[24px] border border-[#E1E7F0] bg-white">
+      <div className="dish-info__sections">
+        <section className="dish-card">
           <button
             type="button"
             onClick={() => toggleSection("customize")}
-            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-[#F8FAFC]"
+            className="dish-card__header"
           >
             <span>
-              <span className="block text-base font-semibold tracking-[-0.02em] text-[#071426]">
-                Customize your burger
-              </span>
-              <span className="mt-1 block text-sm text-[#8A96A8]">
-                Patty, cheese and sauce preferences
-              </span>
+              <span className="dish-card__title">Customize your burger</span>
+              <span className="dish-card__subtext">Patty, cheese and sauce preferences</span>
             </span>
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F5F7FA] text-xl font-medium text-[#071426]">
-              {openSections.customize ? "-" : "+"}
-            </span>
+            <span className="dish-card__toggle">{openSections.customize ? "-" : "+"}</span>
           </button>
 
           {openSections.customize && (
-            <div className="grid gap-4 border-t border-[#E1E7F0] px-5 py-4">
+            <div className="dish-card__content">
               {CUSTOMIZATION_GROUPS.map((group) => (
-                <div key={group.id}>
-                  <p className="mb-2 text-sm font-medium text-[#6B7890]">
-                    {group.title}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
+                <div key={group.id} className="dish-card__group">
+                  <p className="dish-card__group-label">{group.title}</p>
+                  <div className="dish-card__group-options">
                     {group.options.map((option) => {
-                      const isSelected =
-                        selectedOptions[group.id] === option.id;
+                      const isSelected = selectedOptions[group.id] === option.id;
 
                       return (
                         <button
@@ -135,11 +103,7 @@ export function DishInfo({ dish, onAddToCart }) {
                               [group.id]: option.id,
                             }))
                           }
-                          className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
-                            isSelected
-                              ? "border-[#071426] bg-[#071426] text-white"
-                              : "border-[#E1E7F0] bg-[#F5F7FA] text-[#071426] hover:border-[#071426]"
-                          }`}
+                          className={`dish-pill ${isSelected ? "dish-pill--active" : "dish-pill--default"}`}
                         >
                           {option.label}
                         </button>
@@ -152,51 +116,39 @@ export function DishInfo({ dish, onAddToCart }) {
           )}
         </section>
 
-        <section className="overflow-hidden rounded-[24px] border border-[#E1E7F0] bg-white">
+        <section className="dish-card">
           <button
             type="button"
             onClick={() => toggleSection("combo")}
-            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-[#F8FAFC]"
+            className="dish-card__header"
           >
             <span>
-              <span className="block text-base font-semibold tracking-[-0.02em] text-[#071426]">
-                Make it a combo
-              </span>
-              <span className="mt-1 block text-sm text-[#8A96A8]">
-                Add fries, drink or wings if you want
-              </span>
+              <span className="dish-card__title">Make it a combo</span>
+              <span className="dish-card__subtext">Add fries, drink or wings if you want</span>
             </span>
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F5F7FA] text-xl font-medium text-[#071426]">
-              {openSections.combo ? "-" : "+"}
-            </span>
+            <span className="dish-card__toggle">{openSections.combo ? "-" : "+"}</span>
           </button>
 
           {openSections.combo && (
-            <div className="grid gap-2 border-t border-[#E1E7F0] bg-[#F8FAFC] px-5 py-4">
+            <div className="dish-card__combo-content">
               {COMBO_ADD_ONS.map((addOn) => {
                 const isSelected = selectedAddOns.includes(addOn.id);
 
                 return (
                   <label
                     key={addOn.id}
-                    className={`flex cursor-pointer items-center justify-between rounded-2xl border px-4 py-3 text-sm transition ${
-                      isSelected
-                        ? "border-[#071426] bg-white shadow-sm"
-                        : "border-[#E1E7F0] bg-white/80 hover:border-[#071426]"
-                    }`}
+                    className={`dish-check ${isSelected ? "dish-check--selected" : "dish-check--default"}`}
                   >
-                    <span className="flex items-center gap-3 font-medium text-[#071426]">
+                    <span className="dish-check__label">
                       <input
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleAddOn(addOn.id)}
-                        className="h-4 w-4 accent-[#071426]"
+                        className="dish-check__input"
                       />
                       {addOn.label}
                     </span>
-                    <span className="text-[#6B7890]">
-                      +${addOn.price.toFixed(2)}
-                    </span>
+                    <span className="dish-check__price">+${addOn.price.toFixed(2)}</span>
                   </label>
                 );
               })}
@@ -205,33 +157,29 @@ export function DishInfo({ dish, onAddToCart }) {
         </section>
       </div>
 
-      <div className="mt-auto pt-7">
-        <div className="mb-5 flex w-full items-center justify-between gap-6 border-y border-[#E1E7F0] py-4">
-          <span className="text-xl font-semibold uppercase tracking-[0.08em] text-[#071426]">
+      <div className="dish-info__actions">
+        <div className="dish-info__summary">
+          <span className="dish-info__summary-label">
             {quantity > 1 ? "CURRENT TOTAL" : "REGULAR PRICE"}
           </span>
-          <span className="text-[36px] font-semibold leading-none tracking-[-0.04em] text-[#071426]">
-            ${orderTotal.toFixed(2)}
-          </span>
+          <span className="dish-info__summary-value">${orderTotal.toFixed(2)}</span>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-[160px_1fr]">
-          <div className="flex h-16 items-center overflow-hidden rounded-full border border-[#D8DDE7] bg-white">
+        <div className="dish-info__controls">
+          <div className="dish-counter">
             <button
               type="button"
               onClick={decrease}
-              className="flex h-16 w-13 items-center justify-center text-xl text-[#071426] transition hover:bg-[#EEF2F7]"
+              className="dish-counter__button"
               aria-label="Decrease quantity"
             >
               -
             </button>
-            <span className="flex h-16 min-w-13 flex-1 items-center justify-center border-x border-[#D8DDE7] text-lg font-semibold text-[#071426]">
-              {quantity}
-            </span>
+            <span className="dish-counter__value">{quantity}</span>
             <button
               type="button"
               onClick={increase}
-              className="flex h-16 w-13 items-center justify-center text-xl text-[#071426] transition hover:bg-[#EEF2F7]"
+              className="dish-counter__button"
               aria-label="Increase quantity"
             >
               +
@@ -248,12 +196,11 @@ export function DishInfo({ dish, onAddToCart }) {
                 selectedAddOns: selectedAddOnObjects,
               })
             }
-            className="h-16 rounded-full bg-[#071426] px-7 text-lg font-semibold text-white transition hover:bg-black"
+            className="dish-button dish-button--primary dish-button--large"
           >
             Add to cart
           </button>
         </div>
-
       </div>
     </section>
   );

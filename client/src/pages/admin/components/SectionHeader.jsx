@@ -1,13 +1,11 @@
-export function SectionHeader({ title, description }) {
+import "../Admin.scss";
+
+export function SectionHeader({ title, description, className = "" }) {
   return (
-    <div>
-      <h2 className="text-lg font-semibold tracking-[-0.03em] text-[#0D1A2D]">
-        {title}
-      </h2>
+    <div className={`section-header ${className}`.trim()}>
+      <h2 className="section-header__title">{title}</h2>
       {description && (
-        <p className="mt-1 max-w-170 text-sm leading-[145%] text-[#5E6A7A]">
-          {description}
-        </p>
+        <p className="section-header__description">{description}</p>
       )}
     </div>
   );

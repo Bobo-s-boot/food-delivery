@@ -12,6 +12,7 @@ import {
   getRestaurantRecommendations,
   normalizeDish,
 } from "./dishUtils";
+import "./Dish.scss";
 
 export function Dish() {
   const { id } = useParams();
@@ -27,18 +28,16 @@ export function Dish() {
 
   if (!dish) {
     return (
-      <div className="w-full bg-[#F6F7F9] px-4 py-20 font-['Inter'] md:px-8">
-        <div className="mx-auto max-w-180 rounded-[40px] bg-white p-8 text-center">
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-[#8F9BB1]">
-            Dish not found
-          </p>
-          <h1 className="mt-3 text-[48px] font-normal tracking-[-0.05em] text-[#0F1316]">
+      <div className="dish-page dish-page--empty">
+        <div className="dish-page__empty-card">
+          <p className="dish-page__empty-label">Dish not found</p>
+          <h1 className="dish-page__empty-title">
             This dish is not on the menu yet
           </h1>
           <button
             type="button"
             onClick={() => navigate("/menu")}
-            className="mt-8 h-12 rounded-full bg-[#0D1A2D] px-7 text-base font-medium text-white transition hover:bg-black"
+            className="dish-button dish-button--primary"
           >
             Back to menu
           </button>
@@ -76,38 +75,38 @@ export function Dish() {
   };
 
   return (
-    <div className="w-full bg-[#F5F7FA] font-['Inter'] text-[#071426]">
-      <div className="mx-auto w-full max-w-[1824px] px-5 pb-5 pt-6 md:px-10 xl:px-12">
-        <div className="flex flex-wrap items-center gap-2 text-sm tracking-[0.08em] text-[#8F8F93]">
+    <div className="dish-page">
+      <div className="dish-page__container">
+        <nav className="dish-breadcrumb">
           <button
             type="button"
             onClick={() => navigate("/catalog")}
-            className="transition hover:text-[#0D1A2D]"
+            className="dish-breadcrumb__link"
           >
             Restaurants
           </button>
-          <span>{">"}</span>
-          <span>{dish.restaurant}</span>
-          <span>{">"}</span>
+          <span className="dish-breadcrumb__separator">{">"}</span>
+          <span className="dish-breadcrumb__text">{dish.restaurant}</span>
+          <span className="dish-breadcrumb__separator">{">"}</span>
           <button
             type="button"
             onClick={() => navigate("/menu")}
-            className="transition hover:text-[#0D1A2D]"
+            className="dish-breadcrumb__link"
           >
             Menu
           </button>
-          <span>{">"}</span>
-          <span className="tracking-[0.05em] text-[#0D1A2D]">{dish.name}</span>
-        </div>
+          <span className="dish-breadcrumb__separator">{">"}</span>
+          <span className="dish-breadcrumb__current">{dish.name}</span>
+        </nav>
       </div>
 
-      <div className="mx-auto w-full max-w-[1824px] px-5 md:px-10 xl:px-12">
-        <section className="grid gap-6 lg:grid-cols-[minmax(0,1.18fr)_minmax(420px,0.82fr)] 2xl:grid-cols-[minmax(0,1.2fr)_minmax(520px,0.8fr)]">
-          <DishGallery dish={dish} className="relative min-h-[620px]" />
+      <div className="dish-page__container dish-page__content">
+        <section className="dish-page__hero">
+          <DishGallery dish={dish} className="dish-page__gallery" />
           <DishInfo dish={dish} onAddToCart={handleAddToCart} />
         </section>
 
-        <div className="pb-20">
+        <div className="dish-page__details">
           <DishProductDetails />
           <DishReviews dish={dish} />
           <DishRecommendations

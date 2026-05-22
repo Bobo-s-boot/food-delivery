@@ -3,6 +3,7 @@ import { RestaurantCard } from "./RestaurantCard";
 import { getRestaurants } from "../../api/restaurantService";
 import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
 import { Loading } from "../loading/Loading";
+import "./RestaurantList.scss";
 
 export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
   const [restaurants, setRestaurants] = useState([]);
@@ -67,15 +68,11 @@ export function RestaurantList({ searchQuery = "", activeCategory = "All" }) {
   }
 
   if (filteredRestaurants.length === 0) {
-    return (
-      <div className="text-center text-gray-500 text-xl mt-20">
-        Nothing found 😔
-      </div>
-    );
+    return <div className="restaurant-list__empty">Nothing found 😔</div>;
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+    <div className="restaurant-list">
       {filteredRestaurants.map((restaurant) => (
         <RestaurantCard key={restaurant.id} data={restaurant} />
       ))}

@@ -9,6 +9,7 @@ import { useCart } from "../../features/cart/useCart";
 import searchIcon from "../../assets/search.svg";
 import handbagIcon from "../../assets/handbag.svg";
 import userIcon from "../../assets/user.svg";
+import "./Header.scss";
 
 export function Header() {
   const navigate = useNavigate();
@@ -16,6 +17,9 @@ export function Header() {
   const { t } = useTranslation();
   const { openCart, totals } = useCart();
   const user = JSON.parse(localStorage.getItem("user"));
+  const userBasePath = user?.username
+    ? `/${encodeURIComponent(user.username)}`
+    : "";
   const [searchValue, setSearchValue] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,9 +34,7 @@ export function Header() {
 
   useEffect(() => {
     const query = debouncedSearchValue.trim();
-    if (!query) {
-      return;
-    }
+    if (!query) return;
 
     const fetchResults = async () => {
       setIsLoading(true);
@@ -46,7 +48,7 @@ export function Header() {
         id: restaurant.id,
         title: restaurant.name,
         subtitle: restaurant.category,
-        route: `/restaurant/${restaurant.id}`,
+        route: `${userBasePath}/restaurant/${restaurant.id}`,
       }));
 
       const dishResults = dishes
@@ -56,7 +58,7 @@ export function Header() {
           title: dish.name,
           subtitle: dish.restaurantId?.name || "",
           route: dish.restaurantId?.id
-            ? `/restaurant/${dish.restaurantId.id}`
+            ? `${userBasePath}/restaurant/${dish.restaurantId.id}`
             : null,
         }))
         .filter((dish) => dish.route);
@@ -66,6 +68,15 @@ export function Header() {
     };
 
     fetchResults();
+  }, [debouncedSearchValue, userBasePath]);
+
+  useEffect(() => {
+    if (!debouncedSearchValue.trim()) {
+      Promise.resolve().then(() => {
+        setResults([]);
+        setIsLoading(false);
+      });
+    }
   }, [debouncedSearchValue]);
 
   useEffect(() => {
@@ -94,69 +105,77 @@ export function Header() {
   const showDropdown = isOpen && searchValue.trim().length > 0;
 
   return (
-    <header className="bg-white h-22.5 px-4 lg:px-9.75 flex justify-between items-center w-full shrink-0">
-      <div className="flex items-center gap-8 2xl:gap-44.5 shrink-0">
+    <header className="header">
+      <div className="header__start">
         <div
-          className="text-[32px] font-medium text-[#000811] tracking-[0.02em] cursor-pointer"
-          onClick={() => navigate("/")}
+          className="header__brand"
+          onClick={() => navigate(userBasePath || "/")}
         >
           Defilicious
         </div>
 
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-xl text-[#0F1316] tracking-[-0.04em]">
-          {headerLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === "/"}
-              className={({ isActive }) =>
-                `px-4 py-2 transition-colors flex items-center justify-center ${link.defaultClasses} ${
-                  isActive ||
-                  (link.to === "/catalog" &&
-                    location.pathname.startsWith("/dish/"))
-                    ? "bg-[#000000] text-[#FFFFFF] border border-[#000000]"
-                    : "text-[#0F1316]"
-                }`
-              }
-            >
-              {t(`nav.${link.key}`)}
-            </NavLink>
-          ))}
+        <nav className="header__nav">
+          {headerLinks.map((link) => {
+            const linkPath = userBasePath
+              ? `${userBasePath}${link.to}`
+              : link.to;
+            return (
+              <NavLink
+                key={link.to}
+                to={linkPath}
+                end={link.to === "/"}
+                className={({ isActive }) => {
+                  // Сохраняем твою логику активности для блюд
+                  const isCatalogDishActive =
+                    link.to === "/catalog" &&
+                    location.pathname.startsWith("/dish/");
+
+                  return `header__nav-link ${
+                    isActive || isCatalogDishActive
+                      ? "header__nav-link--active"
+                      : "header__nav-link--idle"
+                  }`;
+                }}
+              >
+                {t(`nav.${link.key}`)}
+              </NavLink>
+            );
+          })}
         </nav>
       </div>
 
-      <div className="flex items-center gap-4 xl:gap-6">
-        <div ref={searchRef} className="relative hidden xl:block shrink">
-          <div className="flex items-center justify-between w-80 2xl:w-113.5 h-13.5 bg-[#EFEFF1] rounded-[100px] px-6">
+      <div className="header__actions">
+        <div ref={searchRef} className="header__search">
+          <div className="header__search-box">
             <input
               type="text"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               onFocus={() => setIsOpen(true)}
               placeholder={t("nav.searchPlaceholder")}
-              className="w-full bg-transparent text-[16px] xl:text-[18px] text-[#0F1316] placeholder:text-[rgba(15,19,22,0.5)] outline-none tracking-[-0.04em] truncate"
+              className="header__search-input"
             />
             <img
               src={searchIcon}
               alt="Search"
-              className="w-5 h-5 opacity-50 shrink-0 ml-4"
+              className="header__search-icon"
             />
           </div>
 
           {showDropdown && (
-            <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-white border border-[#E5E7EB] rounded-2xl shadow-lg z-50 max-h-80 overflow-y-auto">
+            <div className="header__dropdown">
               {isLoading ? (
-                <div className="px-4 py-3 text-sm text-[#6B7280]">Loading...</div>
+                <div className="header__dropdown-empty">Loading...</div>
               ) : results.length > 0 ? (
                 results.map((item) => (
                   <button
                     key={`${item.type}-${item.id}`}
                     type="button"
                     onClick={() => handleSelectResult(item.route)}
-                    className="w-full text-left px-4 py-3 hover:bg-[#F3F4F6] transition-colors border-b last:border-b-0 border-[#F3F4F6]"
+                    className="header__dropdown-item"
                   >
-                    <div className="text-sm text-[#111827]">{item.title}</div>
-                    <div className="text-xs text-[#6B7280]">
+                    <div className="header__dropdown-title">{item.title}</div>
+                    <div className="header__dropdown-subtitle">
                       {item.type === "restaurant"
                         ? t("nav.catalog")
                         : `${t("nav.menu")} - ${item.subtitle}`}
@@ -164,22 +183,21 @@ export function Header() {
                   </button>
                 ))
               ) : (
-                <div className="px-4 py-3 text-sm text-[#6B7280]">
-                  Nothing found
-                </div>
+                <div className="header__dropdown-empty">Nothing found</div>
               )}
             </div>
           )}
         </div>
 
-        <div className="flex items-center gap-4 shrink-0">
+        <div className="header__buttons">
           <button
             type="button"
             onClick={openCart}
-            className="relative w-13.5 h-13.5 bg-[#0D1A2D] rounded-[100px] flex items-center justify-center text-white hover:bg-gray-800 transition-colors shrink-0"
+            className="header__ghost-button relative"
             aria-label="Open cart"
           >
-            <img src={handbagIcon} alt="Shop" className="w-6 h-6" />
+            <img src={handbagIcon} alt="Shop" className="header__icon" />
+            {/* Сохраняем твой бейджик корзины */}
             {totals.itemCount > 0 && (
               <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-[#E9EE5D] px-1.5 text-xs font-semibold text-[#0D1A2D] shadow-sm">
                 {totals.itemCount}
@@ -189,7 +207,7 @@ export function Header() {
 
           <button
             onClick={user ? handleLogout : () => navigate("/auth")}
-            className="w-13.5 h-13.5 bg-[#0D1A2D] rounded-[100px] flex items-center justify-center text-white hover:bg-gray-800 transition-colors shrink-0"
+            className="header__ghost-button"
             title={
               user ? `${t("nav.logout")} (${user.username})` : t("nav.login")
             }
@@ -197,7 +215,7 @@ export function Header() {
             <img
               src={userIcon}
               alt={user ? t("nav.logout") : t("nav.login")}
-              className="w-6 h-6"
+              className="header__icon"
             />
           </button>
         </div>

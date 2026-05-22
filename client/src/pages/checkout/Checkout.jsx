@@ -8,6 +8,7 @@ import {
   PaymentForm,
 } from "./components/CheckoutForms";
 import { CheckoutOrderSummary } from "./components/CheckoutOrderSummary";
+import "./Checkout.scss";
 
 export function Checkout() {
   const [activeStep, setActiveStep] = useState("contact");
@@ -24,7 +25,9 @@ export function Checkout() {
   const renderStepContent = (stepId) => {
     if (stepId === "contact") {
       return (
-        <ContactForm onContinue={() => completeAndOpen("contact", "delivery")} />
+        <ContactForm
+          onContinue={() => completeAndOpen("contact", "delivery")}
+        />
       );
     }
 
@@ -48,16 +51,14 @@ export function Checkout() {
   };
 
   return (
-    <div className="w-full bg-[#F6F7F9] px-4 py-8 font-['Inter'] md:px-8 md:py-10">
-      <div className="mx-auto grid w-full max-w-430 gap-6 xl:grid-cols-[minmax(0,1fr)_520px]">
+    <div className="checkout">
+      <div className="checkout__container">
         <div>
-          <div className="mb-8">
-            <h1 className="text-4xl font-medium tracking-[-0.04em] text-[#0F1316] md:text-6xl">
-              Complete your order
-            </h1>
+          <div className="checkout__heading">
+            <h1 className="checkout__title">Complete your order</h1>
           </div>
 
-          <div className="space-y-4">
+          <div className="checkout__steps">
             {checkoutSteps.map((step) => (
               <CheckoutStep
                 key={step.id}

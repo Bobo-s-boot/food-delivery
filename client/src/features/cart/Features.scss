@@ -1,0 +1,400 @@
+.cart-summary {
+  border-top: 1px solid #e8eaf0;
+  background: #ffffff;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .cart-summary {
+    padding: 1.25rem 2rem 1.5rem;
+  }
+}
+
+.cart-summary__items {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #5f6878;
+}
+
+.cart-summary__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-summary__row-value {
+  font-weight: 500;
+  color: #0f1316;
+}
+
+.cart-summary__total {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e8eaf0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart-summary__total-label {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #0f1316;
+}
+
+.cart-summary__total-value {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #0d1a2d;
+}
+
+.cart-summary__button {
+  margin-top: 1.5rem;
+  display: flex;
+  width: 100%;
+  height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #0d1a2d;
+  border: none;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.cart-summary__button:hover:not(:disabled) {
+  background: #000000;
+}
+
+.cart-summary__button:disabled {
+  background: #d8dde7;
+  color: #8f9bb1;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   Cart Drawer (SCSS)
+   ========================================= */
+
+.cart-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none; /* Блокируем клики, когда корзина закрыта */
+  transition: all 0.3s ease;
+
+  &--open {
+    pointer-events: auto; /* Разрешаем клики, когда открыта */
+  }
+
+  /* --- Темный фон с размытием --- */
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(7, 16, 29, 0.45);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  &--open &__overlay {
+    opacity: 1;
+  }
+
+  /* --- Выезжающая панель --- */
+  &__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 37.5rem; /* 600px */
+    height: 100dvh;
+    background-color: #ffffff;
+    box-shadow: -24px 0 60px rgba(13, 26, 45, 0.18);
+    transform: translateX(100%); /* Прячем за правый край экрана */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &--open &__panel {
+    transform: translateX(0); /* Выдвигаем на экран */
+  }
+
+  /* --- Шапка корзины --- */
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid #e8eaf0;
+    padding: 1.5rem;
+
+    @media (min-width: 640px) {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  &__eyebrow {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #8f9bb1;
+  }
+
+  &__title {
+    margin: 0.25rem 0 0 0;
+    font-size: 1.875rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: #0f1316;
+  }
+
+  &__description {
+    margin: 0.75rem 0 0 0;
+    max-width: 26.25rem;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: #5f6878;
+  }
+
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border: 1px solid #d8dde7;
+    background: transparent;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #0d1a2d;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #eef2f7;
+    }
+  }
+
+  /* --- Контент (список товаров) --- */
+  &__content {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 1.5rem;
+
+    @media (min-width: 640px) {
+      padding: 0 2rem;
+    }
+  }
+
+  /* --- Пустая корзина --- */
+  &__empty {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 0;
+    text-align: center;
+  }
+
+  &__empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 9999px;
+    background-color: #eef2f7;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #0d1a2d;
+  }
+
+  &__empty-title {
+    margin: 1.5rem 0 0 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: #0f1316;
+  }
+
+  &__empty-text {
+    margin: 0.75rem 0 0 0;
+    max-width: 20rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #6b7280;
+  }
+}
+
+/* =========================================
+   Cart Item (SCSS)
+   ========================================= */
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr); /* 128px и остаток */
+  gap: 1.25rem;
+  border-bottom: 1px solid #e8eaf0;
+  padding: 1.25rem 0;
+
+  /* --- Изображение --- */
+  &__image-wrapper {
+    width: 8rem;
+    height: 9rem;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    background-color: #eef2f7;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* --- Правая колонка с контентом --- */
+  &__content {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  &__info {
+    min-width: 0; /* Важно для работы truncate */
+  }
+
+  &__restaurant {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #8f9bb1;
+  }
+
+  &__name {
+    margin: 0.25rem 0 0 0;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: #0f1316;
+    /* Tailwind 'truncate' */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__price {
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #0d1a2d;
+  }
+
+  &__description {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #6b7280;
+    /* Tailwind 'line-clamp-2' */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* --- Футер: счетчик и кнопка удаления --- */
+  &__footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 1rem;
+  }
+
+  &__counter {
+    display: flex;
+    height: 2.5rem;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 9999px;
+    border: 1px solid #d8dde7;
+    background-color: #ffffff;
+  }
+
+  &__counter-btn {
+    display: flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #0d1a2d;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #eef2f7;
+    }
+  }
+
+  &__counter-value {
+    display: flex;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #d8dde7;
+    border-right: 1px solid #d8dde7;
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #0f1316;
+  }
+
+  &__remove-btn {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #8f9bb1;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-underline-offset: 4px;
+    transition:
+      color 0.2s ease,
+      text-decoration 0.2s ease;
+
+    &:hover {
+      color: #0d1a2d;
+      text-decoration: underline;
+    }
+  }
+}

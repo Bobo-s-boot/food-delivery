@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from "motion/react";
+import "../Admin.scss";
 
-export function AdminIntro() {
+export function AdminIntro({ className = "" }) {
   const reduceMotion = useReducedMotion();
   const itemMotion = reduceMotion
     ? {}
@@ -11,24 +12,27 @@ export function AdminIntro() {
       };
 
   return (
-    <section className="xl:col-span-2">
-      <div className="flex flex-col gap-1 py-3">
+    <section className={`admin-intro ${className}`.trim()}>
+      <div className="admin-intro__container">
         <motion.p
-          className="text-sm text-[#6B7788]"
+          className="admin-intro__subtitle"
           {...itemMotion}
           transition={{ ...itemMotion.transition, delay: 0.08 }}
         >
           Please respond to changes
         </motion.p>
+
         <motion.h1
-          className="text-[38px] font-normal leading-none tracking-[-0.05em] text-[#0D1A2D] md:text-[56px]"
+          className="admin-intro__title"
           {...itemMotion}
           transition={{ ...itemMotion.transition, delay: 0.16 }}
         >
-          Good morning, <span className="text-[#8E98A6]">Admin</span>
+          Good morning,{" "}
+          <span className="admin-intro__title-highlight">Admin</span>
         </motion.h1>
+
         <motion.p
-          className="max-w-190 text-base text-[#5E6A7A]"
+          className="admin-intro__description"
           {...itemMotion}
           transition={{ ...itemMotion.transition, delay: 0.24 }}
         >

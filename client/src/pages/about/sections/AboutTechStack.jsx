@@ -8,19 +8,15 @@ export function AboutTechStack() {
   const { t } = useTranslation();
 
   return (
-    <section className="px-4 py-24 md:px-8">
-      <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+    <section className="about-section about-stack">
+      <div className="about-stack__grid">
         <div>
           <SectionLabel>{t("about.stack.label")}</SectionLabel>
-          <h2 className="mt-4 text-[56px] font-normal leading-none tracking-[-0.05em] md:text-[96px]">
-            {t("about.stack.title")}
-          </h2>
-          <p className="mt-8 max-w-140 text-[18px] leading-[150%] text-[#3A4656]">
-            {t("about.stack.description")}
-          </p>
+          <h2>{t("about.stack.title")}</h2>
+          <p>{t("about.stack.description")}</p>
         </div>
 
-        <div className="grid gap-6">
+        <div className="about-stack__groups">
           {techStack.map((group) => {
             const translationKey = `about.stack.groups.${group.key}`;
 

@@ -7,6 +7,6 @@ export const PATH_PAGE = {
   DELIVERY: "/delivery",
   DISH: "/dish",
   CHECKOUT: "/checkout",
-  ADMIN: "/admin",
+  ADMIN: "/:username/admin",
   ABOUT: "/about",
 };

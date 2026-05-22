@@ -1,5 +1,7 @@
 import { useCart } from "../../features/cart/useCart";
 import { useNavigate } from "react-router-dom";
+import ratingIcon from "../../assets/rating.svg";
+import "./ProductCard.scss";
 
 export function ProductCard({ item }) {
   const { addItem } = useCart();
@@ -15,65 +17,49 @@ export function ProductCard({ item }) {
   };
 
   return (
-    <article
-      onClick={openDish}
-      className="relative w-full aspect-442/552 rounded-4xl overflow-hidden group font-['Inter'] cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 bg-[#0D1A2D]"
-    >
+    <article className="product-card cursor-pointer" onClick={openDish}>
       <div
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"
+        className="product-card__image"
         style={{ backgroundImage: `url(${item.imageUrl})` }}
       />
 
-      <div className="absolute inset-0 bg-linear-to-b from-black/5 via-black/20 to-black/90 pointer-events-none" />
+      <div className="product-card__backdrop" />
 
-      <div className="absolute top-5.75 right-6 flex flex-row justify-center items-center px-4 py-2 bg-white/25 backdrop-blur-md rounded-[100px] z-10 border border-white/10">
-        <span className="text-white text-[14px] font-medium leading-[130%] tracking-[0.02em]">
-          {item.price} $
-        </span>
-      </div>
+      <div className="product-card__price">{item.price} $</div>
 
+      {/* 2. Возвращаем твою кнопку добавления с Tailwind-классами, чтобы она не потеряла дизайн */}
       <button
         type="button"
         onClick={handleAdd}
-        className="absolute left-6 top-5.75 z-10 flex h-10 items-center justify-center rounded-full bg-white px-5 text-sm font-medium text-[#0D1A2D] shadow-sm transition hover:bg-[#E9EE5D]"
+        className="absolute left-6 top-[23px] z-10 flex h-10 items-center justify-center rounded-full bg-white px-5 text-sm font-medium text-[#0D1A2D] shadow-sm transition hover:bg-[#E9EE5D]"
       >
         Add
       </button>
 
-      <div className="absolute bottom-0 left-0 w-full p-6 flex flex-col gap-3 z-10">
-        <h3 className="text-[24px] font-semibold text-white leading-[140%] m-0 truncate">
-          {item.title}
-        </h3>
+      {/* 3. Оставляем BEM-классы контента из ветки master */}
+      <div className="product-card__body">
+        <h3 className="product-card__title">{item.title}</h3>
 
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-row items-center gap-3 text-[16px] text-white/90 font-normal leading-[140%]">
-            <span>{item.category}</span>
-            <span className="text-white/40">|</span>
-            <span>{item.weight}</span>
-            <span className="text-white/40">|</span>
-            <span>{item.calories}</span>
-          </div>
-
-          <div className="flex flex-row items-center gap-1.5 text-[16px] text-white">
-            <div className="flex items-center justify-center">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="#E9EE5D"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M12 1.7L14.7 8.9H22.3L16.2 13.5L18.9 20.7L12 16.1L5.1 20.7L7.8 13.5L1.7 8.9H9.3L12 1.7Z" />
-              </svg>
-            </div>
-            <span className="font-medium">{item.rating}</span>
-            <span className="text-white/60">({item.reviews})</span>
-          </div>
+        <div className="product-card__meta">
+          <span>{item.category}</span>
+          <span className="product-card__divider">|</span>
+          <span>{item.weight}</span>
+          <span className="product-card__divider">|</span>
+          <span>{item.calories}</span>
         </div>
 
-        <p className="text-[16px] text-white/70 font-normal leading-[140%] line-clamp-2 m-0">
-          {item.description}
-        </p>
+        <div className="product-card__rating">
+          <img
+            src={ratingIcon}
+            alt=""
+            aria-hidden="true"
+            className="product-card__rating-icon"
+          />
+          <span>{item.rating}</span>
+          <span className="product-card__divider">({item.reviews})</span>
+        </div>
+
+        <p className="product-card__description">{item.description}</p>
       </div>
     </article>
   );

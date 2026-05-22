@@ -1,6 +1,6 @@
 import "dotenv/config";
 import mongoose from "mongoose";
-import Restaurant from "./src/models/Restaurant.js";
+import Restaurant from "./src/models/restaurant.js";
 import User from "./src/models/user.js";
 import restoraurants from "./data/restaurants.json" with { type: "json" };
 import users from "./data/users.json" with { type: "json" };

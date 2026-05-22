@@ -1,5 +1,4 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import "./App.css";
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
 import { Admin } from "./pages/admin/Admin";
 import { About } from "./pages/about/About";
@@ -13,22 +12,41 @@ import { Menu } from "./pages/menu/Menu";
 import { Specials } from "./pages/specials/Specials";
 import { Restaurant } from "./pages/restaurant/Restaurant";
 
+// Добавляем твои новые роуты Checkout и Dish в общий массив
+const routes = [
+  { path: "/", element: <Home /> },
+  { path: "/catalog", element: <Catalog /> },
+  { path: "/menu", element: <Menu /> },
+  { path: "/specials", element: <Specials /> },
+  { path: "/delivery", element: <Delivery /> },
+  { path: "/about", element: <About /> },
+  { path: "/restaurant/:id", element: <Restaurant /> },
+  { path: "/dish/:id", element: <Dish /> },
+  { path: "/checkout", element: <Checkout /> },
+];
+
+const buildPath = (path) =>
+  path === "/" ? "/:username?" : `/:username?${path}`;
+
 function App() {
   return (
-    <Router>
+    <Router hashType="noslash">
       <Layout>
         <Routes>
           <Route path="/auth" element={<Auth />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/catalog" element={<Catalog />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/specials" element={<Specials />} />
-          <Route path="/delivery" element={<Delivery />} />
-          <Route path="/dish/:id" element={<Dish />} />
-          <Route path="/checkout" element={<Checkout />} />
+
+          {/* Маппим все роуты с поддержкой :username из master */}
+          {routes.map((route) => (
+            <Route
+              key={route.path}
+              path={buildPath(route.path)}
+              element={route.element}
+            />
+          ))}
+
+          {/* Сохраняем доступ к админке и по обычному пути, и с username */}
           <Route path="/admin" element={<Admin />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/restaurant/:id" element={<Restaurant />} />
+          <Route path="/:username/admin" element={<Admin />} />
         </Routes>
       </Layout>
     </Router>
