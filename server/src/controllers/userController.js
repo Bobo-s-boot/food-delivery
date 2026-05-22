@@ -1,12 +1,12 @@
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
-import User from "../models/User.js";
+import User from "../models/user.js";
 
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().sort({ id: 1 });
 
     res.status(200).json(users);
-  } catch (erorr) {
+  } catch (error) {
     res
       .status(500)
       .json({ message: error.message || SERVER_ERORR_MESSAGE.USERS_NOT_FOUND });

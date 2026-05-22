@@ -43,7 +43,7 @@ export const techStack = [
       "react",
       "vite",
       "reactRouter",
-      "tailwind",
+      "scss",
       "i18next",
       "axios",
       "motion",

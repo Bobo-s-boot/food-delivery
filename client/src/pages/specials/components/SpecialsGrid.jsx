@@ -2,7 +2,7 @@ import { ProductCard } from "../../menu/ProductCard";
 
 export function SpecialsGrid({ t, deals }) {
   return (
-    <section className="mt-16 grid w-full max-w-[1692px] grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+    <section className="specials-grid">
       {deals.map((deal) => (
         <ProductCard
           key={deal.id}

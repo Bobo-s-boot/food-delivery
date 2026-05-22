@@ -25,6 +25,7 @@
     "exploreLocalRestaurants": "Explore Local Restaurants",
     "cravingPlaceholder": "What are you craving right now?",
     "browseDescription": "Browse our carefully curated list of top-rated local spots. Whether you are looking for a quick bite, a healthy lunch, or a premium dinner, we deliver the best food in the city straight to your door, fast and fresh.",
+
     "categories": {
       "all": "All",
       "topRated": "Top Rated",
@@ -133,6 +134,7 @@
     "team": {
       "label": "Team",
       "title": "Development team",
+
       "members": {
         "denis": {
           "name": "Denis Korzhyk",
@@ -142,6 +144,7 @@
             "Has 6 years of design experience and works at the intersection of UX/UI, business analysis, and product strategy. Specializes in creating clear user flows, optimizing funnels, automating processes, and improving business metrics through design."
           ]
         },
+
         "bohdan": {
           "name": "Bohdan Shevchenko",
           "role": "Senior Developer",
@@ -150,6 +153,7 @@
             "Has 4 years of experience creating websites and web applications, worked with commercial products and large companies. Understands the full development cycle: from application structure to feature implementation, code optimization, and preparing the product for scaling."
           ]
         },
+
         "artem": {
           "name": "Artem Hrebeniuk",
           "role": "Developer",
@@ -158,6 +162,7 @@
             "Has experience with different types of projects, from dynamic web services to systems connected with transactions, analytics, and high reliability requirements. Understands the importance of security, data accuracy, and stable interaction between product components."
           ]
         },
+
         "mykola": {
           "name": "Mykola Hitis",
           "role": "Lead Engineer | QA Engineer",
@@ -168,10 +173,12 @@
         }
       }
     },
+
     "stack": {
       "label": "Stack",
       "title": "Technology stack",
       "description": "To build Defilicious, we use a modern JavaScript stack that helps us develop the interface quickly, build server logic, work with the database, and support project scalability.",
+
       "groups": {
         "frontend": {
           "title": "Frontend",
@@ -180,12 +187,13 @@
             "react": "React",
             "vite": "Vite",
             "reactRouter": "React Router",
-            "tailwind": "Tailwind CSS",
+            "scss": "SCSS",
             "i18next": "i18next / react-i18next",
             "axios": "Axios",
             "motion": "Motion"
           }
         },
+
         "backend": {
           "title": "Backend",
           "items": {
@@ -200,6 +208,7 @@
             "dotenv": "dotenv"
           }
         },
+
         "tools": {
           "title": "Tools",
           "items": {
@@ -211,6 +220,7 @@
         }
       }
     },
+
     "methodology": {
       "label": "Methodology",
       "buildTitle": "How we build",
@@ -306,6 +316,7 @@
     },
     "filtersTitle": "Find the right offer",
     "filtersDescription": "Browse delivery promos, restaurant discounts and meal bundles designed for busy days.",
+
     "filters": {
       "all": "All",
       "freeDelivery": "Free Delivery",
@@ -316,6 +327,7 @@
       "limitedTime": "Limited Time",
       "bestValue": "Best Value"
     },
+
     "featured": {
       "imageAlt": "Free delivery weekend",
       "badge": "Limited Time",
@@ -324,12 +336,14 @@
       "conditions": "Valid until Sunday - Selected restaurants only",
       "button": "Order now"
     },
+
     "student": {
       "label": "Student deals",
       "title": "Student deals made for busy days",
       "description": "Get exclusive discounts on selected meals, lunch combos and delivery offers with your student account.",
       "button": "Browse student deals"
     },
+
     "deals": {
       "burgers": {
         "title": "Free Delivery on Burgers",
@@ -337,30 +351,35 @@
         "category": "Free Delivery",
         "restaurant": "The Burger Joint"
       },
+
       "sushi": {
         "title": "20% Off Sushi Sets",
         "description": "Save on selected sushi sets, rolls and combo boxes today.",
         "category": "Limited Time",
         "restaurant": "Kyoto Sushi & Wok"
       },
+
       "student": {
         "title": "Student Lunch Combo",
         "description": "Healthy bowl, drink and dessert at a special student price.",
         "category": "Student Deal",
         "restaurant": "Green Bowl Oasis"
       },
+
       "pizza": {
         "title": "Pizza Night Special",
         "description": "Buy one wood-fired pizza and get the second one 50% off.",
         "category": "Limited Time",
         "restaurant": "Luigi's Woodfire"
       },
+
       "family": {
         "title": "Family Dinner Set",
         "description": "A full dinner set for 3-4 people with curry, rice, naan and drinks.",
         "category": "Family Sets",
         "restaurant": "Tikka Masala House"
       },
+
       "sweet": {
         "title": "Sweet Weekend Box",
         "description": "Fresh cookies, tiramisu and pastries in one weekend dessert box.",
@@ -368,7 +387,9 @@
         "restaurant": "Bakery & Sweets"
       }
     },
+
     "stepsTitle": "How specials work",
+
     "steps": {
       "choose": {
         "title": "Choose a deal",

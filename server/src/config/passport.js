@@ -3,7 +3,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as FacebookStrategy } from "passport-facebook";
 import AppleStrategy from "passport-apple";
 import TwitterStrategy from "@superfaceai/passport-twitter-oauth2";
-import User from "../models/User.js";
+import User from "../models/user.js";
 
 // Helper function to find or create user
 const findOrCreateUser = async (provider, profile, done) => {

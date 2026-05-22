@@ -6,6 +6,7 @@ import { RestaurantList } from "../../components/cardListRestaurant/RestaurantLi
 import { PageHero } from "../../components/pageHero/PageHero";
 import { PromoFeature } from "../../components/promoFeature/PromoFeature";
 import { useDebounce } from "../../hooks/useDebounce";
+import "./Catalog.scss";
 
 export function Catalog() {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ export function Catalog() {
   }));
 
   return (
-    <div className="w-full mx-auto px-4 md:px-8 pb-12 flex flex-col items-center font-['Inter'] bg-[#FFFFFF]">
+    <div className="catalog-page">
       <PageHero
         image="/img/Image_Rest1.png"
         imageAlt="Catalog Background"
@@ -39,8 +40,8 @@ export function Catalog() {
         buttonLabel={t("catalog.exploreMenu")}
       />
 
-      <section className="w-full mt-22.5">
-        <h2 className="text-[48px] font-normal tracking-[-0.04em] text-black mb-16">
+      <section className="catalog-page__section">
+        <h2 className="catalog-page__heading">
           {t("catalog.exploreLocalRestaurants")}
         </h2>
 
@@ -54,8 +55,8 @@ export function Catalog() {
           onSearchChange={setSearchQuery}
         />
 
-        <div className="w-full flex justify-center mt-16">
-          <div className="w-full max-w-423">
+        <div className="catalog-page__list-wrapper">
+          <div className="catalog-page__list-inner">
             <RestaurantList
               searchQuery={debouncedSearchQuery}
               activeCategory={activeCategory}

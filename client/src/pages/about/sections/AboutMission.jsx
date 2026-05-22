@@ -6,22 +6,20 @@ export function AboutMission() {
   const { t } = useTranslation();
 
   return (
-    <section className="px-4 pb-24 md:px-8">
-      <div className="border-b border-[#DDE3EA] pb-24 pt-8">
+    <section className="about-section about-mission">
+      <div className="about-mission__wrapper">
         <SectionLabel>{t("about.mission.label")}</SectionLabel>
-        <h2 className="whitespace-nowrap text-[42px] font-normal leading-none tracking-[-0.05em] xl:text-[56px]">
-          {t("about.mission.title")}
-        </h2>
-        <div className="mt-8 grid max-w-210 gap-8 text-[15px] leading-[145%] text-[#7A828D] lg:ml-[calc(42%-110px)]">
-          <p className="md:indent-27.5">
+        <h2>{t("about.mission.title")}</h2>
+        <div className="about-mission__text">
+          <p>
             <Trans
               i18nKey="about.mission.firstText"
               components={{
-                strong: <strong className="font-semibold text-[#6B727C]" />,
+                strong: <strong className="about-mission__strong" />,
               }}
             />
           </p>
-          <p className="md:indent-27.5">{t("about.mission.secondText")}</p>
+          <p>{t("about.mission.secondText")}</p>
         </div>
       </div>
     </section>

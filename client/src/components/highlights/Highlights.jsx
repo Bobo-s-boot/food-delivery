@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { useLandingMotion } from "../../motion/safeMotion";
+import "./Highlights.scss";
 
 export function Highlights({
   sectionData = {
@@ -14,16 +15,17 @@ export function Highlights({
   const lm = useLandingMotion();
 
   return (
-    <section className={`w-full px-4 py-20 ${className}`.trim()}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section className={`highlights ${className}`.trim()}>
+      <div className="highlights__grid">
         <motion.div
           variants={lm.highlightsLeft}
           initial="hidden"
           whileInView="visible"
           viewport={lm.viewport}
+          className="highlights__text"
         >
           <motion.h2
-            className="text-[32px] text-left font-bold text-gray-900 mb-6"
+            className="highlights__title"
             variants={lm.highlightsLeftChild}
           >
             {headingLines.map((line, index) => (
@@ -34,23 +36,23 @@ export function Highlights({
             ))}
           </motion.h2>
           <motion.p
-            className="text-gray-600 text-left text-base mb-10"
+            className="highlights__description"
             variants={lm.highlightsLeftChild}
           >
             {description}
           </motion.p>
 
           <motion.div
-            className="flex flex-wrap justify-between gap-6 w-full"
+            className="highlights__stats"
             variants={lm.highlightsStatsGroup}
           >
             {statsData.map((item) => (
               <motion.div
                 key={item.label}
-                className="flex flex-col items-center justify-center gap-2"
+                className="highlights__stat"
                 variants={lm.statItem}
               >
-                <div className="flex justify-center items-center w-12 h-12 rounded-full bg-black">
+                <div className="highlights__stat-icon">
                   <img
                     src={item.icon}
                     alt={item.label}
@@ -58,20 +60,18 @@ export function Highlights({
                     height={32}
                   />
                 </div>
-                <span className="text-black text-lg font-bold">
-                  {item.value}
-                </span>
-                <p className="text-black text-sm">{item.label}</p>
+                <span className="highlights__stat-value">{item.value}</span>
+                <p className="highlights__stat-label">{item.label}</p>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
 
-        <div className="space-y-4">
+        <div className="highlights__cards">
           {cards.map((card, index) => (
             <motion.div
               key={card.title}
-              className="flex items-center gap-6 p-6 bg-[#8F9BB1] rounded-2xl shadow-sm border border-[#8F9BB1]"
+              className="highlights__card"
               variants={lm.highlightCard(index)}
               initial="hidden"
               whileInView="visible"
@@ -86,16 +86,12 @@ export function Highlights({
               }
               transition={{ type: "spring", stiffness: 400, damping: 28 }}
             >
-              <div className="shrink-0 w-32 h-32 bg-white rounded-lg flex items-center justify-center py-8 px-3">
+              <div className="highlights__card-icon">
                 <img src={card.icon} alt={card.title} />
               </div>
-              <div className="flex flex-col gap-4">
-                <h3 className="text-2xl font-medium text-white text-left">
-                  {card.title}
-                </h3>
-                <p className="text-white text-left text-lg">
-                  {card.description}
-                </p>
+              <div className="highlights__card-content">
+                <h3 className="highlights__card-title">{card.title}</h3>
+                <p className="highlights__card-text">{card.description}</p>
               </div>
             </motion.div>
           ))}

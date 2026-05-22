@@ -8,15 +8,13 @@ export function AboutTeam() {
   const { t } = useTranslation();
 
   return (
-    <section className="bg-[#F4F6F8] px-4 py-24 md:px-8">
-      <div className="mb-14">
+    <section className="about-section about-team">
+      <div className="about-team__header">
         <SectionLabel>{t("about.team.label")}</SectionLabel>
-        <h2 className="mt-4 text-[64px] font-normal leading-none tracking-[-0.05em] md:text-[120px]">
-          {t("about.team.title")}
-        </h2>
+        <h2>{t("about.team.title")}</h2>
       </div>
 
-      <div className="grid gap-12">
+      <div className="about-team__list">
         {teamMembers.map((member, index) => {
           const translationKey = `about.team.members.${member.key}`;
 

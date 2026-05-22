@@ -1,18 +1,13 @@
-export function AdminTable({
-  columns,
-  rows,
-  renderRow,
-  minWidth = "min-w-180",
-}) {
+import "../Admin.scss";
+
+export function AdminTable({ columns, rows, renderRow, className = "" }) {
   return (
-    <div className="mt-4 w-full overflow-x-auto">
-      <table
-        className={`w-full ${minWidth} border-separate border-spacing-y-2 text-left text-sm`}
-      >
+    <div className={`admin-table-wrapper ${className}`.trim()}>
+      <table className="admin-table">
         <thead>
-          <tr className="text-xs uppercase tracking-[0.08em] text-[#7B8794]">
+          <tr className="admin-table__header-row">
             {columns.map((column) => (
-              <th key={column} className="px-3 pb-1 font-medium">
+              <th key={column} className="admin-table__header-cell">
                 {column}
               </th>
             ))}

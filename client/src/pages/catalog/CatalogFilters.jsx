@@ -1,5 +1,6 @@
 import { CatalogSearch } from "./CatalogSearch";
 import { CatalogTab } from "./CatalogTab";
+import "./CatalogFilters.scss";
 
 export function CatalogFilters({
   categories,
@@ -11,15 +12,15 @@ export function CatalogFilters({
   onSearchChange,
 }) {
   return (
-    <div className="w-full flex justify-center">
-      <div className="flex flex-col lg:flex-row justify-between items-start w-full max-w-423 gap-30">
-        <div className="flex flex-col gap-5 w-full max-w-211.25 items-start">
+    <div className="catalog-filters">
+      <div className="catalog-filters__container">
+        {/* Этот div получает класс __controls, и благодаря SCSS выстраивает внутри себя колонку */}
+        <div className="catalog-filters__controls">
           <CatalogTab
             categories={categories}
             activeCategory={activeCategory}
             onCategorySelect={onCategorySelect}
           />
-
           <CatalogSearch
             value={searchQuery}
             onChange={onSearchChange}
@@ -27,10 +28,9 @@ export function CatalogFilters({
           />
         </div>
 
-        <div className="w-full max-w-181.75 shrink-0 mt-0">
-          <p className="text-[16px] font-normal leading-[140%] text-gray-800">
-            {description}
-          </p>
+        {/* А этот div уезжает вправо на больших экранах */}
+        <div className="catalog-filters__description">
+          <p>{description}</p>
         </div>
       </div>
     </div>

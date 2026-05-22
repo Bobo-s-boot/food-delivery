@@ -1,5 +1,5 @@
-import Dish from "../models/Dish.js";
-import Restaurant from "../models/Restaurant.js";
+import Dish from "../models/dish.js";
+import Restaurant from "../models/restaurant.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 
 export const getDishes = async (req, res) => {

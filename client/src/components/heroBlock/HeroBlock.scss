@@ -1,0 +1,143 @@
+.hero-block {
+  width: 100%;
+  padding: 1rem;
+}
+
+.hero-block__container {
+  position: relative;
+  width: 100%;
+  min-height: 37.5rem;
+  border-radius: 2rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+  box-sizing: border-box;
+}
+
+.hero-block__background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.95;
+}
+
+.hero-block__content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4.5rem;
+}
+
+.hero-block__heading {
+  font-size: clamp(2.5rem, 3.5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0 0 1.25rem;
+  color: #0f172a;
+}
+
+.hero-block__description {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 2rem;
+  max-width: 40rem;
+}
+
+.hero-block__cta-button {
+  background: #111827;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.hero-block__cta-button:hover {
+  background: #131a2d;
+}
+
+.hero-block__side-panel,
+.hero-block__bottom-panel {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hero-block__side-panel {
+  right: 1rem;
+  bottom: 1rem;
+  justify-content: flex-end;
+}
+
+.hero-block__bottom-panel {
+  left: 1rem;
+  bottom: 1rem;
+  justify-content: flex-start;
+}
+
+.hero-block__social-list {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.hero-block__social-pill {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.hero-block__social-pill:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.hero-block__note-wrapper {
+  max-width: 22rem;
+}
+
+.hero-block__note {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.hero-block__dots {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border-radius: 9999px;
+  padding: 0.5rem 0.75rem;
+}
+
+.hero-block__dot {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: rgba(229, 231, 235, 0.9);
+}
+
+.hero-block__dot--overlap {
+  margin-left: -0.75rem;
+  z-index: 20;
+}
+
+.hero-block__dot--overlap-second {
+  margin-left: -0.75rem;
+  z-index: 10;
+}

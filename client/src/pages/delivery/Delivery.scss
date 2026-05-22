@@ -1,0 +1,596 @@
+/* =========================================
+   Delivery Page Styles
+   ========================================= */
+
+.delivery-page {
+  width: 100%;
+  background: #ffffff;
+  font-family: "Inter", sans-serif;
+  color: #0d1a2d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem 6rem;
+
+  @media (min-width: 768px) {
+    padding: 0 2rem 6rem;
+  }
+
+  &__section {
+    width: 100%;
+    /* Ограничитель ширины отключен для эффекта "на весь экран", как ты просил */
+  }
+}
+
+.delivery-hero {
+  position: relative;
+  width: 100%;
+  min-height: 28.125rem; // min-h-112.5
+  overflow: hidden;
+  border-radius: 40px; // rounded-[40px]
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); // shadow-sm
+
+  @media (min-width: 1024px) {
+    border-radius: 64px; // lg:rounded-[64px]
+  }
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(13, 26, 45, 0.55); // bg-[#0D1A2D]/55
+  }
+
+  &__content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    min-height: 28.125rem; // min-h-112.5
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 2rem; // gap-8
+    padding: 2rem; // p-8
+    color: #ffffff;
+
+    @media (min-width: 768px) {
+      padding: 3.5rem; // md:p-14
+    }
+
+    @media (min-width: 1024px) {
+      padding: 5rem; // lg:p-20
+    }
+  }
+
+  &__badge {
+    width: max-content;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.4); // border-white/40
+    background-color: rgba(255, 255, 255, 0.15); // bg-white/15
+    padding: 0.5rem 1.25rem; // py-2 px-5
+    font-size: 0.875rem; // text-sm
+    backdrop-filter: blur(12px); // backdrop-blur-md
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  &__group {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 2rem; // gap-8
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  &__text {
+    max-width: 50rem; // max-w-200
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 42px; // text-[42px]
+    font-weight: 400; // font-normal
+    line-height: 1; // leading-none
+    letter-spacing: -0.04em; // tracking-[-0.04em]
+
+    @media (min-width: 768px) {
+      font-size: 64px; // md:text-[64px]
+    }
+  }
+
+  &__description {
+    margin: 1.25rem 0 0 0; // mt-5
+    max-width: 47.5rem; // max-w-190
+    font-size: 1rem; // text-base
+    line-height: 1.5; // leading-[150%]
+    color: rgba(255, 255, 255, 0.9); // text-white/90
+
+    @media (min-width: 768px) {
+      font-size: 1.125rem; // md:text-lg
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem; // gap-3
+  }
+
+  &__btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem; // h-12
+    border-radius: 9999px; // rounded-full
+    background-color: #ffffff; // bg-white
+    padding: 0 1.75rem; // px-7
+    font-size: 1.125rem; // text-lg
+    color: #0d1a2d; // text-[#0D1A2D]
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: #f3f4f6; // hover:bg-[#F3F4F6]
+    }
+  }
+
+  &__btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem; // h-12
+    border-radius: 9999px; // rounded-full
+    border: 2px solid #ffffff; // border-2 border-white
+    background-color: transparent;
+    padding: 0 1.75rem; // px-7
+    font-size: 1.125rem; // text-lg
+    color: #ffffff; // text-white
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background-color: #ffffff; // hover:bg-white
+      color: #000000; // hover:text-black
+    }
+  }
+}
+
+/* --- 2. Stats Section --- */
+.delivery-stats {
+  margin-top: 4rem;
+  display: grid;
+  width: 100%;
+  flex: 1;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.delivery-stat-card {
+  border-radius: 2rem;
+  background: #f3f4f6;
+  padding: 2rem;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 3vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    margin: 0.75rem 0 0;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+}
+
+/* --- 3. Timeline Section (ОБНОВЛЕНО) --- */
+/* =========================================
+   3. Timeline Section (How delivery works)
+   ========================================= */
+.delivery-timeline {
+  margin-top: 6rem;
+  display: grid;
+  gap: 2.5rem;
+  width: 100%;
+
+  @media (min-width: 1280px) {
+    grid-template-columns: 0.8fr 1.2fr;
+    align-items: stretch; // Растягивает обе колонки на одинаковую высоту
+  }
+
+  &__intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-start;
+
+    .subtitle,
+    p:first-child {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: #0d1a2d;
+    }
+
+    p:last-child {
+      margin: 1.25rem 0 0;
+      max-width: 35rem;
+      color: #4b5563;
+      line-height: 1.6;
+      font-size: 1.125rem;
+    }
+  }
+
+  /* 🌟 ПРАВАЯ ТЕМНАЯ КАРТОЧКА С ШАГАМИ 🌟 */
+  &__steps {
+    border-radius: 2.5rem;
+    background: #0d1a2d; // Тот самый глубокий темно-синий цвет из Figma
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; // Равномерно распределяет шаги по всей высоте
+    gap: 2rem;
+
+    /* Устанавливаем высоту как на макете */
+    min-height: 28.75rem; // Соответствует соседним карточкам (около 460px)
+
+    @media (min-width: 768px) {
+      padding: 3.5rem;
+    }
+  }
+}
+
+/* 🌟 ЭЛЕМЕНТЫ ШАГОВ (ВНУТРИ КАРТОЧКИ) 🌟 */
+.delivery-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  color: #ffffff;
+  align-items: start;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  &__marker {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: #0d1a2d;
+    font-size: 1rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+
+  &__text {
+    margin: 0.5rem 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    font-size: 0.875rem;
+  }
+}
+
+/* --- 4. Options Section --- */
+.delivery-options {
+  margin-top: 6rem;
+  width: 100%;
+
+  &__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 78px;
+      letter-spacing: -0.04em;
+    }
+
+    p {
+      margin: 0;
+      color: #4b5563;
+      max-width: 25rem;
+    }
+  }
+}
+
+.delivery-option-list {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.delivery-option-card {
+  border-radius: 2rem;
+  border: 1px solid #edecef;
+  background: #ffffff;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    margin: 0.75rem 0 0;
+    color: #4b5563;
+    line-height: 1.6;
+  }
+}
+
+.delivery-option-meta {
+  display: inline-flex;
+  margin-top: 2rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  background: #0d1a2d;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* --- 5. Zones & Fees Section --- */
+.delivery-zones {
+  margin-top: 6rem;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 1280px) {
+    grid-template-columns: 1fr 0.85fr;
+  }
+}
+
+.delivery-zones__left {
+  border-radius: 2.5rem;
+  background: #f3f4f6;
+  padding: 1.5rem;
+
+  @media (min-width: 768px) {
+    padding: 2.5rem;
+  }
+}
+
+.delivery-zones__title {
+  margin: 0;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #000000;
+}
+
+.delivery-zones__grid {
+  margin-top: 2rem;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  background: #ffffff;
+}
+
+.delivery-zones__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  border-bottom: 1px solid #edecf1;
+  padding: 1.25rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    gap: 0;
+    padding: 1.25rem;
+  }
+
+  span:first-child {
+    font-weight: 500;
+    color: #000000;
+  }
+
+  span:nth-child(2) {
+    color: #4b5563;
+  }
+
+  span:last-child {
+    font-weight: 500;
+    color: #0d1a2d;
+  }
+}
+
+.delivery-zones__right {
+  position: relative;
+  min-height: 28.75rem;
+  overflow: hidden;
+  border-radius: 2.5rem;
+  background: #0d1a2d;
+  padding: 2rem;
+  color: #ffffff;
+
+  @media (min-width: 768px) {
+    padding: 2.5rem;
+  }
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+    z-index: 1;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: rgba(13, 26, 45, 0.55);
+  }
+}
+
+.delivery-zones__content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.delivery-zones__label {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.delivery-zones__subtitle {
+  margin: 1.25rem 0 0;
+  font-size: clamp(2.25rem, 3.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+}
+
+.delivery-zones__text {
+  margin: 1.25rem 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.delivery-zones__tags {
+  margin: 2rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.delivery-zones__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+/* --- 6. FAQ Section --- */
+.delivery-faq {
+  margin-top: 6rem;
+  width: 100%;
+
+  &__title {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.04em;
+  }
+
+  &__grid {
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__card {
+    background: #f3f4f6;
+    padding: 2rem;
+    border-radius: 2rem;
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 1rem 0 0;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+  }
+}

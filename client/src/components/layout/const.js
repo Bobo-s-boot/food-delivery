@@ -5,6 +5,6 @@ export const PATH_PAGE = {
   MENU: "/menu",
   SPECIALS: "/specials",
   DELIVERY: "/delivery",
-  ADMIN: "/admin",
+  ADMIN: "/:username/admin",
   ABOUT: "/about",
 };
