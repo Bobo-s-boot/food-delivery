@@ -193,13 +193,13 @@ export function Header() {
           <button
             type="button"
             onClick={openCart}
-            className="header__ghost-button relative"
+            className="header__ghost-button"
             aria-label="Open cart"
           >
             <img src={handbagIcon} alt="Shop" className="header__icon" />
             {/* Сохраняем твой бейджик корзины */}
             {totals.itemCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-[#E9EE5D] px-1.5 text-xs font-semibold text-[#0D1A2D] shadow-sm">
+              <span className="header__cart-badge">
                 {totals.itemCount}
               </span>
             )}

@@ -4,11 +4,11 @@ import { deliveryOptions, paymentOptions } from "../const";
 export function ContactForm({ onContinue }) {
   return (
     <div className="checkout-form">
-      <div className="checkout-form__grid">
+      <div className="checkout-form__grid checkout-form__grid--half">
         <CheckoutField label="First name" placeholder="Denys" />
         <CheckoutField label="Last name" placeholder="Korzhyk" />
       </div>
-      <div className="checkout-form__grid">
+      <div className="checkout-form__grid checkout-form__grid--half">
         <CheckoutField label="Phone number" placeholder="+38 (067) 573-57-30" />
         <CheckoutField
           label="Email"
@@ -54,7 +54,7 @@ export function ContactForm({ onContinue }) {
 export function DeliveryForm({ selectedDelivery, onSelect, onContinue }) {
   return (
     <div className="checkout-form checkout-form--spaced">
-      <div className="checkout-form__grid">
+      <div className="checkout-form__grid checkout-form__grid--half">
         <CheckoutField
           label="Delivery address"
           placeholder="Street, building, apartment"
@@ -140,7 +140,7 @@ export function PaymentForm() {
         {paymentOptions.map((option, index) => (
           <label
             key={option}
-            className="checkout-toggle checkout-toggle--radio"
+            className="checkout-toggle checkout-toggle--payment"
           >
             <input
               type="radio"
@@ -153,7 +153,7 @@ export function PaymentForm() {
         ))}
       </div>
 
-      <div className="checkout-form__grid">
+      <div className="checkout-form__grid checkout-form__grid--half">
         <CheckoutField
           label="Card number"
           placeholder="1234 5678 9012 3456"

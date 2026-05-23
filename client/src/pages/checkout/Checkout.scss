@@ -10,7 +10,7 @@
 
   &__container {
     width: 100%;
-    max-width: 430px;
+    max-width: 107.5rem;
     margin: 0 auto;
     display: grid;
     gap: 1.5rem;
@@ -133,11 +133,11 @@
   }
 
   &__input {
-    min-height: 3rem;
+    height: 3rem;
     border-radius: 1rem;
     border: 1px solid #dde2eb;
     background: #fff;
-    padding: 1rem;
+    padding: 0 1rem;
     font-size: 1rem;
     color: #0f1316;
     outline: none;
@@ -163,7 +163,7 @@
 
   .checkout-textarea {
     min-height: 3rem;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     border: 1px solid #dde2eb;
     background: #fff;
     padding: 1rem;
@@ -192,6 +192,8 @@
 
 .checkout-form {
   width: 100%;
+  display: grid;
+  gap: 1.25rem;
 
   &__section {
     margin-top: 0;
@@ -224,11 +226,13 @@
   }
 
   &__wide {
-    grid-column: span 2 / span 2;
+    @media (min-width: 768px) {
+      grid-column: span 2 / span 2;
+    }
   }
 
   &--spaced {
-    row-gap: 1.5rem;
+    gap: 1.5rem;
   }
 }
 
@@ -255,6 +259,10 @@
   &--radio {
     min-height: 3.25rem;
   }
+}
+
+.checkout-toggle--payment {
+  min-height: 3.25rem;
 }
 
 .checkout-option {

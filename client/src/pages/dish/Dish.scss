@@ -116,6 +116,45 @@
   }
 }
 
+.dish-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  color: #8f8f93;
+
+  &__link,
+  &__text,
+  &__current,
+  &__separator {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__link {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #0d1a2d;
+    }
+  }
+
+  &__current {
+    color: #0d1a2d;
+    letter-spacing: 0.05em;
+  }
+}
+
 .dish-info {
   position: sticky;
   top: 6rem;
@@ -240,6 +279,30 @@
       grid-template-columns: 160px 1fr;
     }
   }
+
+  &__actions {
+    margin-top: auto;
+    padding-top: 1.75rem;
+  }
+}
+
+.dish-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #071426;
+}
+
+.dish-tag--highlight {
+  background: #eaf24d;
+}
+
+.dish-tag--pill {
+  border: 1px solid #e1e7f0;
+  background: #f5f7fa;
 }
 
 .dish-card {
@@ -256,6 +319,9 @@
     gap: 1rem;
     padding: 1.25rem 1.5rem;
     text-align: left;
+    border: 0;
+    background: #fff;
+    cursor: pointer;
     transition: background 0.2s ease;
 
     &:hover {

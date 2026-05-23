@@ -17,7 +17,7 @@ export function ProductCard({ item }) {
   };
 
   return (
-    <article className="product-card cursor-pointer" onClick={openDish}>
+    <article className="product-card" onClick={openDish}>
       <div
         className="product-card__image"
         style={{ backgroundImage: `url(${item.imageUrl})` }}
@@ -31,7 +31,7 @@ export function ProductCard({ item }) {
       <button
         type="button"
         onClick={handleAdd}
-        className="absolute left-6 top-[23px] z-10 flex h-10 items-center justify-center rounded-full bg-white px-5 text-sm font-medium text-[#0D1A2D] shadow-sm transition hover:bg-[#E9EE5D]"
+        className="product-card__add-button"
       >
         Add
       </button>

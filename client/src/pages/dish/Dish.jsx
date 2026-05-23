@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useCart } from "../../features/cart/useCart";
 import { MOCK_MENU_ITEMS } from "../menu/const";
@@ -25,6 +26,10 @@ export function Dish() {
     stateDish && String(stateDish.id ?? stateDish._id) === String(id)
       ? normalizeDish(stateDish)
       : findDishById(dishSource, id);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [id]);
 
   if (!dish) {
     return (
