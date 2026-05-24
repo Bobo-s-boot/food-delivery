@@ -2,6 +2,7 @@ import { useLocation, matchPath } from "react-router-dom";
 import { Footer } from "../footer/Footer";
 import { Header } from "../header/Header";
 import { PATH_PAGE } from "./const";
+import { CartDrawer } from "../../features/cart/CartDrawer";
 import "./Layout.scss";
 
 const routePatterns = [
@@ -18,6 +19,8 @@ const routePatterns = [
   "/:username/delivery",
   PATH_PAGE.ABOUT,
   "/:username/about",
+  PATH_PAGE.CHECKOUT,
+  "/:username/checkout",
 ];
 
 export function Layout({ children }) {
@@ -27,7 +30,12 @@ export function Layout({ children }) {
     path === location.pathname ||
     !!matchPath({ path, end: true }, location.pathname);
 
-  const shouldRemoveContainer = routePatterns.some(matchesRoute);
+  // Оставляем твою логику для страницы блюда (так как там динамический ID в конце)
+  const isDishPage = location.pathname.startsWith(PATH_PAGE.DISH);
+
+  // Объединяем проверки из master и твои изменения
+  const shouldRemoveContainer = routePatterns.some(matchesRoute) || isDishPage;
+
   const isAdminPage = !!matchPath(
     { path: PATH_PAGE.ADMIN, end: true },
     location.pathname,
@@ -48,7 +56,11 @@ export function Layout({ children }) {
         {children}
       </main>
 
+      {/* Footer не показывается на странице авторизации (логика из master) */}
       {showFooter && <Footer />}
+
+      {/* Твоя корзина */}
+      <CartDrawer />
     </div>
   );
 }

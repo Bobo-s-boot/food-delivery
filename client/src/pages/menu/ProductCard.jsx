@@ -1,9 +1,23 @@
+import { useCart } from "../../features/cart/useCart";
+import { useNavigate } from "react-router-dom";
 import ratingIcon from "../../assets/rating.svg";
 import "./ProductCard.scss";
 
 export function ProductCard({ item }) {
+  const { addItem } = useCart();
+  const navigate = useNavigate();
+
+  const openDish = () => {
+    navigate(`/dish/${item.id}`, { state: { dish: item } });
+  };
+
+  const handleAdd = (event) => {
+    event.stopPropagation();
+    addItem(item);
+  };
+
   return (
-    <div className="product-card">
+    <article className="product-card" onClick={openDish}>
       <div
         className="product-card__image"
         style={{ backgroundImage: `url(${item.imageUrl})` }}
@@ -13,6 +27,16 @@ export function ProductCard({ item }) {
 
       <div className="product-card__price">{item.price} $</div>
 
+      {/* 2. Возвращаем твою кнопку добавления с Tailwind-классами, чтобы она не потеряла дизайн */}
+      <button
+        type="button"
+        onClick={handleAdd}
+        className="product-card__add-button"
+      >
+        Add
+      </button>
+
+      {/* 3. Оставляем BEM-классы контента из ветки master */}
       <div className="product-card__body">
         <h3 className="product-card__title">{item.title}</h3>
 
@@ -37,6 +61,6 @@ export function ProductCard({ item }) {
 
         <p className="product-card__description">{item.description}</p>
       </div>
-    </div>
+    </article>
   );
 }

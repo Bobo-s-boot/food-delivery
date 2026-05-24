@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { headerLinks } from "./consts.js";
 import { useDebounce } from "../../hooks/useDebounce";
 import { searchRestaurants } from "../../api/restaurantService";
 import { searchDishes } from "../../api/dishService";
+import { useCart } from "../../features/cart/useCart";
 import searchIcon from "../../assets/search.svg";
 import handbagIcon from "../../assets/handbag.svg";
 import userIcon from "../../assets/user.svg";
@@ -12,7 +13,9 @@ import "./Header.scss";
 
 export function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
+  const { openCart, totals } = useCart();
   const user = JSON.parse(localStorage.getItem("user"));
   const userBasePath = user?.username
     ? `/${encodeURIComponent(user.username)}`
@@ -121,9 +124,18 @@ export function Header() {
                 key={link.to}
                 to={linkPath}
                 end={link.to === "/"}
-                className={({ isActive }) =>
-                  `header__nav-link ${isActive ? "header__nav-link--active" : "header__nav-link--idle"}`
-                }
+                className={({ isActive }) => {
+                  // Сохраняем твою логику активности для блюд
+                  const isCatalogDishActive =
+                    link.to === "/catalog" &&
+                    location.pathname.startsWith("/dish/");
+
+                  return `header__nav-link ${
+                    isActive || isCatalogDishActive
+                      ? "header__nav-link--active"
+                      : "header__nav-link--idle"
+                  }`;
+                }}
               >
                 {t(`nav.${link.key}`)}
               </NavLink>
@@ -178,8 +190,19 @@ export function Header() {
         </div>
 
         <div className="header__buttons">
-          <button className="header__ghost-button">
+          <button
+            type="button"
+            onClick={openCart}
+            className="header__ghost-button"
+            aria-label="Open cart"
+          >
             <img src={handbagIcon} alt="Shop" className="header__icon" />
+            {/* Сохраняем твой бейджик корзины */}
+            {totals.itemCount > 0 && (
+              <span className="header__cart-badge">
+                {totals.itemCount}
+              </span>
+            )}
           </button>
 
           <button

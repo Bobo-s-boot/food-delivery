@@ -57,6 +57,31 @@
   font-weight: 500;
 }
 
+.product-card__add-button {
+  position: absolute;
+  left: 1.5rem;
+  top: 1.4375rem;
+  z-index: 10;
+  display: flex;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  background: #ffffff;
+  border: none;
+  padding: 0 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #0d1a2d;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.product-card__add-button:hover {
+  background: #e9ee5d;
+}
+
 .product-card__body {
   position: absolute;
   bottom: 0;

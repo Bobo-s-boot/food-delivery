@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getDishesByRestaurant } from "../../api/dishService";
 import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
-import "./Restaurant.scss";
+import { useCart } from "../../features/cart/useCart";
 
 export function Restaurant() {
   const { id } = useParams();
+  const { addItem } = useCart();
   const [dishes, setDishes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,20 +28,17 @@ export function Restaurant() {
     }
   }, [id]);
 
-  if (isLoading)
-    return (
-      <div className="restaurant-menu__loading">
-        Загружаем вкусное меню... 🍕
-      </div>
-    );
+  if (isLoading) {
+    return <div className="text-amber-300">Loading menu...</div>;
+  }
 
   return (
-    <div className="restaurant-menu">
-      <h2 className="restaurant-menu__title">Меню</h2>
+    <div className="mt-8 w-full">
+      <h2 className="mb-6 text-2xl font-bold text-[#0F1316]">Menu</h2>
 
       {dishes.length === 0 ? (
-        <p className="restaurant-menu__empty-text">
-          В этом ресторане пока нет добавленных блюд.
+        <p className="text-gray-500">
+          This restaurant does not have dishes yet.
         </p>
       ) : (
         <div className="restaurant-menu__grid">
@@ -58,8 +56,19 @@ export function Restaurant() {
               <p className="dish-card__description">{dish.description}</p>
 
               <div className="dish-card__footer">
-                <span className="dish-card__price">{dish.price} ₴</span>
-                <button className="dish-card__btn">В корзину</button>
+                {/* Возвращаем твое форматирование цены */}
+                <span className="dish-card__price">
+                  ${Number(dish.price || 0).toFixed(2)}
+                </span>
+
+                {/* Возвращаем onClick и твой текст на кнопку */}
+                <button
+                  type="button"
+                  onClick={() => addItem(dish)}
+                  className="dish-card__btn"
+                >
+                  Add
+                </button>
               </div>
             </div>
           ))}

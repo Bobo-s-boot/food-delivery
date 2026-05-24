@@ -1,0 +1,134 @@
+.dish-accordion {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.dish-accordion-item {
+  overflow: hidden;
+  border-radius: 1.875rem;
+  border: 1px solid #e8eaf0;
+  background: #ffffff;
+}
+
+.dish-accordion-item__header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  transition: background-color 0.2s ease;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0f1316;
+}
+
+.dish-accordion-item__header:hover {
+  background: #f8fafc;
+}
+
+.dish-accordion-item__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  border: 1px solid #d8dde7;
+  background: transparent;
+  font-size: 1.25rem;
+  color: #0d1a2d;
+  flex-shrink: 0;
+}
+
+.dish-accordion-item__content {
+  border-top: 1px solid #e8eaf0;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #5f6878;
+}
+
+.dish-accordion-item__content ul {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dish-accordion-item__content li {
+  margin: 0;
+  padding: 0;
+}
+
+.dish-accordion__reviews {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.dish-accordion__review-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dish-accordion__rating-text {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: #0d1a2d;
+}
+
+.dish-accordion__rating-subtext {
+  margin: 0;
+  color: #8f9bb1;
+  font-size: 0.875rem;
+}
+
+.dish-accordion__review {
+  border-top: 1px solid #e8eaf0;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dish-accordion__review-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.dish-accordion__review-author {
+  margin: 0;
+  font-weight: 500;
+  color: #0f1316;
+  font-size: 0.875rem;
+}
+
+.dish-accordion__review-time {
+  font-size: 0.75rem;
+  color: #8f9bb1;
+}
+
+.dish-accordion__review-rating {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0d1a2d;
+}
+
+.dish-accordion__review-text {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: #3a4656;
+  line-height: 1.5;
+}
