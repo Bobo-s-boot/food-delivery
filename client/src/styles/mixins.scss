@@ -1,0 +1,22 @@
+@mixin responsive($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin glass-panel($background, $border-color, $blur: 25px) {
+  background: $background;
+  backdrop-filter: blur($blur);
+  border: 1px solid $border-color;
+}
+
+@mixin text-clamp($lines) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: $lines;
+}
+
+@mixin card-shadow($shadow: var(--shadow-card)) {
+  box-shadow: $shadow;
+}

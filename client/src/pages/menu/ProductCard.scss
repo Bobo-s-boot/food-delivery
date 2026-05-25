@@ -5,14 +5,14 @@
   border-radius: 2.5rem;
   overflow: hidden;
   cursor: pointer;
-  background: #0d1a2d;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+  background: var(--color-bg-brand);
+  box-shadow: var(--shadow-product-card);
   transition: box-shadow 0.3s ease;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-family-base);
 }
 
 .product-card:hover {
-  box-shadow: 0 25px 55px rgba(15, 23, 42, 0.18);
+  box-shadow: var(--shadow-product-card-hover);
 }
 
 .product-card__image {
@@ -52,7 +52,7 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 10;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 0.875rem;
   font-weight: 500;
 }
@@ -67,19 +67,19 @@
   align-items: center;
   justify-content: center;
   border-radius: 100px;
-  background: #ffffff;
+  background: var(--color-white);
   border: none;
   padding: 0 1.25rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #0d1a2d;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: var(--color-text-strong);
+  box-shadow: var(--shadow-product-button);
   transition: background-color 0.2s ease;
   cursor: pointer;
 }
 
 .product-card__add-button:hover {
-  background: #e9ee5d;
+  background: var(--color-bg-accent);
 }
 
 .product-card__body {
@@ -96,7 +96,7 @@
 
 .product-card__title {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.4;
@@ -122,7 +122,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 1rem;
   font-weight: 500;
 }

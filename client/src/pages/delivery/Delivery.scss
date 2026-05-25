@@ -4,9 +4,9 @@
 
 .delivery-page {
   width: 100%;
-  background: #ffffff;
+  background: var(--color-white);
   font-family: "Inter", sans-serif;
-  color: #0d1a2d;
+  color: var(--color-text-strong);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +28,7 @@
   min-height: 28.125rem; // min-h-112.5
   overflow: hidden;
   border-radius: 40px; // rounded-[40px]
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); // shadow-sm
+  box-shadow: var(--shadow-sm); // shadow-sm
 
   @media (min-width: 1024px) {
     border-radius: 64px; // lg:rounded-[64px]
@@ -45,7 +45,7 @@
   &__overlay {
     position: absolute;
     inset: 0;
-    background-color: rgba(13, 26, 45, 0.55); // bg-[#0D1A2D]/55
+    background-color: var(--overlay-brand-55);
   }
 
   &__content {
@@ -57,7 +57,7 @@
     justify-content: flex-end;
     gap: 2rem; // gap-8
     padding: 2rem; // p-8
-    color: #ffffff;
+    color: var(--color-text-inverted);
 
     @media (min-width: 768px) {
       padding: 3.5rem; // md:p-14
@@ -72,7 +72,7 @@
     width: max-content;
     border-radius: 9999px;
     border: 1px solid rgba(255, 255, 255, 0.4); // border-white/40
-    background-color: rgba(255, 255, 255, 0.15); // bg-white/15
+    background-color: var(--color-bg-dropdown);
     padding: 0.5rem 1.25rem; // py-2 px-5
     font-size: 0.875rem; // text-sm
     backdrop-filter: blur(12px); // backdrop-blur-md
@@ -113,7 +113,7 @@
     max-width: 47.5rem; // max-w-190
     font-size: 1rem; // text-base
     line-height: 1.5; // leading-[150%]
-    color: rgba(255, 255, 255, 0.9); // text-white/90
+    color: var(--color-text-inverted);
 
     @media (min-width: 768px) {
       font-size: 1.125rem; // md:text-lg
@@ -132,16 +132,16 @@
     justify-content: center;
     height: 3rem; // h-12
     border-radius: 9999px; // rounded-full
-    background-color: #ffffff; // bg-white
+    background-color: var(--color-white); // bg-white
     padding: 0 1.75rem; // px-7
     font-size: 1.125rem; // text-lg
-    color: #0d1a2d; // text-[#0D1A2D]
+    color: var(--color-text-strong); // text-[#0D1A2D]
     border: none;
     cursor: pointer;
     transition: background-color 0.15s ease;
 
     &:hover {
-      background-color: #f3f4f6; // hover:bg-[#F3F4F6]
+      background-color: var(--color-bg-dropdown-hover); // hover:bg-[#F3F4F6]
     }
   }
 
@@ -151,17 +151,17 @@
     justify-content: center;
     height: 3rem; // h-12
     border-radius: 9999px; // rounded-full
-    border: 2px solid #ffffff; // border-2 border-white
+    border: 2px solid var(--color-text-inverted);
     background-color: transparent;
     padding: 0 1.75rem; // px-7
     font-size: 1.125rem; // text-lg
-    color: #ffffff; // text-white
+    color: var(--color-text-inverted);
     cursor: pointer;
     transition: all 0.15s ease;
 
     &:hover {
-      background-color: #ffffff; // hover:bg-white
-      color: #000000; // hover:text-black
+      background-color: var(--color-white);
+      color: var(--color-text-ink);
     }
   }
 }
@@ -183,7 +183,7 @@
 
 .delivery-stat-card {
   border-radius: 2rem;
-  background: #f3f4f6;
+  background: var(--color-bg-dropdown-hover);
   padding: 2rem;
   transition: transform 0.3s ease;
 
@@ -200,7 +200,7 @@
 
   p {
     margin: 0.75rem 0 0;
-    color: #4b5563;
+    color: var(--color-text-gray);
     line-height: 1.6;
   }
 }
@@ -233,7 +233,7 @@
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #6b7280;
+      color: var(--color-text-alt);
       margin-bottom: 1rem;
     }
 
@@ -242,13 +242,13 @@
       font-size: clamp(2.5rem, 4vw, 3.5rem);
       line-height: 1.1;
       letter-spacing: -0.04em;
-      color: #0d1a2d;
+      color: var(--color-text-strong);
     }
 
     p:last-child {
       margin: 1.25rem 0 0;
       max-width: 35rem;
-      color: #4b5563;
+      color: var(--color-text-gray);
       line-height: 1.6;
       font-size: 1.125rem;
     }
@@ -257,7 +257,9 @@
   /* 🌟 ПРАВАЯ ТЕМНАЯ КАРТОЧКА С ШАГАМИ 🌟 */
   &__steps {
     border-radius: 2.5rem;
-    background: #0d1a2d; // Тот самый глубокий темно-синий цвет из Figma
+    background: var(
+      --color-bg-brand
+    ); // Тот самый глубокий темно-синий цвет из Figma
     padding: 2.5rem 2rem;
     display: flex;
     flex-direction: column;
@@ -296,8 +298,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
-    color: #0d1a2d;
+    background: var(--color-white);
+    color: var(--color-text-strong);
     font-size: 1rem;
     font-weight: 600;
     flex-shrink: 0;
@@ -344,7 +346,7 @@
 
     p {
       margin: 0;
-      color: #4b5563;
+      color: var(--color-text-gray);
       max-width: 25rem;
     }
   }
@@ -368,7 +370,7 @@
 .delivery-option-card {
   border-radius: 2rem;
   border: 1px solid #edecef;
-  background: #ffffff;
+  background: var(--color-white);
   padding: 2rem;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
 
@@ -381,7 +383,7 @@
 
   p {
     margin: 0.75rem 0 0;
-    color: #4b5563;
+    color: var(--color-text-gray);
     line-height: 1.6;
   }
 }
@@ -391,7 +393,7 @@
   margin-top: 2rem;
   padding: 0.75rem 1.25rem;
   border-radius: 999px;
-  background: #0d1a2d;
+  background: var(--color-bg-brand);
   color: #ffffff;
   font-size: 0.875rem;
   font-weight: 500;
@@ -412,7 +414,7 @@
 
 .delivery-zones__left {
   border-radius: 2.5rem;
-  background: #f3f4f6;
+  background: var(--color-bg-dropdown-hover);
   padding: 1.5rem;
 
   @media (min-width: 768px) {
@@ -433,7 +435,7 @@
   margin-top: 2rem;
   overflow: hidden;
   border-radius: 1.75rem;
-  background: #ffffff;
+  background: var(--color-white);
 }
 
 .delivery-zones__row {
@@ -460,12 +462,12 @@
   }
 
   span:nth-child(2) {
-    color: #4b5563;
+    color: var(--color-text-gray);
   }
 
   span:last-child {
     font-weight: 500;
-    color: #0d1a2d;
+    color: var(--color-text-strong);
   }
 }
 
@@ -474,7 +476,7 @@
   min-height: 28.75rem;
   overflow: hidden;
   border-radius: 2.5rem;
-  background: #0d1a2d;
+  background: var(--color-bg-brand);
   padding: 2rem;
   color: #ffffff;
 
@@ -577,7 +579,7 @@
   }
 
   &__card {
-    background: #f3f4f6;
+    background: var(--color-bg-dropdown-hover);
     padding: 2rem;
     border-radius: 2rem;
 
@@ -589,7 +591,7 @@
 
     p {
       margin: 1rem 0 0;
-      color: #4b5563;
+      color: var(--color-text-gray);
       line-height: 1.6;
     }
   }

@@ -1,7 +1,7 @@
 .menu-search {
   width: 100%;
   min-height: 3.375rem;
-  background: #efeef1;
+  background: var(--color-bg-search);
   border-radius: 100px;
   display: flex;
   align-items: center;
@@ -25,14 +25,14 @@
   background: transparent;
   border: none;
   outline: none;
-  color: #0f1316;
+  color: var(--color-text-primary);
   font-size: 1.125rem;
   letter-spacing: -0.04em;
   text-align: center;
 }
 
 .menu-search__input::placeholder {
-  color: rgba(15, 19, 22, 0.5);
+  color: var(--color-text-faint);
 }
 
 .menu-search__icon {
