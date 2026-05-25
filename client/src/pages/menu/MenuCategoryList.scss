@@ -21,8 +21,8 @@
 }
 
 .menu-category-card--active {
-  border-color: #e9ee5d;
-  box-shadow: 0 20px 80px rgba(233, 238, 93, 0.22);
+  border-color: var(--color-bg-accent);
+  box-shadow: var(--shadow-menu-active);
 }
 
 .menu-category-card__background {
@@ -57,12 +57,12 @@
   text-align: center;
   z-index: 10;
   padding: 0 0.5rem;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 1.25rem;
   letter-spacing: -0.04em;
 }
 
 .menu-category-card__title--active {
-  color: #e9ee5d;
+  color: var(--color-bg-accent);
   font-weight: 500;
 }

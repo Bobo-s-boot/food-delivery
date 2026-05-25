@@ -9,17 +9,17 @@
   height: 100%;
   padding: 0 1.5rem;
   border-radius: 100px;
-  background: #f0f2f6;
+  background: var(--color-bg-search);
   border: none;
   outline: none;
   text-align: center;
   font-size: 1.125rem;
   letter-spacing: -0.04em;
-  color: #0f1316;
+  color: var(--color-text-primary);
 }
 
 .catalog-search__input::placeholder {
-  color: rgba(15, 19, 22, 0.5);
+  color: var(--color-text-faint);
 }
 
 .catalog-search__icon {

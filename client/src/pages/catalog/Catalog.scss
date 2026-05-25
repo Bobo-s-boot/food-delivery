@@ -5,8 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #ffffff;
-  font-family: "Inter", sans-serif;
+  background: var(--color-bg-body);
+  font-family: var(--font-family-base);
 }
 
 .catalog-page__section {
@@ -18,7 +18,7 @@
   font-size: 3rem;
   font-weight: 400;
   letter-spacing: -0.04em;
-  color: #0f172a;
+  color: var(--color-text-hero);
   margin-bottom: 1rem;
 }
 

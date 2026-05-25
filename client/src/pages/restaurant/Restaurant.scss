@@ -6,12 +6,12 @@
 .restaurant-menu__title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #0d1a2d;
+  color: var(--color-text-strong);
   margin-bottom: 1.5rem;
 }
 
 .restaurant-menu__empty-text {
-  color: #6b7788;
+  color: var(--color-text-tertiary);
 }
 
 /* Сетка для карточек блюд */
@@ -30,10 +30,10 @@
 }
 
 .dish-card {
-  border: 1px solid #dde3ea;
+  border: 1px solid var(--color-border-soft-2);
   border-radius: 0.75rem;
   padding: 1rem;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   box-shadow: 0 1px 3px rgba(13, 26, 45, 0.05);
   display: flex;
   flex-direction: column;
@@ -59,12 +59,12 @@
   margin: 0;
   font-size: 1.125rem;
   font-weight: 700;
-  color: #0d1a2d;
+  color: var(--color-text-strong);
 }
 
 .dish-card__description {
   margin: 0.25rem 0 0;
-  color: #5e6a7a;
+  color: var(--color-text-tertiary);
   font-size: 0.875rem;
   line-height: 1.45;
   flex-grow: 1;
@@ -80,12 +80,12 @@
 .dish-card__price {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #10b981; // Приятный зеленый цвет
+  color: var(--color-success);
 }
 
 .dish-card__btn {
-  background-color: #2563eb; // Фирменный синий
-  color: #ffffff;
+  background-color: var(--color-info);
+  color: var(--color-text-inverted);
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 0.5rem;
@@ -95,13 +95,13 @@
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: #1d4ed8;
+    background-color: var(--color-info-hover);
   }
 }
 
 /* Состояние загрузки */
 .restaurant-menu__loading {
-  color: #fbbf24; // Янтарный/желтый цвет
+  color: var(--color-warning);
   font-size: 1.125rem;
   font-weight: 500;
   padding: 2rem 0;

@@ -12,18 +12,18 @@
   line-height: 1;
   font-weight: 500;
   border-radius: 0.75rem;
-  border: 1px solid #0f172a;
-  background: #ffffff;
-  color: #0f172a;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-white);
+  color: var(--color-text-hero);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .catalog-tab__button:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-dropdown-hover);
 }
 
 .catalog-tab__button--active {
-  background: #0f172a;
-  color: #ffffff;
+  background: var(--color-border-strong);
+  color: var(--color-white);
 }
