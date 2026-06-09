@@ -4,7 +4,7 @@ import { SectionHeader } from "./SectionHeader";
 import { StatusBadge } from "./StatusBadge";
 import "../Admin.scss";
 
-export function MenuAvailabilityTable({ items }) {
+export function MenuAvailabilityTable({ items, onDelete }) {
   return (
     <AdminCard className="menu-availability-card">
       <SectionHeader
@@ -23,7 +23,7 @@ export function MenuAvailabilityTable({ items }) {
           ]}
           rows={items}
           renderRow={(row) => (
-            <tr key={row.item} className="menu-availability-row">
+            <tr key={row.id || row.item} className="menu-availability-row">
               <td className="menu-availability-row__cell menu-availability-row__cell--first font-medium">
                 {row.item}
               </td>
@@ -38,7 +38,12 @@ export function MenuAvailabilityTable({ items }) {
                 <StatusBadge value={row.status} />
               </td>
               <td className="menu-availability-row__cell menu-availability-row__cell--last">
-                <button className="menu-availability-btn">{row.action}</button>
+                <button
+                  className="menu-availability-btn"
+                  onClick={() => onDelete?.(row.id)}
+                >
+                  {row.action}
+                </button>
               </td>
             </tr>
           )}
