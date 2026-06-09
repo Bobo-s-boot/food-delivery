@@ -141,6 +141,7 @@ const buildAnalyticsSeries = (ordersData, period) => {
       revenue: bucket.revenue,
       cancelled: bucket.cancelled,
     })),
+
     revenueBreakdown: buckets.map((bucket) => ({
       label: bucket.label,
       value: totalRevenue
@@ -248,6 +249,7 @@ const buildCourierActivity = (ordersData) => {
         latestOrder?.address?.split(",")[0] ||
         latestOrder?.restaurantId?.name ||
         "-";
+
       const statusMap = {
         pending: "Waiting pickup",
         preparing: "Waiting pickup",
@@ -255,6 +257,7 @@ const buildCourierActivity = (ordersData) => {
         delivered: "Available",
         cancelled: "Offline",
       };
+
       const status =
         statusMap[latestOrder?.status] ||
         (courier === "Not assigned" ? "Available" : "On delivery");

@@ -114,10 +114,12 @@ export function OrderAnalytics({
           <span className="order-analytics__legend-dot order-analytics__legend-dot--orders" />
           Orders: {totalOrders}
         </span>
+
         <span className="order-analytics__legend-item">
           <span className="order-analytics__legend-dot order-analytics__legend-dot--revenue" />
           Revenue: ${totalRevenue.toFixed(2)}
         </span>
+
         <span className="order-analytics__legend-item">
           <span className="order-analytics__legend-dot order-analytics__legend-dot--cancelled" />
           Cancelled: {totalCancelled}

@@ -32,6 +32,7 @@ export function RevenueBreakdown({
           ))}
         </div>
       </div>
+
       <div className="revenue-breakdown__list">
         {data.map((item, index) => (
           <div key={item.label} className="revenue-breakdown__item">
