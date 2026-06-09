@@ -19,7 +19,11 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
+<<<<<<< Updated upstream
     "exrpess": "^0.0.1-security",
+=======
+    "mongoose": "^9.5.0",
+>>>>>>> Stashed changes
     "jsonwebtoken": "^9.0.3",
     "passport": "^0.7.0",
     "passport-apple": "^2.0.2",
