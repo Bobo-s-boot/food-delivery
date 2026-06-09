@@ -288,7 +288,9 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: var(--color-bg-brand-strong); // Заменен color.scale на HEX
+      background-color: var(
+        --color-bg-brand-strong
+      ); // Заменен color.scale на HEX
     }
   }
 
@@ -497,7 +499,9 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: var(--color-bg-brand-strong); // Делаем цвет кнопки чуть светлее при наведении
+      background-color: var(
+        --color-bg-brand-strong
+      ); // Делаем цвет кнопки чуть светлее при наведении
     }
   }
 }
@@ -688,7 +692,9 @@
     color: var(--color-white); // text-white
 
     &:hover {
-      background-color: var(--color-bg-brand); // Активная кнопка не меняет цвет при наведении
+      background-color: var(
+        --color-bg-brand
+      ); // Активная кнопка не меняет цвет при наведении
     }
   }
 }
@@ -753,7 +759,9 @@
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: var(--color-bg-brand-strong); // Точный HEX для ховера, как мы делали раньше
+    background-color: var(
+      --color-bg-brand-strong
+    ); // Точный HEX для ховера, как мы делали раньше
   }
 }
 
@@ -825,7 +833,9 @@
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: var(--color-bg-hover); // Безопасный HEX-аналог hover-эффекта
+    background-color: var(
+      --color-bg-hover
+    ); // Безопасный HEX-аналог hover-эффекта
   }
 }
 
@@ -896,6 +906,11 @@
     gap: 0.75rem; // gap-3
   }
 
+  &__chart--today {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
   &__bar-group {
     display: flex;
     height: 100%;
@@ -904,6 +919,12 @@
     flex-direction: column;
     justify-content: flex-end;
     gap: 0.75rem; // gap-3
+  }
+
+  &__bar-group--today {
+    flex: 0 0 2.75rem;
+    min-width: 2.75rem;
+    gap: 0.5rem;
   }
 
   &__bar {
@@ -917,6 +938,11 @@
     text-align: center;
     font-size: 0.75rem; // text-xs
     color: var(--color-text-muted-strong);
+  }
+
+  &__chart--today &__day-label {
+    font-size: 0.7rem;
+    white-space: nowrap;
   }
 
   &__empty {
@@ -982,12 +1008,16 @@
 
   &__chart-box {
     position: relative;
-    height: 13rem; // h-52
+    height: 17rem; // h-68
     overflow: hidden;
     border-radius: 1.125rem; // rounded-[18px]
     border: 1px solid var(--color-border-card);
     background-color: var(--color-white);
-    padding: 1.5rem 0.75rem 2.25rem 0.75rem; // pt-6 px-3 pb-9
+    padding: 1.75rem 0.75rem 2.75rem 0.75rem; // pt-7 px-3 pb-11
+
+    @media (min-width: 768px) {
+      height: 29rem;
+    }
   }
 
   /* --- Фоновая разметка графика --- */
@@ -1050,8 +1080,8 @@
   &__tooltip {
     display: none; // hidden
     position: absolute;
-    bottom: 100%; // bottom-full
-    margin-bottom: 0.5rem; // mb-2
+    top: 50%; // place below the bar
+    margin-top: 0.5rem; // mt-2
     border-radius: 1rem; // rounded-2xl
     background-color: var(--color-bg-brand);
     padding: 0.5rem 0.75rem; // px-3 py-2
@@ -1180,7 +1210,9 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: var(--color-bg-brand-strong); // Безопасный HEX-аналог hover-эффекта
+      background-color: var(
+        --color-bg-brand-strong
+      ); // Безопасный HEX-аналог hover-эффекта
     }
   }
 }
@@ -1221,7 +1253,9 @@
 
   &__value {
     font-weight: 500; // font-medium
-    color: var(--color-text-strong); // По умолчанию темный цвет текста для значений
+    color: var(
+      --color-text-strong
+    ); // По умолчанию темный цвет текста для значений
   }
 
   &__track {
@@ -1344,6 +1378,7 @@
 
 .top-selling {
   padding: 1.25rem; // p-5
+  width: 180%;
 
   @media (min-width: 768px) {
     padding: 1.5rem; // md:p-6

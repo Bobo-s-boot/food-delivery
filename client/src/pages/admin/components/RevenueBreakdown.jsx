@@ -3,12 +3,36 @@ import { AdminCard } from "./AdminCard";
 import { SectionHeader } from "./SectionHeader";
 import "../Admin.scss";
 
-export function RevenueBreakdown({ data }) {
+export function RevenueBreakdown({
+  data,
+  activePeriod = "7 Days",
+  periods = ["Today", "7 Days", "30 Days", "Month"],
+  onPeriodChange,
+}) {
   const reduceMotion = useReducedMotion();
 
   return (
     <AdminCard className="revenue-breakdown">
-      <SectionHeader title="Revenue Breakdown" />
+      <div className="order-analytics__header">
+        <SectionHeader title="Revenue Breakdown" />
+        <div className="order-analytics__filters">
+          {periods.map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => onPeriodChange?.(filter)}
+              className={`order-analytics__filter-btn ${
+                filter === activePeriod
+                  ? "order-analytics__filter-btn--active"
+                  : ""
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="revenue-breakdown__list">
         {data.map((item, index) => (
           <div key={item.label} className="revenue-breakdown__item">

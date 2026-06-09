@@ -11,10 +11,19 @@ function getOrderBarColor(orders) {
   return "#F8ED8C";
 }
 
-export function OrderAnalytics({ data }) {
+export function OrderAnalytics({
+  data,
+  activePeriod = "7 Days",
+  periods = ["Today", "7 Days", "30 Days", "Month"],
+  onPeriodChange,
+}) {
   const reduceMotion = useReducedMotion();
   const totalOrders = data.reduce((sum, item) => sum + (item.orders || 0), 0);
   const totalRevenue = data.reduce((sum, item) => sum + (item.revenue || 0), 0);
+  const totalCancelled = data.reduce(
+    (sum, item) => sum + (item.cancelled || 0),
+    0,
+  );
   const maxOrders = Math.max(...data.map((item) => item.orders || 0), 1);
 
   return (
@@ -25,11 +34,15 @@ export function OrderAnalytics({ data }) {
           description="Track order volume, revenue and delivery performance over time."
         />
         <div className="order-analytics__filters">
-          {["Today", "7 Days", "30 Days", "Month"].map((filter) => (
+          {periods.map((filter) => (
             <button
               key={filter}
+              type="button"
+              onClick={() => onPeriodChange?.(filter)}
               className={`order-analytics__filter-btn ${
-                filter === "7 Days" ? "order-analytics__filter-btn--active" : ""
+                filter === activePeriod
+                  ? "order-analytics__filter-btn--active"
+                  : ""
               }`}
             >
               {filter}
@@ -38,7 +51,11 @@ export function OrderAnalytics({ data }) {
         </div>
       </div>
 
-      <div className="order-analytics__chart">
+      <div
+        className={`order-analytics__chart ${
+          activePeriod === "Today" ? "order-analytics__chart--today" : ""
+        }`}
+      >
         {data.length > 0 ? (
           data.map((item, index) => {
             const barHeight = `${Math.max(
@@ -47,7 +64,14 @@ export function OrderAnalytics({ data }) {
             )}%`;
 
             return (
-              <div key={item.day} className="order-analytics__bar-group">
+              <div
+                key={item.label || item.day}
+                className={`order-analytics__bar-group ${
+                  activePeriod === "Today"
+                    ? "order-analytics__bar-group--today"
+                    : ""
+                }`}
+              >
                 <motion.div
                   className="order-analytics__bar"
                   initial={
@@ -67,7 +91,9 @@ export function OrderAnalytics({ data }) {
                     )} 0%, #F8ED8C 100%)`,
                   }}
                 />
-                <span className="order-analytics__day-label">{item.day}</span>
+                <span className="order-analytics__day-label">
+                  {item.label || item.day}
+                </span>
               </div>
             );
           })
@@ -88,13 +114,15 @@ export function OrderAnalytics({ data }) {
           <span className="order-analytics__legend-dot order-analytics__legend-dot--orders" />
           Orders: {totalOrders}
         </span>
+
         <span className="order-analytics__legend-item">
           <span className="order-analytics__legend-dot order-analytics__legend-dot--revenue" />
           Revenue: ${totalRevenue.toFixed(2)}
         </span>
+
         <span className="order-analytics__legend-item">
           <span className="order-analytics__legend-dot order-analytics__legend-dot--cancelled" />
-          Cancelled: 0
+          Cancelled: {totalCancelled}
         </span>
       </motion.div>
     </AdminCard>

@@ -10,7 +10,17 @@ export const getDishesByRestaurant = async (restaurantId) => {
   try {
     // Передаем ID ресторана в строке запроса (query parameter)
     const response = await axios.get(`${API_URL}?restaurantId=${restaurantId}`);
-    
+
+    return response.data;
+  } catch (error) {
+    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH_MENU, error);
+    return [];
+  }
+};
+
+export const adminGetDishes = async () => {
+  try {
+    const response = await axios.get(API_URL, createAuthConfig());
     return response.data;
   } catch (error) {
     console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH_MENU, error);
@@ -30,7 +40,10 @@ export const createDish = async (dishData) => {
 
 export const deleteDish = async (dishId) => {
   try {
-    const response = await axios.delete(`${API_URL}/${dishId}`, createAuthConfig());
+    const response = await axios.delete(
+      `${API_URL}/${dishId}`,
+      createAuthConfig(),
+    );
     return response.data;
   } catch (error) {
     console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_DELETE_DISH, error);
