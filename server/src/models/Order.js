@@ -27,7 +27,19 @@ const orderSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: false, // Made optional for guest checkout
+    },
+    customerName: {
+      type: String,
       required: true,
+    },
+    customerPhone: {
+      type: String,
+      required: true,
+    },
+    customerEmail: {
+      type: String,
+      default: "",
     },
     restaurantId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -57,6 +69,14 @@ const orderSchema = new mongoose.Schema(
     address: {
       type: String,
       required: true,
+    },
+    notes: {
+      type: String,
+      default: "",
+    },
+    deliveryPreferences: {
+      type: [String],
+      default: [],
     },
     courier: {
       type: String,

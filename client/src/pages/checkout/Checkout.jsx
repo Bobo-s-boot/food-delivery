@@ -13,9 +13,88 @@ import "./Checkout.scss";
 export function Checkout() {
   const [activeStep, setActiveStep] = useState("contact");
   const [completedSteps, setCompletedSteps] = useState([]);
-  const [selectedDelivery, setSelectedDelivery] = useState("pickup");
+  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    recipientType: "me",
+    address: "",
+    city: "",
+    entrance: "",
+    deliveryMethod: "delivery",
+    notes: "",
+    deliveryPreferences: [],
+    paymentMethod: "Credit / Debit Card",
+  });
+
+  const updateField = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error when user types
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: null }));
+    }
+  };
+
+  const validateAll = () => {
+    const newErrors = {};
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+    else if (!/^\+?[0-9\s()\\-]+$/.test(formData.phone)) {
+      newErrors.phone = "Invalid phone number format";
+    }
+
+    if (!formData.address.trim()) newErrors.address = "Address is required";
+    if (!formData.city.trim()) newErrors.city = "City is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStep = (stepId) => {
+    const newErrors = { ...errors };
+    let isValid = true;
+
+    if (stepId === "contact") {
+      if (!formData.firstName.trim()) {
+        newErrors.firstName = "First name is required";
+        isValid = false;
+      } else delete newErrors.firstName;
+
+      if (!formData.lastName.trim()) {
+        newErrors.lastName = "Last name is required";
+        isValid = false;
+      } else delete newErrors.lastName;
+
+      if (!formData.phone.trim()) {
+        newErrors.phone = "Phone number is required";
+        isValid = false;
+      } else if (!/^\+?[0-9\s()\\-]+$/.test(formData.phone)) {
+        newErrors.phone = "Invalid phone number format";
+        isValid = false;
+      } else delete newErrors.phone;
+    } else if (stepId === "delivery") {
+      if (!formData.address.trim()) {
+        newErrors.address = "Address is required";
+        isValid = false;
+      } else delete newErrors.address;
+
+      if (!formData.city.trim()) {
+        newErrors.city = "City is required";
+        isValid = false;
+      } else delete newErrors.city;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const completeAndOpen = (currentStep, nextStep) => {
+    if (!validateStep(currentStep)) return;
+
     setCompletedSteps((steps) =>
       steps.includes(currentStep) ? steps : [...steps, currentStep],
     );
@@ -27,6 +106,9 @@ export function Checkout() {
       return (
         <ContactForm
           onContinue={() => completeAndOpen("contact", "delivery")}
+          formData={formData}
+          updateField={updateField}
+          errors={errors}
         />
       );
     }
@@ -34,20 +116,25 @@ export function Checkout() {
     if (stepId === "delivery") {
       return (
         <DeliveryForm
-          selectedDelivery={selectedDelivery}
-          onSelect={setSelectedDelivery}
           onContinue={() => completeAndOpen("delivery", "details")}
+          formData={formData}
+          updateField={updateField}
+          errors={errors}
         />
       );
     }
 
     if (stepId === "details") {
       return (
-        <DetailsForm onContinue={() => completeAndOpen("details", "payment")} />
+        <DetailsForm
+          onContinue={() => completeAndOpen("details", "payment")}
+          formData={formData}
+          updateField={updateField}
+        />
       );
     }
 
-    return <PaymentForm />;
+    return <PaymentForm formData={formData} updateField={updateField} />;
   };
 
   return (
@@ -73,7 +160,11 @@ export function Checkout() {
           </div>
         </div>
 
-        <CheckoutOrderSummary />
+        <CheckoutOrderSummary
+          formData={formData}
+          validateAll={validateAll}
+          setErrors={setErrors}
+        />
       </div>
     </div>
   );

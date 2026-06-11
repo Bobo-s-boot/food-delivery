@@ -26,6 +26,17 @@ export const adminGetTopDishes = async () => {
 };
 
 export const adminSeedOrders = async () => {
-  const response = await axios.post(`${API_URL}/seed`, null, createAuthConfig());
+  const response = await axios.post(
+    `${API_URL}/seed`,
+    null,
+    createAuthConfig(),
+  );
+  return response.data;
+};
+
+export const createOrder = async (orderData) => {
+  const config = createAuthConfig();
+  // We don't want to fail if the user is a guest, so if no token is present, we still send the request
+  const response = await axios.post(API_URL, orderData, config);
   return response.data;
 };

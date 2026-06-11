@@ -87,7 +87,8 @@ const PREVIEW_ITEMS = [
   },
 ];
 
-const toCartId = (item) => String(item.id ?? item._id ?? item.title ?? item.name);
+const toCartId = (item) =>
+  String(item.id ?? item._id ?? item.title ?? item.name);
 
 const toNumber = (value) => {
   const parsed = Number(value);
@@ -103,6 +104,7 @@ export const normalizeCartItem = (item) => ({
   price: toNumber(item.price),
   image: item.image ?? item.imageUrl ?? "/img/burger.jpg",
   restaurant: item.restaurant ?? item.restaurantId?.name ?? "Defilicious",
+  restaurantId: item.restaurantId?._id ?? item.restaurantId ?? null,
   category: item.category ?? "Special",
   weight: item.weight ?? "",
   quantity: item.quantity ?? 1,
