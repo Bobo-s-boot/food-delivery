@@ -1,9 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { CartContext } from "./cartContextValue";
 import {
   addCartItem,
@@ -19,9 +14,11 @@ const readStoredCart = () => {
   try {
     const storedCart = localStorage.getItem(CART_STORAGE_KEY);
     const parsedCart = storedCart ? JSON.parse(storedCart) : [];
-    return Array.isArray(parsedCart) ? parsedCart : [];
+    return Array.isArray(parsedCart) && parsedCart.length > 0
+      ? parsedCart
+      : getPreviewCartItems();
   } catch {
-    return [];
+    return getPreviewCartItems();
   }
 };
 

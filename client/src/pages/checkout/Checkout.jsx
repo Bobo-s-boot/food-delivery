@@ -39,13 +39,14 @@ export function Checkout() {
 
   const validateAll = () => {
     const newErrors = {};
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required";
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-    else if (!/^\+?[0-9\s\-\(\)]+$/.test(formData.phone)) {
+    else if (!/^\+?[0-9\s()\\-]+$/.test(formData.phone)) {
       newErrors.phone = "Invalid phone number format";
     }
-    
+
     if (!formData.address.trim()) newErrors.address = "Address is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
 
@@ -58,24 +59,33 @@ export function Checkout() {
     let isValid = true;
 
     if (stepId === "contact") {
-      if (!formData.firstName.trim()) { newErrors.firstName = "First name is required"; isValid = false; }
-      else delete newErrors.firstName;
-      
-      if (!formData.lastName.trim()) { newErrors.lastName = "Last name is required"; isValid = false; }
-      else delete newErrors.lastName;
+      if (!formData.firstName.trim()) {
+        newErrors.firstName = "First name is required";
+        isValid = false;
+      } else delete newErrors.firstName;
 
-      if (!formData.phone.trim()) { newErrors.phone = "Phone number is required"; isValid = false; }
-      else if (!/^\+?[0-9\s\-\(\)]+$/.test(formData.phone)) {
-        newErrors.phone = "Invalid phone number format"; isValid = false;
-      }
-      else delete newErrors.phone;
+      if (!formData.lastName.trim()) {
+        newErrors.lastName = "Last name is required";
+        isValid = false;
+      } else delete newErrors.lastName;
 
+      if (!formData.phone.trim()) {
+        newErrors.phone = "Phone number is required";
+        isValid = false;
+      } else if (!/^\+?[0-9\s()\\-]+$/.test(formData.phone)) {
+        newErrors.phone = "Invalid phone number format";
+        isValid = false;
+      } else delete newErrors.phone;
     } else if (stepId === "delivery") {
-      if (!formData.address.trim()) { newErrors.address = "Address is required"; isValid = false; }
-      else delete newErrors.address;
-      
-      if (!formData.city.trim()) { newErrors.city = "City is required"; isValid = false; }
-      else delete newErrors.city;
+      if (!formData.address.trim()) {
+        newErrors.address = "Address is required";
+        isValid = false;
+      } else delete newErrors.address;
+
+      if (!formData.city.trim()) {
+        newErrors.city = "City is required";
+        isValid = false;
+      } else delete newErrors.city;
     }
 
     setErrors(newErrors);
@@ -116,7 +126,7 @@ export function Checkout() {
 
     if (stepId === "details") {
       return (
-        <DetailsForm 
+        <DetailsForm
           onContinue={() => completeAndOpen("details", "payment")}
           formData={formData}
           updateField={updateField}
@@ -150,7 +160,11 @@ export function Checkout() {
           </div>
         </div>
 
-        <CheckoutOrderSummary formData={formData} validateAll={validateAll} setErrors={setErrors} />
+        <CheckoutOrderSummary
+          formData={formData}
+          validateAll={validateAll}
+          setErrors={setErrors}
+        />
       </div>
     </div>
   );

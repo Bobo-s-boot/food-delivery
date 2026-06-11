@@ -1,14 +1,13 @@
 import bcrypt from "bcryptjs";
-import fs from "fs/promises";
 import jwt from "jsonwebtoken";
-import { USERS_DATA_PATH as DATA_PATH } from "../config/config.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
+import User from "../models/user.js";
 
 const generateToken = (user) => {
   return jwt.sign(
-    { id: user.id, username: user.username },
+    { id: user.id, username: user.username, role: user.role },
     process.env.SESSION_SECRET || "super_secret_jwt_key",
-    { expiresIn: "30d" }
+    { expiresIn: "30d" },
   );
 };
 
@@ -22,10 +21,8 @@ export const register = async (req, res) => {
         .json({ message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY });
     }
 
-    const data = await fs.readFile(DATA_PATH, "utf-8");
-    const users = JSON.parse(data);
-
-    if (users.find((user) => user.username === username)) {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
       return res
         .status(400)
         .json({ message: SERVER_ERORR_MESSAGE.USERER_ALREADY_EXISTS });
@@ -34,14 +31,19 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = { id: Date.now(), username, password: hashedPassword };
-    users.push(newUser);
-    await fs.writeFile(DATA_PATH, JSON.stringify(users, null, 2));
+    const newUser = await User.create({
+      id: Date.now(),
+      username,
+      password: hashedPassword,
+      role: "user",
+      provider: "local",
+      fullName: username,
+    });
 
     const token = generateToken(newUser);
 
     res.status(201).json({
-      user: { username, token },
+      user: { username, role: newUser.role, token },
     });
   } catch (error) {
     res
@@ -60,10 +62,7 @@ export const login = async (req, res) => {
         .json({ message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY });
     }
 
-    const data = await fs.readFile(DATA_PATH, "utf-8");
-    const users = JSON.parse(data);
-
-    const user = users.find((user) => user.username === username);
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res
@@ -71,7 +70,9 @@ export const login = async (req, res) => {
         .json({ message: SERVER_ERORR_MESSAGE.INVALID_CREDENTIALS });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = user.password
+      ? await bcrypt.compare(password, user.password)
+      : false;
 
     if (!isPasswordValid) {
       return res
@@ -81,7 +82,9 @@ export const login = async (req, res) => {
 
     const token = generateToken(user);
 
-    res.status(200).json({ user: { username: user.username, token } });
+    res
+      .status(200)
+      .json({ user: { username: user.username, role: user.role, token } });
   } catch (error) {
     res
       .status(500)

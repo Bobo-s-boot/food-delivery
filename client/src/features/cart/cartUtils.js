@@ -87,7 +87,8 @@ const PREVIEW_ITEMS = [
   },
 ];
 
-const toCartId = (item) => String(item.id ?? item._id ?? item.title ?? item.name);
+const toCartId = (item) =>
+  String(item.id ?? item._id ?? item.title ?? item.name);
 
 const toNumber = (value) => {
   const parsed = Number(value);

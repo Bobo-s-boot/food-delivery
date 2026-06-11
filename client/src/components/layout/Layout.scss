@@ -1,0 +1,22 @@
+.layout-shell {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-bg-page-soft);
+}
+
+.layout-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  margin: 0 auto;
+}
+
+.layout-container {
+  max-width: 72rem;
+  padding: 2rem;
+}

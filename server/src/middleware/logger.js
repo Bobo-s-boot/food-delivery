@@ -11,12 +11,11 @@ export const logger = (req, res, next) => {
   }
 
   const time = new Date().toISOString();
-  
-  // Save the client message (request body or query parameters)
+
   let clientMessage = "";
   if (Object.keys(req.body || {}).length > 0) {
     const safeBody = { ...req.body };
-    // Hide passwords in logs for security
+
     if (safeBody.password) safeBody.password = "***";
     clientMessage = JSON.stringify(safeBody);
   } else if (Object.keys(req.query || {}).length > 0) {
@@ -29,8 +28,11 @@ export const logger = (req, res, next) => {
   const originalSend = res.send;
   res.send = function (body) {
     let responseBody = body;
-    if (typeof body === 'object') {
-      try { responseBody = JSON.stringify(body); } catch(e) {}
+
+    if (typeof body === "object") {
+      try {
+        responseBody = JSON.stringify(body);
+      } catch (e) {}
     } else if (Buffer.isBuffer(body)) {
       responseBody = "[Buffer Data]";
     }
@@ -38,11 +40,15 @@ export const logger = (req, res, next) => {
     const logMessage = `[${time}] ${req.method} ${req.url} | CLIENT_MSG: ${clientMessage} | SERVER_RES: [Status ${res.statusCode}] ${responseBody}\n`;
 
     fs.appendFile(path.join(logDir, fileName), logMessage, (err) => {
-      if (err) console.error(SERVER_ERORR_MESSAGE?.FIELD_TO_LOG || "Failed to log", err);
+      if (err)
+        console.error(
+          SERVER_ERORR_MESSAGE?.FIELD_TO_LOG || "Failed to log",
+          err,
+        );
     });
 
     console.log(`[${time}] ${req.method} ${req.url} -> ${res.statusCode}`);
-    
+
     // Call the original method
     return originalSend.apply(this, arguments);
   };

@@ -1,0 +1,36 @@
+.menu-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem 7.5rem;
+  background: var(--color-white);
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .menu-page {
+    padding: 0 2rem 7.5rem;
+  }
+}
+
+.menu-page__cards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+@media (min-width: 640px) {
+  .menu-page__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .menu-page__cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

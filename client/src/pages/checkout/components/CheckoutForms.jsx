@@ -1,7 +1,12 @@
 import { CheckoutField } from "./CheckoutField";
 import { deliveryOptions, paymentOptions } from "../const";
 
-export function ContactForm({ onContinue, formData, updateField, errors = {} }) {
+export function ContactForm({
+  onContinue,
+  formData,
+  updateField,
+  errors = {},
+}) {
   return (
     <div className="checkout-form">
       <div className="checkout-form__grid checkout-form__grid--half">
@@ -75,7 +80,12 @@ export function ContactForm({ onContinue, formData, updateField, errors = {} }) 
   );
 }
 
-export function DeliveryForm({ onContinue, formData, updateField, errors = {} }) {
+export function DeliveryForm({
+  onContinue,
+  formData,
+  updateField,
+  errors = {},
+}) {
   return (
     <div className="checkout-form checkout-form--spaced">
       <div className="checkout-form__grid checkout-form__grid--half">

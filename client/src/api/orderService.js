@@ -2,7 +2,7 @@ import axios from "axios";
 import { createAuthConfig } from "./authConfig";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5001/api";
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 const API_URL = `${API_BASE_URL}/orders`;
 
 export const adminGetOrders = async () => {
@@ -26,7 +26,11 @@ export const adminGetTopDishes = async () => {
 };
 
 export const adminSeedOrders = async () => {
-  const response = await axios.post(`${API_URL}/seed`, null, createAuthConfig());
+  const response = await axios.post(
+    `${API_URL}/seed`,
+    null,
+    createAuthConfig(),
+  );
   return response.data;
 };
 

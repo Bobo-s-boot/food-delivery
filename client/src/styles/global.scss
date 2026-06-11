@@ -1,0 +1,20 @@
+@forward "./variables";
+@forward "./reset";
+@forward "./normalize";
+@forward "./themes/light";
+@forward "./themes/dark";
+
+:root {
+  color: var(--color-text-base);
+  background-color: var(--color-bg-body);
+}
+
+body {
+  background-color: var(--color-bg-body);
+  color: var(--color-text-base);
+  font-family: var(--font-family-base);
+}
+
+a:hover {
+  color: var(--color-link-hover);
+}

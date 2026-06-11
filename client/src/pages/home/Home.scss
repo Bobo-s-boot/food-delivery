@@ -1,0 +1,13 @@
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-bg-surface-soft);
+  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+}
+
+.home-page__trending {
+  width: 100%;
+}

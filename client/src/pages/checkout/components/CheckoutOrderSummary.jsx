@@ -40,13 +40,17 @@ export function CheckoutOrderSummary({ formData, validateAll, setErrors }) {
       };
 
       await createOrder(orderData);
-      
+
       clearCart();
       alert("Order placed successfully!");
       navigate("/"); // Redirect to home
     } catch (error) {
       console.error("Failed to place order", error);
-      alert(error.response?.data?.message || "Failed to place order. Please try again.");
+      alert(
+        error.response?.data?.message ||
+          "Failed to place order. Please try again.",
+      );
+      setErrors(true);
     } finally {
       setIsSubmitting(false);
     }

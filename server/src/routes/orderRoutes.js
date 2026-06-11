@@ -11,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", createOrder); // Allow guest checkout (no protect middleware)
+router.post("/", createOrder);
 router.get("/", protect, isAdmin, getAllOrders);
 router.get("/stats", protect, isAdmin, getOrderStats);
 router.get("/analytics", protect, isAdmin, getAnalyticsData);

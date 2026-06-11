@@ -1,3 +1,7 @@
+import { motion } from "motion/react";
+import { useLandingMotion } from "../../motion/safeMotion";
+import "./Highlights.scss";
+
 export function Highlights({
   sectionData = {
     headingLines: ["", ""],
@@ -8,30 +12,47 @@ export function Highlights({
   className = "",
 }) {
   const { headingLines, description } = sectionData;
+  const lm = useLandingMotion();
 
   return (
-    <section className={`w-full px-4 py-20 ${className}`.trim()}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <h2 className="text-3xl text-left  text-gray-900 mb-6 font-medium">
+    <section className={`highlights ${className}`.trim()}>
+      <div className="highlights__grid">
+        <motion.div
+          variants={lm.highlightsLeft}
+          initial="hidden"
+          whileInView="visible"
+          viewport={lm.viewport}
+          className="highlights__text"
+        >
+          <motion.h2
+            className="highlights__title"
+            variants={lm.highlightsLeftChild}
+          >
             {headingLines.map((line, index) => (
               <span key={`${line}-${index}`}>
                 {line}
                 {index < headingLines.length - 1 ? <br /> : null}
               </span>
             ))}
-          </h2>
-          <p className="text-gray-600 text-left text-2xl mb-10">
+          </motion.h2>
+          <motion.p
+            className="highlights__description"
+            variants={lm.highlightsLeftChild}
+          >
             {description}
-          </p>
+          </motion.p>
 
-          <div className="flex flex-wrap justify-between gap-6 w-full">
+          <motion.div
+            className="highlights__stats"
+            variants={lm.highlightsStatsGroup}
+          >
             {statsData.map((item) => (
-              <div
+              <motion.div
                 key={item.label}
-                className="flex flex-col items-center justify-center gap-2"
+                className="highlights__stat"
+                variants={lm.statItem}
               >
-                <div className="flex justify-center items-center w-12 h-12 rounded-full bg-black">
+                <div className="highlights__stat-icon">
                   <img
                     src={item.icon}
                     alt={item.label}
@@ -39,33 +60,40 @@ export function Highlights({
                     height={32}
                   />
                 </div>
-                <span className="text-black text-lg font-bold">
-                  {item.value}
-                </span>
-                <p className="text-black text-sm">{item.label}</p>
-              </div>
+                <span className="highlights__stat-value">{item.value}</span>
+                <p className="highlights__stat-label">{item.label}</p>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="space-y-4">
-          {cards.map((card) => (
-            <div
+        <div className="highlights__cards">
+          {cards.map((card, index) => (
+            <motion.div
               key={card.title}
-              className="flex items-center gap-6 p-6 bg-[#8F9BB1] rounded-2xl shadow-sm border border-[#8F9BB1]"
+              className="highlights__card"
+              variants={lm.highlightCard(index)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={lm.viewport}
+              whileHover={
+                lm.reduced
+                  ? undefined
+                  : {
+                      y: -4,
+                      boxShadow: "0 24px 48px rgba(15, 23, 42, 0.2)",
+                    }
+              }
+              transition={{ type: "spring", stiffness: 400, damping: 28 }}
             >
-              <div className="shrink-0 w-32 h-32 bg-white rounded-lg flex items-center justify-center py-8 px-3">
+              <div className="highlights__card-icon">
                 <img src={card.icon} alt={card.title} />
               </div>
-              <div className="flex flex-col gap-4">
-                <h3 className="text-2xl font-medium text-white text-left">
-                  {card.title}
-                </h3>
-                <p className="text-white text-left text-lg">
-                  {card.description}
-                </p>
+              <div className="highlights__card-content">
+                <h3 className="highlights__card-title">{card.title}</h3>
+                <p className="highlights__card-text">{card.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

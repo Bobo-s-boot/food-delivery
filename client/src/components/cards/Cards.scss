@@ -1,0 +1,28 @@
+.cards {
+  width: 100%;
+  padding: 2.5rem 1rem;
+}
+
+.cards__header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.cards__title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text-ink);
+  margin: 0;
+}
+
+.cards__description {
+  color: var(--color-text-alt);
+  max-width: 42rem;
+  margin: 0;
+}
+
+.cards__empty {
+  color: var(--color-text-alt);
+}

@@ -386,11 +386,15 @@ export const createOrder = async (req, res) => {
     }
 
     if (!customerPhone || customerPhone.trim() === "") {
-      return res.status(400).json({ message: "Please provide your phone number" });
+      return res
+        .status(400)
+        .json({ message: "Please provide your phone number" });
     }
 
     if (!address || address.trim() === "") {
-      return res.status(400).json({ message: "Please provide your delivery address" });
+      return res
+        .status(400)
+        .json({ message: "Please provide your delivery address" });
     }
 
     const userId = req.user ? req.user._id : null;
@@ -401,12 +405,12 @@ export const createOrder = async (req, res) => {
       if (!groupedOrders[rId]) {
         groupedOrders[rId] = { restaurantId: rId, items: [], totalPrice: 0 };
       }
-      
+
       let dishPrice = item.price;
       try {
         const dish = await Dish.findById(item.id);
         if (dish) {
-           dishPrice = dish.price;
+          dishPrice = dish.price;
         }
       } catch (e) {
         // Fallback to client price if id is invalid format or dish not found
@@ -426,11 +430,13 @@ export const createOrder = async (req, res) => {
     for (const key in groupedOrders) {
       if (key === "unknown" && groupedOrders[key].items.length > 0) {
         try {
-           const firstDish = await Dish.findById(groupedOrders[key].items[0].dishId);
-           if (firstDish) {
-              groupedOrders[key].restaurantId = firstDish.restaurantId;
-           }
-        } catch(e) {}
+          const firstDish = await Dish.findById(
+            groupedOrders[key].items[0].dishId,
+          );
+          if (firstDish) {
+            groupedOrders[key].restaurantId = firstDish.restaurantId;
+          }
+        } catch (e) {}
       }
 
       const orderData = {
@@ -450,13 +456,14 @@ export const createOrder = async (req, res) => {
 
       // Only create if we resolved a valid restaurantId
       if (orderData.restaurantId && orderData.restaurantId !== "unknown") {
-         const newOrder = await Order.create(orderData);
-         createdOrders.push(newOrder);
+        const newOrder = await Order.create(orderData);
+        createdOrders.push(newOrder);
       }
     }
 
-    res.status(201).json({ message: "Заказ успешно оформлен", orders: createdOrders });
-
+    res
+      .status(201)
+      .json({ message: "Заказ успешно оформлен", orders: createdOrders });
   } catch (error) {
     res.status(500).json({
       message: "Ошибка при оформлении заказа",

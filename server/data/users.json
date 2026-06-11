@@ -17,7 +17,8 @@
   {
     "id": 1774959595605,
     "username": "bohdansheva06@gmail.com",
-    "password": "$2b$10$v6jG7Efyh3x.nAcVifMtWOs3HnOL0KsFz.8Jreowo.8DH//aRFRwe"
+    "password": "$2b$10$v6jG7Efyh3x.nAcVifMtWOs3HnOL0KsFz.8Jreowo.8DH//aRFRwe",
+    "role": "admin"
   },
   {
     "id": 1775561928598,

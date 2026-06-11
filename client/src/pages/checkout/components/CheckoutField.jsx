@@ -17,7 +17,19 @@ export function CheckoutField({
         value={value}
         onChange={onChange}
       />
-      {error && <span className="checkout-field__error" style={{ color: "red", fontSize: "12px", marginTop: "4px", display: "block" }}>{error}</span>}
+      {error && (
+        <span
+          className="checkout-field__error"
+          style={{
+            color: "red",
+            fontSize: "12px",
+            marginTop: "4px",
+            display: "block",
+          }}
+        >
+          {error}
+        </span>
+      )}
     </label>
   );
 }

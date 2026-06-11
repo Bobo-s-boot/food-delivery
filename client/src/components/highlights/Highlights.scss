@@ -1,0 +1,131 @@
+.highlights {
+  width: 100%;
+  padding: 5rem 1rem;
+  box-sizing: border-box;
+}
+
+.highlights__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.highlights__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.highlights__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-ink);
+  margin: 0;
+  line-height: 1.05;
+}
+
+.highlights__description {
+  color: var(--color-text-gray);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.highlights__stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.highlights__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.highlights__stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background: var(--color-bg-brand-dark);
+}
+
+.highlights__stat-value {
+  color: var(--color-text-ink);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.highlights__stat-label {
+  color: var(--color-text-ink);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.highlights__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.highlights__card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--color-bg-soft-alt);
+  border-radius: 1.5rem;
+  border: 1px solid var(--color-bg-soft-alt);
+  box-shadow: var(--shadow-elevated);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.highlights__card:hover {
+  transform: translateY(-0.25rem);
+}
+
+.highlights__card-icon {
+  flex-shrink: 0;
+  width: 8rem;
+  height: 8rem;
+  background: var(--color-white);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0.75rem;
+}
+
+.highlights__card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.highlights__card-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0;
+  color: var(--color-text-inverted);
+}
+
+.highlights__card-text {
+  color: var(--color-text-inverted);
+  font-size: 1rem;
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .highlights__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

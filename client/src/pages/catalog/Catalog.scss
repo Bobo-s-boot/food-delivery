@@ -1,0 +1,45 @@
+.catalog-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--color-bg-body);
+  font-family: var(--font-family-base);
+}
+
+.catalog-page__section {
+  width: 100%;
+  margin-top: 5.625rem;
+}
+
+.catalog-page__heading {
+  font-size: 3rem;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  color: var(--color-text-hero);
+  margin-bottom: 1rem;
+}
+
+.catalog-page__list-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.catalog-page__list-inner {
+  width: 100%;
+  max-width: 26.4375rem;
+}
+
+@media (min-width: 768px) {
+  .catalog-page {
+    padding: 0 2rem 3rem;
+  }
+
+  .catalog-page__list-inner {
+    max-width: 100%;
+  }
+}
