@@ -27,9 +27,8 @@ export function Header() {
   const searchRef = useRef(null);
   const debouncedSearchValue = useDebounce(searchValue, 400);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/auth");
+  const handleProfileClick = () => {
+    navigate(user ? `${userBasePath}/my-account` : "/auth");
   };
 
   useEffect(() => {
@@ -206,15 +205,13 @@ export function Header() {
           </button>
 
           <button
-            onClick={user ? handleLogout : () => navigate("/auth")}
+            onClick={handleProfileClick}
             className="header__ghost-button"
-            title={
-              user ? `${t("nav.logout")} (${user.username})` : t("nav.login")
-            }
+            title={user ? "My Account" : t("nav.login")}
           >
             <img
               src={userIcon}
-              alt={user ? t("nav.logout") : t("nav.login")}
+              alt={user ? "My Account" : t("nav.login")}
               className="header__icon"
             />
           </button>

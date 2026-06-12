@@ -1,6 +1,7 @@
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
 import { Admin } from "./pages/admin/Admin";
+import { Account } from "./pages/account/Account";
 import { About } from "./pages/about/About";
 import { Auth } from "./pages/auth/Auth";
 import { Catalog } from "./pages/catalog/Catalog";
@@ -20,6 +21,7 @@ const routes = [
   { path: "/specials", element: <Specials /> },
   { path: "/delivery", element: <Delivery /> },
   { path: "/about", element: <About /> },
+  { path: "/my-account", element: <Account /> },
   { path: "/restaurant/:id", element: <Restaurant /> },
   { path: "/dish/:id", element: <Dish /> },
   { path: "/checkout", element: <Checkout /> },
