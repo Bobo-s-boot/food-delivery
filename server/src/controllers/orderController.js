@@ -363,3 +363,111 @@ export const createSampleOrders = async (req, res) => {
     });
   }
 };
+
+export const createOrder = async (req, res) => {
+  try {
+    const {
+      customerName,
+      customerPhone,
+      customerEmail,
+      address,
+      notes,
+      deliveryPreferences,
+      paymentMethod,
+      items,
+    } = req.body;
+
+    if (!items || !items.length) {
+      return res.status(400).json({ message: "Cart is empty" });
+    }
+
+    if (!customerName || customerName.trim() === "") {
+      return res.status(400).json({ message: "Please provide your name" });
+    }
+
+    if (!customerPhone || customerPhone.trim() === "") {
+      return res
+        .status(400)
+        .json({ message: "Please provide your phone number" });
+    }
+
+    if (!address || address.trim() === "") {
+      return res
+        .status(400)
+        .json({ message: "Please provide your delivery address" });
+    }
+
+    const userId = req.user ? req.user._id : null;
+
+    const groupedOrders = {};
+    for (const item of items) {
+      const rId = item.restaurantId || "unknown";
+      if (!groupedOrders[rId]) {
+        groupedOrders[rId] = { restaurantId: rId, items: [], totalPrice: 0 };
+      }
+
+      let dishPrice = item.price;
+      try {
+        const dish = await Dish.findById(item.id);
+        if (dish) {
+          dishPrice = dish.price;
+        }
+      } catch (e) {
+        // Fallback to client price if id is invalid format or dish not found
+      }
+
+      const orderItem = {
+        dishId: item.id,
+        quantity: item.quantity,
+        price: dishPrice,
+      };
+
+      groupedOrders[rId].items.push(orderItem);
+      groupedOrders[rId].totalPrice += dishPrice * item.quantity;
+    }
+
+    const createdOrders = [];
+    for (const key in groupedOrders) {
+      if (key === "unknown" && groupedOrders[key].items.length > 0) {
+        try {
+          const firstDish = await Dish.findById(
+            groupedOrders[key].items[0].dishId,
+          );
+          if (firstDish) {
+            groupedOrders[key].restaurantId = firstDish.restaurantId;
+          }
+        } catch (e) {}
+      }
+
+      const orderData = {
+        userId,
+        customerName: customerName || "Guest",
+        customerPhone: customerPhone || "Not provided",
+        customerEmail: customerEmail || "",
+        restaurantId: groupedOrders[key].restaurantId,
+        items: groupedOrders[key].items,
+        totalPrice: groupedOrders[key].totalPrice,
+        address: address || "Not provided",
+        notes: notes || "",
+        deliveryPreferences: deliveryPreferences || [],
+        paymentMethod: paymentMethod || "Cash",
+        status: "pending",
+      };
+
+      // Only create if we resolved a valid restaurantId
+      if (orderData.restaurantId && orderData.restaurantId !== "unknown") {
+        const newOrder = await Order.create(orderData);
+        createdOrders.push(newOrder);
+      }
+    }
+
+    res
+      .status(201)
+      .json({ message: "Заказ успешно оформлен", orders: createdOrders });
+  } catch (error) {
+    res.status(500).json({
+      message: "Ошибка при оформлении заказа",
+      error: error.message,
+    });
+  }
+};

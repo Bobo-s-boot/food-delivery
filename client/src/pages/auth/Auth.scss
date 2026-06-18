@@ -4,40 +4,34 @@
 
 .auth-page {
   width: 100%;
-  // Оставляем минимальную высоту, чтобы страница тянулась, если контент не влезает
   min-height: calc(100vh - 90px);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inter", sans-serif;
-  padding: 1rem; // Компактные отступы на мобильных устройствах
+  font-family: var(--font-family-base);
+  padding: 1rem;
 
   @media (min-width: 1024px) {
     padding: 1.5rem 2rem;
   }
 }
 
-// Главная карточка-контейнер
 .auth-card {
   position: relative;
   width: 100%;
   max-width: 115rem;
-
-  /* ИЗМЕНЕНО: Убрали фиксированный height. Теперь карточка гибкая по высоте */
   min-height: calc(100vh - 140px);
   height: auto;
-
   border-radius: 2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-auth-card);
   overflow: hidden;
   display: flex;
   transition: flex-direction 0.7s ease;
 
   @media (min-width: 1024px) {
-    border-radius: 3.5rem; // [56px] для лучшего баланса углов
+    border-radius: 3.5rem;
   }
 
-  // Модификатор направления: вход / регистрация
   &--login {
     flex-direction: row;
   }
@@ -47,7 +41,6 @@
   }
 }
 
-// Фоновое изображение
 .auth-card__bg {
   position: absolute;
   inset: 0;
@@ -57,7 +50,6 @@
   transition: opacity 0.5s ease;
 }
 
-// Пустой блок-заглушка для удержания половины экрана на десктопе
 .auth-card__spacer {
   display: none;
 
@@ -70,31 +62,20 @@
   }
 }
 
-// Стеклянная панель с формой (Glassmorphism)
 .auth-panel {
   position: relative;
   z-index: 20;
   width: 100%;
-
-  /* ИЗМЕНЕНО: Высота теперь подстраивается автоматически, не зажимая элементы */
   height: auto;
   min-height: 100%;
-
-  background: rgba(
-    13,
-    26,
-    45,
-    0.25
-  ); // Чуть затемнили, чтобы белые инпуты лучше читались
+  background: var(--overlay-auth-panel);
   backdrop-filter: blur(25px);
   border-radius: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-auth-border);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  /* ИЗМЕНЕНО: Уменьшили вертикальные отступы и gap, чтобы сэкономить место */
   padding: 2rem 1.5rem;
   gap: 1.5rem;
 
@@ -106,13 +87,12 @@
   }
 }
 
-// Контейнер для анимации переключения форм
 .auth-panel__animated-wrap {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem; // ИЗМЕНЕНО: Снизили с 2rem/3rem, чтобы форма сжалась по вертикали
+  gap: 1.5rem;
   transition: all 0.3s ease;
 
   @media (min-width: 1024px) {
@@ -130,13 +110,12 @@
   }
 }
 
-// Блок социальных кнопок (OAuth)
 .auth-panel__socials {
   width: 100%;
   max-width: 37.625rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem; // ИЗМЕНЕНО: Сделали зазоры между кнопками OAuth компактнее
+  gap: 0.75rem;
   justify-content: center;
   padding: 0 0.5rem;
 
@@ -146,13 +125,12 @@
   }
 }
 
-// Переключатель режима "Вход / Регистрация" в самом низу
 .auth-panel__toggle-wrapper {
   padding-bottom: 0.5rem;
 }
 
 .auth-panel__toggle-link {
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.4;
@@ -160,7 +138,7 @@
   transition: color 0.2s ease;
 
   &:hover {
-    color: #d1d5db;
+    color: var(--color-text-light-muted);
   }
 
   @media (min-width: 1024px) {
@@ -168,25 +146,20 @@
   }
 }
 
-/* =========================================
-   Auth Form Styles
-   ========================================= */
-
 .auth-form {
   width: 100%;
   max-width: 25.625rem;
 }
 
 .auth-form__title {
-  color: #ffffff;
-  /* ИЗМЕНЕНО: Шрифт теперь адаптивный через clamp, уменьшается на смартфонах */
+  color: var(--color-white);
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.02em;
   width: 100%;
   text-align: left;
-  margin-bottom: 1rem; // ИЗМЕНЕНО: Уменьшили отступ, чтобы не толкать инпуты вниз
+  margin-bottom: 1rem;
   white-space: nowrap;
 
   @media (min-width: 1024px) {
@@ -194,35 +167,32 @@
   }
 }
 
-// Блок отображения ошибки
 .auth-form__error {
   width: 100%;
   margin-bottom: 1rem;
   padding: 0.75rem;
-  background-color: rgba(239, 68, 68, 0.2);
-  border: 1px solid #ef4444;
-  color: #ffffff;
+  background-color: var(--overlay-danger);
+  border: 1px solid var(--color-error-border, #ef4444);
+  color: var(--color-white);
   border-radius: 1rem;
   text-align: center;
   font-size: 0.875rem;
 }
 
-// Тело формы
 .auth-form__body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; // ИЗМЕНЕНО: Сжали расстояние между полями ввода (было 1rem)
+  gap: 0.75rem;
 }
 
-// Ссылка "Забыли пароль?"
 .auth-form__forgot-wrapper {
   width: 100%;
   text-align: left;
 }
 
 .auth-form__forgot-link {
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.3;
@@ -232,19 +202,18 @@
   transition: color 0.2s ease;
 
   &:hover {
-    color: #e5e7eb;
+    color: var(--color-text-light-soft);
   }
 }
 
-// Главная кнопка отправки формы
 .auth-form__submit-btn {
   width: 100%;
-  height: 3.125rem; // ИЗМЕНЕНО: Оптимизировали высоту до 50px (было 3.5625rem)
-  margin-top: 0.75rem; // ИЗМЕНЕНО: Уменьшили отступ сверху
-  background-color: #0d1a2d;
+  height: 3.125rem;
+  margin-top: 0.75rem;
+  background-color: var(--color-bg-brand);
   border: none;
   border-radius: 100px;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 1.125rem;
   font-weight: 400;
   line-height: 1.45;
@@ -258,7 +227,7 @@
     opacity 0.2s ease;
 
   &:hover {
-    background-color: rgba(13, 26, 45, 0.9);
+    background-color: var(--color-bg-brand-strong);
   }
 
   &:disabled {
@@ -272,38 +241,34 @@
   }
 }
 
-/* =========================================
-   Auth Input Styles
-   ========================================= */
-
 .auth-input-wrapper {
   position: relative;
   width: 100%;
-  height: 3rem; // ИЗМЕНЕНО: Снизили высоту инпутов до 48px. Визуально аккуратно, но бережет высоту экрана!
+  height: 3rem;
 }
 
 .auth-input {
   width: 100%;
   height: 100%;
-  background-color: #efeff1;
+  background-color: var(--color-bg-search);
   border: none;
   border-radius: 100px;
   padding: 0 4.5rem 0 1.5rem;
   font-size: 1rem;
-  color: #0f1316;
+  color: var(--color-text-primary);
   letter-spacing: -0.04em;
   transition:
     box-shadow 0.2s ease,
     background-color 0.2s ease;
 
   &::placeholder {
-    color: rgba(15, 19, 22, 0.5);
+    color: var(--color-text-faint);
   }
 
   &:focus {
     outline: none;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 2px #0d1a2d;
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 2px var(--color-auth-focus);
   }
 
   @media (min-width: 1024px) {
@@ -311,7 +276,6 @@
   }
 }
 
-// Кнопка переключения видимости пароля (глаз)
 .auth-input__toggle-btn {
   position: absolute;
   right: 1.25rem;
@@ -330,26 +294,21 @@
   &:hover {
     opacity: 1;
   }
-
 }
 
 .auth-input__toggle-text {
-  color: #0f1316;
+  color: var(--color-text-primary);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0;
 }
 
-/* =========================================
-   Social Login Button Styles
-   ========================================= */
-
 .social-btn {
   width: 47%;
-  height: 2.75rem; // ИЗМЕНЕНО: Снизили высоту кнопок OAuth до 44px
+  height: 2.75rem;
   box-sizing: border-box;
   border-radius: 100px;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--color-white);
   background: transparent;
   display: flex;
   align-items: center;
@@ -362,25 +321,25 @@
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--overlay-auth-button-hover);
   }
 
   @media (min-width: 1024px) {
-    width: 48%; // ИЗМЕНЕНО: Кнопки на ПК теперь тоже делят строку пополам, предотвращая вылезание
+    width: 48%;
     padding: 0 1.25rem;
   }
 }
 
 .social-btn__icon {
-  width: 1.125rem; // 18px
+  width: 1.125rem;
   height: 1.125rem;
   object-fit: contain;
   flex-shrink: 0;
 }
 
 .social-btn__label {
-  color: #ffffff;
-  font-size: 0.8125rem; // 13px для мобильных
+  color: var(--color-white);
+  font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.5rem;
   letter-spacing: -0.04em;
@@ -388,6 +347,6 @@
   text-overflow: ellipsis;
 
   @media (min-width: 1024px) {
-    font-size: 1rem; // 16px для десктопа
+    font-size: 1rem;
   }
 }

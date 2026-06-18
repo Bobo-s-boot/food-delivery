@@ -6,10 +6,12 @@ import {
   getAnalyticsData,
   getTopDishes,
   createSampleOrders,
+  createOrder,
 } from "../controllers/orderController.js";
 
 const router = express.Router();
 
+router.post("/", createOrder);
 router.get("/", protect, isAdmin, getAllOrders);
 router.get("/stats", protect, isAdmin, getOrderStats);
 router.get("/analytics", protect, isAdmin, getAnalyticsData);

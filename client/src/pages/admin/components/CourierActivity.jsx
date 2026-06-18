@@ -10,6 +10,7 @@ export function CourierActivity({ couriers }) {
         title="Courier Activity"
         description="Track courier availability, active deliveries and estimated arrival time."
       />
+
       <div className="courier-activity__list">
         {couriers.map((courier) => (
           <div key={courier.courier} className="courier-card">

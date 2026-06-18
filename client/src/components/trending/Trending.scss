@@ -1,7 +1,7 @@
 .trending {
   width: 100%;
   padding: 2.5rem 1rem;
-  background: #edecef;
+  background: var(--color-bg-card-muted);
   border-radius: 2rem;
   box-sizing: border-box;
 }
@@ -19,12 +19,12 @@
 .trending__title {
   font-size: 2rem;
   font-weight: 500;
-  color: #111827;
+  color: var(--color-text-ink);
   margin: 0;
 }
 
 .trending__description {
-  color: #6b7280;
+  color: var(--color-text-alt);
   margin: 0;
   max-width: 36rem;
 }
@@ -41,9 +41,9 @@
   flex-direction: column;
   min-height: 0;
   border-radius: 1.5rem;
-  border: 1px solid #edecef;
+  border: 1px solid var(--color-bg-card-muted);
   overflow: hidden;
-  background: #ffffff;
+  background: var(--color-white);
 }
 
 .trending-card__badge {
@@ -56,15 +56,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--overlay-card-glass);
   backdrop-filter: blur(10px);
   border-radius: 1.5rem;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-elevated);
 }
 
 .trending-card__badge-text {
   font-size: 0.875rem;
-  color: #f8fafc;
+  color: var(--color-bg-surface-soft);
   margin: 0;
 }
 
@@ -72,7 +72,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
-  background: #edecef;
+  background: var(--color-bg-card-muted);
   overflow: hidden;
 }
 
@@ -108,7 +108,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  color: #f8fafc;
+  color: var(--color-bg-surface-soft);
 }
 
 .trending-card__name {
@@ -124,7 +124,7 @@
   gap: 0.5rem;
   margin: 0;
   font-size: 0.875rem;
-  color: #cbd5e1;
+  color: var(--color-text-card-muted);
 }
 
 .trending-card__divider {
@@ -146,8 +146,8 @@
 }
 
 .trending__cta-button {
-  background: #0d1a2d;
-  color: #ffffff;
+  background: var(--color-bg-brand);
+  color: var(--color-text-inverted);
   padding: 0.75rem 1.25rem;
   border-radius: 1.5rem;
   border: none;
@@ -156,7 +156,7 @@
 }
 
 .trending__cta-button:hover {
-  background: #5f5d5d;
+  background: var(--color-bg-brand-hover);
 }
 
 .trending__controls {
@@ -168,9 +168,9 @@
   width: 3rem;
   height: 3rem;
   border-radius: 9999px;
-  border: 1px solid #111827;
-  background: #ffffff;
-  color: #0f1316;
+  border: 1px solid var(--color-text-ink);
+  background: var(--color-white);
+  color: var(--color-text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,7 +181,7 @@
 }
 
 .trending__control-button:hover {
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--color-bg-surface-soft);
 }
 
 @media (min-width: 768px) {

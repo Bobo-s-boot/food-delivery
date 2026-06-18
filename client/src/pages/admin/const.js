@@ -10,6 +10,37 @@ export const adminNavItems = [
   "Settings",
 ];
 
+export const categorysStatistic = [
+  "Item",
+  "Restaurant",
+  "Category",
+  "Price",
+  "Status",
+  "Action",
+];
+
+export const dashbordTabs = [
+  "Order ID",
+  "Customer",
+  "Restaurant",
+  "Status",
+  "Payment",
+  "Courier",
+  "Total",
+  "Time",
+  "Action",
+];
+
+export const termin = [
+  "Promotion",
+  "Type",
+  "Restaurant",
+  "Discount",
+  "Status",
+  "Valid until",
+  "Action",
+];
+
 export const createActions = [
   "New restaurant",
   "New promotion",

@@ -3,7 +3,7 @@ import { SectionHeader } from "./SectionHeader";
 import { StatusBadge } from "./StatusBadge";
 import "../Admin.scss";
 
-export function RestaurantStatus({ restaurants }) {
+export function RestaurantStatus({ restaurants, onDelete }) {
   return (
     <AdminCard className="restaurant-status-admin">
       <SectionHeader
@@ -13,7 +13,7 @@ export function RestaurantStatus({ restaurants }) {
       <div className="restaurant-status-admin__grid">
         {restaurants.map((restaurant) => (
           <article
-            key={restaurant.name}
+            key={restaurant.id || restaurant.name}
             className="restaurant-card_adminStatus-admin"
           >
             <div className="restaurant-card_adminStatus-admin__header">
@@ -34,7 +34,10 @@ export function RestaurantStatus({ restaurants }) {
               <span className="restaurant-card_adminStatus-admin__rating">
                 Rating: {restaurant.rating}
               </span>
-              <button className="restaurant-card_adminStatus-admin__btn">
+              <button
+                className="restaurant-card_adminStatus-admin__btn"
+                onClick={() => onDelete?.(restaurant.id)}
+              >
                 {restaurant.action}
               </button>
             </div>

@@ -89,6 +89,7 @@ export function Highlights({
               <div className="highlights__card-icon">
                 <img src={card.icon} alt={card.title} />
               </div>
+
               <div className="highlights__card-content">
                 <h3 className="highlights__card-title">{card.title}</h3>
                 <p className="highlights__card-text">{card.description}</p>

@@ -1,11 +1,60 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../features/cart/useCart";
 import { CheckoutOrderItem } from "./CheckoutOrderItem";
+import { createOrder } from "../../../api/orderService";
 
 const formatMoney = (value) => `$${value.toFixed(2)}`;
 
-export function CheckoutOrderSummary() {
+export function CheckoutOrderSummary({ formData, validateAll, setErrors }) {
   const { items, totals, increaseItem, decreaseItem, removeItem, clearCart } =
     useCart();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+
+  const handlePlaceOrder = async () => {
+    if (totals.itemCount === 0) return;
+
+    // Validate all steps before submitting
+    if (validateAll && !validateAll()) {
+      alert("Please fill in all required fields correctly.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const orderData = {
+        customerName: `${formData.firstName} ${formData.lastName}`.trim(),
+        customerPhone: formData.phone,
+        customerEmail: formData.email,
+        address: `${formData.city}, ${formData.address}, ${formData.entrance}`,
+        notes: formData.notes,
+        deliveryPreferences: formData.deliveryPreferences,
+        paymentMethod: formData.paymentMethod,
+        items: items.map((item) => ({
+          id: item.id, // using dish._id or cart id
+          quantity: item.quantity,
+          price: item.price,
+          restaurantId: item.restaurantId,
+        })),
+      };
+
+      await createOrder(orderData);
+
+      clearCart();
+      alert("Order placed successfully!");
+      navigate("/"); // Redirect to home
+    } catch (error) {
+      console.error("Failed to place order", error);
+      alert(
+        error.response?.data?.message ||
+          "Failed to place order. Please try again.",
+      );
+      setErrors(true);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <aside className="checkout-summary">
@@ -57,10 +106,11 @@ export function CheckoutOrderSummary() {
 
         <button
           type="button"
-          disabled={totals.itemCount === 0}
+          onClick={handlePlaceOrder}
+          disabled={totals.itemCount === 0 || isSubmitting}
           className="checkout-button checkout-button--primary checkout-button--wide checkout-button--summary"
         >
-          Place order
+          {isSubmitting ? "Placing order..." : "Place order"}
         </button>
         <button
           type="button"

@@ -1,8 +1,8 @@
 .catalog-filters {
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   padding: 1.5rem 0;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-family-base);
 }
 
 .catalog-filters__container {
@@ -18,7 +18,6 @@
   }
 }
 
-/* ЛЕВАЯ ЧАСТЬ: Табы сверху, поиск снизу */
 .catalog-filters__controls {
   display: flex;
   flex-direction: column;
@@ -26,39 +25,37 @@
   width: 100%;
 
   @media (min-width: 1024px) {
-    max-width: 600px; /* Ограничиваем ширину левой части, как на скрине */
+    max-width: 600px;
   }
 
-  /* Стилизация строки поиска (если она внутри без своих стилей) */
   input[type="search"] {
-    height: 3rem; /* Делаем инпут толстеньким, как на макете */
+    height: 3rem;
     width: 100%;
     border-radius: 9999px;
     border: none;
-    background-color: #f1f3f5; /* Светло-серый фон инпута */
-    padding: 0 1.5rem 0 3rem; /* Оставляем место слева под иконку лупы */
+    background-color: var(--color-bg-input-soft);
+    padding: 0 1.5rem 0 3rem;
     font-size: 0.95rem;
-    color: #0d1a2d;
+    color: var(--color-text-strong);
     outline: none;
 
     &::placeholder {
-      color: #8b95a1;
+      color: var(--color-text-placeholder);
     }
   }
 }
 
-/* ПРАВАЯ ЧАСТЬ: Текст описания */
 .catalog-filters__description {
   width: 100%;
 
   @media (min-width: 1024px) {
-    max-width: 500px; /* Ограничиваем ширину текста, чтобы он был компактным */
+    max-width: 500px;
   }
 
   p {
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #3a4656;
+    color: var(--color-text-muted-strong);
   }
 }

@@ -1,25 +1,24 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { headerLinks } from "./consts.js";
 import { useDebounce } from "../../hooks/useDebounce";
 import { searchRestaurants } from "../../api/restaurantService";
 import { searchDishes } from "../../api/dishService";
 import { useCart } from "../../features/cart/useCart";
-import searchIcon from "../../assets/search.svg";
-import handbagIcon from "../../assets/handbag.svg";
-import userIcon from "../../assets/user.svg";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { HeaderNav } from "./components/HeaderNav.jsx";
+import { HeaderSearchBox } from "./components/HeaderSearchBox.jsx";
+import { HeaderSearchDropdown } from "./components/HeaderSearchDropdown.jsx";
+import { HeaderButtons } from "./components/HeaderButtons.jsx";
 import "./Header.scss";
 
 export function Header() {
   const navigate = useNavigate();
-  const location = useLocation();
+
   const { t } = useTranslation();
   const { openCart, totals } = useCart();
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userBasePath = user?.username
-    ? `/${encodeURIComponent(user.username)}`
-    : "";
+  const { user, userBasePath, logout } = useCurrentUser();
+
   const [searchValue, setSearchValue] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,8 +26,9 @@ export function Header() {
   const searchRef = useRef(null);
   const debouncedSearchValue = useDebounce(searchValue, 400);
 
-  const handleProfileClick = () => {
-    navigate(user ? `${userBasePath}/my-account` : "/auth");
+  const handleLogout = () => {
+    logout();
+    navigate("/auth");
   };
 
   useEffect(() => {
@@ -112,110 +112,36 @@ export function Header() {
         >
           Defilicious
         </div>
-
-        <nav className="header__nav">
-          {headerLinks.map((link) => {
-            const linkPath = userBasePath
-              ? `${userBasePath}${link.to}`
-              : link.to;
-            return (
-              <NavLink
-                key={link.to}
-                to={linkPath}
-                end={link.to === "/"}
-                className={({ isActive }) => {
-                  // Сохраняем твою логику активности для блюд
-                  const isCatalogDishActive =
-                    link.to === "/catalog" &&
-                    location.pathname.startsWith("/dish/");
-
-                  return `header__nav-link ${
-                    isActive || isCatalogDishActive
-                      ? "header__nav-link--active"
-                      : "header__nav-link--idle"
-                  }`;
-                }}
-              >
-                {t(`nav.${link.key}`)}
-              </NavLink>
-            );
-          })}
-        </nav>
+        <HeaderNav />
       </div>
 
       <div className="header__actions">
         <div ref={searchRef} className="header__search">
-          <div className="header__search-box">
-            <input
-              type="text"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              onFocus={() => setIsOpen(true)}
-              placeholder={t("nav.searchPlaceholder")}
-              className="header__search-input"
-            />
-            <img
-              src={searchIcon}
-              alt="Search"
-              className="header__search-icon"
-            />
-          </div>
+          <HeaderSearchBox
+            value={searchValue}
+            onChange={setSearchValue}
+            onFocus={() => setIsOpen(true)}
+            placeholder={t("nav.searchPlaceholder")}
+          />
 
           {showDropdown && (
-            <div className="header__dropdown">
-              {isLoading ? (
-                <div className="header__dropdown-empty">Loading...</div>
-              ) : results.length > 0 ? (
-                results.map((item) => (
-                  <button
-                    key={`${item.type}-${item.id}`}
-                    type="button"
-                    onClick={() => handleSelectResult(item.route)}
-                    className="header__dropdown-item"
-                  >
-                    <div className="header__dropdown-title">{item.title}</div>
-                    <div className="header__dropdown-subtitle">
-                      {item.type === "restaurant"
-                        ? t("nav.catalog")
-                        : `${t("nav.menu")} - ${item.subtitle}`}
-                    </div>
-                  </button>
-                ))
-              ) : (
-                <div className="header__dropdown-empty">Nothing found</div>
-              )}
-            </div>
+            <HeaderSearchDropdown
+              results={results}
+              isLoading={isLoading}
+              onSelect={handleSelectResult}
+              translate={t}
+            />
           )}
         </div>
 
-        <div className="header__buttons">
-          <button
-            type="button"
-            onClick={openCart}
-            className="header__ghost-button"
-            aria-label="Open cart"
-          >
-            <img src={handbagIcon} alt="Shop" className="header__icon" />
-            {/* Сохраняем твой бейджик корзины */}
-            {totals.itemCount > 0 && (
-              <span className="header__cart-badge">
-                {totals.itemCount}
-              </span>
-            )}
-          </button>
-
-          <button
-            onClick={handleProfileClick}
-            className="header__ghost-button"
-            title={user ? "My Account" : t("nav.login")}
-          >
-            <img
-              src={userIcon}
-              alt={user ? "My Account" : t("nav.login")}
-              className="header__icon"
-            />
-          </button>
-        </div>
+        <HeaderButtons
+          totals={totals}
+          openCart={openCart}
+          user={user}
+          onLogin={() => navigate("/auth")}
+          onLogout={handleLogout}
+          translate={t}
+        />
       </div>
     </header>
   );

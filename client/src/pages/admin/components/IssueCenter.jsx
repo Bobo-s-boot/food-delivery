@@ -9,6 +9,7 @@ export function IssueCenter({ issues }) {
         title="Issue Center"
         description="Operational issues that need admin attention."
       />
+
       <div className="issue-center__grid">
         {issues.map((issue) => (
           <article key={issue.title} className="issue-card">

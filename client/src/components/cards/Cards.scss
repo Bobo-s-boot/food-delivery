@@ -13,16 +13,16 @@
 .cards__title {
   font-size: 2rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--color-text-ink);
   margin: 0;
 }
 
 .cards__description {
-  color: #6b7280;
+  color: var(--color-text-alt);
   max-width: 42rem;
   margin: 0;
 }
 
 .cards__empty {
-  color: #6b7280;
+  color: var(--color-text-alt);
 }

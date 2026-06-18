@@ -1,8 +1,8 @@
 .specials-page {
   width: 100%;
-  background: #ffffff;
+  background: var(--color-white);
   font-family: "Inter", sans-serif;
-  color: #0d1a2d;
+  color: var(--color-text-strong);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +52,7 @@
   max-width: 45rem;
   font-size: 1rem;
   line-height: 1.5;
-  color: #4b5563;
+  color: var(--color-text-gray);
 }
 
 .specials-filters__controls {
@@ -69,13 +69,13 @@
   font-size: 1rem;
   font-weight: 500;
   transition: all 0.2s ease;
-  background: #fff;
+  background: var(--color-white);
   color: #000;
   cursor: pointer;
 }
 
 .specials-filter-button:hover {
-  background: #f3f4f6;
+  background: var(--color-bg-dropdown-hover);
 }
 
 .specials-filter-button--active {
@@ -213,8 +213,8 @@
   transition: all 0.2s ease;
 
   &:hover {
-    background: #ffffff;
-    color: #0d1a2d;
+    background: var(--color-white);
+    color: var(--color-text-strong);
   }
 }
 
@@ -242,7 +242,7 @@
   border-radius: 2.5rem;
   padding: 2rem;
   overflow: hidden;
-  background: #0d1a2d;
+  background: var(--color-bg-brand);
   color: #ffffff;
 }
 
@@ -328,16 +328,16 @@
   width: max-content;
 
   &:hover {
-    background: #ffffff;
+    background: var(--color-white);
     color: #000000;
   }
 }
 
 .specials-promo__student {
   border-radius: 2.5rem;
-  background: #f3f4f6;
+  background: var(--color-bg-dropdown-hover);
   padding: 2rem;
-  color: #0d1a2d;
+  color: var(--color-text-strong);
 }
 
 .specials-promo__student-label {
@@ -346,7 +346,7 @@
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #6b7280;
+  color: var(--color-text-alt);
 }
 
 .specials-promo__student-title {
@@ -360,7 +360,7 @@
   margin-top: 1.25rem;
   font-size: 1rem;
   line-height: 1.6;
-  color: #4b5563;
+  color: var(--color-text-gray);
 }
 
 .specials-promo__student-button {
@@ -369,14 +369,14 @@
   padding: 0 1.75rem;
   border-radius: 999px;
   border: none;
-  background: #0d1a2d;
+  background: var(--color-bg-brand);
   color: #ffffff;
   cursor: pointer;
   transition: background 0.2s ease;
   width: max-content;
 
   &:hover {
-    background: #000000;
+    background: var(--color-bg-brand-dark);
   }
 }
 
@@ -426,7 +426,7 @@
 
 .specials-step {
   border-radius: 2rem;
-  background: #0d1a2d;
+  background: var(--color-bg-brand);
   padding: 2rem;
   color: #ffffff;
 }
@@ -438,8 +438,8 @@
   width: 3rem;
   height: 3rem;
   border-radius: 999px;
-  background: #ffffff;
-  color: #0d1a2d;
+  background: var(--color-white);
+  color: var(--color-text-strong);
   font-size: 1.125rem;
   font-weight: 600;
 }
