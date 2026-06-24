@@ -1,13 +1,17 @@
 import express from "express";
-import { getUserById, getAllUsers } from "../controllers/userController.js";
+import {
+  getUserById,
+  getAllUsers,
+  getUserProfile,
+} from "../controllers/userController.js";
 import { protect, isAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.use(protect);
-router.use(isAdmin);
 
-router.get("/", getAllUsers);
-router.get("/:id", getUserById);
+router.get("/profile", getUserProfile);
+router.get("/", isAdmin, getAllUsers);
+router.get("/:id", isAdmin, getUserById);
 
 export default router;

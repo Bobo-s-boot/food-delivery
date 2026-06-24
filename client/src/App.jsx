@@ -13,7 +13,6 @@ import { Menu } from "./pages/menu/Menu";
 import { Specials } from "./pages/specials/Specials";
 import { Restaurant } from "./pages/restaurant/Restaurant";
 
-// Добавляем твои новые роуты Checkout и Dish в общий массив
 const routes = [
   { path: "/", element: <Home /> },
   { path: "/catalog", element: <Catalog /> },
@@ -21,7 +20,7 @@ const routes = [
   { path: "/specials", element: <Specials /> },
   { path: "/delivery", element: <Delivery /> },
   { path: "/about", element: <About /> },
-  { path: "/my-account", element: <Account /> },
+  { path: "/profile", element: <Account /> },
   { path: "/restaurant/:id", element: <Restaurant /> },
   { path: "/dish/:id", element: <Dish /> },
   { path: "/checkout", element: <Checkout /> },
@@ -37,7 +36,6 @@ function App() {
         <Routes>
           <Route path="/auth" element={<Auth />} />
 
-          {/* Маппим все роуты с поддержкой :username из master */}
           {routes.map((route) => (
             <Route
               key={route.path}
@@ -46,7 +44,6 @@ function App() {
             />
           ))}
 
-          {/* Сохраняем доступ к админке и по обычному пути, и с username */}
           <Route path="/admin" element={<Admin />} />
           <Route path="/:username/admin" element={<Admin />} />
         </Routes>

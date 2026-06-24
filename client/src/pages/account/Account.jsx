@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../features/cart/useCart";
 import { getStoredUser } from "../../api/authConfig";
+import { getUserProfile } from "../../api/userService"; // Подключаем твою функцию API!
 import { AccountSidebar } from "./components/AccountSidebar";
 import { AddressesSection } from "./components/AddressesSection";
 import { ConfirmDialog } from "./components/ConfirmDialog";
@@ -12,16 +13,18 @@ import { PaymentsSection } from "./components/PaymentsSection";
 import { SettingsSection } from "./components/SettingsSection";
 import { SupportSection } from "./components/SupportSection";
 import { MOCK_ACCOUNT } from "./const";
-import {
-  createAddressId,
-  setDefaultAddress,
-} from "./accountUtils";
+import { createAddressId, setDefaultAddress } from "./accountUtils";
 import "./Account.scss";
 
 export function Account() {
   const navigate = useNavigate();
   const { addItem } = useCart();
   const storedUser = getStoredUser();
+
+  // Добавляем новые стейты для работы с бэкендом
+  const [serverUser, setServerUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [activeSection, setActiveSection] = useState("dashboard");
   const [addresses, setAddresses] = useState(MOCK_ACCOUNT.addresses);
   const [settings, setSettings] = useState(MOCK_ACCOUNT.settings);
@@ -31,18 +34,52 @@ export function Account() {
   const [supportContext, setSupportContext] = useState("");
   const [dialog, setDialog] = useState(null);
 
+  // useEffect для получения профиля при загрузке компонента
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        setIsLoading(true);
+
+        const data = await getUserProfile();
+        setServerUser(data); // Сохраняем реальные данные с бэкенда
+      } catch (error) {
+        console.error(
+          "Не удалось загрузить профиль, перенаправляем на авторизацию",
+          error,
+        );
+        navigate("/auth"); // Если токен протух - кидаем на логин
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // Если нет токена локально, сразу кидаем на логин, чтобы не делать лишний запрос
+    if (!storedUser?.token) {
+      navigate("/auth");
+    } else {
+      fetchProfile();
+    }
+  }, [navigate, storedUser?.token]);
+
+  // Смешиваем реального юзера с сервера с заглушками (пока нет бэкенда для адресов/заказов)
   const user = useMemo(
     () => ({
-      ...MOCK_ACCOUNT.user,
-      email: storedUser?.username || MOCK_ACCOUNT.user.email,
-      name: storedUser?.fullName || MOCK_ACCOUNT.user.name,
+      ...MOCK_ACCOUNT.user, // Фолбек на моковые данные (аватарка и т.д.)
+      email:
+        serverUser?.email || storedUser?.username || MOCK_ACCOUNT.user.email,
+      name:
+        serverUser?.fullName ||
+        serverUser?.username ||
+        storedUser?.fullName ||
+        MOCK_ACCOUNT.user.name,
+      role: serverUser?.role || "user", // Если нужна роль для отображения
     }),
-    [storedUser],
+    [serverUser, storedUser],
   );
 
   const account = useMemo(
     () => ({
-      ...MOCK_ACCOUNT,
+      ...MOCK_ACCOUNT, // Пока оставляем моковые заказы и адреса
       user,
       addresses,
       settings,
@@ -204,6 +241,15 @@ export function Account() {
       />
     );
   };
+
+  // Показываем прелоадер, пока данные тянутся с сервера
+  if (isLoading) {
+    return (
+      <div className="account-page flex items-center justify-center h-screen">
+        <p className="text-xl text-gray-500">Загрузка профиля...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="account-page">

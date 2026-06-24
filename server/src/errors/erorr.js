@@ -6,6 +6,7 @@ export const SERVER_ERORR_MESSAGE = {
 
   USERS_NOT_FOUND: "Users not found",
   USER_NOT_FOUND: "User not found",
+  PROFILE_NOT_FOUND: "Profile not found",
 
   FIELD_REGISTER_EMPTY: "Please fill in all fields",
 
