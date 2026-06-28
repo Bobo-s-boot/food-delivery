@@ -1513,6 +1513,14 @@
     }
   }
 
+  &__main-full {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
   /* --- Вложенная сетка для узких карточек (Revenue & Peak Hours) --- */
   &__sub-grid {
     display: grid;

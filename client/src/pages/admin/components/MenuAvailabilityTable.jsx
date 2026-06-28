@@ -5,7 +5,7 @@ import { StatusBadge } from "./StatusBadge";
 import "../Admin.scss";
 import { categorysStatistic } from "../const";
 
-export function MenuAvailabilityTable({ items, onDelete }) {
+export function MenuAvailabilityTable({ items, onDelete, onEdit }) {
   return (
     <AdminCard className="menu-availability-card">
       <SectionHeader
@@ -36,12 +36,23 @@ export function MenuAvailabilityTable({ items, onDelete }) {
               </td>
 
               <td className="menu-availability-row__cell menu-availability-row__cell--last">
-                <button
-                  className="menu-availability-btn"
-                  onClick={() => onDelete?.(row.id)}
-                >
-                  {row.action}
-                </button>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  {onEdit && (
+                    <button
+                      className="menu-availability-btn"
+                      onClick={() => onEdit?.(row)}
+                      style={{ backgroundColor: "var(--color-bg-brand)", color: "white" }}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  <button
+                    className="menu-availability-btn"
+                    onClick={() => onDelete?.(row.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           )}

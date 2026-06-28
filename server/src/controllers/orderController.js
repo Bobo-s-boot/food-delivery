@@ -471,3 +471,34 @@ export const createOrder = async (req, res) => {
     });
   }
 };
+
+export const updateOrderStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const validStatuses = ["pending", "preparing", "delivering", "delivered", "cancelled"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Неверный статус заказа" });
+    }
+
+    const order = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    )
+      .populate("userId", "username fullName")
+      .populate("restaurantId", "name");
+
+    if (!order) {
+      return res.status(404).json({ message: "Заказ не найден" });
+    }
+
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({
+      message: "Ошибка при обновлении статуса заказа",
+      error: error.message,
+    });
+  }
+};

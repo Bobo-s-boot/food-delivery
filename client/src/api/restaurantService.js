@@ -48,3 +48,8 @@ export const adminCreateRestaurant = async (restaurantData) => {
   const response = await axios.post(API_URL, restaurantData, createAuthConfig());
   return response.data;
 };
+
+export const adminUpdateRestaurant = async (id, restaurantData) => {
+  const response = await axios.put(`${API_URL}/${id}`, restaurantData, createAuthConfig());
+  return response.data;
+};

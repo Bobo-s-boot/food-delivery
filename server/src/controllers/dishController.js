@@ -87,3 +87,21 @@ export const deleteDish = async (req, res) => {
     res.status(500).json({ message: SERVER_ERORR_MESSAGE.DISH_DELETE_SERVER_ERROR });
   }
 };
+
+export const updateDish = async (req, res) => {
+  try {
+    const dish = await Dish.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!dish) {
+      return res.status(404).json({ message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND });
+    }
+
+    res.status(200).json(dish);
+  } catch (error) {
+    console.error("Ошибка обновления блюда", error);
+    res.status(400).json({ message: "Ошибка при обновлении блюда", error: error.message });
+  }
+};
