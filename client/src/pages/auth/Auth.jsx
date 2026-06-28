@@ -46,7 +46,8 @@ export function Auth({ onLogin }) {
   }, [location, navigate, onLogin, t]);
 
   const handleSocialLogin = (provider) => {
-    window.location.href = `http://127.0.0.1:5000/api/auth/${provider}`;
+    const apiBaseUrl = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
+    window.location.href = `${apiBaseUrl}/auth/${provider}`;
   };
 
   const toggleMode = () => {
