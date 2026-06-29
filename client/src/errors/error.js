@@ -10,4 +10,5 @@ export const CLIENT_ERORR_MESSAGE = {
   ERROR_GET_USERS: "Error geting users:",
   ERROR_ROLE_ADMIN: "You don`t have admin role:",
   ERROR_TOKEN: "Your token empty:",
+  ERROR_PROFILE: "Error profile:",
 };

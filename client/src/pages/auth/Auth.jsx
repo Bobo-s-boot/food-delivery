@@ -34,7 +34,7 @@ export function Auth({ onLogin }) {
         if (user?.role === "admin") {
           navigate(`/${user.username}/admin`, { replace: true });
         } else {
-          navigate(`/${user.username}`, { replace: true });
+          navigate(`/${user.username}/profile`, { replace: true });
         }
       } catch {
         setError(t("auth.oauthParseError"));
@@ -96,7 +96,7 @@ export function Auth({ onLogin }) {
       if (response.user?.role === "admin") {
         navigate(`/${response.user.username}/admin`, { replace: true });
       } else {
-        navigate(`/${response.user.username}`, { replace: true });
+        navigate(`/${response.user.username}/profile`, { replace: true });
       }
     } catch (error) {
       setError(

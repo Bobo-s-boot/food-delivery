@@ -28,3 +28,19 @@ export const getUsers = async () => {
     return [];
   }
 };
+
+export const getUserProfile = async () => {
+  try {
+    const token = getAuthToken();
+
+    if (!token) {
+      throw new Error(CLIENT_ERORR_MESSAGE.ERROR_TOKEN);
+    }
+
+    const response = await axios.get(`${API_URL}/profile`, createAuthConfig());
+    return response.data;
+  } catch (error) {
+    console.error(CLIENT_ERORR_MESSAGE.ERROR_PROFILE, error);
+    throw error;
+  }
+};

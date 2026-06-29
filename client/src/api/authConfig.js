@@ -6,7 +6,13 @@ export const getStoredUser = () => {
   }
 };
 
-export const getAuthToken = () => getStoredUser()?.token || "";
+export const getAuthToken = () => {
+  const data = getStoredUser();
+
+  const token = data?.token || data?.user?.token || "";
+
+  return token;
+};
 
 export const createAuthConfig = () => {
   const token = getAuthToken();

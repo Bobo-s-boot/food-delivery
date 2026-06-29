@@ -30,3 +30,23 @@ export const getUserById = async (req, res) => {
       .json({ message: error.message || SERVER_ERORR_MESSAGE.USER_NOT_FOUND });
   }
 };
+
+export const getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findOne({ id: parseInt(req.user.id) }).select(
+      "-password",
+    );
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: SERVER_ERORR_MESSAGE.USER_NOT_FOUND });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || SERVER_ERORR_MESSAGE.PROFILE_NOT_FOUND,
+    });
+  }
+};
