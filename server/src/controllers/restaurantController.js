@@ -16,7 +16,17 @@ export const initializeRestaurantsFromFile = async () => {
 
 export const createRestaurant = async (req, res) => {
   try {
-    const newRestaurant = await Restaurant.create(req.body);
+    const lastRestaurant = await Restaurant.findOne().sort({ id: -1 });
+    const nextId = lastRestaurant ? lastRestaurant.id + 1 : 1;
+
+    const newRestaurant = await Restaurant.create({
+      id: nextId,
+      ...req.body,
+      badge: req.body.badge || "New",
+      location: req.body.location || "Local",
+      rating: req.body.rating || "5.0",
+      image: req.body.image || "/img/card-1.png",
+    });
     res.status(201).json(newRestaurant);
   } catch (error) {
     res
@@ -100,5 +110,25 @@ export const addRestaurant = async (req, res) => {
     res
       .status(500)
       .json({ message: error.message || SERVER_ERORR_MESSAGE.FIELD_TO_ADD });
+  }
+};
+
+export const updateRestaurant = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedRestaurant = await Restaurant.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedRestaurant) {
+      return res.status(404).json({ message: "Ресторан не найден" });
+    }
+    res.status(200).json(updatedRestaurant);
+  } catch (error) {
+    res.status(400).json({
+      message: "Ошибка при редактировании ресторана",
+      error: error.message,
+    });
   }
 };

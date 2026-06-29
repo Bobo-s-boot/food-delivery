@@ -40,3 +40,8 @@ export const createOrder = async (orderData) => {
   const response = await axios.post(API_URL, orderData, config);
   return response.data;
 };
+
+export const adminUpdateOrderStatus = async (id, status) => {
+  const response = await axios.put(`${API_URL}/${id}/status`, { status }, createAuthConfig());
+  return response.data;
+};

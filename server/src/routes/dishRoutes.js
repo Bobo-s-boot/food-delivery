@@ -4,6 +4,7 @@ import {
   getDishById,
   createDish,
   deleteDish,
+  updateDish,
 } from "../controllers/dishController.js";
 import { protect, isAdmin } from "../middleware/authMiddleware.js";
 
@@ -13,6 +14,7 @@ router.get("/", getDishes);
 router.get("/:id", getDishById);
 
 router.post("/", protect, isAdmin, createDish);
+router.put("/:id", protect, isAdmin, updateDish);
 router.delete("/:id", protect, isAdmin, deleteDish);
 
 export default router;

@@ -46,6 +46,18 @@ function App() {
 
           <Route path="/admin" element={<Admin />} />
           <Route path="/:username/admin" element={<Admin />} />
+          {/* Сохраняем доступ к админке и по обычному пути, и с username */}
+          <Route path="/admin" element={<Admin section="dashboard" />} />
+          <Route path="/:username/admin" element={<Admin section="dashboard" />} />
+
+          <Route path="/admin/restaurants" element={<Admin section="restaurants" />} />
+          <Route path="/:username/admin/restaurants" element={<Admin section="restaurants" />} />
+
+          <Route path="/admin/dishes" element={<Admin section="dishes" />} />
+          <Route path="/:username/admin/dishes" element={<Admin section="dishes" />} />
+
+          <Route path="/admin/orders" element={<Admin section="orders" />} />
+          <Route path="/:username/admin/orders" element={<Admin section="orders" />} />
         </Routes>
       </Layout>
     </Router>
