@@ -66,3 +66,17 @@ export const searchDishes = async (query, limit = 5) => {
     return [];
   }
 };
+
+export const updateDish = async (dishId, dishData) => {
+  try {
+    const response = await axios.put(
+      `${API_URL}/${dishId}`,
+      dishData,
+      createAuthConfig(),
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка при обновлении блюда:", error);
+    throw error;
+  }
+};

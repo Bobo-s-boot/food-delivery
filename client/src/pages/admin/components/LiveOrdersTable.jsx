@@ -6,7 +6,7 @@ import { StatusBadge } from "./StatusBadge";
 import "../Admin.scss";
 import { dashbordTabs } from "../const";
 
-export function LiveOrdersTable({ orders, filters }) {
+export function LiveOrdersTable({ orders, filters, onUpdateStatus }) {
   const [activeFilter, setActiveFilter] = useState("All");
 
   const filteredOrders = useMemo(() => {
@@ -58,7 +58,30 @@ export function LiveOrdersTable({ orders, filters }) {
               </td>
 
               <td className="live-orders-row__cell">
-                <StatusBadge value={order.status} />
+                {onUpdateStatus ? (
+                  <select
+                    value={order.status}
+                    onChange={(e) => onUpdateStatus?.(order.id, e.target.value)}
+                    style={{
+                      padding: "4px 8px",
+                      borderRadius: "8px",
+                      border: "1px solid var(--color-border-card)",
+                      fontSize: "0.75rem",
+                      backgroundColor: "var(--color-bg-soft)",
+                      color: "var(--color-text-strong)",
+                      cursor: "pointer",
+                      fontWeight: "500",
+                    }}
+                  >
+                    <option value="pending">pending</option>
+                    <option value="preparing">preparing</option>
+                    <option value="delivering">delivering</option>
+                    <option value="delivered">delivered</option>
+                    <option value="cancelled">cancelled</option>
+                  </select>
+                ) : (
+                  <StatusBadge value={order.status} />
+                )}
               </td>
 
               <td className="live-orders-row__cell text-tertiary">
