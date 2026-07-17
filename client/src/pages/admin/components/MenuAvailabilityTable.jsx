@@ -3,7 +3,16 @@ import { AdminTable } from "./AdminTable";
 import { SectionHeader } from "./SectionHeader";
 import { StatusBadge } from "./StatusBadge";
 import "../Admin.scss";
-import { categorysStatistic } from "../const";
+import "./MenuAvailabilityTable.scss";
+
+const menuAvailabilityColumns = [
+  "Item",
+  "Restaurant",
+  "Category",
+  "Price",
+  "Status",
+  "Action",
+];
 
 export function MenuAvailabilityTable({ items, onDelete, onEdit }) {
   return (
@@ -14,7 +23,7 @@ export function MenuAvailabilityTable({ items, onDelete, onEdit }) {
       />
       <div className="menu-availability__table-wrapper">
         <AdminTable
-          columns={categorysStatistic}
+          columns={menuAvailabilityColumns}
           rows={items}
           renderRow={(row) => (
             <tr key={row.id || row.item} className="menu-availability-row">
@@ -46,12 +55,14 @@ export function MenuAvailabilityTable({ items, onDelete, onEdit }) {
                       Edit
                     </button>
                   )}
-                  <button
-                    className="menu-availability-btn"
-                    onClick={() => onDelete?.(row.id)}
-                  >
-                    Delete
-                  </button>
+                  {onDelete && (
+                    <button
+                      className="menu-availability-btn"
+                      onClick={() => onDelete?.(row.id)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               </td>
             </tr>

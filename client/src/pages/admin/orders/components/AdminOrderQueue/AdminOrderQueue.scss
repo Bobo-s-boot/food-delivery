@@ -1,0 +1,377 @@
+.admin-order-queue {
+  min-width: 0;
+  overflow: hidden;
+  padding: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__table {
+    width: 100%;
+    min-width: 0;
+    margin-top: 1rem;
+  }
+
+  &__head,
+  &__row {
+    display: none;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+  }
+
+  &__head {
+    padding: 0 0.75rem 0.5rem;
+    color: var(--color-text-muted-strong);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  &__body {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  &__item {
+    min-width: 0;
+  }
+
+  &__row,
+  &__card {
+    background-color: var(--color-bg-soft-strong);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-bg-soft);
+    }
+  }
+
+  &__row {
+    min-height: 3.5rem;
+    border-radius: 1rem;
+    padding: 0.75rem;
+    color: var(--color-text-tertiary);
+    font-size: 0.875rem;
+  }
+
+  &__row > *,
+  &__head > * {
+    min-width: 0;
+  }
+
+  &__pair {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  &__primary,
+  &__money {
+    color: var(--color-text-strong);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  &__secondary {
+    min-width: 0;
+    color: var(--color-text-muted-strong);
+    font-size: 0.75rem;
+    line-height: 1.35;
+  }
+
+  &__ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__nowrap,
+  &__money,
+  .status-badge {
+    white-space: nowrap;
+  }
+
+  &__issue {
+    display: inline-flex;
+    width: fit-content;
+
+    .status-badge {
+      border-width: 1.5px;
+      box-shadow: 0 0 0 2px rgba(254, 205, 211, 0.38);
+      font-weight: 600;
+    }
+  }
+
+  &__no-issue {
+    display: block;
+    width: 0;
+    height: 0;
+  }
+
+  &__payment .status-badge,
+  &__state .status-badge {
+    width: fit-content;
+  }
+
+  &__action-cell {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__action {
+    display: inline-flex;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 9999px;
+    background-color: var(--color-bg-brand);
+    color: var(--color-white);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-bg-brand-strong);
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgba(13, 26, 45, 0.2);
+      outline-offset: 2px;
+    }
+  }
+
+  &__action-text {
+    display: none;
+  }
+
+  &__action-icon {
+    width: 1rem;
+    height: 1rem;
+    filter: brightness(0) invert(1);
+  }
+
+  &__card {
+    display: grid;
+    gap: 0.75rem;
+    border-radius: 1rem;
+    padding: 0.875rem 1rem;
+  }
+
+  &__card-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto 2.5rem;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__card-parties {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    color: var(--color-text-tertiary);
+    font-size: 0.875rem;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__card-state {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &__card-meta {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: end;
+    gap: 0.75rem;
+
+    > span:not(.status-badge) {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+
+    small {
+      color: var(--color-text-muted-strong);
+      font-size: 0.75rem;
+    }
+
+    strong {
+      overflow: hidden;
+      color: var(--color-text-strong);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__footer {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    color: var(--color-text-tertiary);
+
+    p {
+      margin: 0;
+      font-size: 0.875rem;
+    }
+
+    @media (min-width: 640px) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    gap: 0.5rem;
+
+    button {
+      border: none;
+      border-radius: 9999px;
+      background-color: var(--color-bg-soft);
+      padding: 0.5rem 1rem;
+      color: var(--color-text-strong);
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--color-bg-hover);
+      }
+    }
+  }
+
+  @media (min-width: 960px) and (max-width: 1119px) {
+    &__head--compact,
+    &__row--compact {
+      display: grid;
+      grid-template-columns:
+        minmax(13rem, 1.55fr)
+        minmax(8.5rem, 1.05fr)
+        minmax(7.75rem, 0.95fr)
+        minmax(6rem, 0.75fr)
+        2.5rem;
+      column-gap: 0.75rem;
+    }
+
+    &__row--compact {
+      min-height: 4.75rem;
+    }
+
+    &__card {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1120px) and (max-width: 1359px) {
+    &__head--medium,
+    &__row--medium {
+      display: grid;
+      grid-template-columns:
+        minmax(8.5rem, 1.2fr)
+        minmax(7.25rem, 1fr)
+        minmax(6.25rem, 0.85fr)
+        minmax(6.5rem, 1fr)
+        minmax(7.75rem, 1.1fr)
+        minmax(6.25rem, 0.85fr)
+        2.5rem;
+      column-gap: clamp(0.75rem, 1vw, 1rem);
+    }
+
+    &__card {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1360px) {
+    &__head--large,
+    &__row--large {
+      display: grid;
+      grid-template-columns:
+        minmax(5rem, 0.65fr)
+        minmax(6.875rem, 1fr)
+        minmax(7.5rem, 1.15fr)
+        minmax(6.25rem, 0.9fr)
+        minmax(6.875rem, 1fr)
+        minmax(5.9375rem, 0.8fr)
+        minmax(6.875rem, 1fr)
+        minmax(5rem, 0.65fr)
+        minmax(4.6875rem, 0.65fr)
+        minmax(4rem, auto);
+      column-gap: clamp(0.75rem, 1vw, 1.25rem);
+    }
+
+    &__action {
+      min-width: 0;
+      min-height: 0;
+      padding: 0.5rem 1rem;
+    }
+
+    &__action-text {
+      display: inline;
+    }
+
+    &__action-icon {
+      display: none;
+    }
+
+    &__card {
+      display: none;
+    }
+  }
+
+  @media (max-width: 959px) {
+    padding-right: clamp(0.75rem, 2vw, 1rem);
+    padding-left: clamp(0.75rem, 2vw, 1rem);
+
+    &__table {
+      margin-top: 0.875rem;
+    }
+
+    &__head {
+      display: none;
+    }
+
+    &__body {
+      gap: 0.625rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-order-queue__row,
+  .admin-order-queue__card,
+  .admin-order-queue__action {
+    transition: none;
+  }
+}

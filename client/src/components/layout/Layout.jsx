@@ -3,6 +3,7 @@ import { Footer } from "../footer/Footer";
 import { Header } from "../header/Header";
 import { PATH_PAGE } from "./const";
 import { CartDrawer } from "../../features/cart/CartDrawer";
+import { adminLayoutRoutePatterns } from "../../pages/admin/admin.routes";
 import "./Layout.scss";
 
 const routePatterns = [
@@ -38,9 +39,8 @@ export function Layout({ children }) {
   // Объединяем проверки из master и твои изменения
   const shouldRemoveContainer = routePatterns.some(matchesRoute) || isDishPage;
 
-  const isAdminPage = !!matchPath(
-    { path: PATH_PAGE.ADMIN, end: true },
-    location.pathname,
+  const isAdminPage = adminLayoutRoutePatterns.some((path) =>
+    matchPath({ path, end: false }, location.pathname),
   );
   const showFooter = location.pathname !== PATH_PAGE.AUTH;
 
