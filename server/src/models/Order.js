@@ -86,10 +86,30 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: "Cash",
     },
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "paid", "failed", "cash_on_delivery"],
+      default: "pending",
+    },
+    stripePaymentIntentId: {
+      type: String,
+      default: null,
+      index: true,
+    },
+    paymentCurrency: {
+      type: String,
+      default: "usd",
+    },
+    deliveryMethod: {
+      type: String,
+      default: "delivery",
+    },
   },
   {
     timestamps: true,
   },
 );
 
-export default mongoose.model("Order", orderSchema);
+const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
+
+export default Order;

@@ -19,14 +19,15 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "exrpess": "^0.0.1-security",
-    "mongoose": "^9.5.0",
     "express-session": "^1.19.0",
+    "exrpess": "^0.0.1-security",
     "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.5.0",
     "passport": "^0.7.0",
     "passport-apple": "^2.0.2",
     "passport-facebook": "^3.0.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "stripe": "^22.3.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

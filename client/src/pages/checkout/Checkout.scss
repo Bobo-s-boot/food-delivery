@@ -613,3 +613,22 @@
   letter-spacing: -0.03em;
   color: var(--color-text-strong);
 }
+
+/* Контейнер должен выглядеть в точности как твои обычные инпуты */
+.checkout-stripe-input {
+  display: block;
+  width: 100%;
+  padding: 12px; /* или твои стандартные отступы */
+  border: 1px solid #e5e7eb; /* цвет рамки */
+  border-radius: 8px; /* скругление */
+  background-color: #ffffff;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+/* Эффект фокуса на контейнер (когда пользователь внутри инпута Stripe) */
+.checkout-stripe-input:focus-within {
+  border-color: #3b82f6; /* цвет рамки при фокусе (например, синий) */
+  box-shadow: 0 0 0 1px #3b82f6;
+}

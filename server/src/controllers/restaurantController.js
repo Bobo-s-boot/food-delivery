@@ -29,9 +29,10 @@ export const createRestaurant = async (req, res) => {
     });
     res.status(201).json(newRestaurant);
   } catch (error) {
-    res
-      .status(400)
-      .json({ message: "Ошибка при создании ресторана", error: error.message });
+    res.status(400).json({
+      message: SERVER_ERORR_MESSAGE.RESTAURANT_CREATE_ERROR,
+      error: error.message,
+    });
   }
 };
 
@@ -39,12 +40,17 @@ export const deleteRestaurant = async (req, res) => {
   try {
     const restaurant = await Restaurant.findByIdAndDelete(req.params.id);
 
-    if (!restaurant)
-      return res.status(404).json({ message: "Ресторан не найден" });
+    if (!restaurant) {
+      return res
+        .status(404)
+        .json({ message: SERVER_ERORR_MESSAGE.RESTAURANT_NOT_FOUND });
+    }
 
-    res.json({ message: "Ресторан успешно удален из базы" });
+    res.json({ message: SERVER_ERORR_MESSAGE.RESTAURANT_DELETE_SUCCESS });
   } catch (error) {
-    res.status(500).json({ message: "Ошибка сервера" });
+    res
+      .status(500)
+      .json({ message: SERVER_ERORR_MESSAGE.RESTAURANT_DELETE_ERROR });
   }
 };
 
@@ -116,18 +122,18 @@ export const addRestaurant = async (req, res) => {
 export const updateRestaurant = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedRestaurant = await Restaurant.findByIdAndUpdate(
-      id,
-      req.body,
-      { new: true }
-    );
+    const updatedRestaurant = await Restaurant.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!updatedRestaurant) {
-      return res.status(404).json({ message: "Ресторан не найден" });
+      return res
+        .status(404)
+        .json({ message: SERVER_ERORR_MESSAGE.RESTAURANT_NOT_FOUND });
     }
     res.status(200).json(updatedRestaurant);
   } catch (error) {
     res.status(400).json({
-      message: "Ошибка при редактировании ресторана",
+      message: SERVER_ERORR_MESSAGE.RESTAURANT_UPDATE_ERROR,
       error: error.message,
     });
   }
