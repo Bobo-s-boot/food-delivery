@@ -16,13 +16,19 @@ import { PromotionsTab } from "./workspace/PromotionsTab";
 import { RestaurantConfirmationDialog } from "./workspace/RestaurantConfirmationDialog";
 import { SettingsTab } from "./workspace/SettingsTab";
 
-const workspaceTabs = ["Overview", "Menu", "Operations", "Promotions", "Settings"];
+const workspaceTabs = [
+  "Overview",
+  "Menu",
+  "Operations",
+  "Promotions",
+  "Settings",
+];
 
 export function RestaurantWorkspace({
   restaurant,
-  menuItems,
-  orders,
-  promotions,
+  menuItems = [],
+  orders = [],
+  promotions = [],
   activeTab,
   editorItemId,
   onTabChange,
@@ -30,43 +36,119 @@ export function RestaurantWorkspace({
   onNavigate,
   basePath,
   returnQuery,
+  onUpdateRestaurant,
+  onDeleteRestaurant,
+  onSaveDish,
+  onDeleteDish,
+  previewMode = false,
 }) {
   const [confirmation, setConfirmation] = useState(null);
   const [notice, setNotice] = useState("");
   const [focusSettingsDetails, setFocusSettingsDetails] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  // Получаем приоритетный ObjectId ресторана
+  const activeRestaurantId = restaurant?._id || restaurant?.id;
+
+  // Безопасный фильтр блюд именно для текущего ресторана
+  const currentRestaurantMenuItems = useMemo(() => {
+    if (!Array.isArray(menuItems)) return [];
+
+    return menuItems.filter((dish) => {
+      // Если у блюда restaurantId — это объект (populated) или строка
+      const dishRestId = String(
+        dish.restaurantId?._id || dish.restaurantId || "",
+      );
+      const targetRestId = String(activeRestaurantId || "");
+
+      // Если в массив переданы уже отфильтрованные блюда или совпадает ID
+      return !dishRestId || dishRestId === targetRestId;
+    });
+  }, [menuItems, activeRestaurantId]);
+
   const restaurantOrders = useMemo(
-    () => orders.filter((order) => order.restaurant.name === restaurant.name),
+    () => orders.filter((order) => order.restaurant?.name === restaurant.name),
     [orders, restaurant.name],
   );
+
   const restaurantPromotions = useMemo(
-    () => promotions.filter(
-      (promotion) => !promotion.restaurant || promotion.restaurant === restaurant.name,
-    ),
+    () =>
+      promotions.filter(
+        (promotion) =>
+          !promotion.restaurant || promotion.restaurant === restaurant.name,
+      ),
     [promotions, restaurant.name],
   );
-  const returnSuffix = returnQuery ? `&return=${encodeURIComponent(returnQuery)}` : "";
+
+  const returnSuffix = returnQuery
+    ? `&return=${encodeURIComponent(returnQuery)}`
+    : "";
+
   const openItem = (itemId) => {
-    onNavigate(`${basePath}/restaurants/${restaurant.id}/menu/${itemId}?tab=menu${returnSuffix}`);
+    onNavigate(
+      `${basePath}/restaurants/${activeRestaurantId}/menu/${itemId}?tab=menu${returnSuffix}`,
+    );
   };
 
-  const confirmAction = (action) => {
-    setNotice(`${action} is represented as a mock UI state. Backend mutation remains a TODO.`);
+  const confirmAction = async (action) => {
     setConfirmation(null);
+
+    if (previewMode) {
+      setNotice(
+        `${action} is represented as a mock UI state. Backend mutation remains a TODO.`,
+      );
+      return;
+    }
+
+    try {
+      setIsUpdating(true);
+
+      if (action === "Pause orders") {
+        await onUpdateRestaurant?.(activeRestaurantId, {
+          ...restaurant,
+          operationalAvailability: "Paused",
+        });
+        setNotice("Приём заказов для ресторана приостановлен.");
+      } else if (action === "Resume orders") {
+        await onUpdateRestaurant?.(activeRestaurantId, {
+          ...restaurant,
+          operationalAvailability: "Accepting orders",
+        });
+        setNotice("Ресторан снова принимает заказы!");
+      } else if (
+        action.toLowerCase().includes("delete") ||
+        action.toLowerCase().includes("удалить")
+      ) {
+        await onDeleteRestaurant?.(activeRestaurantId);
+        onBack();
+      } else {
+        setNotice(`Действие "${action}" выполнено.`);
+      }
+    } catch (error) {
+      console.error("Ошибка при выполнении действия:", error);
+      setNotice("Произошла ошибка при сохранении изменений в БД.");
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   const navigateToOrders = (orderId) => {
     onNavigate(
       `${basePath}/orders?restaurant=${encodeURIComponent(restaurant.name)}` +
-      `${orderId ? `&order=${encodeURIComponent(orderId)}` : ""}`,
+        `${orderId ? `&order=${encodeURIComponent(orderId)}` : ""}`,
     );
   };
 
   const closeMenuEditor = () => {
-    onNavigate(`${basePath}/restaurants/${restaurant.id}?tab=menu${returnSuffix}`);
+    onNavigate(
+      `${basePath}/restaurants/${activeRestaurantId}?tab=menu${returnSuffix}`,
+    );
   };
 
   const openFinancePromotions = () => {
-    onNavigate(`${basePath}/finance?tab=promotions&restaurant=${restaurant.id}`);
+    onNavigate(
+      `${basePath}/finance?tab=promotions&restaurant=${activeRestaurantId}`,
+    );
   };
 
   const editRestaurant = () => {
@@ -76,47 +158,88 @@ export function RestaurantWorkspace({
 
   return (
     <div className="restaurant-workspace">
-      <button type="button" className="restaurant-workspace__back" onClick={onBack}>
+      <button
+        type="button"
+        className="restaurant-workspace__back"
+        onClick={onBack}
+        disabled={isUpdating}
+      >
         <ArrowLeft size={17} /> Restaurants
       </button>
+
       <div className="restaurant-workspace__breadcrumb">
-        <span>Restaurants</span><ChevronRight size={14} /><strong>{restaurant.name}</strong>
+        <span>Restaurants</span>
+        <ChevronRight size={14} />
+        <strong>{restaurant.name}</strong>
       </div>
+
       <AdminCard className="restaurant-workspace__hero">
         <div className="restaurant-workspace__identity">
-          <span className="restaurant-workspace__logo">{getRestaurantInitials(restaurant.name)}</span>
+          <span className="restaurant-workspace__logo">
+            {getRestaurantInitials(restaurant.name)}
+          </span>
           <div>
             <h1>{restaurant.name}</h1>
-            <p>{restaurant.cuisine} · {restaurant.location}</p>
+            <p>
+              {restaurant.cuisine} · {restaurant.location}
+            </p>
+
             <div>
               <StatusBadge value={restaurant.partnershipStatus} />
               <StatusBadge value={restaurant.operationalAvailability} />
             </div>
           </div>
         </div>
+
         <div className="restaurant-workspace__actions">
           <button
             type="button"
             className="restaurants-primary-action"
-            onClick={() => setConfirmation(
-              restaurant.operationalAvailability === "Accepting orders" ? "Pause orders" : "Resume orders",
-            )}
+            disabled={isUpdating}
+            onClick={() =>
+              setConfirmation(
+                restaurant.operationalAvailability === "Accepting orders"
+                  ? "Pause orders"
+                  : "Resume orders",
+              )
+            }
           >
+            {restaurant.operationalAvailability === "Accepting orders" ? (
+              <Pause size={16} />
+            ) : (
+              <Play size={16} />
+            )}
             {restaurant.operationalAvailability === "Accepting orders"
-              ? <Pause size={16} />
-              : <Play size={16} />}
-            {restaurant.operationalAvailability === "Accepting orders" ? "Pause orders" : "Resume orders"}
+              ? "Pause orders"
+              : "Resume orders"}
           </button>
-          <button type="button" onClick={editRestaurant}>Edit restaurant</button>
-          <button type="button" aria-label="More restaurant actions"><MoreHorizontal size={18} /></button>
+
+          <button type="button" onClick={editRestaurant} disabled={isUpdating}>
+            Edit restaurant
+          </button>
+
+          <button
+            type="button"
+            aria-label="More restaurant actions"
+            disabled={isUpdating}
+          >
+            <MoreHorizontal size={18} />
+          </button>
         </div>
       </AdminCard>
+
       {notice && (
         <div className="restaurants-notice" role="status">
-          {notice}<button type="button" onClick={() => setNotice("")}>Dismiss</button>
+          {notice}
+          <button type="button" onClick={() => setNotice("")}>
+            Dismiss
+          </button>
         </div>
       )}
-      <nav className="restaurant-workspace__tabs" aria-label="Restaurant workspace tabs">
+      <nav
+        className="restaurant-workspace__tabs"
+        aria-label="Restaurant workspace tabs"
+      >
         {workspaceTabs.map((tab) => (
           <button
             type="button"
@@ -141,23 +264,32 @@ export function RestaurantWorkspace({
       {activeTab === "Menu" && (
         <MenuTab
           restaurant={restaurant}
-          menuItems={menuItems}
+          menuItems={currentRestaurantMenuItems}
           editorItemId={editorItemId}
           onOpenItem={openItem}
           onCloseEditor={closeMenuEditor}
+          onSaveDish={onSaveDish}
+          onDeleteDish={onDeleteDish}
+          previewMode={previewMode}
         />
       )}
       {activeTab === "Operations" && <OperationsTab restaurant={restaurant} />}
       {activeTab === "Promotions" && (
-        <PromotionsTab promotions={restaurantPromotions} onOpenFinance={openFinancePromotions} />
+        <PromotionsTab
+          promotions={restaurantPromotions}
+          onOpenFinance={openFinancePromotions}
+        />
       )}
       {activeTab === "Settings" && (
         <SettingsTab
-          key={restaurant.id}
+          key={activeRestaurantId}
           restaurant={restaurant}
           onConfirm={setConfirmation}
           focusDetails={focusSettingsDetails}
           onDetailsFocused={() => setFocusSettingsDetails(false)}
+          onUpdateRestaurant={onUpdateRestaurant}
+          onDeleteRestaurant={onDeleteRestaurant}
+          previewMode={previewMode}
         />
       )}
       <RestaurantConfirmationDialog

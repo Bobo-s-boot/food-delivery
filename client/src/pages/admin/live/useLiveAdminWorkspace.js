@@ -1,14 +1,24 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isTokenActive } from "../../../api/authService";
-import { adminGetRestaurants } from "../../../api/restaurantService";
-import { adminGetOrders, adminUpdateOrderStatus } from "../../../api/orderService";
+import {
+  adminGetOrders,
+  adminUpdateOrderStatus,
+} from "../../../api/orderService";
 import {
   adminGetDishes,
   createDish,
   deleteDish,
   updateDish,
 } from "../../../api/dishService";
+
+import {
+  adminGetRestaurants,
+  adminCreateRestaurant,
+  adminUpdateRestaurant,
+  adminDeleteRestaurant,
+} from "../../../api/restaurantService";
+
 import {
   buildLiveOrderRows,
   buildMenuAvailability,
@@ -16,9 +26,9 @@ import {
   initialDishFormData,
 } from "./liveAdmin.utils";
 
+// Убираем "restaurants" из статических секций, чтобы в Live-режиме шла загрузка из БД
 const STATIC_ADMIN_SECTIONS = new Set([
   "dashboard",
-  "restaurants",
   "users",
   "finance",
   "support",
@@ -66,6 +76,27 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
     }
   }, []);
 
+  // Загружаем рестораны, блюда И заказы для раздела restaurants
+  const loadRestaurantsWorkspace = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const [restaurantsData, dishesData, ordersData] = await Promise.all([
+        adminGetRestaurants(),
+        adminGetDishes(),
+        adminGetOrders(),
+      ]);
+
+      setRestaurantsRaw(restaurantsData);
+      setDishesRaw(dishesData);
+      setOrders(ordersData);
+      setMenuAvailability(buildMenuAvailability(dishesData));
+    } catch (error) {
+      console.error("Error loading admin restaurants workspace", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (previewMode) {
       setIsLoading(false);
@@ -93,35 +124,67 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
       return;
     }
 
-    setIsLoading(false);
-  }, [navigate, loadDishesWorkspace, loadLiveOrders, previewMode, section]);
+    if (section === "restaurants") {
+      loadRestaurantsWorkspace();
+      return;
+    }
 
-  const handleSaveDish = async (event) => {
-    event.preventDefault();
+    setIsLoading(false);
+  }, [
+    navigate,
+    loadDishesWorkspace,
+    loadRestaurantsWorkspace,
+    loadLiveOrders,
+    previewMode,
+    section,
+  ]);
+
+  // --- ОБРАБОТЧИКИ ДЛЯ БЛЮД ---
+
+  const handleSaveDish = async (dishDataOrEvent, dishId) => {
+    if (dishDataOrEvent?.preventDefault) {
+      dishDataOrEvent.preventDefault();
+    }
+
     if (previewMode) {
       setIsDishFormOpen(false);
       setEditingDish(null);
       return;
     }
 
+    let dishData = dishDataOrEvent;
+
+    if (dishDataOrEvent?.currentTarget) {
+      const formData = new FormData(dishDataOrEvent.currentTarget);
+      dishData = Object.fromEntries(formData.entries());
+    }
+
     try {
-      if (!dishFormData.restaurantId) {
-        alert("Выберите ресторан для блюда");
-        return;
+      const id = dishId || dishData?.id || editingDish?.id;
+
+      const payload =
+        typeof formatDishPayload === "function"
+          ? formatDishPayload(dishData)
+          : dishData;
+
+      if (id) {
+        console.log("Обновление блюда ID:", id, payload);
+        await updateDish(id, payload);
+      } else {
+        console.log("Создание нового блюда:", payload);
+        await createDish(payload);
       }
 
-      const formattedData = formatDishPayload(dishFormData);
-      if (editingDish) {
-        await updateDish(editingDish._id, formattedData);
+      if (section === "restaurants") {
+        await loadRestaurantsWorkspace();
       } else {
-        await createDish(formattedData);
+        await loadDishesWorkspace();
       }
 
       setIsDishFormOpen(false);
       setEditingDish(null);
-      setDishFormData({ ...initialDishFormData });
-      await loadDishesWorkspace();
     } catch (error) {
+      console.error("Ошибка при сохранении блюда:", error.response?.data);
       alert(
         "Ошибка при сохранении блюда: " +
           (error.response?.data?.message || error.message),
@@ -131,7 +194,8 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
 
   const handleEditDishClick = (dish) => {
     const rawDish = dishesRaw.find(
-      (item) => item._id === dish.id || item.name === dish.item,
+      (item) =>
+        item._id === dish.id || item.id === dish.id || item.name === dish.item,
     );
     if (!rawDish) return;
 
@@ -147,12 +211,88 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
     setIsDishFormOpen(true);
   };
 
+  const handleDeleteDish = async (id) => {
+    if (previewMode) return;
+    if (!window.confirm("Удалить это блюдо из меню?")) return;
+
+    try {
+      await deleteDish(id);
+      if (section === "restaurants") {
+        await loadRestaurantsWorkspace();
+      } else {
+        await loadDishesWorkspace();
+      }
+    } catch (error) {
+      console.error("Error deleting dish", error);
+      alert("Ошибка при удалении блюда. Проверьте права доступа.");
+    }
+  };
+
+  // --- ОБРАБОТЧИКИ ДЛЯ РЕСТОРАНОВ ---
+
+  const handleCreateRestaurant = async (restaurantData) => {
+    if (previewMode) return null;
+
+    try {
+      const created = await adminCreateRestaurant(restaurantData);
+      await loadRestaurantsWorkspace();
+      return created;
+    } catch (error) {
+      alert(
+        "Ошибка при создании ресторана: " +
+          (error.response?.data?.message || error.message),
+      );
+      throw error;
+    }
+  };
+
+  const handleUpdateRestaurant = async (id, restaurantData) => {
+    if (previewMode) return null;
+
+    try {
+      const updated = await adminUpdateRestaurant(id, restaurantData);
+      setRestaurantsRaw((prev) =>
+        prev.map((item) =>
+          item._id === id || item.id === id ? updated : item,
+        ),
+      );
+      return updated;
+    } catch (error) {
+      alert(
+        "Ошибка при обновлении ресторана: " +
+          (error.response?.data?.message || error.message),
+      );
+      throw error;
+    }
+  };
+
+  const handleDeleteRestaurant = async (id) => {
+    if (previewMode) return;
+    if (!window.confirm("Удалить этот ресторан?")) return;
+
+    try {
+      await adminDeleteRestaurant(id);
+      setRestaurantsRaw((prev) =>
+        prev.filter((item) => item._id !== id && item.id !== id),
+      );
+    } catch (error) {
+      console.error("Error deleting restaurant", error);
+      alert("Ошибка при удалении ресторана. Проверьте права доступа.");
+    }
+  };
+
+  // --- ОБРАБОТЧИКИ ДЛЯ ЗАКАЗОВ ---
+
   const handleUpdateStatus = async (orderId, newStatus) => {
     if (previewMode) return;
 
     try {
       await adminUpdateOrderStatus(orderId, newStatus);
-      await loadLiveOrders();
+      if (section === "restaurants") {
+        await loadRestaurantsWorkspace();
+      } else {
+        await loadLiveOrders();
+      }
     } catch (error) {
       alert(
         "Ошибка при обновлении статуса заказа: " +
@@ -161,22 +301,11 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
     }
   };
 
-  const handleDeleteDish = async (id) => {
-    if (previewMode) return;
-    if (!window.confirm("Удалить это блюдо из меню?")) return;
-
-    try {
-      await deleteDish(id);
-      await loadDishesWorkspace();
-    } catch (error) {
-      console.error("Error deleting dish", error);
-      alert("Ошибка при удалении блюда. Проверьте права доступа.");
-    }
-  };
-
   return {
     isLoading,
+    orders,
     restaurantsRaw,
+    dishesRaw,
     menuAvailability,
     liveOrdersData: buildLiveOrderRows(orders),
     isDishFormOpen,
@@ -189,5 +318,8 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
     handleEditDishClick,
     handleUpdateStatus,
     handleDeleteDish,
+    handleCreateRestaurant,
+    handleUpdateRestaurant,
+    handleDeleteRestaurant,
   };
 }

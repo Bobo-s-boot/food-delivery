@@ -11,11 +11,13 @@ import { AdminPlaceholderPage } from "./components/AdminPlaceholderPage";
 const placeholderSections = {
   users: {
     title: "Users",
-    description: "User management will be designed here during the admin refactor.",
+    description:
+      "User management will be designed here during the admin refactor.",
   },
   support: {
     title: "Support",
-    description: "Support queue and issue handling will be shaped in this section.",
+    description:
+      "Support queue and issue handling will be shaped in this section.",
   },
 };
 
@@ -25,7 +27,20 @@ export function AdminSectionContent({ section, previewMode, workspace }) {
   return (
     <>
       {section === "dashboard" && <AdminDashboardPage />}
-      {section === "restaurants" && <AdminRestaurantsPage />}
+
+      {/* 🔥 Добавили пропсы в AdminRestaurantsPage */}
+      {section === "restaurants" && (
+        <AdminRestaurantsPage
+          restaurants={workspace.restaurantsRaw}
+          dishes={workspace.dishesRaw}
+          orders={workspace.orders}
+          onCreateRestaurant={workspace.handleCreateRestaurant}
+          onUpdateRestaurant={workspace.handleUpdateRestaurant}
+          onDeleteRestaurant={workspace.handleDeleteRestaurant}
+          previewMode={previewMode}
+          workspace={workspace}
+        />
+      )}
 
       {section === "dishes" && (
         <LegacyDishesSection

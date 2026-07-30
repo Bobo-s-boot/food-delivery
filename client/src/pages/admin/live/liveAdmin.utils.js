@@ -28,20 +28,44 @@ export const buildMenuAvailability = (dishesData) =>
     action: "Delete",
   }));
 
-export const buildLiveOrderRows = (orders) =>
+export const buildLiveOrderRows = (orders = []) =>
   orders.map((order) => ({
     id: order._id || order.id,
     customer:
-      order.userId?.fullName || order.userId?.username || "Unknown customer",
+      order.userId?.fullName ||
+      order.userId?.username ||
+      order.customerName ||
+      "Unknown customer",
     restaurant: order.restaurantId?.name || "Unknown restaurant",
     status: order.status,
-    payment: order.paymentMethod || "Paid",
-    courier: order.courier || "Not assigned",
+    payment: order.paymentMethod,
+    courier: order.courier,
     total: `$${order.totalPrice?.toFixed(2) || "0.00"}`,
     time: formatOrderTime(order.createdAt),
+    items: order.items || [],
+    address: order.address || "",
   }));
 
-export const formatDishPayload = (formData) => ({
-  ...formData,
-  price: Number(formData.price),
-});
+export const formatDishPayload = (formData) => {
+  // Достаем ID ресторана
+  const restaurantId =
+    typeof formData.restaurantId === "object"
+      ? formData.restaurantId?._id || formData.restaurantId?.id
+      : formData.restaurantId || formData.restaurant;
+
+  return {
+    name: formData.name?.trim() || "",
+    description: formData.description?.trim() || "",
+    price: Number(formData.price) || 0,
+    image: formData.image?.trim() || "",
+    // Выбираем правильную категорию
+    category:
+      formData.category ||
+      formData.restaurantCategory ||
+      formData.platformCategory ||
+      "",
+    // Передаем ID ресторана (и как restaurant, и как restaurantId на случай разных моделей на бэкенде)
+    restaurant: restaurantId,
+    restaurantId: restaurantId,
+  };
+};

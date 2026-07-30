@@ -32,6 +32,8 @@ export function LiveOrdersTable({
   orders,
   filters = [],
   onUpdateStatus,
+  onViewOrder,
+  onViewAll,
   compact = false,
   maxRows,
 }) {
@@ -43,6 +45,7 @@ export function LiveOrdersTable({
     }
     return orders.filter((order) => order.status === activeFilter);
   }, [activeFilter, orders]);
+
   const visibleOrders = compact
     ? filteredOrders.slice(0, maxRows || 6)
     : filteredOrders;
@@ -142,7 +145,13 @@ export function LiveOrdersTable({
               </td>
 
               <td className="live-orders-row__cell live-orders-row__cell--last">
-                <button className="live-orders-btn">View</button>
+                <button
+                  type="button"
+                  className="live-orders-btn"
+                  onClick={() => onViewOrder?.(order)}
+                >
+                  View
+                </button>
               </td>
             </tr>
           )}
@@ -151,7 +160,11 @@ export function LiveOrdersTable({
 
       {compact && (
         <div className="live-orders__footer">
-          <button type="button" className="live-orders__view-all">
+          <button
+            type="button"
+            className="live-orders__view-all"
+            onClick={onViewAll}
+          >
             View all orders {"->"}
           </button>
         </div>

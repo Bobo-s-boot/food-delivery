@@ -9,7 +9,10 @@ const API_URL = `${API_BASE_URL}/dishes`;
 export const getDishesByRestaurant = async (restaurantId) => {
   try {
     // Передаем ID ресторана в строке запроса (query parameter)
-    const response = await axios.get(`${API_URL}?restaurantId=${restaurantId}`);
+    const response = await axios.get(
+      `${API_URL}?restaurantId=${restaurantId}`,
+      createAuthConfig(),
+    );
 
     return response.data;
   } catch (error) {

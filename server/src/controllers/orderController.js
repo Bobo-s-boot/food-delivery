@@ -1,4 +1,4 @@
-import Order from "../models/Order.js";
+import Order from "../models/order.js";
 import User from "../models/user.js";
 import Restaurant from "../models/restaurant.js";
 import Dish from "../models/dish.js";
@@ -17,6 +17,10 @@ export const getAllOrders = async (req, res) => {
     const orders = await Order.find(filter)
       .populate("userId", "username fullName")
       .populate("restaurantId", "name")
+      .populate({
+        path: "items.dishId",
+        select: "name price image",
+      })
       .sort({ createdAt: -1 });
 
     res.status(200).json(orders);
@@ -477,16 +481,18 @@ export const updateOrderStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    const validStatuses = ["pending", "preparing", "delivering", "delivered", "cancelled"];
+    const validStatuses = [
+      "pending",
+      "preparing",
+      "delivering",
+      "delivered",
+      "cancelled",
+    ];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ message: "Неверный статус заказа" });
     }
 
-    const order = await Order.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true }
-    )
+    const order = await Order.findByIdAndUpdate(id, { status }, { new: true })
       .populate("userId", "username fullName")
       .populate("restaurantId", "name");
 

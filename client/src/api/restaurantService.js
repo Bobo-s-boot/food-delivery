@@ -35,7 +35,7 @@ export const searchRestaurants = async (query, limit = 5) => {
 };
 
 export const adminGetRestaurants = async () => {
-  const response = await axios.get(API_URL);
+  const response = await axios.get(API_URL, createAuthConfig());
   return response.data;
 };
 
@@ -45,11 +45,19 @@ export const adminDeleteRestaurant = async (id) => {
 };
 
 export const adminCreateRestaurant = async (restaurantData) => {
-  const response = await axios.post(API_URL, restaurantData, createAuthConfig());
+  const response = await axios.post(
+    API_URL,
+    restaurantData,
+    createAuthConfig(),
+  );
   return response.data;
 };
 
 export const adminUpdateRestaurant = async (id, restaurantData) => {
-  const response = await axios.put(`${API_URL}/${id}`, restaurantData, createAuthConfig());
+  const response = await axios.put(
+    `${API_URL}/${id}`,
+    restaurantData,
+    createAuthConfig(),
+  );
   return response.data;
 };
