@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getRestaurants } from "../../api/restaurantService";
 import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
 import { Loading } from "../../components/loading/Loading";
+import { HomeFaq } from "./components/HomeFaq";
 import "./Home.scss";
 
 export function Home() {
@@ -109,6 +110,8 @@ export function Home() {
           <HomeTrending {...translatedTrendingSection} />
         )}
       </div>
+
+      <HomeFaq isContentReady={!isLoading} />
 
       {/* <HomeCardRestaurants {...restaurantCards} /> */}
       {/* <HomeRestaurants restaurants={restaurants} isLoading={isloading} /> вернуться и сделать подобный функционал на беке для  HomeCardRestaurants */}

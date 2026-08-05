@@ -11,8 +11,10 @@ import { Delivery } from "./pages/delivery/Delivery";
 import { Dish } from "./pages/dish/Dish";
 import { Home } from "./pages/home/Home";
 import { Menu } from "./pages/menu/Menu";
+import { PrivacyPolicy } from "./pages/privacy/PrivacyPolicy";
 import { Specials } from "./pages/specials/Specials";
 import { Restaurant } from "./pages/restaurant/Restaurant";
+import { SupportProvider } from "./features/support/SupportProvider";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -25,6 +27,7 @@ const routes = [
   { path: "/restaurant/:id", element: <Restaurant /> },
   { path: "/dish/:id", element: <Dish /> },
   { path: "/checkout", element: <Checkout /> },
+  { path: "/privacy-policy", element: <PrivacyPolicy /> },
 ];
 
 const buildPath = (path) =>
@@ -33,28 +36,30 @@ const buildPath = (path) =>
 function App() {
   return (
     <Router hashType="noslash">
-      <Layout>
-        <Routes>
-          <Route path="/auth" element={<Auth />} />
+      <SupportProvider>
+        <Layout>
+          <Routes>
+            <Route path="/auth" element={<Auth />} />
 
-          {adminRouteConfig.map(({ routeKey, path, section, previewMode }) => (
-            <Route
-              key={routeKey}
-              path={path}
-              element={<Admin section={section} previewMode={previewMode} />}
-            />
-          ))}
+            {adminRouteConfig.map(({ routeKey, path, section, previewMode }) => (
+              <Route
+                key={routeKey}
+                path={path}
+                element={<Admin section={section} previewMode={previewMode} />}
+              />
+            ))}
 
-          {routes.map((route) => (
-            <Route
-              key={route.path}
-              path={buildPath(route.path)}
-              element={route.element}
-            />
-          ))}
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                path={buildPath(route.path)}
+                element={route.element}
+              />
+            ))}
 
-        </Routes>
-      </Layout>
+          </Routes>
+        </Layout>
+      </SupportProvider>
     </Router>
   );
 }

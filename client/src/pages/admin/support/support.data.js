@@ -33,6 +33,14 @@ export const supportSummaryCards = [
 
 export const supportIssueTypeFilters = [
   "All issue types",
+  "Account & profile",
+  "Order or delivery",
+  "Restaurant information",
+  "Offer or discount",
+  "Student Discount",
+  "Payment or refund",
+  "Technical problem",
+  "Other",
   "Missing item",
   "Wrong item",
   "Late delivery",

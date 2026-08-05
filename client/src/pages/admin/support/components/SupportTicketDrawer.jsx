@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ExternalLink, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { adminDownloadSupportAttachment } from "../../../../api/supportService";
 import { StatusBadge } from "../../components/StatusBadge";
 import {
   getSupportActionKind,
@@ -46,6 +47,7 @@ export function SupportTicketDrawer({
   onReopen,
 }) {
   const [isResolveConfirmationOpen, setIsResolveConfirmationOpen] = useState(false);
+  const [attachmentError, setAttachmentError] = useState("");
   const workflowActions = getWorkflowActionsForTicket(ticket);
 
   if (!ticket) return null;
@@ -78,6 +80,24 @@ export function SupportTicketDrawer({
       return `${adminBasePath}/users`;
     }
     return "";
+  };
+
+  const downloadAttachment = async (attachment) => {
+    setAttachmentError("");
+    try {
+      const blob = await adminDownloadSupportAttachment(
+        ticket.ticketId,
+        attachment._id,
+      );
+      const downloadUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = attachment.originalName;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(downloadUrl), 0);
+    } catch {
+      setAttachmentError("Unable to download this attachment.");
+    }
   };
 
   return (
@@ -154,6 +174,25 @@ export function SupportTicketDrawer({
               ))}
             </dl>
           </DrawerSection>
+
+          {ticket.attachments?.length > 0 && (
+            <DrawerSection title="Attachments" tone="light">
+              <ul className="support-drawer__attachments">
+                {ticket.attachments.map((attachment) => (
+                  <li key={attachment._id}>
+                    <div>
+                      <strong>{attachment.originalName}</strong>
+                      <span>{Math.max(1, Math.round(attachment.size / 1024))} KB</span>
+                    </div>
+                    <button type="button" onClick={() => downloadAttachment(attachment)}>
+                      Download
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              {attachmentError && <p className="support-drawer__muted" role="alert">{attachmentError}</p>}
+            </DrawerSection>
+          )}
 
           <DrawerSection title="Conversation / Timeline" tone="timeline">
             {ticket.conversation?.length ? (

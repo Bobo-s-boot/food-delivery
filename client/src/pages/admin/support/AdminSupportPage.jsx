@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { adminGetSupportTickets } from "../../../api/supportService";
+import { normalizeAdminSupportTicket } from "../../../features/support/support.utils";
 import {
   AdminKpiCard,
   AdminKpiGrid,
@@ -20,22 +22,65 @@ import { SupportTicketsTable } from "./components/SupportTicketsTable";
 import { getAdminBasePath } from "../admin.routes";
 import "./SupportPage.scss";
 
-export function AdminSupportPage() {
+export function AdminSupportPage({ previewMode = true }) {
   const location = useLocation();
   const adminBasePath = getAdminBasePath(location.pathname);
-  const [tickets, setTickets] = useState(() => supportTicketsMockData);
+  const [tickets, setTickets] = useState(() =>
+    previewMode ? supportTicketsMockData : [],
+  );
   const [filters, setFilters] = useState(defaultSupportFilters);
   const [page, setPage] = useState(1);
   const [selectedTicketId, setSelectedTicketId] = useState("");
   const [mockActionMessage, setMockActionMessage] = useState("");
+  const [loadError, setLoadError] = useState("");
+  const [isLoading, setIsLoading] = useState(!previewMode);
+
+  useEffect(() => {
+    if (previewMode) return undefined;
+
+    let isActive = true;
+    adminGetSupportTickets()
+      .then((data) => {
+        if (!isActive) return;
+        setTickets((Array.isArray(data) ? data : []).map(normalizeAdminSupportTicket));
+        setLoadError("");
+      })
+      .catch(() => {
+        if (isActive) setLoadError("Unable to load live support tickets.");
+      })
+      .finally(() => {
+        if (isActive) setIsLoading(false);
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, [previewMode]);
 
   const filteredTickets = useMemo(
     () => sortSupportTickets(filterSupportTickets(tickets, filters)),
     [filters, tickets],
   );
   const selectedTicket = tickets.find((ticket) => ticket.ticketId === selectedTicketId);
-  const totalTicketCount =
-    filters.summaryFilter === "Open Tickets" ? 24 : filteredTickets.length;
+  const totalTicketCount = filteredTickets.length;
+  const summaryCards = useMemo(() => {
+    if (previewMode) return supportSummaryCards;
+    const today = new Date().toDateString();
+    return supportSummaryCards.map((card) => {
+      const value = {
+        "Open Tickets": tickets.filter((ticket) => ticket.status !== "Resolved").length,
+        "New Tickets": tickets.filter((ticket) => ticket.status === "New").length,
+        "High Priority": tickets.filter((ticket) => ticket.priority === "High").length,
+        Overdue: tickets.filter((ticket) => ticket.sla === "Overdue").length,
+        "Resolved Today": tickets.filter(
+          (ticket) =>
+            ticket.status === "Resolved" &&
+            new Date(ticket.updatedAt).toDateString() === today,
+        ).length,
+      }[card.label];
+      return { ...card, value: String(value ?? 0) };
+    });
+  }, [previewMode, tickets]);
   const pageSize = 10;
   const totalPages = Math.max(1, Math.ceil(filteredTickets.length / pageSize));
   const visibleTickets = filteredTickets.slice(
@@ -86,7 +131,11 @@ export function AdminSupportPage() {
         },
       ],
     }));
-    setMockActionMessage(`${ticketId} is resolved in this preview. Backend integration is still required.`);
+    setMockActionMessage(
+      previewMode
+        ? `${ticketId} is resolved in this preview. Backend integration is still required.`
+        : `${ticketId} was updated locally. Admin mutation API is not connected yet.`,
+    );
   };
 
   const handleReopen = (ticketId) => {
@@ -122,7 +171,7 @@ export function AdminSupportPage() {
       </div>
 
       <AdminKpiGrid>
-        {supportSummaryCards.map((card) => (
+        {summaryCards.map((card) => (
           <AdminKpiCard
             key={card.label}
             label={card.label}
@@ -137,6 +186,9 @@ export function AdminSupportPage() {
       </AdminKpiGrid>
 
       <SupportFilters filters={filters} onChange={setManualFilter} />
+
+      {isLoading && <div className="admin-support__mock-notice" role="status">Loading live support tickets...</div>}
+      {loadError && <div className="admin-support__mock-notice" role="alert">{loadError}</div>}
 
       <SupportTicketsTable
         tickets={tickets}

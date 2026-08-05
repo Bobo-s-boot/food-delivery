@@ -60,11 +60,13 @@ export function AdminSectionContent({ section, previewMode, workspace }) {
 
       {section === "users" && previewMode && <AdminUsersPage />}
       {section === "finance" && <AdminFinancePage />}
-      {section === "support" && previewMode && <AdminSupportPage />}
+      {section === "support" && (
+        <AdminSupportPage previewMode={previewMode} />
+      )}
 
       {placeholder &&
         !(section === "users" && previewMode) &&
-        !(section === "support" && previewMode) &&
+        section !== "support" &&
         section !== "finance" && <AdminPlaceholderPage {...placeholder} />}
     </>
   );

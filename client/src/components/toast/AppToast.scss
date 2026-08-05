@@ -1,0 +1,102 @@
+.app-toast {
+  position: fixed;
+  right: max(1.25rem, env(safe-area-inset-right));
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  z-index: 1300;
+  width: min(calc(100vw - 2rem), 25rem);
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.8rem;
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-elevated);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateX(calc(100% + 2rem));
+  transition:
+    opacity 0.24s ease,
+    transform 0.24s ease;
+}
+
+.app-toast--visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.app-toast__icon {
+  margin-top: 0.1rem;
+  color: var(--color-success);
+}
+
+.app-toast--error .app-toast__icon {
+  color: #be123c;
+}
+
+.app-toast__copy {
+  min-width: 0;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.app-toast__copy > span,
+.app-toast__copy small {
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.app-toast__copy strong {
+  color: var(--color-text-ink);
+  font-size: 0.95rem;
+}
+
+.app-toast__copy p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.app-toast__copy small {
+  margin-top: 0.25rem;
+  color: var(--color-text-strong);
+}
+
+.app-toast__close {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.app-toast__close:hover {
+  background: var(--color-bg-soft);
+}
+
+.app-toast button:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (max-width: 639px) {
+  .app-toast {
+    right: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-toast {
+    transition-duration: 0.01ms;
+  }
+}

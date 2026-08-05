@@ -2,6 +2,10 @@
 node_modules/
 .env
 server/logs/
+server/uploads/
 
 # Documentation
 docs/
+
+
+AGENTS.md
