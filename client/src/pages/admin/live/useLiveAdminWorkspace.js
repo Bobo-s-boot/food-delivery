@@ -272,12 +272,11 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
 
     try {
       await adminDeleteRestaurant(id);
-      setRestaurantsRaw((prev) =>
-        prev.filter((item) => item._id !== id && item.id !== id),
-      );
+      // Удаляем из локального стора строго по _id
+      setRestaurantsRaw((prev) => prev.filter((item) => item._id !== id));
     } catch (error) {
-      console.error("Error deleting restaurant", error);
-      alert("Ошибка при удалении ресторана. Проверьте права доступа.");
+      console.error("Ошибка при удалении ресторана:", error);
+      alert("Не удалось удалить ресторан из базы данных.");
     }
   };
 

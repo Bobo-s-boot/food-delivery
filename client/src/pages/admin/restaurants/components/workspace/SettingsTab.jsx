@@ -87,7 +87,7 @@ export function SettingsTab({
       return;
     }
 
-    const restaurantId = restaurant.id || restaurant._id;
+    const restaurantId = restaurant._id || restaurant.id;
 
     if (
       actionType === "End partnership" ||
