@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getDishesByRestaurant } from "../../api/dishService";
-import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
+import { CLIENT_ERROR_MESSAGES } from "../../errors/error";
 import { useCart } from "../../features/cart/useCart";
 
 export function Restaurant() {
@@ -17,7 +17,7 @@ export function Restaurant() {
         const menuData = await getDishesByRestaurant(id);
         setDishes(menuData);
       } catch (error) {
-        console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH_MENU, error);
+        console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH_MENU, error);
       } finally {
         setIsLoading(false);
       }

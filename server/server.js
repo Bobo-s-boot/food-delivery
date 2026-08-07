@@ -9,6 +9,7 @@ import dishRoutes from "./src/routes/dishRoutes.js";
 import restaurantRoutes from "./src/routes/restaurantRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import orderRoutes from "./src/routes/orderRoutes.js";
+import supportRoutes from "./src/routes/supportRoutes.js";
 import { connectDB } from "./db/connection.js";
 import { initializeRestaurantsFromFile } from "./src/controllers/restaurantController.js";
 import { SERVER_ERORR_MESSAGE } from "./src/errors/erorr.js";
@@ -42,6 +43,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/dishes", dishRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/support", supportRoutes);
 
 const startServer = async () => {
   try {

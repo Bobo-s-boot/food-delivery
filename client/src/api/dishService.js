@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CLIENT_ERORR_MESSAGE } from "../errors/error";
+import { CLIENT_ERROR_MESSAGES } from "../errors/error";
 import { createAuthConfig } from "./authConfig";
 
 const API_BASE_URL =
@@ -9,11 +9,14 @@ const API_URL = `${API_BASE_URL}/dishes`;
 export const getDishesByRestaurant = async (restaurantId) => {
   try {
     // Передаем ID ресторана в строке запроса (query parameter)
-    const response = await axios.get(`${API_URL}?restaurantId=${restaurantId}`);
+    const response = await axios.get(
+      `${API_URL}?restaurantId=${restaurantId}`,
+      createAuthConfig(),
+    );
 
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH_MENU, error);
+    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH_MENU, error);
     return [];
   }
 };
@@ -23,7 +26,7 @@ export const adminGetDishes = async () => {
     const response = await axios.get(API_URL, createAuthConfig());
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH_MENU, error);
+    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH_MENU, error);
     return [];
   }
 };
@@ -33,7 +36,7 @@ export const createDish = async (dishData) => {
     const response = await axios.post(API_URL, dishData, createAuthConfig());
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_CREATE_DISH, error);
+    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_CREATE_DISH, error);
     throw error;
   }
 };
@@ -46,7 +49,7 @@ export const deleteDish = async (dishId) => {
     );
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_DELETE_DISH, error);
+    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_DELETE_DISH, error);
     throw error;
   }
 };
@@ -62,7 +65,7 @@ export const searchDishes = async (query, limit = 5) => {
 
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_SEARCH_DISH, error);
+    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_SEARCH_DISH, error);
     return [];
   }
 };

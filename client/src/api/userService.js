@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CLIENT_ERORR_MESSAGE } from "../errors/error";
+import { CLIENT_ERROR_MESSAGES } from "../errors/error";
 import { createAuthConfig, getAuthToken, getStoredUser } from "./authConfig";
 
 const API_BASE_URL =
@@ -12,19 +12,19 @@ export const getUsers = async () => {
     const user = getStoredUser();
 
     if (user?.role !== "admin") {
-      throw new Error(CLIENT_ERORR_MESSAGE.ERROR_ROLE_ADMIN);
+      throw new Error(CLIENT_ERROR_MESSAGES.ERROR_ROLE_ADMIN);
     }
 
     const token = getAuthToken();
 
     if (!token) {
-      throw new Error(CLIENT_ERORR_MESSAGE.ERROR_TOKEN);
+      throw new Error(CLIENT_ERROR_MESSAGES.ERROR_TOKEN);
     }
 
     const response = await axios.get(API_URL, createAuthConfig());
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.ERROR_GET_USERS, error);
+    console.error(CLIENT_ERROR_MESSAGES.ERROR_GET_USERS, error);
     return [];
   }
 };
@@ -34,13 +34,13 @@ export const getUserProfile = async () => {
     const token = getAuthToken();
 
     if (!token) {
-      throw new Error(CLIENT_ERORR_MESSAGE.ERROR_TOKEN);
+      throw new Error(CLIENT_ERROR_MESSAGES.ERROR_TOKEN);
     }
 
     const response = await axios.get(`${API_URL}/profile`, createAuthConfig());
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.ERROR_PROFILE, error);
+    console.error(CLIENT_ERROR_MESSAGES.ERROR_PROFILE, error);
     throw error;
   }
 };

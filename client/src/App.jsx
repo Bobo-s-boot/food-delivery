@@ -1,6 +1,12 @@
-import { Route, HashRouter as Router, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  HashRouter as Router,
+  Routes,
+} from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
 import { Admin } from "./pages/admin/Admin";
+import { adminRouteConfig } from "./pages/admin/admin.routes";
 import { Account } from "./pages/account/Account";
 import { About } from "./pages/about/About";
 import { Auth } from "./pages/auth/Auth";
@@ -10,8 +16,10 @@ import { Delivery } from "./pages/delivery/Delivery";
 import { Dish } from "./pages/dish/Dish";
 import { Home } from "./pages/home/Home";
 import { Menu } from "./pages/menu/Menu";
+import { PrivacyPolicy } from "./pages/privacy/PrivacyPolicy";
 import { Specials } from "./pages/specials/Specials";
 import { Restaurant } from "./pages/restaurant/Restaurant";
+import { SupportProvider } from "./features/support/SupportProvider";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -24,6 +32,7 @@ const routes = [
   { path: "/restaurant/:id", element: <Restaurant /> },
   { path: "/dish/:id", element: <Dish /> },
   { path: "/checkout", element: <Checkout /> },
+  { path: "/privacy-policy", element: <PrivacyPolicy /> },
 ];
 
 const buildPath = (path) =>
@@ -32,34 +41,31 @@ const buildPath = (path) =>
 function App() {
   return (
     <Router hashType="noslash">
-      <Layout>
-        <Routes>
-          <Route path="/auth" element={<Auth />} />
+      <SupportProvider>
+        <Layout>
+          <Routes>
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/auth/admin/*" element={<Navigate to="/auth" replace />} />
 
-          {routes.map((route) => (
-            <Route
-              key={route.path}
-              path={buildPath(route.path)}
-              element={route.element}
-            />
-          ))}
+            {adminRouteConfig.map(({ routeKey, path, section }) => (
+              <Route
+                key={routeKey}
+                path={path}
+                element={<Admin section={section} />}
+              />
+            ))}
 
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/:username/admin" element={<Admin />} />
-          {/* Сохраняем доступ к админке и по обычному пути, и с username */}
-          <Route path="/admin" element={<Admin section="dashboard" />} />
-          <Route path="/:username/admin" element={<Admin section="dashboard" />} />
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                path={buildPath(route.path)}
+                element={route.element}
+              />
+            ))}
 
-          <Route path="/admin/restaurants" element={<Admin section="restaurants" />} />
-          <Route path="/:username/admin/restaurants" element={<Admin section="restaurants" />} />
-
-          <Route path="/admin/dishes" element={<Admin section="dishes" />} />
-          <Route path="/:username/admin/dishes" element={<Admin section="dishes" />} />
-
-          <Route path="/admin/orders" element={<Admin section="orders" />} />
-          <Route path="/:username/admin/orders" element={<Admin section="orders" />} />
-        </Routes>
-      </Layout>
+          </Routes>
+        </Layout>
+      </SupportProvider>
     </Router>
   );
 }

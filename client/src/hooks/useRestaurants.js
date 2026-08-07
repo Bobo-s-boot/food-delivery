@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getRestaurants } from "../api/restaurantService";
-import { CLIENT_ERORR_MESSAGE } from "../errors/error";
+import { CLIENT_ERROR_MESSAGES } from "../errors/error";
 import { formatRestaurant } from "../components/cardListRestaurant/utils/restaurantUtils";
 
 export function useRestaurants() {
@@ -19,7 +19,7 @@ export function useRestaurants() {
         }
       } catch (error) {
         if (isMounted) {
-          console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
+          console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH, error);
         }
       } finally {
         if (isMounted) {
