@@ -1,4 +1,9 @@
-import { Route, HashRouter as Router, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  HashRouter as Router,
+  Routes,
+} from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
 import { Admin } from "./pages/admin/Admin";
 import { adminRouteConfig } from "./pages/admin/admin.routes";
@@ -40,12 +45,13 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/auth" element={<Auth />} />
+            <Route path="/auth/admin/*" element={<Navigate to="/auth" replace />} />
 
-            {adminRouteConfig.map(({ routeKey, path, section, previewMode }) => (
+            {adminRouteConfig.map(({ routeKey, path, section }) => (
               <Route
                 key={routeKey}
                 path={path}
-                element={<Admin section={section} previewMode={previewMode} />}
+                element={<Admin section={section} />}
               />
             ))}
 

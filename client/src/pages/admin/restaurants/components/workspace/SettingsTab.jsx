@@ -9,7 +9,6 @@ export function SettingsTab({
   onDetailsFocused,
   onUpdateRestaurant,
   onDeleteRestaurant,
-  previewMode = false,
 }) {
   const initialForm = useMemo(
     () => ({
@@ -50,12 +49,6 @@ export function SettingsTab({
     event.preventDefault();
     if (!isDirty || isSubmitting) return;
 
-    if (previewMode) {
-      setSavedForm(form);
-      setSaveMessage("Restaurant details saved in this preview.");
-      return;
-    }
-
     try {
       setIsSubmitting(true);
       const restaurantId = restaurant.id || restaurant._id;
@@ -82,11 +75,6 @@ export function SettingsTab({
 
   // 🔥 Используем onDeleteRestaurant при удалении или архивации
   const handleDangerAction = async (actionType) => {
-    if (previewMode) {
-      onConfirm(actionType);
-      return;
-    }
-
     const restaurantId = restaurant._id || restaurant.id;
 
     if (

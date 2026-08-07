@@ -11,26 +11,47 @@ import {
   dateFilters,
   orderStatusFilters,
   orderSummaryCards,
-  ordersMockData,
   paymentFilters,
 } from "./orders.data";
-import { filterOrders, getOrderStatusToneClass } from "./orders.utils";
+import {
+  buildOrderSummaryCards,
+  filterOrders,
+  getOrderStatusToneClass,
+  normalizeLiveOrders,
+} from "./orders.utils";
 import "./OrdersPage.scss";
 
-export function AdminOrdersPage() {
+export function AdminOrdersPage({ orders = [], onUpdateStatus }) {
   const [searchValue, setSearchValue] = useState("");
   const [dateFilter, setDateFilter] = useState("Today");
   const [paymentFilter, setPaymentFilter] = useState("All payments");
   const [statusFilter, setStatusFilter] = useState("All");
   const [selectedOrder, setSelectedOrder] = useState(null);
 
+  const sourceOrders = useMemo(
+    () => normalizeLiveOrders(orders),
+    [orders],
+  );
+
+  const summaryCards = useMemo(
+    () => buildOrderSummaryCards(sourceOrders, orderSummaryCards),
+    [sourceOrders],
+  );
+
   const filteredOrders = useMemo(() => {
-    return filterOrders(ordersMockData, {
+    return filterOrders(sourceOrders, {
       searchValue,
       paymentFilter,
       statusFilter,
     });
-  }, [paymentFilter, searchValue, statusFilter]);
+  }, [paymentFilter, searchValue, sourceOrders, statusFilter]);
+
+  const handleUpdateStatus = async (orderId, status) => {
+    if (!onUpdateStatus) return;
+
+    await onUpdateStatus(orderId, status);
+    setSelectedOrder(null);
+  };
 
   return (
     <div className="admin-orders">
@@ -40,7 +61,7 @@ export function AdminOrdersPage() {
       </div>
 
       <AdminKpiGrid>
-        {orderSummaryCards.map((card) => (
+        {summaryCards.map((card) => (
           <AdminKpiCard
             key={card.label}
             label={card.label}
@@ -114,13 +135,14 @@ export function AdminOrdersPage() {
 
       <AdminOrderQueue
         orders={filteredOrders}
-        totalCount={128}
+        totalCount={sourceOrders.length}
         onViewOrder={setSelectedOrder}
       />
 
       <OrderDetailsDrawer
         order={selectedOrder}
         onClose={() => setSelectedOrder(null)}
+        onUpdateStatus={handleUpdateStatus}
       />
     </div>
   );

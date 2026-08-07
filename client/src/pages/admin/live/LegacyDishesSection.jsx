@@ -11,7 +11,7 @@ const createEmptyDishForm = () => ({
   restaurantId: "",
 });
 
-export function LegacyDishesSection({ previewMode, menuAvailabilityView, workspace }) {
+export function LegacyDishesSection({ menuAvailabilityView, workspace }) {
   const {
     restaurantsRaw,
     isDishFormOpen,
@@ -164,8 +164,8 @@ export function LegacyDishesSection({ previewMode, menuAvailabilityView, workspa
 
       <MenuAvailabilityTable
         items={menuAvailabilityView.length ? menuAvailabilityView : []}
-        onDelete={previewMode ? undefined : handleDeleteDish}
-        onEdit={previewMode ? undefined : handleEditDishClick}
+        onDelete={handleDeleteDish}
+        onEdit={handleEditDishClick}
       />
     </div>
   );

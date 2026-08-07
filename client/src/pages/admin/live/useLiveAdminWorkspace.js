@@ -18,9 +18,9 @@ import {
   adminUpdateRestaurant,
   adminDeleteRestaurant,
 } from "../../../api/restaurantService";
+import { getUsers } from "../../../api/userService";
 
 import {
-  buildLiveOrderRows,
   buildMenuAvailability,
   formatDishPayload,
   initialDishFormData,
@@ -29,19 +29,19 @@ import {
 // Убираем "restaurants" из статических секций, чтобы в Live-режиме шла загрузка из БД
 const STATIC_ADMIN_SECTIONS = new Set([
   "dashboard",
-  "users",
   "finance",
   "support",
 ]);
 
-export function useLiveAdminWorkspace({ section, previewMode }) {
+export function useLiveAdminWorkspace({ section }) {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [restaurantsRaw, setRestaurantsRaw] = useState([]);
   const [dishesRaw, setDishesRaw] = useState([]);
+  const [usersRaw, setUsersRaw] = useState([]);
   const [menuAvailability, setMenuAvailability] = useState([]);
   const [isLoading, setIsLoading] = useState(
-    () => !previewMode && !STATIC_ADMIN_SECTIONS.has(section),
+    () => !STATIC_ADMIN_SECTIONS.has(section),
   );
   const [isDishFormOpen, setIsDishFormOpen] = useState(false);
   const [editingDish, setEditingDish] = useState(null);
@@ -97,12 +97,25 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
     }
   }, []);
 
-  useEffect(() => {
-    if (previewMode) {
-      setIsLoading(false);
-      return;
-    }
+  const loadUsersWorkspace = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const [usersData, ordersData] = await Promise.all([
+        getUsers(),
+        adminGetOrders(),
+      ]);
 
+      setUsersRaw(usersData);
+      setOrders(ordersData);
+    } catch (error) {
+      console.error("Error loading admin users workspace", error);
+      setUsersRaw([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
     if (!isTokenActive()) {
       localStorage.removeItem("user");
       navigate("/auth", { replace: true });
@@ -129,13 +142,18 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
       return;
     }
 
+    if (section === "users") {
+      loadUsersWorkspace();
+      return;
+    }
+
     setIsLoading(false);
   }, [
     navigate,
     loadDishesWorkspace,
     loadRestaurantsWorkspace,
+    loadUsersWorkspace,
     loadLiveOrders,
-    previewMode,
     section,
   ]);
 
@@ -144,12 +162,6 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
   const handleSaveDish = async (dishDataOrEvent, dishId) => {
     if (dishDataOrEvent?.preventDefault) {
       dishDataOrEvent.preventDefault();
-    }
-
-    if (previewMode) {
-      setIsDishFormOpen(false);
-      setEditingDish(null);
-      return;
     }
 
     let dishData = dishDataOrEvent;
@@ -212,7 +224,6 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
   };
 
   const handleDeleteDish = async (id) => {
-    if (previewMode) return;
     if (!window.confirm("Удалить это блюдо из меню?")) return;
 
     try {
@@ -231,7 +242,6 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
   // --- ОБРАБОТЧИКИ ДЛЯ РЕСТОРАНОВ ---
 
   const handleCreateRestaurant = async (restaurantData) => {
-    if (previewMode) return null;
 
     try {
       const created = await adminCreateRestaurant(restaurantData);
@@ -247,7 +257,6 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
   };
 
   const handleUpdateRestaurant = async (id, restaurantData) => {
-    if (previewMode) return null;
 
     try {
       const updated = await adminUpdateRestaurant(id, restaurantData);
@@ -267,7 +276,6 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
   };
 
   const handleDeleteRestaurant = async (id) => {
-    if (previewMode) return;
     if (!window.confirm("Удалить этот ресторан?")) return;
 
     try {
@@ -283,7 +291,6 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
   // --- ОБРАБОТЧИКИ ДЛЯ ЗАКАЗОВ ---
 
   const handleUpdateStatus = async (orderId, newStatus) => {
-    if (previewMode) return;
 
     try {
       await adminUpdateOrderStatus(orderId, newStatus);
@@ -305,8 +312,8 @@ export function useLiveAdminWorkspace({ section, previewMode }) {
     orders,
     restaurantsRaw,
     dishesRaw,
+    usersRaw,
     menuAvailability,
-    liveOrdersData: buildLiveOrderRows(orders),
     isDishFormOpen,
     editingDish,
     dishFormData,

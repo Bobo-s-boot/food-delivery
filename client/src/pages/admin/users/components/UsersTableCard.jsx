@@ -19,7 +19,7 @@ const userColumns = [
 
 const formatMoney = (value) => `$${Number(value || 0).toFixed(2)}`;
 
-export function UsersTableCard({ users, onSelectUser }) {
+export function UsersTableCard({ users, totalCount = users.length, onSelectUser }) {
   return (
     <AdminCard className="admin-users-table-card">
       <div className="admin-users-table-card__header">
@@ -82,7 +82,9 @@ export function UsersTableCard({ users, onSelectUser }) {
       {users.length === 0 && <div className="admin-users-empty">No users match this filter.</div>}
 
       <div className="admin-users-table-card__footer">
-        <p>Showing 1–10 of 1,248 users</p>
+        <p className="admin-users-table-card__count">
+          Showing {users.length ? "1" : "0"}-{users.length} of {totalCount} users
+        </p>
         <div className="admin-users-table-card__pagination">
           <button type="button">Previous</button>
           <button type="button">Next</button>

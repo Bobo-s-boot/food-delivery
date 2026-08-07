@@ -15,7 +15,6 @@ function MenuEditor({
   onClose,
   onSaveDish,
   onDeleteDish,
-  previewMode,
 }) {
   const isNew = !item;
   const [saved, setSaved] = useState(false);
@@ -24,7 +23,7 @@ function MenuEditor({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (previewMode || !onSaveDish) {
+    if (!onSaveDish) {
       setSaved(true);
       return;
     }
@@ -211,7 +210,6 @@ export function MenuTab({
   onCloseEditor,
   onSaveDish,
   onDeleteDish,
-  previewMode = false,
 }) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All menu categories");
@@ -250,7 +248,6 @@ export function MenuTab({
           onClose={onCloseEditor}
           onSaveDish={onSaveDish}
           onDeleteDish={onDeleteDish}
-          previewMode={previewMode}
         />
       )}
       <WorkspaceSection

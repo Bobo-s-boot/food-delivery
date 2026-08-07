@@ -4,10 +4,10 @@ import { adminNavItems } from "./admin.routes";
 import { useLiveAdminWorkspace } from "./live/useLiveAdminWorkspace";
 import "./Admin.scss";
 
-export function Admin({ section = "dashboard", previewMode = false }) {
-  const workspace = useLiveAdminWorkspace({ section, previewMode });
+export function Admin({ section = "dashboard" }) {
+  const workspace = useLiveAdminWorkspace({ section });
 
-  if (workspace.isLoading && !previewMode) {
+  if (workspace.isLoading) {
     return (
       <div className="admin-layout__loading">Загрузка панели управления...</div>
     );
@@ -29,7 +29,6 @@ export function Admin({ section = "dashboard", previewMode = false }) {
         >
           <AdminSectionContent
             section={section}
-            previewMode={previewMode}
             workspace={workspace}
           />
         </main>

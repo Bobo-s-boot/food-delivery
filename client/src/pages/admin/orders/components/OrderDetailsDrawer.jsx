@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StatusBadge } from "../../components/StatusBadge";
 
 const formatMoney = (value) => `$${Number(value || 0).toFixed(2)}`;
@@ -20,12 +21,33 @@ const actionsByStatus = {
   Cancelled: ["View reason", "Refund details"],
 };
 
-export function OrderDetailsDrawer({ order, onClose }) {
+const statusByAction = {
+  "Accept order": "preparing",
+  "Cancel order": "cancelled",
+  "Mark as on the way": "delivering",
+  "Mark as delivered": "delivered",
+};
+
+export function OrderDetailsDrawer({ order, onClose, onUpdateStatus }) {
+  const [updatingAction, setUpdatingAction] = useState("");
+
   if (!order) {
     return null;
   }
 
   const actions = actionsByStatus[order.status] || [];
+
+  const handleAction = async (action) => {
+    const status = statusByAction[action];
+    if (!status || !onUpdateStatus) return;
+
+    try {
+      setUpdatingAction(action);
+      await onUpdateStatus(order.id, status);
+    } finally {
+      setUpdatingAction("");
+    }
+  };
 
   return (
     <div className="order-drawer" role="dialog" aria-modal="true">
@@ -137,7 +159,13 @@ export function OrderDetailsDrawer({ order, onClose }) {
           <h3>Admin actions</h3>
           <div className="order-drawer__actions">
             {actions.map((action) => (
-              <button key={action} type="button" className="order-drawer__action">
+              <button
+                key={action}
+                type="button"
+                className="order-drawer__action"
+                disabled={Boolean(updatingAction)}
+                onClick={() => handleAction(action)}
+              >
                 {action}
               </button>
             ))}

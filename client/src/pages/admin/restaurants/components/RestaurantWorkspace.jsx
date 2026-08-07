@@ -40,7 +40,6 @@ export function RestaurantWorkspace({
   onDeleteRestaurant,
   onSaveDish,
   onDeleteDish,
-  previewMode = false,
 }) {
   const [confirmation, setConfirmation] = useState(null);
   const [notice, setNotice] = useState("");
@@ -92,13 +91,6 @@ export function RestaurantWorkspace({
 
   const confirmAction = async (action) => {
     setConfirmation(null);
-
-    if (previewMode) {
-      setNotice(
-        `${action} is represented as a mock UI state. Backend mutation remains a TODO.`,
-      );
-      return;
-    }
 
     try {
       setIsUpdating(true);
@@ -270,7 +262,6 @@ export function RestaurantWorkspace({
           onCloseEditor={closeMenuEditor}
           onSaveDish={onSaveDish}
           onDeleteDish={onDeleteDish}
-          previewMode={previewMode}
         />
       )}
       {activeTab === "Operations" && <OperationsTab restaurant={restaurant} />}
@@ -289,7 +280,6 @@ export function RestaurantWorkspace({
           onDetailsFocused={() => setFocusSettingsDetails(false)}
           onUpdateRestaurant={onUpdateRestaurant}
           onDeleteRestaurant={onDeleteRestaurant}
-          previewMode={previewMode}
         />
       )}
       <RestaurantConfirmationDialog

@@ -8,7 +8,6 @@ import {
 } from "../components/ui/AdminKpiCard/AdminKpiCard";
 import {
   supportSummaryCards,
-  supportTicketsMockData,
 } from "./support.data";
 import {
   applySupportSummaryFilter,
@@ -22,22 +21,18 @@ import { SupportTicketsTable } from "./components/SupportTicketsTable";
 import { getAdminBasePath } from "../admin.routes";
 import "./SupportPage.scss";
 
-export function AdminSupportPage({ previewMode = true }) {
+export function AdminSupportPage() {
   const location = useLocation();
   const adminBasePath = getAdminBasePath(location.pathname);
-  const [tickets, setTickets] = useState(() =>
-    previewMode ? supportTicketsMockData : [],
-  );
+  const [tickets, setTickets] = useState([]);
   const [filters, setFilters] = useState(defaultSupportFilters);
   const [page, setPage] = useState(1);
   const [selectedTicketId, setSelectedTicketId] = useState("");
   const [mockActionMessage, setMockActionMessage] = useState("");
   const [loadError, setLoadError] = useState("");
-  const [isLoading, setIsLoading] = useState(!previewMode);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (previewMode) return undefined;
-
     let isActive = true;
     adminGetSupportTickets()
       .then((data) => {
@@ -55,7 +50,7 @@ export function AdminSupportPage({ previewMode = true }) {
     return () => {
       isActive = false;
     };
-  }, [previewMode]);
+  }, []);
 
   const filteredTickets = useMemo(
     () => sortSupportTickets(filterSupportTickets(tickets, filters)),
@@ -64,7 +59,6 @@ export function AdminSupportPage({ previewMode = true }) {
   const selectedTicket = tickets.find((ticket) => ticket.ticketId === selectedTicketId);
   const totalTicketCount = filteredTickets.length;
   const summaryCards = useMemo(() => {
-    if (previewMode) return supportSummaryCards;
     const today = new Date().toDateString();
     return supportSummaryCards.map((card) => {
       const value = {
@@ -80,7 +74,7 @@ export function AdminSupportPage({ previewMode = true }) {
       }[card.label];
       return { ...card, value: String(value ?? 0) };
     });
-  }, [previewMode, tickets]);
+  }, [tickets]);
   const pageSize = 10;
   const totalPages = Math.max(1, Math.ceil(filteredTickets.length / pageSize));
   const visibleTickets = filteredTickets.slice(
@@ -132,9 +126,7 @@ export function AdminSupportPage({ previewMode = true }) {
       ],
     }));
     setMockActionMessage(
-      previewMode
-        ? `${ticketId} is resolved in this preview. Backend integration is still required.`
-        : `${ticketId} was updated locally. Admin mutation API is not connected yet.`,
+      `${ticketId} was updated locally. Admin mutation API is not connected yet.`,
     );
   };
 
@@ -146,7 +138,9 @@ export function AdminSupportPage({ previewMode = true }) {
       resolvedToday: false,
       lastActivity: "Just now",
     }));
-    setMockActionMessage(`${ticketId} is reopened in this preview. Backend integration is still required.`);
+    setMockActionMessage(
+      `${ticketId} was reopened locally. Admin mutation API is not connected yet.`,
+    );
   };
 
   const handleAddTimelineEntry = (ticketId, entry) => {
@@ -158,8 +152,8 @@ export function AdminSupportPage({ previewMode = true }) {
     }));
     setMockActionMessage(
       entry.author === "Support note"
-        ? "Internal note added to this preview."
-        : "Reply added to this preview; it was not sent to the customer.",
+        ? "Internal note added locally. Admin mutation API is not connected yet."
+        : "Reply added locally; it was not sent to the customer.",
     );
   };
 

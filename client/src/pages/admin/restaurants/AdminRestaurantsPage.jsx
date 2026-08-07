@@ -10,9 +10,7 @@ import { AdminSelect } from "../components/ui/AdminSelect/AdminSelect";
 import { getAdminBasePath } from "../admin.routes";
 import { financePromotionsMockData } from "../shared/promotions.data";
 import {
-  menuItemsMockData,
   restaurantCategoryFilters,
-  restaurantsMockData,
 } from "./restaurants.data";
 import {
   enrichMenuItem,
@@ -37,7 +35,6 @@ function RestaurantCreateDialog({
   onClose,
   onContinue,
   onCreateRestaurant,
-  previewMode,
 }) {
   const [selectedRestaurant, setSelectedRestaurant] = useState(
     restaurants[0]?.id || "",
@@ -51,7 +48,7 @@ function RestaurantCreateDialog({
   const handleCreateSubmit = async (event) => {
     event.preventDefault();
 
-    if (previewMode || !onCreateRestaurant) {
+    if (!onCreateRestaurant) {
       setSaved(true);
       return;
     }
@@ -215,7 +212,6 @@ export function AdminRestaurantsPage({
   onCreateRestaurant,
   onUpdateRestaurant,
   onDeleteRestaurant,
-  previewMode = false,
   workspace,
 }) {
   const navigate = useNavigate();
@@ -229,18 +225,20 @@ export function AdminRestaurantsPage({
   const basePath = getAdminBasePath(location.pathname);
 
   const rawRestaurants = useMemo(() => {
-    if (!previewMode && liveRestaurants && liveRestaurants.length > 0) {
-      return liveRestaurants.map((r) => ({ ...r, id: r.id || r._id }));
-    }
-    return restaurantsMockData;
-  }, [previewMode, liveRestaurants]);
+    if (!Array.isArray(liveRestaurants)) return [];
+    return liveRestaurants.map((restaurant) => ({
+      ...restaurant,
+      id: restaurant.id || restaurant._id,
+    }));
+  }, [liveRestaurants]);
 
   const rawMenuItems = useMemo(() => {
-    if (!previewMode && liveDishes && liveDishes.length > 0) {
-      return liveDishes.map((d) => ({ ...d, id: d.id || d._id }));
-    }
-    return menuItemsMockData;
-  }, [previewMode, liveDishes]);
+    if (!Array.isArray(liveDishes)) return [];
+    return liveDishes.map((dish) => ({
+      ...dish,
+      id: dish.id || dish._id,
+    }));
+  }, [liveDishes]);
 
   const restaurants = useMemo(
     () => rawRestaurants.map(enrichRestaurant),
@@ -526,7 +524,6 @@ export function AdminRestaurantsPage({
           navigate(`${basePath}/restaurants/${id}/menu/new?tab=menu`)
         }
         onCreateRestaurant={onCreateRestaurant}
-        previewMode={previewMode}
       />
     </div>
   );

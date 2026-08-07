@@ -22,11 +22,15 @@ export function UserDrawerActions({
     onAddInternalNote(user.id, message);
     setInternalNote("");
     setIsInternalNoteOpen(false);
-    setActionMessage("Internal note added to this preview.");
+    setActionMessage(
+      "Internal note added locally. Users mutation API is not connected yet.",
+    );
   };
 
   const handleMockAction = (message) => {
-    setActionMessage(`${message} is a preview action until the Users API is connected.`);
+    setActionMessage(
+      `${message} is local only. Users mutation API is not connected yet.`,
+    );
   };
 
   return (
@@ -94,7 +98,9 @@ export function UserDrawerActions({
               className="user-drawer__action"
               onClick={() => {
                 onStatusChange(user.id, "Active");
-                setActionMessage("User reactivated in this preview.");
+                setActionMessage(
+                  "User reactivated locally. Users mutation API is not connected yet.",
+                );
               }}
             >
               Reactivate user
@@ -142,7 +148,9 @@ export function UserDrawerActions({
                   // TODO(users-api): persist the reversible account suspension.
                   onStatusChange(user.id, "Suspended");
                   setIsSuspendConfirmationOpen(false);
-                  setActionMessage("User suspended in this preview. Backend integration is still required.");
+                  setActionMessage(
+                    "User suspended locally. Users mutation API is not connected yet.",
+                  );
                 }}
               >
                 Suspend user

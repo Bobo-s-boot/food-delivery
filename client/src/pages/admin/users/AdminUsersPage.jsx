@@ -11,12 +11,13 @@ import {
   userIssueFilters,
   userStatusFilters,
   userSummaryCards,
-  usersMockData,
 } from "./users.data";
 import {
   applyUserSummaryFilter,
+  buildUserSummaryCards,
   defaultUserFilters,
   filterUsers,
+  normalizeLiveUsers,
 } from "./users.utils";
 import { UserDetailsDrawer } from "./components/UserDetailsDrawer";
 import { UsersTableCard } from "./components/UsersTableCard";
@@ -29,15 +30,23 @@ const getToneClass = (value) =>
     .toLowerCase()
     .replace(/\s+/g, "-")}`;
 
-export function AdminUsersPage() {
+export function AdminUsersPage({ users: liveUsers = [], orders = [] }) {
   const location = useLocation();
   const adminBasePath = getAdminBasePath(location.pathname);
-  const [users, setUsers] = useState(() => usersMockData);
+  const sourceUsers = useMemo(
+    () => normalizeLiveUsers(liveUsers, orders),
+    [liveUsers, orders],
+  );
+  const [users, setUsers] = useState(() => sourceUsers);
   const [filters, setFilters] = useState(defaultUserFilters);
   const [selectedUserId, setSelectedUserId] = useState("");
 
   const filteredUsers = useMemo(() => filterUsers(users, filters), [filters, users]);
   const selectedUser = users.find((user) => user.id === selectedUserId);
+  const summaryCards = useMemo(
+    () => buildUserSummaryCards(users, userSummaryCards),
+    [users],
+  );
 
   const setManualFilter = (partialFilters) => {
     setFilters((currentFilters) => ({
@@ -81,7 +90,7 @@ export function AdminUsersPage() {
       </div>
 
       <AdminKpiGrid>
-        {userSummaryCards.map((card) => (
+        {summaryCards.map((card) => (
           <AdminKpiCard
             key={card.label}
             label={card.label}
@@ -144,7 +153,11 @@ export function AdminUsersPage() {
         </div>
       </AdminCard>
 
-      <UsersTableCard users={filteredUsers} onSelectUser={setSelectedUserId} />
+      <UsersTableCard
+        users={filteredUsers}
+        totalCount={users.length}
+        onSelectUser={setSelectedUserId}
+      />
 
       <UserDetailsDrawer
         key={selectedUser?.id || "closed"}
