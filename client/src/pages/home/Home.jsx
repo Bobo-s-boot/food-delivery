@@ -6,7 +6,7 @@ import { Cards as HomeCardRestaurants } from "../../components/cards/Cards";
 import { heroData, highlightCards, trendingSection } from "./const";
 import { useEffect, useState } from "react";
 import { getRestaurants } from "../../api/restaurantService";
-import { CLIENT_ERORR_MESSAGE } from "../../errors/error";
+import { CLIENT_ERROR_MESSAGES } from "../../errors/error";
 import { Loading } from "../../components/loading/Loading";
 import { HomeFaq } from "./components/HomeFaq";
 import "./Home.scss";
@@ -22,7 +22,7 @@ export function Home() {
         const data = await getRestaurants();
         setRestaurants(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
+        console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH, error);
         setRestaurants([]);
       } finally {
         setLoading(false);

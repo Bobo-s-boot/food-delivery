@@ -12,10 +12,10 @@ export function SettingsTab({
 }) {
   const initialForm = useMemo(
     () => ({
-      name: restaurant.name,
-      cuisine: restaurant.cuisine,
-      location: restaurant.location,
-      email: restaurant.email || `partner@${restaurant.id}.com`,
+      name: restaurant.name ?? "",
+      cuisine: restaurant.cuisine ?? "",
+      location: restaurant?.location ?? restaurant?.address,
+      email: restaurant.email || `partner@${restaurant._id}.com`,
       description:
         restaurant.description ||
         `${restaurant.name} partner profile and customer-facing restaurant description.`,
@@ -51,13 +51,14 @@ export function SettingsTab({
 
     try {
       setIsSubmitting(true);
-      const restaurantId = restaurant.id || restaurant._id;
+      const restaurantId = restaurant._id || restaurant.id;
 
       const updatedData = {
         ...restaurant,
         name: form.name,
         cuisine: form.cuisine,
         location: form.location,
+        address: form.location,
         email: form.email,
         description: form.description,
       };

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CLIENT_ERORR_MESSAGE } from "../errors/error";
+import { CLIENT_ERROR_MESSAGES } from "../errors/error";
 import { getAuthToken } from "./authConfig";
 
 const API_BASE_URL =
@@ -12,7 +12,7 @@ export const registerUser = async (userData) => {
     return response.data;
   } catch (error) {
     throw (
-      error.response?.data?.message || CLIENT_ERORR_MESSAGE.FIELD_TO_REGISTER
+      error.response?.data?.message || CLIENT_ERROR_MESSAGES.FAILED_TO_REGISTER
     );
   }
 };
@@ -22,7 +22,9 @@ export const loginUser = async (userData) => {
     const response = await axios.post(`${API_URL}/login`, userData);
     return response.data;
   } catch (error) {
-    throw error.response?.data?.message || CLIENT_ERORR_MESSAGE.FIELD_TO_LOGIN;
+    throw (
+      error.response?.data?.message || CLIENT_ERROR_MESSAGES.FAILED_TO_LOGIN
+    );
   }
 };
 

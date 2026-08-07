@@ -25,13 +25,13 @@ import {
   formatDishPayload,
   initialDishFormData,
 } from "./liveAdmin.utils";
+import {
+  ADMIN_CONFIRM_MESSAGES,
+  ADMIN_ERROR_MESSAGES,
+  buildAdminErrorMessage,
+} from "../../../errors/error.js";
 
-// Убираем "restaurants" из статических секций, чтобы в Live-режиме шла загрузка из БД
-const STATIC_ADMIN_SECTIONS = new Set([
-  "dashboard",
-  "finance",
-  "support",
-]);
+const STATIC_ADMIN_SECTIONS = new Set(["dashboard", "finance", "support"]);
 
 export function useLiveAdminWorkspace({ section }) {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export function useLiveAdminWorkspace({ section }) {
       setIsLoading(true);
       setOrders(await adminGetOrders());
     } catch (error) {
-      console.error("Error loading admin orders", error);
+      console.error(ADMIN_ERROR_MESSAGES.LOAD_ORDERS, error);
     } finally {
       setIsLoading(false);
     }
@@ -70,13 +70,13 @@ export function useLiveAdminWorkspace({ section }) {
       setDishesRaw(dishesData);
       setMenuAvailability(buildMenuAvailability(dishesData));
     } catch (error) {
-      console.error("Error loading admin dishes", error);
+      console.error(ADMIN_ERROR_MESSAGES.LOAD_DISHES, error);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  // Загружаем рестораны, блюда И заказы для раздела restaurants
+  // Load restaurants, dishes and orders for the restaurants section
   const loadRestaurantsWorkspace = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -91,7 +91,7 @@ export function useLiveAdminWorkspace({ section }) {
       setOrders(ordersData);
       setMenuAvailability(buildMenuAvailability(dishesData));
     } catch (error) {
-      console.error("Error loading admin restaurants workspace", error);
+      console.error(ADMIN_ERROR_MESSAGES.LOAD_RESTAURANTS_WORKSPACE, error);
     } finally {
       setIsLoading(false);
     }
@@ -108,7 +108,7 @@ export function useLiveAdminWorkspace({ section }) {
       setUsersRaw(usersData);
       setOrders(ordersData);
     } catch (error) {
-      console.error("Error loading admin users workspace", error);
+      console.error(ADMIN_ERROR_MESSAGES.LOAD_USERS_WORKSPACE, error);
       setUsersRaw([]);
     } finally {
       setIsLoading(false);
@@ -157,7 +157,7 @@ export function useLiveAdminWorkspace({ section }) {
     section,
   ]);
 
-  // --- ОБРАБОТЧИКИ ДЛЯ БЛЮД ---
+  // --- DISH HANDLERS ---
 
   const handleSaveDish = async (dishDataOrEvent, dishId) => {
     if (dishDataOrEvent?.preventDefault) {
@@ -180,10 +180,8 @@ export function useLiveAdminWorkspace({ section }) {
           : dishData;
 
       if (id) {
-        console.log("Обновление блюда ID:", id, payload);
         await updateDish(id, payload);
       } else {
-        console.log("Создание нового блюда:", payload);
         await createDish(payload);
       }
 
@@ -196,11 +194,8 @@ export function useLiveAdminWorkspace({ section }) {
       setIsDishFormOpen(false);
       setEditingDish(null);
     } catch (error) {
-      console.error("Ошибка при сохранении блюда:", error.response?.data);
-      alert(
-        "Ошибка при сохранении блюда: " +
-          (error.response?.data?.message || error.message),
-      );
+      console.error(ADMIN_ERROR_MESSAGES.SAVE_DISH, error.response?.data);
+      alert(buildAdminErrorMessage("SAVE_DISH", error));
     }
   };
 
@@ -224,7 +219,7 @@ export function useLiveAdminWorkspace({ section }) {
   };
 
   const handleDeleteDish = async (id) => {
-    if (!window.confirm("Удалить это блюдо из меню?")) return;
+    if (!window.confirm(ADMIN_CONFIRM_MESSAGES.DELETE_DISH)) return;
 
     try {
       await deleteDish(id);
@@ -234,64 +229,60 @@ export function useLiveAdminWorkspace({ section }) {
         await loadDishesWorkspace();
       }
     } catch (error) {
-      console.error("Error deleting dish", error);
-      alert("Ошибка при удалении блюда. Проверьте права доступа.");
+      console.error(ADMIN_ERROR_MESSAGES.DELETE_DISH, error);
+      alert(buildAdminErrorMessage("DELETE_DISH", error));
     }
   };
 
-  // --- ОБРАБОТЧИКИ ДЛЯ РЕСТОРАНОВ ---
+  // --- RESTAURANT HANDLERS ---
 
   const handleCreateRestaurant = async (restaurantData) => {
-
     try {
       const created = await adminCreateRestaurant(restaurantData);
       await loadRestaurantsWorkspace();
       return created;
     } catch (error) {
-      alert(
-        "Ошибка при создании ресторана: " +
-          (error.response?.data?.message || error.message),
-      );
+      alert(buildAdminErrorMessage("CREATE_RESTAURANT", error));
       throw error;
     }
   };
 
   const handleUpdateRestaurant = async (id, restaurantData) => {
-
     try {
-      const updated = await adminUpdateRestaurant(id, restaurantData);
+      const res = await adminUpdateRestaurant(id, restaurantData);
+
+      const updatedRestaurant = res?.data || res;
+
       setRestaurantsRaw((prev) =>
         prev.map((item) =>
-          item._id === id || item.id === id ? updated : item,
+          item._id === id || item.id === id
+            ? { ...item, ...updatedRestaurant }
+            : item,
         ),
       );
-      return updated;
+      return updatedRestaurant;
     } catch (error) {
-      alert(
-        "Ошибка при обновлении ресторана: " +
-          (error.response?.data?.message || error.message),
-      );
+      console.error(ADMIN_ERROR_MESSAGES.UPDATE_RESTAURANT, error);
       throw error;
     }
   };
 
   const handleDeleteRestaurant = async (id) => {
-    if (!window.confirm("Удалить этот ресторан?")) return;
+    if (!window.confirm(ADMIN_CONFIRM_MESSAGES.DELETE_RESTAURANT)) return;
 
     try {
       await adminDeleteRestaurant(id);
       // Удаляем из локального стора строго по _id
       setRestaurantsRaw((prev) => prev.filter((item) => item._id !== id));
     } catch (error) {
-      console.error("Ошибка при удалении ресторана:", error);
-      alert("Не удалось удалить ресторан из базы данных.");
+      console.error(ADMIN_ERROR_MESSAGES.DELETE_RESTAURANT, error);
+      alert(buildAdminErrorMessage("DELETE_RESTAURANT", error));
     }
   };
 
-  // --- ОБРАБОТЧИКИ ДЛЯ ЗАКАЗОВ ---
+  // --- ORDER HANDLERS ---
 
   const handleUpdateStatus = async (orderId, newStatus) => {
-
     try {
       await adminUpdateOrderStatus(orderId, newStatus);
       if (section === "restaurants") {
@@ -300,10 +291,7 @@ export function useLiveAdminWorkspace({ section }) {
         await loadLiveOrders();
       }
     } catch (error) {
-      alert(
-        "Ошибка при обновлении статуса заказа: " +
-          (error.response?.data?.message || error.message),
-      );
+      alert(buildAdminErrorMessage("UPDATE_ORDER_STATUS", error));
     }
   };
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CLIENT_ERORR_MESSAGE } from "../errors/error";
+import { CLIENT_ERROR_MESSAGES } from "../errors/error";
 import { createAuthConfig } from "./authConfig";
 
 const API_BASE_URL =
@@ -11,7 +11,7 @@ export const getRestaurants = async () => {
     const response = await axios.get(API_URL, createAuthConfig());
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
+    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH, error);
     return [];
   }
 };
@@ -29,7 +29,7 @@ export const searchRestaurants = async (query, limit = 5) => {
     const response = await axios.get(API_URL, config);
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
+    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH, error);
     return [];
   }
 };
