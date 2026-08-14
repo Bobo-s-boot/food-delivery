@@ -227,9 +227,132 @@ export const getAnalyticsData = async (req, res) => {
   }
 };
 
+export const getTopRestaurantsToday = async (req, res) => {
+  try {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    // 1. Try orders from today
+    let topRestaurants = await Order.aggregate([
+      { $match: { createdAt: { $gte: todayStart } } },
+      {
+        $group: {
+          _id: "$restaurantId",
+          ordersCount: { $sum: 1 },
+          revenue: { $sum: "$totalPrice" },
+        },
+      },
+      {
+        $lookup: {
+          from: "restaurants",
+          localField: "_id",
+          foreignField: "_id",
+          as: "restaurant",
+        },
+      },
+      {
+        $unwind: {
+          path: "$restaurant",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          restaurantId: "$_id",
+          name: { $ifNull: ["$restaurant.name", "Unknown Restaurant"] },
+          orders: "$ordersCount",
+          revenue: "$revenue",
+        },
+      },
+      { $sort: { revenue: -1, orders: -1 } },
+      { $limit: 4 },
+    ]);
+
+    // 2. If fewer than 4 restaurants today, include overall order aggregates
+    if (topRestaurants.length < 4) {
+      const existingIds = topRestaurants.map((r) => String(r.restaurantId));
+      const overallTop = await Order.aggregate([
+        {
+          $group: {
+            _id: "$restaurantId",
+            ordersCount: { $sum: 1 },
+            revenue: { $sum: "$totalPrice" },
+          },
+        },
+        {
+          $lookup: {
+            from: "restaurants",
+            localField: "_id",
+            foreignField: "_id",
+            as: "restaurant",
+          },
+        },
+        {
+          $unwind: {
+            path: "$restaurant",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            restaurantId: "$_id",
+            name: { $ifNull: ["$restaurant.name", "Unknown Restaurant"] },
+            orders: "$ordersCount",
+            revenue: "$revenue",
+          },
+        },
+        { $sort: { revenue: -1, orders: -1 } },
+        { $limit: 10 },
+      ]);
+
+      for (const item of overallTop) {
+        if (
+          !existingIds.includes(String(item.restaurantId)) &&
+          topRestaurants.length < 4
+        ) {
+          existingIds.push(String(item.restaurantId));
+          topRestaurants.push(item);
+        }
+      }
+    }
+
+    // 3. If still fewer than 4, fallback to available restaurants in DB
+    if (topRestaurants.length < 4) {
+      const existingIds = topRestaurants.map((r) => String(r.restaurantId));
+      const fallbackRestaurants = await Restaurant.find({
+        _id: { $nin: existingIds },
+      })
+        .limit(4 - topRestaurants.length)
+        .select("name");
+
+      fallbackRestaurants.forEach((r) => {
+        topRestaurants.push({
+          restaurantId: r._id,
+          name: r.name,
+          orders: 0,
+          revenue: 0,
+        });
+      });
+    }
+
+    const formatted = topRestaurants.map((r) => ({
+      name: r.name,
+      orders: `${r.orders} ${r.orders === 1 ? "order" : "orders"}`,
+      revenue: `$${Number(r.revenue || 0).toFixed(2)}`,
+    }));
+
+    res.status(200).json(formatted);
+  } catch (error) {
+    res.status(500).json({
+      message: "Ошибка при получении топ ресторанов",
+      error: error.message,
+    });
+  }
+};
+
 export const getTopDishes = async (req, res) => {
   try {
-    const topDishes = await Order.aggregate([
+    let topDishes = await Order.aggregate([
       { $unwind: "$items" },
       {
         $group: {
@@ -251,19 +374,34 @@ export const getTopDishes = async (req, res) => {
       {
         $unwind: {
           path: "$dish",
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+      {
+        $lookup: {
+          from: "restaurants",
+          localField: "dish.restaurantId",
+          foreignField: "_id",
+          as: "restaurant",
+        },
+      },
+      {
+        $unwind: {
+          path: "$restaurant",
           preserveNullAndEmptyArrays: true,
         },
       },
       {
         $project: {
           dishId: "$_id",
-          name: { $ifNull: ["$dish.name", "Unknown Dish"] },
+          name: "$dish.name",
+          restaurant: { $ifNull: ["$restaurant.name", ""] },
           orders: 1,
           revenue: 1,
         },
       },
       { $sort: { revenue: -1, orders: -1 } },
-      { $limit: 5 },
+      { $limit: 6 },
     ]);
 
     if (topDishes.length < 5) {
@@ -271,14 +409,15 @@ export const getTopDishes = async (req, res) => {
       const fallbackDishes = await Dish.find({
         _id: { $nin: existingDishIds },
       })
+        .populate("restaurantId", "name")
         .sort({ createdAt: -1 })
-        .limit(5 - topDishes.length)
-        .select("name");
+        .limit(5 - topDishes.length);
 
       fallbackDishes.forEach((dish) => {
         topDishes.push({
           dishId: dish._id,
           name: dish.name,
+          restaurant: dish.restaurantId?.name || "",
           orders: 0,
           revenue: 0,
         });
@@ -288,8 +427,9 @@ export const getTopDishes = async (req, res) => {
     res.status(200).json(
       topDishes.map((dish) => ({
         name: dish.name,
-        orders: dish.orders,
-        revenue: dish.revenue,
+        restaurant: dish.restaurant,
+        orders: `${dish.orders} ${dish.orders === 1 ? "order" : "orders"}`,
+        revenue: `$${Number(dish.revenue || 0).toFixed(2)}`,
       })),
     );
   } catch (error) {
