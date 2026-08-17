@@ -16,16 +16,6 @@ export const getRestaurants = async () => {
   }
 };
 
-export const getRestaurantById = async (id) => {
-  try {
-    const response = await axios.get(`${API_URL}/${id}`, createAuthConfig());
-    return response.data;
-  } catch (error) {
-    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH, error);
-    return null;
-  }
-};
-
 export const searchRestaurants = async (query, limit = 5) => {
   try {
     const config = {

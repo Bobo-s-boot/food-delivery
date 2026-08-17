@@ -25,14 +25,6 @@ export const adminGetTopDishes = async () => {
   return response.data;
 };
 
-export const adminGetTopRestaurants = async () => {
-  const response = await axios.get(
-    `${API_URL}/top-restaurants`,
-    createAuthConfig(),
-  );
-  return response.data;
-};
-
 export const adminSeedOrders = async () => {
   const response = await axios.post(
     `${API_URL}/seed`,

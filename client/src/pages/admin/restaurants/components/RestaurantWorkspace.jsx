@@ -46,30 +46,24 @@ export function RestaurantWorkspace({
   const [focusSettingsDetails, setFocusSettingsDetails] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
+  // Получаем приоритетный ObjectId ресторана
   const activeRestaurantId = restaurant?._id || restaurant?.id;
 
+  // Безопасный фильтр блюд именно для текущего ресторана
   const currentRestaurantMenuItems = useMemo(() => {
     if (!Array.isArray(menuItems)) return [];
 
     return menuItems.filter((dish) => {
+      // Если у блюда restaurantId — это объект (populated) или строка
       const dishRestId = String(
-        dish.restaurantId?._id || dish.restaurantId?.id || dish.restaurantId || "",
+        dish.restaurantId?._id || dish.restaurantId || "",
       );
-      const targetRestId = String(restaurant?._id || "");
-      const targetNumericId = String(restaurant?.id || "");
-      const dishRestName = typeof dish.restaurantId === "object" ? dish.restaurantId?.name : dish.restaurant;
+      const targetRestId = String(activeRestaurantId || "");
 
-      if (!dishRestId || dishRestId === "undefined" || dishRestId === "null") {
-        return true;
-      }
-
-      return (
-        dishRestId === targetRestId ||
-        dishRestId === targetNumericId ||
-        (dishRestName && restaurant?.name && dishRestName.toLowerCase() === restaurant.name.toLowerCase())
-      );
+      // Если в массив переданы уже отфильтрованные блюда или совпадает ID
+      return !dishRestId || dishRestId === targetRestId;
     });
-  }, [menuItems, restaurant]);
+  }, [menuItems, activeRestaurantId]);
 
   const restaurantOrders = useMemo(
     () => orders.filter((order) => order.restaurant?.name === restaurant.name),

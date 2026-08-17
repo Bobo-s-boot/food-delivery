@@ -90,38 +90,10 @@ export const enrichRestaurant = (restaurant) => {
 };
 
 export const enrichMenuItem = (item, restaurants = []) => {
-  const populatedRestaurantId =
-    typeof item.restaurantId === "object" && item.restaurantId !== null
-      ? item.restaurantId._id || item.restaurantId.id
-      : item.restaurantId;
-
-  const populatedRestaurantName =
-    typeof item.restaurantId === "object" && item.restaurantId !== null
-      ? item.restaurantId.name
-      : null;
-
-  const targetId = populatedRestaurantId || item.restaurantId;
-
   const restaurant = restaurants.find(
-    (entry) =>
-      String(entry.id) === String(targetId) ||
-      String(entry._id) === String(targetId) ||
-      entry.name === item.restaurant ||
-      (populatedRestaurantName && entry.name === populatedRestaurantName),
+    (entry) => entry.id === item.restaurantId || entry.name === item.restaurant,
   );
-
-  const restaurantId =
-    targetId ||
-    restaurant?.id ||
-    restaurant?._id ||
-    (item.restaurant ? normalize(item.restaurant).replace(/[^a-z0-9]+/g, "-") : "unknown");
-
-  const resolvedRestaurantName =
-    populatedRestaurantName ||
-    restaurant?.name ||
-    item.restaurant ||
-    "Unknown Restaurant";
-
+  const restaurantId = item.restaurantId || restaurant?.id || normalize(item.restaurant).replace(/[^a-z0-9]+/g, "-");
   const platformCategory = item.platformCategory || item.category || "Uncategorized";
   const restaurantCategory =
     item.restaurantCategory ||
@@ -137,17 +109,13 @@ export const enrichMenuItem = (item, restaurants = []) => {
 
   return {
     ...item,
-    restaurant: resolvedRestaurantName,
     restaurantId,
     platformCategory,
     restaurantCategory,
     contentHealth,
     customerVisibility,
     promotion: item.promotion || item.discount || "No active promotion",
-    restaurantAvailability:
-      restaurant?.operationalAvailability ||
-      (restaurant?.status ? availabilityByLegacyStatus[restaurant.status] : null) ||
-      "Accepting orders",
+    restaurantAvailability: restaurant?.operationalAvailability || "Offline",
   };
 };
 

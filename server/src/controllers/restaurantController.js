@@ -1,5 +1,4 @@
 import fs from "fs/promises";
-import mongoose from "mongoose";
 import { RESTAURANTS_DATA_PATH as DATA_PATH } from "../config/config.js";
 import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 import Restaurant from "../models/restaurant.js";
@@ -84,16 +83,9 @@ export const getAllRestaurants = async (req, res) => {
 
 export const getRestaurantById = async (req, res) => {
   try {
-    const { id } = req.params;
-    let restaurant = null;
-
-    if (mongoose.Types.ObjectId.isValid(id)) {
-      restaurant = await Restaurant.findById(id);
-    }
-
-    if (!restaurant && !Number.isNaN(Number(id))) {
-      restaurant = await Restaurant.findOne({ id: Number(id) });
-    }
+    const restaurant = await Restaurant.findOne({
+      id: parseInt(req.params.id),
+    });
 
     if (!restaurant) {
       return res.status(404).json({ message: SERVER_ERORR_MESSAGE.NOT_FOUND });
