@@ -42,24 +42,35 @@ export function Header() {
         searchDishes(query, 5),
       ]);
 
-      const restaurantResults = restaurants.map((restaurant) => ({
-        type: "restaurant",
-        id: restaurant.id,
-        title: restaurant.name,
-        subtitle: restaurant.category,
-        route: `${userBasePath}/restaurant/${restaurant.id}`,
-      }));
+      const restaurantResults = restaurants.map((restaurant) => {
+        const restId = restaurant.id ?? restaurant._id;
+        return {
+          type: "restaurant",
+          id: restId,
+          title: restaurant.name,
+          subtitle: restaurant.category,
+          route: `${userBasePath}/restaurant/${restId}`,
+        };
+      });
 
       const dishResults = dishes
-        .map((dish) => ({
-          type: "dish",
-          id: dish._id,
-          title: dish.name,
-          subtitle: dish.restaurantId?.name || "",
-          route: dish.restaurantId?.id
-            ? `${userBasePath}/restaurant/${dish.restaurantId.id}`
-            : null,
-        }))
+        .map((dish) => {
+          const restName =
+            typeof dish.restaurantId === "object" && dish.restaurantId !== null
+              ? dish.restaurantId.name
+              : "";
+          const dishId = dish._id || dish.id;
+          const targetRoute = `${userBasePath}/dish/${dishId}`;
+
+          return {
+            type: "dish",
+            id: dishId,
+            title: dish.name,
+            subtitle: restName || dish.category || "Menu",
+            route: targetRoute,
+            dish,
+          };
+        })
         .filter((dish) => dish.route);
 
       setResults([...restaurantResults, ...dishResults].slice(0, 8));
@@ -91,11 +102,18 @@ export function Header() {
     };
   }, []);
 
-  const handleSelectResult = (route) => {
+  const handleSelectResult = (itemOrRoute) => {
+    const route =
+      typeof itemOrRoute === "string" ? itemOrRoute : itemOrRoute?.route;
     if (!route) {
       return;
     }
-    navigate(route);
+    const state =
+      typeof itemOrRoute === "object" && itemOrRoute?.dish
+        ? { state: { dish: itemOrRoute.dish } }
+        : undefined;
+
+    navigate(route, state);
     setSearchValue("");
     setResults([]);
     setIsOpen(false);

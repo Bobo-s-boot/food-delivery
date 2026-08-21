@@ -21,6 +21,16 @@ export const getDishesByRestaurant = async (restaurantId) => {
   }
 };
 
+export const getDishById = async (dishId) => {
+  try {
+    const response = await axios.get(`${API_URL}/${dishId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch dish by ID:", error);
+    return null;
+  }
+};
+
 export const adminGetDishes = async () => {
   try {
     const response = await axios.get(API_URL, createAuthConfig());

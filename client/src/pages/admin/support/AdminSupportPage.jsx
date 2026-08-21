@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { adminGetSupportTickets } from "../../../api/supportService";
+import {
+  adminAddSupportTimelineEntry,
+  adminGetSupportTickets,
+  adminUpdateSupportTicketStatus,
+} from "../../../api/supportService";
 import { normalizeAdminSupportTicket } from "../../../features/support/support.utils";
 import {
   AdminKpiCard,
@@ -108,53 +112,64 @@ export function AdminSupportPage() {
     );
   };
 
-  const handleResolve = (ticketId) => {
-    // TODO(support-api): persist the resolved status and resolution event.
-    updateTicket(ticketId, (ticket) => ({
-      ...ticket,
-      status: "Resolved",
-      sla: "On track",
-      resolvedToday: true,
-      lastActivity: "Just now",
-      conversation: [
-        ...(ticket.conversation || []),
-        {
-          author: "Support note",
-          timestamp: "Just now",
-          text: "Ticket marked as resolved by the administrator.",
-        },
-      ],
-    }));
-    setMockActionMessage(
-      `${ticketId} was updated locally. Admin mutation API is not connected yet.`,
-    );
+  const handleResolve = async (ticketId) => {
+    try {
+      await adminUpdateSupportTicketStatus(ticketId, "Resolved");
+      updateTicket(ticketId, (ticket) => ({
+        ...ticket,
+        status: "Resolved",
+        sla: "On track",
+        resolvedToday: true,
+        lastActivity: "Just now",
+        conversation: [
+          ...(ticket.conversation || []),
+          {
+            author: "Support note",
+            timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+            text: "Ticket marked as resolved by the administrator.",
+          },
+        ],
+      }));
+      setMockActionMessage(`Ticket ${ticketId} has been marked as resolved in the database.`);
+    } catch (error) {
+      console.error("Error resolving ticket:", error);
+      setMockActionMessage(`Failed to update ${ticketId} in database.`);
+    }
   };
 
-  const handleReopen = (ticketId) => {
-    // TODO(support-api): persist the reopened ticket status.
-    updateTicket(ticketId, (ticket) => ({
-      ...ticket,
-      status: "Open",
-      resolvedToday: false,
-      lastActivity: "Just now",
-    }));
-    setMockActionMessage(
-      `${ticketId} was reopened locally. Admin mutation API is not connected yet.`,
-    );
+  const handleReopen = async (ticketId) => {
+    try {
+      await adminUpdateSupportTicketStatus(ticketId, "Open");
+      updateTicket(ticketId, (ticket) => ({
+        ...ticket,
+        status: "Open",
+        resolvedToday: false,
+        lastActivity: "Just now",
+      }));
+      setMockActionMessage(`Ticket ${ticketId} has been reopened in the database.`);
+    } catch (error) {
+      console.error("Error reopening ticket:", error);
+      setMockActionMessage(`Failed to reopen ${ticketId} in database.`);
+    }
   };
 
-  const handleAddTimelineEntry = (ticketId, entry) => {
-    // TODO(support-api): send the reply or store the private internal note.
-    updateTicket(ticketId, (ticket) => ({
-      ...ticket,
-      lastActivity: "Just now",
-      conversation: [...(ticket.conversation || []), entry],
-    }));
-    setMockActionMessage(
-      entry.author === "Support note"
-        ? "Internal note added locally. Admin mutation API is not connected yet."
-        : "Reply added locally; it was not sent to the customer.",
-    );
+  const handleAddTimelineEntry = async (ticketId, entry) => {
+    try {
+      await adminAddSupportTimelineEntry(ticketId, entry);
+      updateTicket(ticketId, (ticket) => ({
+        ...ticket,
+        lastActivity: "Just now",
+        conversation: [...(ticket.conversation || []), entry],
+      }));
+      setMockActionMessage(
+        entry.author === "Support note"
+          ? "Internal note saved to database."
+          : "Reply saved to database.",
+      );
+    } catch (error) {
+      console.error("Error adding timeline entry:", error);
+      setMockActionMessage(`Failed to save timeline entry to database.`);
+    }
   };
 
   return (

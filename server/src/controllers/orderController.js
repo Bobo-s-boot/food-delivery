@@ -227,6 +227,80 @@ export const getAnalyticsData = async (req, res) => {
   }
 };
 
+export const getTopRestaurants = async (req, res) => {
+  try {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const topRestaurants = await Order.aggregate([
+      {
+        $group: {
+          _id: "$restaurantId",
+          orders: { $sum: 1 },
+          revenue: { $sum: "$totalPrice" },
+        },
+      },
+      {
+        $lookup: {
+          from: "restaurants",
+          localField: "_id",
+          foreignField: "_id",
+          as: "restaurant",
+        },
+      },
+      {
+        $unwind: {
+          path: "$restaurant",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          restaurantId: "$_id",
+          name: { $ifNull: ["$restaurant.name", "Unknown Restaurant"] },
+          orders: 1,
+          revenue: 1,
+        },
+      },
+      { $sort: { revenue: -1, orders: -1 } },
+      { $limit: 4 },
+    ]);
+
+    if (topRestaurants.length < 4) {
+      const existingIds = topRestaurants
+        .map((r) => r.restaurantId)
+        .filter(Boolean);
+      const fallbackRestaurants = await Restaurant.find({
+        _id: { $nin: existingIds },
+      })
+        .limit(4 - topRestaurants.length)
+        .select("name");
+
+      fallbackRestaurants.forEach((r) => {
+        topRestaurants.push({
+          restaurantId: r._id,
+          name: r.name,
+          orders: 0,
+          revenue: 0,
+        });
+      });
+    }
+
+    res.status(200).json(
+      topRestaurants.map((r) => ({
+        name: r.name,
+        orders: `${r.orders} orders`,
+        revenue: `$${Number(r.revenue || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      })),
+    );
+  } catch (error) {
+    res.status(500).json({
+      message: "Ошибка при получении топ ресторанов",
+      error: error.message,
+    });
+  }
+};
+
 export const getTopDishes = async (req, res) => {
   try {
     const topDishes = await Order.aggregate([
@@ -255,9 +329,24 @@ export const getTopDishes = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "restaurants",
+          localField: "dish.restaurantId",
+          foreignField: "_id",
+          as: "restaurant",
+        },
+      },
+      {
+        $unwind: {
+          path: "$restaurant",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $project: {
           dishId: "$_id",
           name: { $ifNull: ["$dish.name", "Unknown Dish"] },
+          restaurant: { $ifNull: ["$restaurant.name", ""] },
           orders: 1,
           revenue: 1,
         },
@@ -267,18 +356,19 @@ export const getTopDishes = async (req, res) => {
     ]);
 
     if (topDishes.length < 5) {
-      const existingDishIds = topDishes.map((dish) => dish.dishId);
+      const existingDishIds = topDishes.map((dish) => dish.dishId).filter(Boolean);
       const fallbackDishes = await Dish.find({
         _id: { $nin: existingDishIds },
       })
+        .populate("restaurantId", "name")
         .sort({ createdAt: -1 })
-        .limit(5 - topDishes.length)
-        .select("name");
+        .limit(5 - topDishes.length);
 
       fallbackDishes.forEach((dish) => {
         topDishes.push({
           dishId: dish._id,
           name: dish.name,
+          restaurant: dish.restaurantId?.name || "",
           orders: 0,
           revenue: 0,
         });
@@ -288,6 +378,7 @@ export const getTopDishes = async (req, res) => {
     res.status(200).json(
       topDishes.map((dish) => ({
         name: dish.name,
+        restaurant: dish.restaurant,
         orders: dish.orders,
         revenue: dish.revenue,
       })),

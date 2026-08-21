@@ -54,16 +54,22 @@ export function RestaurantWorkspace({
     if (!Array.isArray(menuItems)) return [];
 
     return menuItems.filter((dish) => {
-      // Если у блюда restaurantId — это объект (populated) или строка
       const dishRestId = String(
-        dish.restaurantId?._id || dish.restaurantId || "",
+        dish.restaurantId?._id || dish.restaurantId?.id || dish.restaurantId || "",
       );
       const targetRestId = String(activeRestaurantId || "");
+      const targetRestMongoId = String(restaurant?._id || "");
+      const targetRestCustomId = String(restaurant?.id || "");
 
-      // Если в массив переданы уже отфильтрованные блюда или совпадает ID
-      return !dishRestId || dishRestId === targetRestId;
+      return (
+        !dishRestId ||
+        dishRestId === targetRestId ||
+        dishRestId === targetRestMongoId ||
+        dishRestId === targetRestCustomId ||
+        (dish.restaurant && dish.restaurant === restaurant.name)
+      );
     });
-  }, [menuItems, activeRestaurantId]);
+  }, [menuItems, activeRestaurantId, restaurant]);
 
   const restaurantOrders = useMemo(
     () => orders.filter((order) => order.restaurant?.name === restaurant.name),

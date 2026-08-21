@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { getDishById } from "../../api/dishService";
 import { useCart } from "../../features/cart/useCart";
 import { MOCK_MENU_ITEMS } from "../menu/const";
 import { RESTAURANT_RELATED_ITEMS } from "./const";
@@ -22,14 +23,50 @@ export function Dish() {
   const { addItem } = useCart();
   const stateDish = location.state?.dish;
   const dishSource = [...MOCK_MENU_ITEMS, ...RESTAURANT_RELATED_ITEMS];
-  const dish =
+
+  const localDish =
     stateDish && String(stateDish.id ?? stateDish._id) === String(id)
       ? normalizeDish(stateDish)
       : findDishById(dishSource, id);
 
+  const [dbDish, setDbDish] = useState(null);
+  const [isLoading, setIsLoading] = useState(!localDish && Boolean(id));
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, [id]);
+
+    let isMounted = true;
+    if (!localDish && id) {
+      getDishById(id)
+        .then((data) => {
+          if (isMounted && data) {
+            setDbDish(normalizeDish(data));
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          if (isMounted) {
+            setIsLoading(false);
+          }
+        });
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, localDish]);
+
+  const dish = localDish || dbDish;
+
+  if (isLoading) {
+    return (
+      <div className="dish-page dish-page--empty">
+        <div className="dish-page__empty-card">
+          <h1 className="dish-page__empty-title">Loading dish details...</h1>
+        </div>
+      </div>
+    );
+  }
 
   if (!dish) {
     return (

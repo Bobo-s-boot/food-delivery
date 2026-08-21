@@ -43,7 +43,13 @@ export const createSupportTicket = async (req, res) => {
   const storedNames = [];
 
   try {
-    const user = await User.findOne({ id: Number(req.user.id) }).select("-password");
+    const user = await User.findOne({
+      $or: [
+        { id: req.user.id },
+        { username: req.user.username },
+        { _id: mongoose.Types.ObjectId.isValid(req.user.id) ? req.user.id : null },
+      ].filter(Boolean),
+    }).select("-password");
 
     if (!user) {
       return res.status(401).json({ message: "A valid user account is required." });
@@ -166,6 +172,145 @@ export const getSupportTickets = async (req, res) => {
   }
 };
 
+export const getUserSupportTickets = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      $or: [
+        { id: req.user.id },
+        { username: req.user.username },
+        { _id: mongoose.Types.ObjectId.isValid(req.user.id) ? req.user.id : null },
+      ].filter(Boolean),
+    });
+
+    if (!user) {
+      return res.status(401).json({ message: "User not found." });
+    }
+
+    const query = {
+      $or: [
+        { userId: user._id },
+        { userApplicationId: user.id },
+        { requesterEmail: user.email || user.username },
+      ],
+    };
+
+    const tickets = await SupportTicket.find(query)
+      .populate("relatedRestaurantId", "name id")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return res.status(200).json(
+      tickets.map((ticket) => ({
+        ...ticket,
+        categoryLabel: CATEGORY_LABELS[ticket.category] || ticket.category,
+      })),
+    );
+  } catch (error) {
+    console.error("Unable to load user support tickets:", error.message);
+    return res.status(500).json({
+      message: "Unable to load support tickets.",
+    });
+  }
+};
+
+export const updateSupportTicketStatus = async (req, res) => {
+  try {
+    const { ticketId } = req.params;
+    const { status, note } = req.body;
+
+    const validStatuses = [
+      "New",
+      "Open",
+      "Waiting for customer",
+      "Waiting for restaurant",
+      "Waiting for internal action",
+      "Resolved",
+    ];
+
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid ticket status." });
+    }
+
+    const ticket = await SupportTicket.findOne({
+      $or: [
+        { ticketId },
+        { _id: mongoose.Types.ObjectId.isValid(ticketId) ? ticketId : null },
+      ].filter(Boolean),
+    });
+
+    if (!ticket) {
+      return res.status(404).json({ message: "Ticket not found." });
+    }
+
+    ticket.status = status;
+    if (note) {
+      ticket.conversation.push({
+        author: req.user?.username ? `Admin (${req.user.username})` : "Support team",
+        text: note,
+        timestamp: new Date(),
+      });
+    } else if (status === "Resolved") {
+      ticket.conversation.push({
+        author: "Support note",
+        text: "Ticket marked as resolved by the administrator.",
+        timestamp: new Date(),
+      });
+    }
+
+    await ticket.save();
+
+    return res.status(200).json({
+      ticketId: ticket.ticketId,
+      status: ticket.status,
+      updatedAt: ticket.updatedAt,
+      conversation: ticket.conversation,
+    });
+  } catch (error) {
+    console.error("Unable to update support ticket status:", error.message);
+    return res.status(500).json({
+      message: "Unable to update support ticket status.",
+    });
+  }
+};
+
+export const addSupportTicketTimelineEntry = async (req, res) => {
+  try {
+    const { ticketId } = req.params;
+    const { author, text } = req.body;
+
+    if (!text || text.trim() === "") {
+      return res.status(400).json({ message: "Message text is required." });
+    }
+
+    const ticket = await SupportTicket.findOne({
+      $or: [
+        { ticketId },
+        { _id: mongoose.Types.ObjectId.isValid(ticketId) ? ticketId : null },
+      ].filter(Boolean),
+    });
+
+    if (!ticket) {
+      return res.status(404).json({ message: "Ticket not found." });
+    }
+
+    const entry = {
+      author: cleanText(author || req.user?.username || "Support team", 80),
+      text: cleanText(text, 1500),
+      timestamp: new Date(),
+    };
+
+    ticket.conversation.push(entry);
+    await ticket.save();
+
+    return res.status(200).json(entry);
+  } catch (error) {
+    console.error("Unable to add timeline entry:", error.message);
+    return res.status(500).json({
+      message: "Unable to add timeline entry.",
+    });
+  }
+};
+
 export const downloadSupportAttachment = async (req, res) => {
   try {
     const ticket = await SupportTicket.findOne({ ticketId: req.params.ticketId });
@@ -188,3 +333,4 @@ export const downloadSupportAttachment = async (req, res) => {
 };
 
 export { CATEGORY_LABELS };
+
