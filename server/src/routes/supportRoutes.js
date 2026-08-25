@@ -5,6 +5,9 @@ import {
   createSupportTicket,
   downloadSupportAttachment,
   getSupportTickets,
+  getUserSupportTickets,
+  updateSupportTicketStatus,
+  addSupportTicketTimelineEntry,
 } from "../controllers/supportController.js";
 import { isAdmin, protect } from "../middleware/authMiddleware.js";
 
@@ -49,7 +52,10 @@ const receiveAttachments = (req, res, next) => {
 };
 
 router.post("/", protect, receiveAttachments, createSupportTicket);
+router.get("/my-tickets", protect, getUserSupportTickets);
 router.get("/", protect, isAdmin, getSupportTickets);
+router.put("/:ticketId/status", protect, isAdmin, updateSupportTicketStatus);
+router.post("/:ticketId/timeline", protect, isAdmin, addSupportTicketTimelineEntry);
 router.get(
   "/:ticketId/attachments/:attachmentId",
   protect,
@@ -58,3 +64,4 @@ router.get(
 );
 
 export default router;
+

@@ -5,6 +5,7 @@ import {
   getOrderStats,
   getAnalyticsData,
   getTopDishes,
+  getTopRestaurants,
   createSampleOrders,
   createOrder,
   updateOrderStatus,
@@ -18,6 +19,8 @@ router.put("/:id/status", protect, isAdmin, updateOrderStatus);
 router.get("/stats", protect, isAdmin, getOrderStats);
 router.get("/analytics", protect, isAdmin, getAnalyticsData);
 router.get("/top-dishes", protect, isAdmin, getTopDishes);
+router.get("/top-restaurants", protect, isAdmin, getTopRestaurants);
 router.post("/seed", protect, isAdmin, createSampleOrders);
 
 export default router;
+

@@ -90,32 +90,72 @@ export const enrichRestaurant = (restaurant) => {
 };
 
 export const enrichMenuItem = (item, restaurants = []) => {
-  const restaurant = restaurants.find(
-    (entry) => entry.id === item.restaurantId || entry.name === item.restaurant,
-  );
-  const restaurantId = item.restaurantId || restaurant?.id || normalize(item.restaurant).replace(/[^a-z0-9]+/g, "-");
-  const platformCategory = item.platformCategory || item.category || "Uncategorized";
+  const rawRestId =
+    typeof item.restaurantId === "object" && item.restaurantId !== null
+      ? item.restaurantId._id || item.restaurantId.id
+      : item.restaurantId;
+
+  const rawRestName =
+    typeof item.restaurantId === "object" && item.restaurantId !== null
+      ? item.restaurantId.name
+      : item.restaurant;
+
+  const restaurant = restaurants.find((entry) => {
+    if (
+      rawRestId &&
+      (String(entry.id) === String(rawRestId) ||
+        String(entry._id) === String(rawRestId))
+    ) {
+      return true;
+    }
+    if (
+      rawRestName &&
+      (entry.name === rawRestName ||
+        normalize(entry.name) === normalize(rawRestName))
+    ) {
+      return true;
+    }
+    return false;
+  });
+
+  const resolvedRestaurantId =
+    restaurant?.id ||
+    restaurant?._id ||
+    rawRestId ||
+    (rawRestName
+      ? normalize(rawRestName).replace(/[^a-z0-9]+/g, "-")
+      : "unknown");
+
+  const resolvedRestaurantName =
+    restaurant?.name || rawRestName || "Unknown Restaurant";
+
+  const platformCategory =
+    item.platformCategory || item.category || "Uncategorized";
   const restaurantCategory =
     item.restaurantCategory ||
     restaurantCategoryByItem[item.id] ||
     item.category ||
     "Uncategorized";
-  const contentHealth = item.contentHealth || (!item.image ? "Missing image" : "Complete");
+  const contentHealth =
+    item.contentHealth || (!item.image ? "Missing image" : "Complete");
   const customerVisibility =
     item.customerVisibility ||
-    (item.availability === "Available" && restaurant?.operationalAvailability === "Accepting orders"
+    (item.availability === "Available" &&
+    restaurant?.operationalAvailability === "Accepting orders"
       ? "Visible"
       : "Hidden");
 
   return {
     ...item,
-    restaurantId,
+    restaurant: resolvedRestaurantName,
+    restaurantId: resolvedRestaurantId,
     platformCategory,
     restaurantCategory,
     contentHealth,
     customerVisibility,
     promotion: item.promotion || item.discount || "No active promotion",
-    restaurantAvailability: restaurant?.operationalAvailability || "Offline",
+    restaurantAvailability:
+      restaurant?.operationalAvailability || "Accepting orders",
   };
 };
 

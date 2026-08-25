@@ -15,6 +15,32 @@ export const adminGetSupportTickets = async () => {
   return response.data;
 };
 
+export const getUserSupportTickets = async () => {
+  const response = await axios.get(
+    `${API_URL}/my-tickets`,
+    createAuthConfig(),
+  );
+  return response.data;
+};
+
+export const adminUpdateSupportTicketStatus = async (ticketId, status, note) => {
+  const response = await axios.put(
+    `${API_URL}/${encodeURIComponent(ticketId)}/status`,
+    { status, note },
+    createAuthConfig(),
+  );
+  return response.data;
+};
+
+export const adminAddSupportTimelineEntry = async (ticketId, entry) => {
+  const response = await axios.post(
+    `${API_URL}/${encodeURIComponent(ticketId)}/timeline`,
+    entry,
+    createAuthConfig(),
+  );
+  return response.data;
+};
+
 export const adminDownloadSupportAttachment = async (ticketId, attachmentId) => {
   const response = await axios.get(
     `${API_URL}/${encodeURIComponent(ticketId)}/attachments/${encodeURIComponent(attachmentId)}`,
@@ -22,3 +48,4 @@ export const adminDownloadSupportAttachment = async (ticketId, attachmentId) => 
   );
   return response.data;
 };
+

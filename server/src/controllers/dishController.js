@@ -46,9 +46,13 @@ export const getDishes = async (req, res) => {
 
 export const getDishById = async (req, res) => {
   try {
-    const dish = await Dish.findById(req.params.id).populate(
+    const { id } = req.params;
+    const isObjectId = id && id.length === 24 && /^[0-9a-fA-F]{24}$/.test(id);
+    const query = isObjectId ? { _id: id } : { id: Number(id) || id };
+
+    const dish = await Dish.findOne(query).populate(
       "restaurantId",
-      "name",
+      "name id",
     );
 
     if (!dish) {

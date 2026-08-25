@@ -2,7 +2,7 @@ export function HeaderSearchResult({ item, onSelect, translate }) {
   return (
     <button
       type="button"
-      onClick={() => onSelect(item.route)}
+      onClick={() => onSelect(item)}
       className="header__dropdown-item"
     >
       <div className="header__dropdown-title">{item.title}</div>
@@ -14,3 +14,4 @@ export function HeaderSearchResult({ item, onSelect, translate }) {
     </button>
   );
 }
+
