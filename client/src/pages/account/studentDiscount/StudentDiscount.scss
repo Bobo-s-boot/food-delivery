@@ -1,0 +1,485 @@
+.account-payments-tabs {
+  margin-top: var(--space-5);
+  padding: 0.3rem;
+  display: inline-flex;
+  gap: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-soft);
+}
+
+.account-payments-tabs button {
+  min-height: 2.6rem;
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.account-payments-tabs button[aria-selected="true"] {
+  background: var(--color-bg-surface);
+  color: var(--color-text-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+.account-payment-methods-layout {
+  display: grid;
+}
+
+.account-payment-methods-content {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.student-discount-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+  align-items: start;
+  gap: var(--space-4);
+  outline: none;
+}
+
+.student-discount-main,
+.student-discount-aside {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.student-verification-card,
+.student-verification-form-card,
+.student-discount-info-card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+}
+
+.student-verification-card h2,
+.student-discount-info-card h2 {
+  margin: 0;
+}
+
+.student-verification-card > p,
+.student-discount-info-card > p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.student-verification-card > .account-button,
+.student-discount-info-card > .account-button {
+  width: max-content;
+}
+
+.account-student-status {
+  gap: 0.4rem;
+  border: 0;
+}
+
+button.account-student-status {
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 650;
+  transition:
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+button.account-student-status:hover,
+button.account-student-status:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  transform: translateY(-1px);
+}
+
+.account-student-status--warning {
+  color: #854d0e;
+  background: var(--color-bg-warning-alt);
+}
+
+.account-student-status--success {
+  color: #166534;
+  background: var(--color-bg-success-soft);
+}
+
+.account-student-status--error {
+  color: #9f1239;
+  background: var(--color-bg-danger-soft);
+}
+
+.account-sidebar__email {
+  max-width: 14rem;
+  margin: -0.25rem 0 0;
+  overflow: hidden;
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-discount-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.student-discount-benefits > div {
+  min-width: 0;
+  padding: var(--space-4);
+  display: grid;
+  gap: var(--space-2);
+  color: var(--color-text-strong);
+  background: var(--color-bg-soft-strong);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.student-discount-info-card ol {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+.student-discount-info-card li {
+  display: grid;
+  grid-template-columns: 1.8rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: 0.88rem;
+}
+
+.student-discount-info-card li span {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-accent);
+  color: var(--color-text-strong);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.student-discount-info-card small {
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.student-verification-summary {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  background: var(--color-border-subtle);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+.student-verification-summary > div {
+  min-width: 0;
+  padding: var(--space-4);
+  display: grid;
+  gap: 0.25rem;
+  background: var(--color-bg-soft-strong);
+}
+
+.student-verification-summary dt {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.student-verification-summary dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--color-text-strong);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.student-verification-card__actions,
+.student-verification-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.student-verification-card__message,
+.student-verification-card__note {
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-warning-soft);
+  color: var(--color-text-muted-strong);
+  font-size: 0.88rem;
+}
+
+.student-verification-card__note {
+  background: var(--color-bg-info-soft);
+}
+
+.student-verification-form {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.student-verification-form fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  border: 0;
+}
+
+.student-verification-form legend {
+  margin-bottom: var(--space-3);
+  color: var(--color-text-strong);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.student-verification-form__identity {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.student-verification-form__identity > div {
+  min-width: 0;
+  padding: var(--space-3);
+  display: grid;
+  gap: 0.25rem;
+  border-radius: 0.8rem;
+  background: var(--color-bg-soft-strong);
+}
+
+.student-verification-form__identity span,
+.student-verification-form__helper {
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.student-verification-form__identity strong {
+  overflow: hidden;
+  color: var(--color-text-strong);
+  font-size: 0.85rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-verification-form__field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.student-verification-form__field > label {
+  color: var(--color-text-strong);
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.student-verification-form__field input,
+.student-verification-form__field select {
+  width: 100%;
+  min-height: 2.85rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--color-border-input);
+  border-radius: 0.8rem;
+  outline: none;
+  background: var(--color-bg-input);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.student-verification-form__field input:focus,
+.student-verification-form__field select:focus {
+  border-color: var(--color-bg-brand);
+  box-shadow: 0 0 0 0.25rem var(--focus-ring);
+}
+
+.student-verification-form__field [aria-invalid="true"] {
+  border-color: #be123c;
+}
+
+.student-verification-form__error {
+  color: #b42318;
+  font-size: 0.78rem;
+}
+
+.student-verification-form__file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
+.student-verification-form__file-button {
+  width: max-content;
+  min-height: 2.65rem;
+  padding: 0.6rem 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface);
+  color: var(--color-text-strong);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 650;
+}
+
+.student-verification-form__file {
+  min-width: 0;
+  padding: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-radius: 0.8rem;
+  background: var(--color-bg-soft-strong);
+}
+
+.student-verification-form__file > div {
+  min-width: 0;
+  display: grid;
+}
+
+.student-verification-form__file strong {
+  overflow: hidden;
+  color: var(--color-text-strong);
+  font-size: 0.84rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-verification-form__file span {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+}
+
+.student-verification-form__file button {
+  width: 2.2rem;
+  height: 2.2rem;
+  flex: 0 0 2.2rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: #be123c;
+  cursor: pointer;
+}
+
+.student-verification-form__confirmation {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  color: var(--color-text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.student-verification-form__confirmation input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.15rem;
+  flex: 0 0 1.1rem;
+  accent-color: var(--color-bg-brand);
+}
+
+.student-verification-form__confirmation a {
+  color: var(--color-text-strong);
+  font-weight: 650;
+}
+
+.student-verification-form__alert {
+  padding: var(--space-4);
+  display: grid;
+  gap: 0.25rem;
+  color: #9f1239;
+  background: var(--color-bg-danger-soft);
+  border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+}
+
+.student-verification-form__spinner {
+  animation: student-verification-spin 0.8s linear infinite;
+}
+
+.student-discount-loading {
+  min-height: 12rem;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-secondary);
+}
+
+@keyframes student-verification-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1050px) {
+  .student-discount-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .student-discount-aside {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .student-discount-aside,
+  .student-discount-benefits,
+  .student-verification-form__identity,
+  .student-verification-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .account-payments-tabs {
+    width: 100%;
+  }
+
+  .account-payments-tabs button {
+    flex: 1;
+  }
+
+  .student-verification-card__actions,
+  .student-verification-form__actions {
+    flex-direction: column;
+  }
+
+  .student-verification-card__actions .account-button,
+  .student-verification-form__actions .account-button,
+  .student-verification-card > .account-button,
+  .student-discount-info-card > .account-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .student-verification-form__spinner {
+    animation-duration: 1.6s;
+  }
+}

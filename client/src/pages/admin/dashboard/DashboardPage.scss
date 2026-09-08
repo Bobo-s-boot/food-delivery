@@ -1,0 +1,691 @@
+/* =========================================
+   Admin Intro
+   ========================================= */
+
+.admin-intro {
+  /* Перевод xl:col-span-2. Если компонент лежит в Grid-сетке, он займет 2 колонки на ПК */
+  @media (min-width: 1280px) {
+    grid-column: span 2 / span 2;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem; // gap-1
+    padding: 0.75rem 0; // py-3
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-size: 0.875rem; // text-sm
+    color: var(--color-text-tertiary); // text-[#6B7788]
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 38px; // text-[38px]
+    font-weight: 400; // font-normal
+    line-height: 1; // leading-none
+    letter-spacing: -0.05em; // tracking-[-0.05em]
+    color: var(--color-text-strong); // text-[#0D1A2D]
+
+    @media (min-width: 768px) {
+      font-size: 56px; // md:text-[56px]
+    }
+  }
+
+  &__title-highlight {
+    color: var(--color-text-soft-3); // text-[#8E98A6]
+  }
+
+  &__description {
+    margin: 0;
+    max-width: 47.5rem; // max-w-190 (190 * 0.25rem = 47.5rem)
+    font-size: 1rem; // text-base
+    color: var(--color-text-tertiary); // text-[#5E6A7A]
+  }
+}
+
+/* =========================================
+   Courier Activity (Admin)
+   ========================================= */
+
+.courier-activity {
+  padding: 1.25rem; // p-5
+
+  @media (min-width: 768px) {
+    padding: 1.5rem; // md:p-6
+  }
+
+  &__list {
+    margin-top: 1.25rem; // mt-5
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; // space-y-3
+  }
+
+  &__footer {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+/* --- Карточка курьера --- */
+.courier-card {
+  border-radius: 1rem; // rounded-2xl
+  background-color: var(--color-bg-soft-strong);
+  padding: 1rem; // p-4
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-bg-soft); // hover:bg-[#EEF2F7]
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem; // gap-3
+  }
+
+  &__info {
+    min-width: 0; // min-w-0 (важно, чтобы текст внутри Flex обрезался)
+  }
+
+  &__name {
+    margin: 0;
+    font-weight: 500; // font-medium
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__details {
+    margin: 0;
+    font-size: 0.875rem; // text-sm
+    color: var(--color-text-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__footer {
+    margin-top: 1rem; // mt-4
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem; // text-sm
+  }
+
+  &__eta {
+    color: var(--color-text-tertiary);
+  }
+
+  &__btn {
+    border-radius: 9999px; // rounded-full
+    background-color: var(--color-bg-brand);
+    padding: 0.5rem 1rem; // px-4 py-2
+    font-size: 0.75rem; // text-xs
+    color: var(--color-white);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(
+        --color-bg-brand-strong
+      ); // Делаем цвет кнопки чуть светлее при наведении
+    }
+  }
+}
+
+/* =========================================
+   Issue Center (Admin)
+   ========================================= */
+
+.issue-center {
+  padding: 1.25rem; // p-5
+
+  @media (min-width: 768px) {
+    padding: 1.5rem; // md:p-6
+  }
+
+  &__grid {
+    margin-top: 1.25rem; // mt-5
+    display: grid;
+    grid-template-columns: 1fr; // grid-cols-1
+    gap: 0.75rem; // gap-3
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr)); // md:grid-cols-2
+    }
+  }
+}
+
+/* --- Карточка проблемы --- */
+.issue-card {
+  border-radius: 1rem; // rounded-2xl
+  background-color: #fff8e6;
+  padding: 1rem; // p-4
+
+  &__title {
+    margin: 0;
+    font-weight: 500; // font-medium
+    color: #7a4a00;
+  }
+
+  &__text {
+    margin: 0.5rem 0 0 0; // mt-2
+    font-size: 0.875rem; // text-sm
+    line-height: 1.45; // leading-[145%]
+    color: #695a42;
+  }
+
+  &__btn {
+    margin-top: 1rem; // mt-4
+    border-radius: 9999px; // rounded-full
+    background-color: var(--color-bg-brand);
+    padding: 0.5rem 1rem; // px-4 py-2
+    font-size: 0.75rem; // text-xs
+    color: var(--color-white);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    // Делаем цвет кнопки чуть светлее при наведении (HEX вместо lighten)
+    &:hover {
+      background-color: var(--color-bg-brand-strong);
+    }
+  }
+}
+
+/* =========================================
+   Order Analytics Chart (Admin)
+   ========================================= */
+
+.order-analytics {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem; // p-5
+
+  @media (min-width: 768px) {
+    padding: 1.5rem; // md:p-6
+  }
+
+  /* --- Шапка и фильтры --- */
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; // gap-4
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+  }
+
+  &__filters {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 0.5rem; // gap-2
+  }
+
+  &__filter-btn {
+    border-radius: 9999px;
+    padding: 0.375rem 0.75rem; // px-3 py-1.5
+    font-size: 0.75rem; // text-xs
+    background-color: var(--color-bg-soft);
+    color: var(--color-text-tertiary);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-bg-hover); // Безопасный HEX для hover
+    }
+
+    &--active {
+      background-color: var(--color-bg-brand);
+      color: var(--color-white);
+
+      &:hover {
+        background-color: var(--color-bg-brand);
+      }
+    }
+  }
+
+  /* --- Область графика --- */
+  &__chart {
+    margin-top: 2rem; // mt-8
+    display: flex;
+    min-height: 24rem; // min-h-96
+    flex: 1;
+    align-items: flex-end;
+    gap: 0.75rem; // gap-3
+  }
+
+  &--compact &__chart {
+    min-height: 15rem;
+    margin-top: 1.5rem;
+  }
+
+  &__chart--today {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  &__bar-group {
+    display: flex;
+    height: 100%;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.75rem; // gap-3
+  }
+
+  &__bar-group--today {
+    flex: 0 0 2.75rem;
+    min-width: 2.75rem;
+    gap: 0.5rem;
+  }
+
+  &__bar {
+    border-top-left-radius: 1.125rem; // rounded-t-[18px]
+    border-top-right-radius: 1.125rem;
+    width: 100%;
+    /* Высота и фон задаются инлайн через Framer Motion */
+  }
+
+  &__day-label {
+    text-align: center;
+    font-size: 0.75rem; // text-xs
+    color: var(--color-text-muted-strong);
+  }
+
+  &__chart--today &__day-label {
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+
+  &__empty {
+    min-height: 12rem; // min-h-48
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-text-tertiary);
+  }
+
+  /* --- Легенда под графиком --- */
+  &__legend {
+    margin-top: 1rem; // mt-4
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; // gap-4
+    font-size: 0.75rem; // text-xs
+    color: var(--color-text-tertiary);
+  }
+
+  &__legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem; // gap-2
+  }
+
+  &__legend-dot {
+    height: 0.625rem; // h-2.5
+    width: 0.625rem; // w-2.5
+    border-radius: 9999px;
+
+    &--orders {
+      background-color: #ea7a32;
+    }
+    &--revenue {
+      background-color: var(--color-bg-brand);
+    }
+    &--cancelled {
+      background-color: #c9d3df;
+    }
+  }
+}
+
+/* =========================================
+   Peak Hours Chart (Admin)
+   ========================================= */
+
+.peak-hours {
+  padding: 1.25rem; // p-5
+
+  @media (min-width: 768px) {
+    padding: 1.5rem; // md:p-6
+  }
+
+  &__wrapper {
+    margin-top: 1.25rem; // mt-5
+    border-radius: 1.375rem; // rounded-[22px]
+    background-color: var(--color-bg-soft-strong);
+    padding: 0.875rem; // p-3.5
+  }
+
+  &__chart-box {
+    position: relative;
+    height: 21rem; // h-84
+    overflow: hidden;
+    border-radius: 1rem; // rounded-2xl
+    border: 1px solid var(--color-border-card);
+    background-color: var(--color-white);
+    padding: 1.5rem 0.75rem 2.25rem 0.75rem; // pt-6 px-3 pb-9
+
+    @media (min-width: 768px) {
+      height: 21rem;
+    }
+  }
+
+  /* --- Фоновая разметка графика --- */
+  &__grid-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, #e8edf4 1px, transparent 1px),
+      linear-gradient(to bottom, #e8edf4 1px, transparent 1px);
+    background-size: 2rem 2rem; // dense grid like the reference
+  }
+
+  &__mid-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 52%;
+    height: 1px;
+    background-color: var(--color-border-muted);
+  }
+
+  /* --- Столбики графика --- */
+  &__bars-container {
+    position: relative;
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+    gap: 0.25rem; // gap-1
+  }
+
+  &__bar-group {
+    position: relative;
+    display: flex;
+    height: 100%;
+    min-width: 0;
+    flex: 1;
+    align-items: flex-end;
+    justify-content: center;
+
+    /* Показываем тултип при наведении на группу */
+    &:hover .peak-hours__tooltip {
+      display: block;
+    }
+
+    /* Меняем цвет столбика при наведении */
+    &:hover .peak-hours__bar {
+      background-color: #8bc53f; // group-hover:bg-[#8BC53F]
+    }
+  }
+
+  &__bar {
+    width: 0.5rem; // w-2
+    border-radius: 9999px; // rounded-full
+    background-color: var(--color-bg-brand);
+    transition: background-color 0.2s ease; // duration-200
+
+    @media (max-width: 767px) {
+      width: 0.375rem;
+    }
+  }
+
+  /* --- Всплывающая подсказка (Tooltip) --- */
+  &__tooltip {
+    display: none; // hidden
+    position: absolute;
+    top: 50%; // place below the bar
+    margin-top: 0.5rem; // mt-2
+    border-radius: 1rem; // rounded-2xl
+    background-color: var(--color-bg-brand);
+    padding: 0.5rem 0.75rem; // px-3 py-2
+    font-size: 0.75rem; // text-xs
+    color: var(--color-white);
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04); // shadow-xl
+    white-space: nowrap; // Чтобы текст не переносился
+    z-index: 10;
+  }
+
+  &__tooltip-orders {
+    margin: 0;
+    font-weight: 600; // font-semibold
+  }
+
+  &__tooltip-time {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.6); // text-white/60
+  }
+
+  &__empty {
+    display: flex;
+    min-height: 12rem; // min-h-48
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem; // text-sm
+    color: var(--color-text-tertiary);
+  }
+
+  /* --- Ось X (Метки времени) --- */
+  &__x-axis {
+    position: absolute;
+    left: 0.75rem; // inset-x-3
+    right: 0.75rem;
+    bottom: 0.5rem; // bottom-2
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr)); // grid-cols-6
+    text-align: center;
+    font-size: 10px; // text-[10px]
+    color: var(--color-text-muted-strong);
+  }
+}
+
+/* =========================================
+   Revenue Breakdown (Admin)
+   ========================================= */
+
+.revenue-breakdown {
+  padding: 1.25rem; // p-5
+
+  @media (min-width: 768px) {
+    padding: 1.5rem; // md:p-6
+  }
+
+  &__list {
+    margin-top: 1.5rem; // mt-6
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; // space-y-4
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    margin-bottom: 0.5rem; // mb-2
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem; // text-sm
+  }
+
+  &__label {
+    color: var(--color-text-tertiary); // text-[#5E6A7A]
+  }
+
+  &__value {
+    font-weight: 500; // font-medium
+    color: var(
+      --color-text-strong
+    ); // По умолчанию темный цвет текста для значений
+  }
+
+  &__track {
+    height: 0.75rem; // h-3
+    width: 100%;
+    overflow: hidden;
+    border-radius: 9999px; // rounded-full
+    background-color: #e8edf4; // bg-[#E8EDF4]
+  }
+
+  &__bar {
+    height: 100%;
+    border-radius: 9999px; // rounded-full
+    background-color: var(--color-bg-brand); // bg-[#0D1A2D]
+    /* Ширина (width) задается инлайн через framer-motion */
+  }
+}
+
+/* =========================================
+   Top Selling Dishes (Admin)
+   ========================================= */
+
+.top-selling {
+  padding: 1.25rem; // p-5
+  width: 100%;
+
+  @media (min-width: 768px) {
+    padding: 1.5rem; // md:p-6
+  }
+
+  @media (min-width: 1280px) {
+    grid-column: span 2 / span 2;
+  }
+
+  &__list {
+    margin-top: 1.25rem; // mt-5
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; // space-y-3
+  }
+}
+
+/* =========================================
+   Top Restaurants Today (Admin)
+   ========================================= */
+
+.top-restaurants {
+  padding: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  &__list {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.top-restaurant-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 1rem;
+  background-color: var(--color-bg-soft-strong);
+  padding: 1rem;
+
+  &__rank {
+    display: flex;
+    height: 2.25rem;
+    width: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: var(--color-bg-brand);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-white);
+  }
+
+  &__info {
+    min-width: 0;
+  }
+
+  &__name {
+    margin: 0;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__orders {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-muted-strong);
+  }
+
+  &__revenue {
+    font-weight: 500;
+  }
+}
+
+/* --- Карточка блюда --- */
+.top-selling-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto; // grid-cols-[auto_1fr_auto]
+  align-items: center;
+  gap: 1rem; // gap-4
+  border-radius: 1rem; // rounded-2xl
+  background-color: var(--color-bg-soft-strong);
+  padding: 1rem; // p-4
+
+  &__rank {
+    display: flex;
+    height: 2.25rem; // h-9
+    width: 2.25rem; // w-9
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px; // rounded-full
+    background-color: var(--color-bg-brand);
+    font-size: 0.875rem; // text-sm
+    font-weight: 500; // font-medium
+    color: var(--color-white);
+  }
+
+  &__info {
+    min-width: 0; // min-w-0 (обязательно для работы truncate во флекс/грид контейнерах)
+  }
+
+  &__name {
+    margin: 0;
+    font-weight: 500; // font-medium
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__orders {
+    margin: 0;
+    font-size: 0.875rem; // text-sm
+    color: var(--color-text-muted-strong);
+  }
+
+  &__revenue {
+    font-weight: 500; // font-medium
+  }
+}
+

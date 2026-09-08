@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ActionLink, SquarePenIcon } from "./AccountActions";
+import { StudentDiscountPanel } from "../studentDiscount/StudentDiscountPanel";
 
 const GOOGLE_PAY_METHOD = {
   id: "google-pay",
@@ -17,7 +19,16 @@ const ensureGooglePay = (payments) => {
   return [...payments, GOOGLE_PAY_METHOD];
 };
 
-export function PaymentsSection({ payments, promoCodes, receipts }) {
+export function PaymentsSection({
+  payments,
+  promoCodes,
+  receipts,
+  user,
+  activeTab,
+  onTabChange,
+  verificationState,
+}) {
+  const { t } = useTranslation();
   const [paymentMethods, setPaymentMethods] = useState(() =>
     ensureGooglePay(payments),
   );
@@ -121,15 +132,62 @@ export function PaymentsSection({ payments, promoCodes, receipts }) {
     setPromoMessage("This promo code is not valid.");
   };
 
+  const handleTabKeyDown = (event) => {
+    const tabs = ["payment-methods", "student-discount"];
+    const currentIndex = tabs.indexOf(activeTab);
+    let nextIndex = currentIndex;
+
+    if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % tabs.length;
+    else if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = tabs.length - 1;
+    else return;
+
+    event.preventDefault();
+    const nextTab = tabs[nextIndex];
+    onTabChange(nextTab);
+    requestAnimationFrame(() => document.getElementById(`${nextTab}-tab`)?.focus());
+  };
+
   return (
     <div className="account-section">
       <section className="account-page-heading">
-        <span className="account-eyebrow">Payments</span>
-        <h1>Payments & Discounts</h1>
-        <p>Manage payment methods, promo codes, student discount, and receipts.</p>
+        <span className="account-eyebrow">{t("studentDiscount.page.eyebrow")}</span>
+        <h1>{t("studentDiscount.page.title")}</h1>
+        <p>{t("studentDiscount.page.description")}</p>
+        <div className="account-payments-tabs" role="tablist" aria-label={t("studentDiscount.tabs.label")}>
+          <button
+            id="payment-methods-tab"
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "payment-methods"}
+            aria-controls="payment-methods-panel"
+            tabIndex={activeTab === "payment-methods" ? 0 : -1}
+            onClick={() => onTabChange("payment-methods")}
+            onKeyDown={handleTabKeyDown}
+          >
+            {t("studentDiscount.tabs.paymentMethods")}
+          </button>
+          <button
+            id="student-discount-tab"
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "student-discount"}
+            aria-controls="student-discount-panel"
+            tabIndex={activeTab === "student-discount" ? 0 : -1}
+            onClick={() => onTabChange("student-discount")}
+            onKeyDown={handleTabKeyDown}
+          >
+            {t("studentDiscount.tabs.studentDiscount")}
+          </button>
+        </div>
       </section>
 
-      <div className="account-two-column">
+      {activeTab === "student-discount" ? (
+        <StudentDiscountPanel user={user} verificationState={verificationState} />
+      ) : (
+        <div id="payment-methods-panel" role="tabpanel" aria-labelledby="payment-methods-tab" className="account-payment-methods-content">
+      <div className="account-payment-methods-layout">
         <section className="account-card account-payments-card">
           <div className="account-card__header">
             <div>
@@ -182,33 +240,6 @@ export function PaymentsSection({ payments, promoCodes, receipts }) {
           )}
         </section>
 
-        <section className="account-card account-student-discount-card">
-          <div className="account-card__header">
-            <div>
-              <span className="account-eyebrow">Student discount</span>
-              <h2>Student Discount</h2>
-            </div>
-          </div>
-          <span className="account-pill account-pill--accent">
-            Student discount active
-          </span>
-          <p>
-            Your student benefits are verified and ready to use at eligible
-            restaurants and selected offers.
-          </p>
-          <div className="account-benefit-list">
-            <span>15% off eligible restaurants</span>
-            <span>Student-only promo codes</span>
-            <span>Auto-applied at checkout when available</span>
-          </div>
-          <p className="account-settings-note">
-            Works with selected restaurants and eligible orders.
-          </p>
-          <div className="account-actions-row">
-            <ActionLink>Manage student benefits</ActionLink>
-            <ActionLink>View eligible restaurants</ActionLink>
-          </div>
-        </section>
       </div>
 
       <div className="account-two-column">
@@ -403,6 +434,8 @@ export function PaymentsSection({ payments, promoCodes, receipts }) {
               </button>
             </div>
           </form>
+        </div>
+      )}
         </div>
       )}
     </div>

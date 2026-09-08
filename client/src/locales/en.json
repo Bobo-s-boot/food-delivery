@@ -81,6 +81,65 @@
       "heading": "Trending Now",
       "description": "From cozy local cafes to premium dining spots, discover the best places to satisfy your cravings right now.",
       "buttonLabel": "View all restaurants"
+    },
+
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "Find quick answers about Defilicious, restaurants, offers, delivery, student discounts, and your account.",
+      "supportPrompt": "Still need help?",
+      "supportDescription": "Open your account support tools and tell us what happened.",
+      "supportAction": "Contact support",
+      "actions": {
+        "exploreRestaurants": "Explore restaurants",
+        "browseMenus": "Browse menus",
+        "viewSpecialOffers": "View special offers",
+        "trackOrder": "Track an order",
+        "viewStudentDiscounts": "View student discounts",
+        "contactSupport": "Contact support",
+        "openSupport": "Open Help & Support"
+      },
+      "items": {
+        "whatIsDefilicious": {
+          "question": "What is Defilicious?",
+          "answer": "Defilicious helps you discover restaurants, explore menus, find special offers, and access useful dining features in one place."
+        },
+        "accountRequirements": {
+          "question": "Do I need an account to use Defilicious?",
+          "answer": "You can browse restaurants, menus, and available offers without an account. Some features, including student verification, order tracking, and personalized account tools, may require you to sign in."
+        },
+        "findRestaurant": {
+          "question": "How can I find a restaurant?",
+          "answer": "Open the Restaurants section and browse the available places. Use the existing search and filtering options to narrow the results by cuisine, location, rating, or available offer."
+        },
+        "viewMenus": {
+          "question": "Where can I view restaurant menus?",
+          "answer": "Menus are available in the Menu section and on individual restaurant pages. Dish names, prices, descriptions, and availability are based on the information provided by each restaurant."
+        },
+        "specialOffers": {
+          "question": "How do special offers work?",
+          "answer": "Special offers are provided by participating restaurants and may have specific conditions, availability periods, or usage restrictions. Review the offer details before using it."
+        },
+        "delivery": {
+          "question": "How does delivery work?",
+          "answer": "Available delivery options depend on the restaurant and your location. Delivery time and availability are displayed before you complete an order when that information is available."
+        },
+        "trackOrder": {
+          "question": "How can I track my order?",
+          "answer": "Open the Orders section in your account and select the required order. If tracking is available, the current status and relevant updates will be displayed."
+        },
+        "studentDiscounts": {
+          "question": "How do student discounts work?",
+          "answer": "Verified students can access eligible student offers through Defilicious. Available discounts and their conditions may vary depending on the restaurant."
+        },
+        "incorrectInformation": {
+          "question": "What should I do if restaurant or offer information is incorrect?",
+          "answer": "Check whether the offer is still active and review its conditions. If the information still appears incorrect, contact Defilicious Support and include the restaurant name, the affected offer, and a short description of the issue."
+        },
+        "contactSupport": {
+          "question": "How can I contact Defilicious Support?",
+          "answer": "Open Help & Support and describe what happened. Select the most relevant issue category and provide enough information for the support team to understand the problem."
+        }
+      }
     }
   },
 
@@ -526,6 +585,321 @@
         "answer": "Yes, selected restaurants support scheduled delivery."
       }
     }
+  },
+
+  "support": {
+    "title": "Help & Support",
+    "description": "Tell us what happened and our support team will review your request.",
+    "close": "Close Help & Support",
+    "auth": {
+      "title": "Sign in to contact support",
+      "description": "Support requests are available to registered Defilicious users. Sign in to your account or create one to send a request.",
+      "signIn": "Sign in",
+      "createAccount": "Create account",
+      "viewFaq": "View frequently asked questions"
+    },
+    "categories": {
+      "accountProfile": "Account & profile",
+      "orderDelivery": "Order or delivery",
+      "restaurantInformation": "Restaurant information",
+      "offerDiscount": "Offer or discount",
+      "studentDiscount": "Student Discount",
+      "paymentRefund": "Payment or refund",
+      "technicalProblem": "Technical problem",
+      "other": "Other"
+    },
+    "features": {
+      "homepage": "Homepage",
+      "restaurants": "Restaurants",
+      "menu": "Menu",
+      "cart": "Cart",
+      "checkout": "Checkout",
+      "userAccount": "User account",
+      "studentDiscount": "Student Discount",
+      "other": "Other"
+    },
+    "studentStatuses": {
+      "Not verified": "Not verified",
+      "Pending": "Pending",
+      "Verified": "Verified",
+      "Action required": "Action required",
+      "Rejected": "Rejected",
+      "Expired": "Expired"
+    },
+    "fields": {
+      "category": {
+        "label": "Issue category",
+        "placeholder": "Select a category"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Briefly describe your issue"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Describe what happened, what you expected, and any steps that may help us understand the problem."
+      },
+      "order": {
+        "label": "Order",
+        "placeholder": "Enter your order number",
+        "selectPlaceholder": "Select an order",
+        "helper": "Use the order number shown in your account or receipt."
+      },
+      "restaurant": {
+        "label": "Restaurant",
+        "placeholder": "Select a restaurant",
+        "loading": "Loading restaurants..."
+      },
+      "offer": {
+        "label": "Restaurant or offer",
+        "placeholder": "Enter the restaurant or offer name"
+      },
+      "studentStatus": {
+        "label": "Current student verification status"
+      },
+      "affectedFeature": {
+        "label": "Where did the problem occur?",
+        "placeholder": "Select an area"
+      },
+      "attachments": {
+        "label": "Add attachments",
+        "helper": "Upload screenshots or files that may help us understand the issue. JPG, PNG, WEBP, or PDF; up to 10 MB each.",
+        "action": "Choose files",
+        "remove": "Remove {{fileName}}"
+      },
+      "optional": "Optional"
+    },
+    "contact": {
+      "loading": "Loading your contact details...",
+      "replyTo": "Replies will be sent to: {{userEmail}}",
+      "changeSettings": "Change in account settings",
+      "missingTitle": "A contact email is required.",
+      "missingDescription": "Add or verify an email in your account settings before sending a request."
+    },
+    "actions": {
+      "send": "Send request",
+      "sending": "Sending...",
+      "cancel": "Cancel"
+    },
+    "validation": {
+      "categoryRequired": "Select an issue category.",
+      "subjectRequired": "Enter a subject.",
+      "subjectMin": "Subject must contain at least 5 characters.",
+      "subjectMax": "Subject cannot exceed 120 characters.",
+      "descriptionMin": "Describe the problem in at least 20 characters.",
+      "descriptionMax": "Description cannot exceed 1500 characters.",
+      "unsupportedFile": "This file type is not supported.",
+      "fileTooLarge": "The file is larger than the allowed size.",
+      "tooManyFiles": "You can upload up to 3 files."
+    },
+    "toast": {
+      "status": "Success",
+      "title": "Request sent",
+      "description": "Your support request has been sent for review. We’ll notify you when there is an update.",
+      "ticket": "Request #{{ticketNumber}}",
+      "close": "Close notification"
+    },
+    "error": {
+      "title": "Unable to send request",
+      "description": "Something went wrong. Your information has not been lost. Please try again.",
+      "preserved": "Your information has not been lost. Please try again."
+    }
+  },
+
+  "studentDiscount": {
+    "page": {
+      "eyebrow": "Payments & discounts",
+      "title": "Payments & Discounts",
+      "description": "Manage payment methods, promo codes, receipts, and your student benefits."
+    },
+    "tabs": {
+      "label": "Payments and discounts sections",
+      "paymentMethods": "Payment methods",
+      "studentDiscount": "Student Discount"
+    },
+    "status": {
+      "notVerified": "Not verified",
+      "pending": "Pending review",
+      "verified": "Verified",
+      "actionRequired": "Action required",
+      "rejected": "Not approved",
+      "expired": "Expired"
+    },
+    "badge": {
+      "open": "Student status: {{status}}. Open Student Discount."
+    },
+    "loading": "Loading student verification status...",
+    "statusCard": {
+      "eyebrow": "Student benefits"
+    },
+    "states": {
+      "notVerified": {
+        "title": "Verify your student status",
+        "description": "Confirm that you are currently enrolled to unlock eligible student offers across Defilicious."
+      },
+      "pending": {
+        "title": "Your verification is under review",
+        "description": "We received your details and are checking your student status.",
+        "note": "You can keep using Defilicious while the review is in progress."
+      },
+      "verified": {
+        "title": "Your student status is verified",
+        "description": "Student benefits are active on your account while your verification remains valid."
+      },
+      "actionRequired": {
+        "title": "We need updated information",
+        "description": "Review the note below, update your details, and submit the verification again.",
+        "fallback": "We could not confirm the submitted information. Please review your details."
+      },
+      "rejected": {
+        "title": "We could not approve this verification",
+        "fallback": "The submitted information did not meet the verification requirements."
+      },
+      "expired": {
+        "title": "Your student verification has expired",
+        "description": "Verify again to continue receiving eligible student offers."
+      }
+    },
+    "reviewNotes": {
+      "information_unconfirmed": "The submitted information could not be confirmed. Review your details and submit an updated verification request.",
+      "document_unreadable": "The submitted document was unreadable."
+    },
+    "benefits": {
+      "offers": "Access eligible student offers",
+      "account": "Benefits stay connected to your account",
+      "validity": "Status remains active until its expiry date"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "submitting": "Submitting...",
+      "submit": "Submit for verification",
+      "contactSupport": "Contact support",
+      "verify": "Verify student status",
+      "exploreOffers": "Explore offers",
+      "viewDetails": "View details",
+      "update": "Update information",
+      "tryAgain": "Try again",
+      "verifyAgain": "Verify again"
+    },
+    "summary": {
+      "institution": "Institution",
+      "country": "Country",
+      "studentEmail": "Student email",
+      "graduationYear": "Graduation year",
+      "submittedDate": "Submitted",
+      "verificationMethod": "Verification method",
+      "verifiedDate": "Verified",
+      "expirationDate": "Valid until",
+      "methods": {
+        "student_email": "Student email",
+        "document": "Supporting document"
+      }
+    },
+    "form": {
+      "title": "Student verification",
+      "description": "Enter your current study information. You may also attach one supporting document.",
+      "accountInfo": "Account information",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "accountEmail": "Account email",
+      "studentInfo": "Study information",
+      "institution": "College or university",
+      "institutionPlaceholder": "Enter your institution",
+      "country": "Country of study",
+      "countryPlaceholder": "Select a country",
+      "studentEmail": "Student email",
+      "studentEmailHelper": "Use an email issued by your college or university.",
+      "studentEmailPlaceholder": "name@university.edu",
+      "graduationYear": "Expected graduation year",
+      "graduationYearPlaceholder": "Select a year",
+      "document": "Supporting document (optional)",
+      "documentHelper": "JPG, PNG, WEBP, or PDF, up to 10 MB. The file is used only for this form and is not stored in the browser.",
+      "chooseDocument": "Choose document",
+      "removeDocument": "Remove {{fileName}}",
+      "confirmationPrefix": "I confirm that this information is accurate and agree to the",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "validation": {
+      "institution": "Enter the name of your college or university.",
+      "institutionMax": "Institution name cannot exceed 120 characters.",
+      "country": "Select your country of study.",
+      "studentEmail": "Enter a valid student email address.",
+      "graduationYear": "Select your expected graduation year.",
+      "confirmation": "Confirm that the information is accurate.",
+      "fileType": "Choose a JPG, PNG, WEBP, or PDF file.",
+      "fileSize": "The file must be 10 MB or smaller."
+    },
+    "countries": {
+      "ukraine": "Ukraine",
+      "poland": "Poland",
+      "germany": "Germany",
+      "france": "France",
+      "italy": "Italy",
+      "spain": "Spain",
+      "unitedKingdom": "United Kingdom",
+      "unitedStates": "United States",
+      "canada": "Canada",
+      "netherlands": "Netherlands",
+      "czechRepublic": "Czech Republic",
+      "romania": "Romania",
+      "other": "Other"
+    },
+    "aside": {
+      "label": "Student verification guidance",
+      "how": {
+        "title": "How it works",
+        "step1": "Add your current study details",
+        "step2": "Submit them for verification",
+        "step3": "Use eligible student offers"
+      },
+      "eligibility": {
+        "title": "Who is eligible?",
+        "description": "Current students at a recognized college or university may apply.",
+        "note": "Availability and offer terms can vary by restaurant and location."
+      },
+      "support": {
+        "title": "Need help?",
+        "description": "Contact support if your institution, email, or verification result needs attention."
+      }
+    },
+    "toast": {
+      "successStatus": "Success",
+      "successTitle": "Verification submitted",
+      "successDescription": "Your student information has been sent for review.",
+      "errorStatus": "Error",
+      "errorTitle": "Unable to submit verification",
+      "errorDescription": "Something went wrong. Your information has not been lost. Please try again.",
+      "close": "Close notification"
+    }
+  },
+
+  "privacyPolicy": {
+    "eyebrow": "Legal & privacy",
+    "title": "Privacy Policy",
+    "description": "This summary explains how Defilicious handles information used by account, student verification, and support features.",
+    "sections": {
+      "information": {
+        "title": "Information you provide",
+        "description": "Defilicious uses the account details and information you choose to provide to deliver account features, orders, support, and eligible benefits."
+      },
+      "studentVerification": {
+        "title": "Student verification",
+        "description": "The current student verification experience keeps status and form metadata locally in this browser for each signed-in account. A document selected in the form stays in memory only and is not saved in browser storage."
+      },
+      "localStorage": {
+        "title": "Browser storage",
+        "description": "Defilicious uses browser storage for essential account state, interface preferences, cart items, and frontend preview data. Student verification records are separated by account."
+      },
+      "support": {
+        "title": "Support requests",
+        "description": "When you send a support request, the details and attachments you choose are sent to the support service so the request can be reviewed."
+      },
+      "choices": {
+        "title": "Your choices",
+        "description": "You can remove optional files before submitting a form, manage account settings, or contact support with a privacy question."
+      }
+    },
+    "contactSupport": "Contact support"
   },
 
   "footer": {

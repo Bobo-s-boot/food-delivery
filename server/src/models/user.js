@@ -7,6 +7,18 @@ const userSchema = new mongoose.Schema(
     password: { type: String, default: null },
     role: { type: String, default: "user" },
     fullName: { type: String, default: "" },
+    studentStatus: {
+      type: String,
+      enum: [
+        "Not verified",
+        "Pending",
+        "Verified",
+        "Action required",
+        "Rejected",
+        "Expired",
+      ],
+      default: "Not verified",
+    },
     provider: { type: String, default: "local" },
     providerId: { type: String, default: null },
   },

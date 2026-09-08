@@ -5,12 +5,20 @@ import { loginUser, registerUser } from "../../api/authService";
 import { INITIAL_FORM_DATA, SOCIAL_PROVIDERS } from "./const";
 import { SocialLoginButton } from "./SocialLoginButton";
 import { AuthForm } from "./AuthForm";
+import {
+  buildPostAuthPath,
+  clearAccountIntent,
+  readAccountIntent,
+} from "../account/accountIntent";
 
 import "./Auth.scss";
 
 export function Auth({ onLogin }) {
   const { t } = useTranslation();
-  const [isLogin, setIsLogin] = useState(true);
+  const location = useLocation();
+  const [isLogin, setIsLogin] = useState(
+    () => location.state?.authMode !== "register",
+  );
   const [isAnimating, setIsAnimating] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [error, setError] = useState("");
@@ -18,8 +26,6 @@ export function Auth({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
-
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const userParam = params.get("user");
@@ -31,11 +37,9 @@ export function Auth({ onLogin }) {
         if (onLogin) onLogin(user);
         localStorage.setItem("user", JSON.stringify(user));
 
-        if (user?.role === "admin") {
-          navigate(`/${user.username}/admin`, { replace: true });
-        } else {
-          navigate(`/${user.username}/profile`, { replace: true });
-        }
+        const accountIntent = readAccountIntent(location.state);
+        clearAccountIntent();
+        navigate(buildPostAuthPath(user, accountIntent), { replace: true });
       } catch {
         setError(t("auth.oauthParseError"));
       }
@@ -93,11 +97,9 @@ export function Auth({ onLogin }) {
       if (onLogin) onLogin(response.user);
       localStorage.setItem("user", JSON.stringify(response.user));
 
-      if (response.user?.role === "admin") {
-        navigate(`/${response.user.username}/admin`, { replace: true });
-      } else {
-        navigate(`/${response.user.username}/profile`, { replace: true });
-      }
+      const accountIntent = readAccountIntent(location.state);
+      clearAccountIntent();
+      navigate(buildPostAuthPath(response.user, accountIntent), { replace: true });
     } catch (error) {
       setError(
         typeof error === "string"

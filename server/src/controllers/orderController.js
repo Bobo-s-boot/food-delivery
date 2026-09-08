@@ -6,6 +6,19 @@ import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 
 const WEEK_DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+const createOrderNumber = async () => {
+  const existingOrders = await Order.find(
+    { orderNumber: /^#\d+$/ },
+    { orderNumber: 1 },
+  ).lean();
+  const highestNumber = existingOrders.reduce((highest, order) => {
+    const number = Number.parseInt(order.orderNumber.slice(1), 10);
+    return Number.isNaN(number) ? highest : Math.max(highest, number);
+  }, 999);
+
+  return `#${highestNumber + 1}`;
+};
+
 export const getAllOrders = async (req, res) => {
   try {
     const { status } = req.query;
@@ -18,9 +31,32 @@ export const getAllOrders = async (req, res) => {
     const orders = await Order.find(filter)
       .populate("userId", "username fullName")
       .populate("restaurantId", "name")
+      .populate({
+        path: "items.dishId",
+        select: "name price image",
+      })
       .sort({ createdAt: -1 });
 
-    res.status(200).json(orders);
+    const ordersWithoutNumber = orders.filter(
+      (order) => !/^#\d+$/.test(order.orderNumber || ""),
+    );
+    if (ordersWithoutNumber.length) {
+      for (const order of ordersWithoutNumber) {
+        order.orderNumber = await createOrderNumber();
+        await order.save();
+      }
+    }
+
+    const responseOrders = orders.map((order) => {
+      const plainOrder = order.toObject();
+
+      return {
+        ...plainOrder,
+        id: plainOrder.orderNumber || plainOrder.id,
+      };
+    });
+
+    res.status(200).json(responseOrders);
   } catch (error) {
     res.status(500).json({
       message: SERVER_ERORR_MESSAGE.ORDER_FETCH_ERROR,
@@ -224,6 +260,80 @@ export const getAnalyticsData = async (req, res) => {
   }
 };
 
+export const getTopRestaurants = async (req, res) => {
+  try {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const topRestaurants = await Order.aggregate([
+      {
+        $group: {
+          _id: "$restaurantId",
+          orders: { $sum: 1 },
+          revenue: { $sum: "$totalPrice" },
+        },
+      },
+      {
+        $lookup: {
+          from: "restaurants",
+          localField: "_id",
+          foreignField: "_id",
+          as: "restaurant",
+        },
+      },
+      {
+        $unwind: {
+          path: "$restaurant",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          restaurantId: "$_id",
+          name: { $ifNull: ["$restaurant.name", "Unknown Restaurant"] },
+          orders: 1,
+          revenue: 1,
+        },
+      },
+      { $sort: { revenue: -1, orders: -1 } },
+      { $limit: 4 },
+    ]);
+
+    if (topRestaurants.length < 4) {
+      const existingIds = topRestaurants
+        .map((r) => r.restaurantId)
+        .filter(Boolean);
+      const fallbackRestaurants = await Restaurant.find({
+        _id: { $nin: existingIds },
+      })
+        .limit(4 - topRestaurants.length)
+        .select("name");
+
+      fallbackRestaurants.forEach((r) => {
+        topRestaurants.push({
+          restaurantId: r._id,
+          name: r.name,
+          orders: 0,
+          revenue: 0,
+        });
+      });
+    }
+
+    res.status(200).json(
+      topRestaurants.map((r) => ({
+        name: r.name,
+        orders: `${r.orders} orders`,
+        revenue: `$${Number(r.revenue || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      })),
+    );
+  } catch (error) {
+    res.status(500).json({
+      message: "Ошибка при получении топ ресторанов",
+      error: error.message,
+    });
+  }
+};
+
 export const getTopDishes = async (req, res) => {
   try {
     const topDishes = await Order.aggregate([
@@ -252,9 +362,24 @@ export const getTopDishes = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "restaurants",
+          localField: "dish.restaurantId",
+          foreignField: "_id",
+          as: "restaurant",
+        },
+      },
+      {
+        $unwind: {
+          path: "$restaurant",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $project: {
           dishId: "$_id",
           name: { $ifNull: ["$dish.name", "Unknown Dish"] },
+          restaurant: { $ifNull: ["$restaurant.name", ""] },
           orders: 1,
           revenue: 1,
         },
@@ -264,18 +389,21 @@ export const getTopDishes = async (req, res) => {
     ]);
 
     if (topDishes.length < 5) {
-      const existingDishIds = topDishes.map((dish) => dish.dishId);
+      const existingDishIds = topDishes
+        .map((dish) => dish.dishId)
+        .filter(Boolean);
       const fallbackDishes = await Dish.find({
         _id: { $nin: existingDishIds },
       })
+        .populate("restaurantId", "name")
         .sort({ createdAt: -1 })
-        .limit(5 - topDishes.length)
-        .select("name");
+        .limit(5 - topDishes.length);
 
       fallbackDishes.forEach((dish) => {
         topDishes.push({
           dishId: dish._id,
           name: dish.name,
+          restaurant: dish.restaurantId?.name || "",
           orders: 0,
           revenue: 0,
         });
@@ -285,6 +413,7 @@ export const getTopDishes = async (req, res) => {
     res.status(200).json(
       topDishes.map((dish) => ({
         name: dish.name,
+        restaurant: dish.restaurant,
         orders: dish.orders,
         revenue: dish.revenue,
       })),
@@ -376,17 +505,20 @@ export const updateOrderStatus = async (req, res) => {
       "cancelled",
     ];
 
-    if (!allowedStatuses.includes(status)) {
-      return res
-        .status(400)
-        .json({ message: SERVER_ERORR_MESSAGE.ORDER_STATUS_INVALID });
+    const validStatuses = [
+      "pending",
+      "preparing",
+      "delivering",
+      "delivered",
+      "cancelled",
+    ];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Неверный статус заказа" });
     }
 
-    const updatedOrder = await Order.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true },
-    );
+    const order = await Order.findByIdAndUpdate(id, { status }, { new: true })
+      .populate("userId", "username fullName")
+      .populate("restaurantId", "name");
 
     if (!updatedOrder) {
       return res
@@ -533,6 +665,7 @@ export const createOrder = async (req, res) => {
       }
 
       const orderData = {
+        orderNumber: await createOrderNumber(),
         userId,
         customerName: customerName || "Guest",
         customerPhone: customerPhone || "Not provided",

@@ -53,6 +53,14 @@
   width: max-content;
 }
 
+.footer__link--button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
 .footer__link:hover,
 .footer__small-link:hover {
   color: var(--color-text-inverted);

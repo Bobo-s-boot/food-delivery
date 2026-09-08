@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useCart } from "../../features/cart/useCart";
+import { useSupport } from "../../features/support/useSupport";
+import { useStudentVerification } from "./studentDiscount/useStudentVerification";
 import { getStoredUser } from "../../api/authConfig";
 import { getUserProfile } from "../../api/userService"; // Подключаем твою функцию API!
 import { AccountSidebar } from "./components/AccountSidebar";
@@ -11,28 +13,63 @@ import { FavoritesSection } from "./components/FavoritesSection";
 import { OrdersSection } from "./components/OrdersSection";
 import { PaymentsSection } from "./components/PaymentsSection";
 import { SettingsSection } from "./components/SettingsSection";
-import { SupportSection } from "./components/SupportSection";
-import { MOCK_ACCOUNT } from "./const";
+import { ACCOUNT_SECTIONS, MOCK_ACCOUNT } from "./const";
 import { createAddressId, setDefaultAddress } from "./accountUtils";
 import "./Account.scss";
 
+const ACCOUNT_SECTION_IDS = new Set(ACCOUNT_SECTIONS.map((section) => section.id));
+
+const getAccountSection = (value) =>
+  ACCOUNT_SECTION_IDS.has(value) ? value : "dashboard";
+
 export function Account() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { addItem } = useCart();
+  const { openSupport: openSupportModal } = useSupport();
   const storedUser = getStoredUser();
+  const studentVerification = useStudentVerification(storedUser?.username);
 
   // Добавляем новые стейты для работы с бэкендом
   const [serverUser, setServerUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [activeSection, setActiveSection] = useState("dashboard");
+  const [activeSection, setActiveSectionState] = useState(() =>
+    getAccountSection(searchParams.get("section")),
+  );
   const [addresses, setAddresses] = useState(MOCK_ACCOUNT.addresses);
   const [settings, setSettings] = useState(MOCK_ACCOUNT.settings);
   const [selectedOrderId, setSelectedOrderId] = useState(
     MOCK_ACCOUNT.activeOrder.id,
   );
-  const [supportContext, setSupportContext] = useState("");
   const [dialog, setDialog] = useState(null);
+
+  useEffect(() => {
+    const requestedSection = getAccountSection(searchParams.get("section"));
+    setActiveSectionState(requestedSection);
+  }, [searchParams]);
+
+  const setActiveSection = (section) => {
+    const nextSection = getAccountSection(section);
+    const nextSearchParams = new URLSearchParams(searchParams);
+
+    nextSearchParams.set("section", nextSection);
+    nextSearchParams.delete("tab");
+    setActiveSectionState(nextSection);
+    setSearchParams(nextSearchParams, { replace: true });
+  };
+
+  const setPaymentsTab = (tab) => {
+    const nextSearchParams = new URLSearchParams(searchParams);
+    nextSearchParams.set("section", "payments");
+    if (tab === "student-discount") {
+      nextSearchParams.set("tab", "student-discount");
+    } else {
+      nextSearchParams.delete("tab");
+    }
+    setActiveSectionState("payments");
+    setSearchParams(nextSearchParams);
+  };
 
   // useEffect для получения профиля при загрузке компонента
   useEffect(() => {
@@ -105,8 +142,13 @@ export function Account() {
   };
 
   const openSupport = (orderId = "") => {
-    setSupportContext(orderId);
-    setActiveSection("support");
+    openSupportModal({
+      orderId,
+      recentOrders: account.orders.map((order) => ({
+        id: order.id,
+        restaurantName: order.restaurantName,
+      })),
+    });
   };
 
   const addAddress = (addressData) => {
@@ -197,6 +239,14 @@ export function Account() {
           payments={account.payments}
           promoCodes={account.promoCodes}
           receipts={account.receipts}
+          user={user}
+          activeTab={
+            searchParams.get("tab") === "student-discount"
+              ? "student-discount"
+              : "payment-methods"
+          }
+          onTabChange={setPaymentsTab}
+          verificationState={studentVerification}
         />
       );
     }
@@ -217,15 +267,6 @@ export function Account() {
               onConfirm: () => setDialog(null),
             })
           }
-        />
-      );
-    }
-
-    if (activeSection === "support") {
-      return (
-        <SupportSection
-          supportContext={supportContext}
-          onClearContext={() => setSupportContext("")}
         />
       );
     }
@@ -258,6 +299,8 @@ export function Account() {
           user={user}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          studentVerificationStatus={studentVerification.verification.status}
+          onStudentDiscount={() => setPaymentsTab("student-discount")}
           onSupport={() => openSupport("")}
           onLogout={() =>
             setDialog({

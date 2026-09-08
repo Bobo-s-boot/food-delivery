@@ -1,0 +1,169 @@
+.admin-kpi-grid {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  > * {
+    min-width: 0;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  &--dashboard {
+    @media (min-width: 1280px) {
+      grid-column: span 2 / span 2;
+    }
+  }
+}
+
+.admin-kpi-card {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 7.1875rem;
+  flex-direction: column;
+  border: 1px solid var(--color-border-card);
+  border-radius: 1.5rem;
+  background-color: var(--color-white);
+  padding: 1.25rem;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  box-shadow: var(--shadow-card);
+
+  &__label {
+    margin: 0;
+    overflow: hidden;
+    color: var(--color-text-tertiary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__content {
+    display: flex;
+    min-width: 0;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  &__value {
+    min-width: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    color: var(--color-text-strong);
+    font-size: 2.25rem;
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__chip {
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 9999px;
+    background-color: var(--color-bg-soft);
+    padding: 0.25rem 0.75rem;
+    color: var(--color-text-tertiary);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &--success,
+    &--active,
+    &--delivered,
+    &--resolved,
+    &--fees {
+      background-color: #d1fae5;
+      color: #047857;
+    }
+
+    &--warning,
+    &--preparing,
+    &--pending,
+    &--promo {
+      background-color: #fef3c7;
+      color: #b45309;
+    }
+
+    &--danger,
+    &--high,
+    &--overdue,
+    &--refunds {
+      background-color: #fff1f2;
+      color: #be123c;
+    }
+
+    &--info,
+    &--new,
+    &--gross,
+    &--total {
+      background-color: #f0f9ff;
+      color: #0369a1;
+    }
+
+    &--violet,
+    &--on-way,
+    &--verified,
+    &--payouts {
+      background-color: #f5f3ff;
+      color: #6d28d9;
+    }
+
+    &--paused,
+    &--open {
+      background-color: var(--color-bg-soft);
+      color: var(--color-text-tertiary);
+    }
+  }
+
+  &--interactive {
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      border-color: var(--color-text-muted-strong);
+      box-shadow: var(--shadow-md);
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgba(13, 26, 45, 0.18);
+      outline-offset: 2px;
+    }
+  }
+
+  &--active {
+    border-color: var(--color-text-strong);
+    background-color: var(--color-bg-soft-strong);
+    box-shadow: 0 0 0 3px rgba(13, 26, 45, 0.08), var(--shadow-card);
+  }
+
+  &--active:hover {
+    border-color: var(--color-text-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-kpi-card--interactive {
+    transition: none;
+  }
+}

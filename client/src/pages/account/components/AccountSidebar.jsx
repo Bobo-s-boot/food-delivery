@@ -1,9 +1,12 @@
 import { ACCOUNT_SECTIONS } from "../const";
+import { StudentStatusBadge } from "../studentDiscount/StudentStatusBadge";
 
 export function AccountSidebar({
   user,
   activeSection,
   onSectionChange,
+  studentVerificationStatus,
+  onStudentDiscount,
   onSupport,
   onLogout,
 }) {
@@ -19,11 +22,11 @@ export function AccountSidebar({
         <div className="account-sidebar__avatar">{initials}</div>
         <div className="account-sidebar__profile-info">
           <h2 className="account-sidebar__name">{user.name}</h2>
-          {user.studentDiscountActive && (
-            <span className="account-pill account-pill--accent">
-              Student Discount
-            </span>
-          )}
+          <p className="account-sidebar__email">{user.email}</p>
+          <StudentStatusBadge
+            status={studentVerificationStatus}
+            onClick={onStudentDiscount}
+          />
         </div>
       </div>
 

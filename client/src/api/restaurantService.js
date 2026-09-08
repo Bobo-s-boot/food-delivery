@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CLIENT_ERORR_MESSAGE } from "../errors/error";
+import { CLIENT_ERROR_MESSAGES } from "../errors/error";
 import { createAuthConfig } from "./authConfig";
 
 const API_BASE_URL =
@@ -11,7 +11,7 @@ export const getRestaurants = async () => {
     const response = await axios.get(API_URL, createAuthConfig());
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
+    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH, error);
     return [];
   }
 };
@@ -29,13 +29,13 @@ export const searchRestaurants = async (query, limit = 5) => {
     const response = await axios.get(API_URL, config);
     return response.data;
   } catch (error) {
-    console.error(CLIENT_ERORR_MESSAGE.FIELD_TO_FETCH, error);
+    console.error(CLIENT_ERROR_MESSAGES.FAILED_TO_FETCH, error);
     return [];
   }
 };
 
 export const adminGetRestaurants = async () => {
-  const response = await axios.get(API_URL);
+  const response = await axios.get(API_URL, createAuthConfig());
   return response.data;
 };
 
@@ -45,11 +45,19 @@ export const adminDeleteRestaurant = async (id) => {
 };
 
 export const adminCreateRestaurant = async (restaurantData) => {
-  const response = await axios.post(API_URL, restaurantData, createAuthConfig());
+  const response = await axios.post(
+    API_URL,
+    restaurantData,
+    createAuthConfig(),
+  );
   return response.data;
 };
 
 export const adminUpdateRestaurant = async (id, restaurantData) => {
-  const response = await axios.put(`${API_URL}/${id}`, restaurantData, createAuthConfig());
+  const response = await axios.put(
+    `${API_URL}/${id}`,
+    restaurantData,
+    createAuthConfig(),
+  );
   return response.data;
 };

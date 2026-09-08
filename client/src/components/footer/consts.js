@@ -9,14 +9,14 @@ export const dataLinksForFooter = [
   },
   {
     links: [
-      { key: "helpSupport", name: "Help & Support", to: "/help" },
-      { key: "trackOrder", name: "Track Order", to: "/track-order" },
+      { key: "helpSupport", name: "Help & Support", action: "support" },
+      { key: "trackOrder", name: "Track Order", action: "trackOrder" },
       {
         key: "studentDiscounts",
         name: "Student Discounts",
-        to: "/student-discounts",
+        action: "studentDiscounts",
       },
-      { key: "faq", name: "FAQ", to: "/faq" },
+      { key: "faq", name: "FAQ", to: "/#faq" },
     ],
   },
   {
