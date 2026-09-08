@@ -4,7 +4,6 @@ import {
   addCartItem,
   calculateCartTotals,
   decreaseCartItem,
-  getPreviewCartItems,
   removeCartItem,
 } from "./cartUtils";
 
@@ -14,11 +13,9 @@ const readStoredCart = () => {
   try {
     const storedCart = localStorage.getItem(CART_STORAGE_KEY);
     const parsedCart = storedCart ? JSON.parse(storedCart) : [];
-    return Array.isArray(parsedCart) && parsedCart.length > 0
-      ? parsedCart
-      : getPreviewCartItems();
+    return Array.isArray(parsedCart) ? parsedCart : [];
   } catch {
-    return getPreviewCartItems();
+    return [];
   }
 };
 

@@ -351,23 +351,27 @@
 }
 
 .live-orders-row {
-  background-color: var(--color-bg-soft-strong); // bg-[#F7F9FC]
+  background-color: var(--color-bg-soft-strong);
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: var(--color-bg-soft); // hover:bg-[#EEF2F7]
+    background-color: var(--color-bg-soft);
   }
 
   &__cell {
-    padding: 0.75rem; // px-3 py-3
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0.75rem;
 
     &--first {
-      border-top-left-radius: 1rem; // rounded-l-2xl
+      border-top-left-radius: 1rem;
       border-bottom-left-radius: 1rem;
     }
 
     &--last {
-      border-top-right-radius: 1rem; // rounded-r-2xl
+      border-top-right-radius: 1rem;
       border-bottom-right-radius: 1rem;
     }
   }
@@ -390,7 +394,7 @@
   .live-orders-row {
     display: grid;
     grid-template-columns:
-      minmax(5rem, 0.72fr)
+      minmax(12rem, 1.25fr)
       minmax(9rem, 1.15fr)
       minmax(9rem, 1.25fr)
       minmax(8rem, 1fr)

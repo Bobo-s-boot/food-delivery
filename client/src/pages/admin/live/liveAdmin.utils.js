@@ -30,7 +30,7 @@ export const buildMenuAvailability = (dishesData) =>
 
 export const buildLiveOrderRows = (orders = []) =>
   orders.map((order) => ({
-    id: order._id || order.id,
+    id: order.orderNumber || order.id,
     customer:
       order.userId?.fullName ||
       order.userId?.username ||

@@ -8,12 +8,24 @@ import {
   PaymentForm,
 } from "./components/CheckoutForms";
 import { CheckoutOrderSummary } from "./components/CheckoutOrderSummary";
+import { useCart } from "../../features/cart/useCart";
 import "./Checkout.scss";
+import axios from "axios";
+
+// --- ИМПОРТЫ ДЛЯ STRIPE ---
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+// Инициализируем Stripe с твоим публичным ключом из .env
+const stripePromise = loadStripe(import.meta.env.VITE_API_STRIPE_PUBLISHER_KEY);
 
 export function Checkout() {
+  const { items, totals, clearCart } = useCart();
   const [activeStep, setActiveStep] = useState("contact");
   const [completedSteps, setCompletedSteps] = useState([]);
   const [errors, setErrors] = useState({});
+  const [isOrdered, setIsOrdered] = useState(false); // Стейт для успешного завершения заказа
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -28,6 +40,8 @@ export function Checkout() {
     deliveryPreferences: [],
     paymentMethod: "Credit / Debit Card",
   });
+
+  const totalAmount = Math.round((totals?.total ?? 0) * 100);
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -101,6 +115,78 @@ export function Checkout() {
     setActiveStep(nextStep);
   };
 
+  // --- ОБРАБОТЧИК УСПЕШНОГО ПЛАТЕЖА И ОТПРАВКИ ЗАКАЗА ---
+  const handlePaymentSuccess = async (paymentDetails) => {
+    let orderPayload = null;
+
+    try {
+      console.log("Сырые товары в корзине (items):", items);
+
+      orderPayload = {
+        customerName: `${formData.firstName} ${formData.lastName}`.trim(),
+        customerPhone: formData.phone,
+        // Подстраховка: если email пустой, отправляем хотя бы заглушку, чтобы пройти валидатор
+        customerEmail: formData.email || "no-email@test.com",
+        address: `${formData.city}, ${formData.address}${
+          formData.entrance ? `, ${formData.entrance}` : ""
+        }`,
+        notes: formData.notes,
+        deliveryPreferences: formData.deliveryPreferences,
+        paymentMethod: formData.paymentMethod,
+        paymentStatus:
+          paymentDetails.status === "succeeded"
+            ? "paid"
+            : paymentDetails.status || "pending",
+        stripePaymentIntentId: paymentDetails.id || null,
+        deliveryMethod: formData.deliveryMethod,
+        totalPrice: Number((totals?.total ?? 0).toFixed(2)),
+
+        items: items.map((item) => {
+          // 1. Берем сырой ID со склейкой
+          const rawId = String(item.id || item._id || item.foodId);
+          // 2. Отрезаем всё, что идет после дефиса (оставляем только '11' вместо '11-Single...')
+          const realFoodId = rawId.includes("-") ? rawId.split("-")[0] : rawId;
+
+          return {
+            id: realFoodId, // Теперь тут будет чистое число/строка ID
+            _id: realFoodId, // Дублируем для MongoDB
+            name: item.name,
+            quantity: Number(item.quantity),
+            price: Number(item.price),
+            // Оставляем как есть, либо поменяй на жесткий ID, если сервер ждет цифру
+            restaurantId: item.restaurantId || item.restaurant || null,
+          };
+        }),
+      };
+
+      console.log("Финальный Payload, улетающий на бэкенд:", orderPayload);
+
+      const response = await axios.post("http://localhost:5000/api/orders", {
+        body: JSON.stringify(orderPayload),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(data?.message || "Failed to save order on the server");
+      }
+
+      console.log("Order saved successfully in backend database:", data);
+
+      clearCart();
+      setIsOrdered(true);
+    } catch (error) {
+      console.error("Error saving order:", error);
+
+      alert(
+        `Оплата прошла успешно, но бэкенд отклонил заказ!\n\n` +
+          `Сообщение от сервера: ${error.message}\n\n` +
+          `Вот что мы фактически отправили в items:\n` +
+          JSON.stringify(orderPayload?.items, null, 2),
+      );
+    }
+  };
+
   const renderStepContent = (stepId) => {
     if (stepId === "contact") {
       return (
@@ -134,8 +220,46 @@ export function Checkout() {
       );
     }
 
-    return <PaymentForm formData={formData} updateField={updateField} />;
+    // --- ОБОРАЧИВАЕМ ПОСЛЕДНИЙ ШАГ ОПЛАТЫ В ELEMENTS ---
+    if (stepId === "payment") {
+      return (
+        <Elements stripe={stripePromise}>
+          <PaymentForm
+            formData={formData}
+            updateField={updateField}
+            totalAmount={totalAmount}
+            onPaymentSuccess={handlePaymentSuccess}
+          />
+        </Elements>
+      );
+    }
+
+    return null;
   };
+
+  // Экран успешного оформления заказа
+  if (isOrdered) {
+    return (
+      <div
+        className="checkout-success"
+        style={{ textAlign: "center", padding: "4rem 2rem" }}
+      >
+        <span style={{ fontSize: "5rem" }}>🎉</span>
+        <h1
+          style={{
+            fontSize: "2rem",
+            fontWeight: "bold",
+            margin: "1.5rem 0 0.5rem",
+          }}
+        >
+          Thank you for your order!
+        </h1>
+        <p style={{ color: "#6b7280" }}>
+          We've received your payment and are already preparing your food.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="checkout">
@@ -164,6 +288,16 @@ export function Checkout() {
           formData={formData}
           validateAll={validateAll}
           setErrors={setErrors}
+          onContinueToPayment={() => {
+            if (!validateAll()) {
+              return;
+            }
+
+            setCompletedSteps((steps) =>
+              steps.includes("details") ? steps : [...steps, "details"],
+            );
+            setActiveStep("payment");
+          }}
         />
       </div>
     </div>

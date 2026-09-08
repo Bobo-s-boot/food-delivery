@@ -1,49 +1,34 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../features/cart/useCart";
 import { CheckoutOrderItem } from "./CheckoutOrderItem";
-import { createOrder } from "../../../api/orderService";
 
 const formatMoney = (value) => `$${value.toFixed(2)}`;
 
-export function CheckoutOrderSummary({ formData, validateAll, setErrors }) {
+export function CheckoutOrderSummary({
+  validateAll,
+  setErrors,
+  onContinueToPayment,
+}) {
   const { items, totals, increaseItem, decreaseItem, removeItem, clearCart } =
     useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate();
 
   const handlePlaceOrder = async () => {
     if (totals.itemCount === 0) return;
 
-    // Validate all steps before submitting
     if (validateAll && !validateAll()) {
       alert("Please fill in all required fields correctly.");
       return;
     }
 
+    if (onContinueToPayment) {
+      onContinueToPayment();
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      const orderData = {
-        customerName: `${formData.firstName} ${formData.lastName}`.trim(),
-        customerPhone: formData.phone,
-        customerEmail: formData.email,
-        address: `${formData.city}, ${formData.address}, ${formData.entrance}`,
-        notes: formData.notes,
-        deliveryPreferences: formData.deliveryPreferences,
-        paymentMethod: formData.paymentMethod,
-        items: items.map((item) => ({
-          id: item.id, // using dish._id or cart id
-          quantity: item.quantity,
-          price: item.price,
-          restaurantId: item.restaurantId,
-        })),
-      };
-
-      await createOrder(orderData);
-
-      clearCart();
-      alert("Order placed successfully!");
-      navigate("/"); // Redirect to home
+      throw new Error("Payment flow must be handled on the checkout step.");
     } catch (error) {
       console.error("Failed to place order", error);
       alert(
@@ -83,6 +68,7 @@ export function CheckoutOrderSummary({ formData, validateAll, setErrors }) {
               {formatMoney(totals.subtotal)}
             </span>
           </div>
+
           <div className="checkout-summary__row">
             <span>Delivery</span>
             <span className="checkout-summary__value">
@@ -91,6 +77,7 @@ export function CheckoutOrderSummary({ formData, validateAll, setErrors }) {
                 : "Free"}
             </span>
           </div>
+
           <div className="checkout-summary__row">
             <span>Service</span>
             <span className="checkout-summary__value">$0.00</span>
@@ -110,8 +97,9 @@ export function CheckoutOrderSummary({ formData, validateAll, setErrors }) {
           disabled={totals.itemCount === 0 || isSubmitting}
           className="checkout-button checkout-button--primary checkout-button--wide checkout-button--summary"
         >
-          {isSubmitting ? "Placing order..." : "Place order"}
+          {isSubmitting ? "Opening payment..." : "Continue to payment"}
         </button>
+
         <button
           type="button"
           onClick={clearCart}

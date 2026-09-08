@@ -13,7 +13,9 @@ export const getDishes = async (req, res) => {
     if (restaurantId) {
       const numericRestaurantId = Number(restaurantId);
       if (Number.isFinite(numericRestaurantId)) {
-        const restaurant = await Restaurant.findOne({ id: numericRestaurantId });
+        const restaurant = await Restaurant.findOne({
+          id: numericRestaurantId,
+        });
         if (restaurant) {
           filter.restaurantId = restaurant._id;
         } else {
@@ -40,7 +42,9 @@ export const getDishes = async (req, res) => {
     res.status(200).json(dishes);
   } catch (error) {
     console.error(SERVER_ERORR_MESSAGE.DISH_FETCH_ERROR, error);
-    res.status(500).json({ message: SERVER_ERORR_MESSAGE.DISH_FETCH_SERVER_ERROR });
+    res
+      .status(500)
+      .json({ message: SERVER_ERORR_MESSAGE.DISH_FETCH_SERVER_ERROR });
   }
 };
 
@@ -56,7 +60,9 @@ export const getDishById = async (req, res) => {
     );
 
     if (!dish) {
-      return res.status(404).json({ message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND });
+      return res
+        .status(404)
+        .json({ message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND });
     }
 
     res.status(200).json(dish);
@@ -73,7 +79,10 @@ export const createDish = async (req, res) => {
     console.error(SERVER_ERORR_MESSAGE.DISH_CREATE_ERROR, error);
     res
       .status(400)
-      .json({ message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR, error: error.message });
+      .json({
+        message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR,
+        error: error.message,
+      });
   }
 };
 
@@ -82,13 +91,17 @@ export const deleteDish = async (req, res) => {
     const dish = await Dish.findByIdAndDelete(req.params.id);
 
     if (!dish) {
-      return res.status(404).json({ message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND });
+      return res
+        .status(404)
+        .json({ message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND });
     }
 
     res.json({ message: SERVER_ERORR_MESSAGE.DISH_DELETE_SUCCESS });
   } catch (error) {
     console.error(SERVER_ERORR_MESSAGE.DISH_DELETE_ERROR, error);
-    res.status(500).json({ message: SERVER_ERORR_MESSAGE.DISH_DELETE_SERVER_ERROR });
+    res
+      .status(500)
+      .json({ message: SERVER_ERORR_MESSAGE.DISH_DELETE_SERVER_ERROR });
   }
 };
 
@@ -100,12 +113,17 @@ export const updateDish = async (req, res) => {
     });
 
     if (!dish) {
-      return res.status(404).json({ message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND });
+      return res
+        .status(404)
+        .json({ message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND });
     }
 
     res.status(200).json(dish);
   } catch (error) {
-    console.error("Ошибка обновления блюда", error);
-    res.status(400).json({ message: "Ошибка при обновлении блюда", error: error.message });
+    console.error(SERVER_ERORR_MESSAGE.DISH_CREATE_ERROR, error);
+    res.status(400).json({
+      message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR,
+      error: error.message,
+    });
   }
 };

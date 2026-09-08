@@ -2,8 +2,22 @@ import Order from "../models/order.js";
 import User from "../models/user.js";
 import Restaurant from "../models/restaurant.js";
 import Dish from "../models/dish.js";
+import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 
 const WEEK_DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+const createOrderNumber = async () => {
+  const existingOrders = await Order.find(
+    { orderNumber: /^#\d+$/ },
+    { orderNumber: 1 },
+  ).lean();
+  const highestNumber = existingOrders.reduce((highest, order) => {
+    const number = Number.parseInt(order.orderNumber.slice(1), 10);
+    return Number.isNaN(number) ? highest : Math.max(highest, number);
+  }, 999);
+
+  return `#${highestNumber + 1}`;
+};
 
 export const getAllOrders = async (req, res) => {
   try {
@@ -23,10 +37,29 @@ export const getAllOrders = async (req, res) => {
       })
       .sort({ createdAt: -1 });
 
-    res.status(200).json(orders);
+    const ordersWithoutNumber = orders.filter(
+      (order) => !/^#\d+$/.test(order.orderNumber || ""),
+    );
+    if (ordersWithoutNumber.length) {
+      for (const order of ordersWithoutNumber) {
+        order.orderNumber = await createOrderNumber();
+        await order.save();
+      }
+    }
+
+    const responseOrders = orders.map((order) => {
+      const plainOrder = order.toObject();
+
+      return {
+        ...plainOrder,
+        id: plainOrder.orderNumber || plainOrder.id,
+      };
+    });
+
+    res.status(200).json(responseOrders);
   } catch (error) {
     res.status(500).json({
-      message: "Ошибка при получении заказов",
+      message: SERVER_ERORR_MESSAGE.ORDER_FETCH_ERROR,
       error: error.message,
     });
   }
@@ -130,7 +163,7 @@ export const getOrderStats = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "Ошибка при подсчете статистики заказов",
+      message: SERVER_ERORR_MESSAGE.ORDER_STATS_ERROR,
       error: error.message,
     });
   }
@@ -221,7 +254,7 @@ export const getAnalyticsData = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "Ошибка при получении аналитики заказов",
+      message: SERVER_ERORR_MESSAGE.ORDER_ANALYTICS_ERROR,
       error: error.message,
     });
   }
@@ -356,7 +389,9 @@ export const getTopDishes = async (req, res) => {
     ]);
 
     if (topDishes.length < 5) {
-      const existingDishIds = topDishes.map((dish) => dish.dishId).filter(Boolean);
+      const existingDishIds = topDishes
+        .map((dish) => dish.dishId)
+        .filter(Boolean);
       const fallbackDishes = await Dish.find({
         _id: { $nin: existingDishIds },
       })
@@ -385,7 +420,7 @@ export const getTopDishes = async (req, res) => {
     );
   } catch (error) {
     res.status(500).json({
-      message: "Ошибка при получении топ блюд",
+      message: SERVER_ERORR_MESSAGE.ORDER_TOP_DISHES_ERROR,
       error: error.message,
     });
   }
@@ -406,8 +441,7 @@ export const createSampleOrders = async (req, res) => {
 
     if (!user || !restaurant || !dishes.length) {
       return res.status(400).json({
-        message:
-          "Недостаточно данных для генерации тестового заказа. Добавьте пользователя, ресторан и блюда.",
+        message: SERVER_ERORR_MESSAGE.ORDER_SEED_ERROR,
       });
     }
 
@@ -453,115 +487,7 @@ export const createSampleOrders = async (req, res) => {
     res.status(201).json(sampleOrder);
   } catch (error) {
     res.status(500).json({
-      message: "Ошибка при создании тестового заказа",
-      error: error.message,
-    });
-  }
-};
-
-export const createOrder = async (req, res) => {
-  try {
-    const {
-      customerName,
-      customerPhone,
-      customerEmail,
-      address,
-      notes,
-      deliveryPreferences,
-      paymentMethod,
-      items,
-    } = req.body;
-
-    if (!items || !items.length) {
-      return res.status(400).json({ message: "Cart is empty" });
-    }
-
-    if (!customerName || customerName.trim() === "") {
-      return res.status(400).json({ message: "Please provide your name" });
-    }
-
-    if (!customerPhone || customerPhone.trim() === "") {
-      return res
-        .status(400)
-        .json({ message: "Please provide your phone number" });
-    }
-
-    if (!address || address.trim() === "") {
-      return res
-        .status(400)
-        .json({ message: "Please provide your delivery address" });
-    }
-
-    const userId = req.user ? req.user._id : null;
-
-    const groupedOrders = {};
-    for (const item of items) {
-      const rId = item.restaurantId || "unknown";
-      if (!groupedOrders[rId]) {
-        groupedOrders[rId] = { restaurantId: rId, items: [], totalPrice: 0 };
-      }
-
-      let dishPrice = item.price;
-      try {
-        const dish = await Dish.findById(item.id);
-        if (dish) {
-          dishPrice = dish.price;
-        }
-      } catch (e) {
-        // Fallback to client price if id is invalid format or dish not found
-      }
-
-      const orderItem = {
-        dishId: item.id,
-        quantity: item.quantity,
-        price: dishPrice,
-      };
-
-      groupedOrders[rId].items.push(orderItem);
-      groupedOrders[rId].totalPrice += dishPrice * item.quantity;
-    }
-
-    const createdOrders = [];
-    for (const key in groupedOrders) {
-      if (key === "unknown" && groupedOrders[key].items.length > 0) {
-        try {
-          const firstDish = await Dish.findById(
-            groupedOrders[key].items[0].dishId,
-          );
-          if (firstDish) {
-            groupedOrders[key].restaurantId = firstDish.restaurantId;
-          }
-        } catch (e) {}
-      }
-
-      const orderData = {
-        userId,
-        customerName: customerName || "Guest",
-        customerPhone: customerPhone || "Not provided",
-        customerEmail: customerEmail || "",
-        restaurantId: groupedOrders[key].restaurantId,
-        items: groupedOrders[key].items,
-        totalPrice: groupedOrders[key].totalPrice,
-        address: address || "Not provided",
-        notes: notes || "",
-        deliveryPreferences: deliveryPreferences || [],
-        paymentMethod: paymentMethod || "Cash",
-        status: "pending",
-      };
-
-      // Only create if we resolved a valid restaurantId
-      if (orderData.restaurantId && orderData.restaurantId !== "unknown") {
-        const newOrder = await Order.create(orderData);
-        createdOrders.push(newOrder);
-      }
-    }
-
-    res
-      .status(201)
-      .json({ message: "Заказ успешно оформлен", orders: createdOrders });
-  } catch (error) {
-    res.status(500).json({
-      message: "Ошибка при оформлении заказа",
+      message: SERVER_ERORR_MESSAGE.ORDER_CREATE_ERROR,
       error: error.message,
     });
   }
@@ -571,6 +497,13 @@ export const updateOrderStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
+    const allowedStatuses = [
+      "pending",
+      "preparing",
+      "delivering",
+      "delivered",
+      "cancelled",
+    ];
 
     const validStatuses = [
       "pending",
@@ -587,14 +520,186 @@ export const updateOrderStatus = async (req, res) => {
       .populate("userId", "username fullName")
       .populate("restaurantId", "name");
 
-    if (!order) {
-      return res.status(404).json({ message: "Заказ не найден" });
+    if (!updatedOrder) {
+      return res
+        .status(404)
+        .json({ message: SERVER_ERORR_MESSAGE.ORDER_NOT_FOUND });
     }
 
-    res.status(200).json(order);
+    res.status(200).json(updatedOrder);
   } catch (error) {
     res.status(500).json({
-      message: "Ошибка при обновлении статуса заказа",
+      message: SERVER_ERORR_MESSAGE.ORDER_UPDATE_ERROR,
+      error: error.message,
+    });
+  }
+};
+
+export const createOrder = async (req, res) => {
+  try {
+    const body = req.body || {};
+    const customer = body.customer || {};
+    const delivery = body.delivery || {};
+    const preferences = body.preferences || {};
+    const payment = body.payment || {};
+    const items = Array.isArray(body.items) ? body.items : [];
+
+    const customerName =
+      body.customerName ||
+      [customer.firstName, customer.lastName].filter(Boolean).join(" ").trim();
+    const customerPhone = body.customerPhone || customer.phone;
+    const customerEmail = body.customerEmail || customer.email || "";
+    const address = body.address || delivery.address || "Not provided";
+    const notes = body.notes || preferences.notes || "";
+    const deliveryPreferences =
+      body.deliveryPreferences || preferences.deliveryPreferences || [];
+    const paymentMethod = body.paymentMethod || payment.method || "Cash";
+    const paymentStatus = body.paymentStatus || payment.status || "pending";
+    const stripePaymentIntentId =
+      body.stripePaymentIntentId || payment.stripePaymentIntentId || null;
+    const deliveryMethod = body.deliveryMethod || delivery.method || "delivery";
+
+    if (!items.length) {
+      return res
+        .status(400)
+        .json({ message: SERVER_ERORR_MESSAGE.ORDER_CART_EMPTY });
+    }
+
+    if (!customerName || customerName.trim() === "") {
+      return res
+        .status(400)
+        .json({ message: SERVER_ERORR_MESSAGE.ORDER_NAME_REQUIRED });
+    }
+
+    if (!customerPhone || customerPhone.trim() === "") {
+      return res
+        .status(400)
+        .json({ message: SERVER_ERORR_MESSAGE.ORDER_PHONE_REQUIRED });
+    }
+
+    if (!address || address.trim() === "") {
+      return res
+        .status(400)
+        .json({ message: SERVER_ERORR_MESSAGE.ORDER_ADDRESS_REQUIRED });
+    }
+
+    const userId = req.user ? req.user._id : null;
+
+    const groupedOrders = {};
+    let resolvedAnyValidRestaurant = false;
+
+    for (const item of items) {
+      const itemId = item.id || item._id;
+      const restaurantIdFromItem =
+        item.restaurantId || item.restaurant?.id || null;
+      const rId = restaurantIdFromItem || "unknown";
+
+      if (!groupedOrders[rId]) {
+        groupedOrders[rId] = { restaurantId: rId, items: [], totalPrice: 0 };
+      }
+
+      let dishPrice = Number(item.price) || 0;
+      let resolvedRestaurantId = restaurantIdFromItem;
+
+      try {
+        const dish = await Dish.findById(itemId);
+        if (dish) {
+          dishPrice = dish.price;
+          resolvedRestaurantId =
+            dish.restaurantId?.toString?.() || resolvedRestaurantId;
+        }
+      } catch (e) {
+        // Ignore invalid item IDs and fallback to other fields
+      }
+
+      if (resolvedRestaurantId && resolvedRestaurantId !== "unknown") {
+        resolvedAnyValidRestaurant = true;
+        groupedOrders[resolvedRestaurantId] = groupedOrders[
+          resolvedRestaurantId
+        ] || {
+          restaurantId: resolvedRestaurantId,
+          items: [],
+          totalPrice: 0,
+        };
+
+        const existingGroup = groupedOrders[resolvedRestaurantId];
+        existingGroup.items.push({
+          dishId: itemId,
+          quantity: Number(item.quantity) || 1,
+          price: dishPrice,
+        });
+        existingGroup.totalPrice += dishPrice * (Number(item.quantity) || 1);
+
+        if (rId !== resolvedRestaurantId) {
+          groupedOrders[rId].items = groupedOrders[rId].items.filter(
+            (orderItem) => orderItem.dishId !== itemId,
+          );
+        }
+      } else {
+        groupedOrders[rId].items.push({
+          dishId: itemId,
+          quantity: Number(item.quantity) || 1,
+          price: dishPrice,
+        });
+        groupedOrders[rId].totalPrice +=
+          dishPrice * (Number(item.quantity) || 1);
+      }
+    }
+
+    const createdOrders = [];
+    for (const key in groupedOrders) {
+      const group = groupedOrders[key];
+      let restaurantId = group.restaurantId;
+
+      if (key === "unknown" && group.items.length > 0) {
+        try {
+          const firstDish = await Dish.findById(group.items[0].dishId);
+          if (firstDish) {
+            restaurantId = firstDish.restaurantId;
+          }
+        } catch (e) {}
+      }
+
+      if (!restaurantId || restaurantId === "unknown") {
+        continue;
+      }
+
+      const orderData = {
+        orderNumber: await createOrderNumber(),
+        userId,
+        customerName: customerName || "Guest",
+        customerPhone: customerPhone || "Not provided",
+        customerEmail: customerEmail || "",
+        restaurantId,
+        items: group.items,
+        totalPrice: group.totalPrice,
+        address: address || "Not provided",
+        notes: notes || "",
+        deliveryPreferences: deliveryPreferences || [],
+        paymentMethod: paymentMethod || "Cash",
+        paymentStatus,
+        stripePaymentIntentId,
+        paymentCurrency: "usd",
+        deliveryMethod,
+        status: "pending",
+      };
+
+      const newOrder = await Order.create(orderData);
+      createdOrders.push(newOrder);
+    }
+
+    if (!createdOrders.length) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.ORDER_INVALID_CART,
+      });
+    }
+
+    res
+      .status(201)
+      .json({ message: "Order placed successfully", orders: createdOrders });
+  } catch (error) {
+    res.status(500).json({
+      message: SERVER_ERORR_MESSAGE.ORDER_CREATE_ERROR,
       error: error.message,
     });
   }

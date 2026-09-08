@@ -28,6 +28,52 @@ const fullOrderColumns = [
   "Action",
 ];
 
+const formatOrderTime = (value) => {
+  if (!value) return "Unknown";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(date);
+};
+
+const getOrderDisplayData = (order) => {
+  const customer =
+    typeof order.customer === "object" ? order.customer?.name : order.customer;
+  const restaurant =
+    typeof order.restaurant === "object"
+      ? order.restaurant?.name
+      : order.restaurant;
+  const payment =
+    typeof order.payment === "object"
+      ? order.payment?.method || order.payment?.status
+      : order.payment;
+  const courier =
+    typeof order.courier === "object" ? order.courier?.name : order.courier;
+  const total =
+    order.total ??
+    (order.totalPrice === undefined
+      ? undefined
+      : `$${Number(order.totalPrice || 0).toFixed(2)}`);
+  const time = order.time || order.placed || formatOrderTime(order.createdAt);
+
+  return {
+    id: order.orderNumber || order.id || order._id || "Unknown order",
+    customer: customer || order.customerName || "Unknown customer",
+    restaurant: restaurant || order.restaurantId?.name || "Unknown restaurant",
+    payment: payment || order.paymentMethod || "Not provided",
+    courier: courier || "Not assigned",
+    total: total || "$0.00",
+    time,
+    status: String(order.status).trim().toLowerCase(),
+  };
+};
+
 export function LiveOrdersTable({
   orders,
   filters = [],
@@ -43,7 +89,12 @@ export function LiveOrdersTable({
     if (activeFilter === "All") {
       return orders;
     }
-    return orders.filter((order) => order.status === activeFilter);
+    return orders.filter(
+      (order) =>
+        String(order.status || "pending")
+          .trim()
+          .toLowerCase() === activeFilter.toLowerCase(),
+    );
   }, [activeFilter, orders]);
 
   const visibleOrders = compact
@@ -91,70 +142,77 @@ export function LiveOrdersTable({
         <AdminTable
           columns={columns}
           rows={visibleOrders}
-          renderRow={(order) => (
-            <tr key={order.id} className="live-orders-row">
-              <td className="live-orders-row__cell live-orders-row__cell--first font-medium text-primary">
-                {order.id}
-              </td>
+          renderRow={(order) => {
+            const displayOrder = getOrderDisplayData(order);
+            const orderId = order._id || order.id || order.orderNumber;
 
-              <td className="live-orders-row__cell text-secondary">
-                {order.customer}
-              </td>
+            return (
+              <tr key={orderId} className="live-orders-row">
+                <td className="live-orders-row__cell live-orders-row__cell--first font-medium text-primary">
+                  {displayOrder.id}
+                </td>
 
-              <td className="live-orders-row__cell text-secondary">
-                {order.restaurant}
-              </td>
+                <td className="live-orders-row__cell text-secondary">
+                  {displayOrder.customer}
+                </td>
 
-              <td className="live-orders-row__cell">
-                {onUpdateStatus ? (
-                  <AdminSelect
-                    value={order.status}
-                    onChange={(e) => onUpdateStatus?.(order.id, e.target.value)}
-                    size="compact"
-                    aria-label={`Status for order ${order.id}`}
-                  >
-                    <option value="pending">pending</option>
-                    <option value="preparing">preparing</option>
-                    <option value="delivering">delivering</option>
-                    <option value="delivered">delivered</option>
-                    <option value="cancelled">cancelled</option>
-                  </AdminSelect>
-                ) : (
-                  <StatusBadge value={order.status} />
+                <td className="live-orders-row__cell text-secondary">
+                  {displayOrder.restaurant}
+                </td>
+
+                <td className="live-orders-row__cell">
+                  {onUpdateStatus ? (
+                    <AdminSelect
+                      value={displayOrder.status}
+                      onChange={(e) =>
+                        onUpdateStatus?.(orderId, e.target.value)
+                      }
+                      size="compact"
+                      aria-label={`Status for order ${displayOrder.id}`}
+                    >
+                      <option value="pending">pending</option>
+                      <option value="preparing">preparing</option>
+                      <option value="delivering">delivering</option>
+                      <option value="delivered">delivered</option>
+                      <option value="cancelled">cancelled</option>
+                    </AdminSelect>
+                  ) : (
+                    <StatusBadge value={displayOrder.status} />
+                  )}
+                </td>
+
+                {!compact && (
+                  <td className="live-orders-row__cell text-tertiary">
+                    {displayOrder.payment}
+                  </td>
                 )}
-              </td>
 
-              {!compact && (
-                <td className="live-orders-row__cell text-tertiary">
-                  {order.payment}
+                {!compact && (
+                  <td className="live-orders-row__cell text-tertiary">
+                    {displayOrder.courier}
+                  </td>
+                )}
+
+                <td className="live-orders-row__cell font-medium">
+                  {displayOrder.total}
                 </td>
-              )}
 
-              {!compact && (
-                <td className="live-orders-row__cell text-tertiary">
-                  {order.courier}
+                <td className="live-orders-row__cell text-quaternary">
+                  {displayOrder.time}
                 </td>
-              )}
 
-              <td className="live-orders-row__cell font-medium">
-                {order.total}
-              </td>
-
-              <td className="live-orders-row__cell text-quaternary">
-                {order.time}
-              </td>
-
-              <td className="live-orders-row__cell live-orders-row__cell--last">
-                <button
-                  type="button"
-                  className="live-orders-btn"
-                  onClick={() => onViewOrder?.(order)}
-                >
-                  View
-                </button>
-              </td>
-            </tr>
-          )}
+                <td className="live-orders-row__cell live-orders-row__cell--last">
+                  <button
+                    type="button"
+                    className="live-orders-btn"
+                    onClick={() => onViewOrder?.(order)}
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            );
+          }}
         />
       </div>
 

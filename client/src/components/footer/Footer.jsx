@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import "./Footer.scss";
 import { FooterColumn } from "./components/FooterColumn.jsx";
+import { FooterLanguageSwitcher } from "./components/FooterLanguageSwitcher.jsx";
 import { FooterSmallLinks } from "./components/FooterSmallLinks.jsx";
 
 export function Footer() {
@@ -38,6 +39,7 @@ export function Footer() {
           <small className="footer__copyright">{t("footer.copyright")}</small>
 
           <FooterSmallLinks />
+          <FooterLanguageSwitcher />
         </div>
       </div>
     </footer>

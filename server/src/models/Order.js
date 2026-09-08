@@ -26,6 +26,14 @@ const orderItemSchema = new mongoose.Schema(
 
 const orderSchema = new mongoose.Schema(
   {
+    orderNumber: {
+      type: String,
+      unique: true,
+      index: true,
+      sparse: true,
+      trim: true,
+    },
+
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -101,6 +109,24 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: "Cash",
     },
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "paid", "failed", "cash_on_delivery"],
+      default: "pending",
+    },
+    stripePaymentIntentId: {
+      type: String,
+      default: null,
+      index: true,
+    },
+    paymentCurrency: {
+      type: String,
+      default: "usd",
+    },
+    deliveryMethod: {
+      type: String,
+      default: "delivery",
+    },
   },
 
   {
@@ -108,4 +134,6 @@ const orderSchema = new mongoose.Schema(
   },
 );
 
-export default mongoose.model("Order", orderSchema);
+const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
+
+export default Order;

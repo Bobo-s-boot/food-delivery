@@ -17,7 +17,10 @@ export function TopSellingDishes({ dishes }) {
               : dish.revenue;
 
           return (
-            <div key={dish.name} className="top-selling-item">
+            <div
+              key={dish._id || dish.id || `dish-${index}`}
+              className="top-selling-item"
+            >
               <span className="top-selling-item__rank">{index + 1}</span>
 
               <div className="top-selling-item__info">
