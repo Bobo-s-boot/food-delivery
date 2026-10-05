@@ -6,6 +6,8 @@ export const CLIENT_ERROR_MESSAGES = {
   FAILED_TO_SEARCH_DISH: "Error searching dishes:",
   FAILED_TO_REGISTER: "Error registering user:",
   FAILED_TO_LOGIN: "Error logging in user:",
+  FAILED_TO_REQUEST_RESET: "Error requesting password reset:",
+  FAILED_TO_RESET_PASSWORD: "Error resetting password:",
 
   ERROR_GET_USERS: "Error getting users:",
   ERROR_ROLE_ADMIN: "You don't have admin role:",

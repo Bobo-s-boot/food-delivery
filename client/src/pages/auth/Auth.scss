@@ -155,15 +155,82 @@
   color: var(--color-white);
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.02em;
   width: 100%;
   text-align: left;
-  margin-bottom: 1rem;
-  white-space: nowrap;
+  margin-bottom: 0.75rem;
+  word-break: break-word;
 
   @media (min-width: 1024px) {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.auth-form__subtitle {
+  color: var(--color-text-light-soft, rgba(255, 255, 255, 0.75));
+  font-size: 0.875rem;
+  line-height: 1.45;
+  margin-top: -0.25rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.auth-form__code-box {
+  display: inline-block;
+  font-family: monospace;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 0.25rem 0.625rem;
+  background: rgba(34, 197, 94, 0.25);
+  border: 1px dashed rgba(34, 197, 94, 0.5);
+  border-radius: 0.5rem;
+  color: #86efac;
+  margin-top: 0.35rem;
+}
+
+.auth-form__resend-wrapper {
+  width: 100%;
+  text-align: right;
+  margin-top: -0.25rem;
+}
+
+.auth-form__edit-email-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  background: none;
+  border: none;
+  color: #86efac;
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+.auth-form__resend-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-white);
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  transition: color 0.2s ease, opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    color: var(--color-text-light-soft);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    text-decoration: none;
   }
 }
 
@@ -177,6 +244,19 @@
   border-radius: 1rem;
   text-align: center;
   font-size: 0.875rem;
+}
+
+.auth-form__success {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #bbf7d0;
+  border-radius: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.4;
 }
 
 .auth-form__body {
@@ -199,6 +279,10 @@
   letter-spacing: 0.02em;
   text-decoration: underline;
   text-underline-offset: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   transition: color 0.2s ease;
 
   &:hover {

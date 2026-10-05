@@ -1,11 +1,18 @@
 import express from "express";
 import passport from "passport";
-import { login, register } from "../controllers/authController.js";
+import {
+  forgotPassword,
+  login,
+  register,
+  resetPassword,
+} from "../controllers/authController.js";
 
 const router = express.Router();
 
 router.post("/register", register);
 router.post("/login", login);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);
 
 import jwt from "jsonwebtoken";
 

@@ -329,7 +329,26 @@
     "oauthParseError": "Не вдалося обробити користувача з OAuth callback.",
     "genericError": "Щось пішло не так",
     "or": "або",
-    "switchMode": "Переключити на {mode}"
+    "switchMode": "Переключити на {mode}",
+    "forgotPasswordTitle": "Скидання пароля",
+    "forgotPasswordSubtitle": "Введіть адресу електронної пошти для отримання коду підтвердження.",
+    "enterCodeSubtitle": "Введіть 6-значний код із листа та новий пароль для входу.",
+    "codeSentToEmail": "6-значний код підтвердження надіслано на {{email}}. Перевірте вашу поштову скриньку або папку Спам.",
+    "resendCodeCountdown": "Надіслати повторно через {{count}}с",
+    "changeEmail": "Змінити адресу пошти",
+    "resetCodePrompt": "6-значний код підтвердження надіслано на вашу пошту.",
+    "resetCodeLabel": "Код підтвердження",
+    "enterResetCode": "Введіть 6-значний код",
+    "newPassword": "Новий пароль",
+    "confirmNewPassword": "Підтвердіть новий пароль",
+    "sendResetCode": "Надіслати код на пошту",
+    "resetPasswordSubmit": "Змінити пароль",
+    "backToLogin": "Повернутися до входу",
+    "resendCode": "Надіслати код повторно",
+    "passwordTooShort": "Пароль має містити щонайменше 4 символи",
+    "usernameRequired": "Будь ласка, введіть електронну пошту або ім'я користувача",
+    "emailOrUsername": "Електронна пошта або логін",
+    "passwordResetSuccess": "Пароль успішно змінено! Тепер ви можете увійти."
   },
 
   "menu": {
