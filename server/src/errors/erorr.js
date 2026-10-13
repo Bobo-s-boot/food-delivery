@@ -14,6 +14,16 @@ export const SERVER_ERORR_MESSAGE = {
 
   ERROR_IN_LOGIN: "Error during login",
   INVALID_CREDENTIALS: "Invalid username or password",
+  RESET_CODE_SENT: "Verification code sent to your email",
+  RESET_CODE_INVALID: "Invalid reset code",
+  RESET_CODE_EXPIRED: "Reset code has expired",
+  EMAIL_NOT_CONFIGURED: "Email service is not configured. Please contact support.",
+  EMAIL_SEND_FAILED: "Failed to send verification email. Please try again later.",
+  USER_NO_EMAIL: "This account does not have a valid email address.",
+  OAUTH_USER_NO_PASSWORD:
+    "This account was registered using social login and does not have a local password",
+  PASSWORD_RESET_SUCCESS: "Password updated successfully",
+  PASSWORD_TOO_SHORT: "Password must be at least 4 characters long",
 
   DB_URI_ERROR: "MONGO_URI is not set",
   DB_CONNECTION_ERROR: "Error connect to data base",

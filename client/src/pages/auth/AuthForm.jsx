@@ -6,11 +6,13 @@ export function AuthForm({
   isLogin,
   formData,
   error,
+  successMessage,
   isLoading,
   showPassword,
   onChange,
   onSubmit,
   onTogglePassword,
+  onForgotPassword,
 }) {
   const { t } = useTranslation();
 
@@ -21,6 +23,9 @@ export function AuthForm({
       </h1>
 
       {error && <div className="auth-form__error">{error}</div>}
+      {successMessage && (
+        <div className="auth-form__success">{successMessage}</div>
+      )}
 
       <form onSubmit={onSubmit} className="auth-form__body">
         {!isLogin && (
@@ -63,9 +68,13 @@ export function AuthForm({
 
         {isLogin && (
           <div className="auth-form__forgot-wrapper">
-            <a href="#" className="auth-form__forgot-link">
+            <button
+              type="button"
+              onClick={onForgotPassword}
+              className="auth-form__forgot-link"
+            >
               {t("auth.forgotPassword")}
-            </a>
+            </button>
           </div>
         )}
 

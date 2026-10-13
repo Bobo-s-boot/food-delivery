@@ -5,14 +5,15 @@ import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
 const stripeSecretKey =
   process.env.STRIPE_SECRET_KEY || process.env.VITE_STRIPE_SECRET_KEY;
 
-if (!stripeSecretKey) {
-  throw new Error(SERVER_ERORR_MESSAGE.STRIPE_SECRET_KEY_ERROR);
-}
-
-const stripe = new Stripe(stripeSecretKey);
+const stripe = stripeSecretKey ? new Stripe(stripeSecretKey) : null;
 
 export const createPaymentIntent = async (req, res) => {
   try {
+    if (!stripe) {
+      return res
+        .status(500)
+        .json({ error: SERVER_ERORR_MESSAGE.STRIPE_SECRET_KEY_ERROR });
+    }
     const { amount, currency = "usd", metadata = {} } = req.body || {};
 
     if (!amount || Number(amount) <= 0) {
@@ -42,6 +43,12 @@ export const createPaymentIntent = async (req, res) => {
 
 export const handleStripeWebhook = async (req, res) => {
   try {
+    if (!stripe) {
+      return res
+        .status(500)
+        .json({ error: SERVER_ERORR_MESSAGE.STRIPE_SECRET_KEY_ERROR });
+    }
+
     const signature = req.headers["stripe-signature"];
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
