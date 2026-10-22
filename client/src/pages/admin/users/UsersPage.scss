@@ -44,9 +44,10 @@
     gap: 0.75rem;
 
     @media (min-width: 920px) {
-      grid-template-columns: minmax(18rem, 1fr) auto auto;
+      grid-template-columns: minmax(16rem, 1fr) 16rem 12rem;
       align-items: center;
     }
+    > .admin-select { width: 100%; min-width: 0; }
   }
 
   &__search,

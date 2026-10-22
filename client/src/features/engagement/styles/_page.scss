@@ -1,0 +1,181 @@
+@font-face {
+  font-family: "Engagement Lora";
+  src: url("/fonts/engagement-lora-italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+.eng-page {
+  --eng-surface: var(--color-bg-soft-strong);
+  --eng-accent-ink: #0d1a2d;
+  --eng-error-text: #be123c;
+  --eng-error-border: #be123c;
+  --eng-error-surface: var(--color-bg-danger-soft);
+  width: 100%; padding: 0 32px 96px;
+  background: var(--color-bg-body); color: var(--color-text-strong);
+  font: 400 16px / 1.7 var(--font-family-base);
+  :is(h1, h2, h3, p, figure) { margin: 0; }
+  :is(h1, h2, h3) { text-wrap: balance; }
+  p { max-width: 40rem; }
+  a { color: inherit; text-underline-offset: 4px; }
+  ::selection { background: var(--color-bg-accent); color: var(--eng-accent-ink); }
+  :is(button, a, input, select, textarea, [tabindex]):focus-visible { outline: 3px solid var(--color-info); outline-offset: 4px; }
+  :is(input, textarea) { caret-color: var(--color-text-strong); }
+}
+.eng-breadcrumb {
+  padding: 20px 8px 24px; font-size: 13px; line-height: 1.5;
+  ol { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  li { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  a { padding: 8px 0; color: var(--color-text-secondary); text-decoration: none; }
+  a:hover { color: var(--color-text-strong); text-decoration: underline; }
+  svg { flex-shrink: 0; color: var(--color-text-secondary); }
+  [aria-current] { padding: 4px 8px; border-radius: 8px; background: var(--color-bg-soft); font-weight: 600; }
+}
+.eng-hero {
+  display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 48px; min-width: 0;
+  &__copy { padding: 48px 0 48px 32px; min-width: 0; }
+  h1 { max-width: 16ch; font-size: clamp(48px, 5.8vw, 96px); line-height: 1.04; letter-spacing: -0.04em; font-weight: 500; }
+  h1 > span { display: block; font-family: "Engagement Lora", Georgia, serif; font-style: italic; letter-spacing: -0.04em; }
+  &__copy > p { margin-top: 24px; color: var(--color-text-secondary); max-width: 34rem; font-size: 18px; line-height: 1.65; }
+  &__copy > .eng-hero__note { margin-top: 16px; font-size: 13px; }
+  &__visual { position: relative; align-self: stretch; min-height: 480px; border-radius: 40px; overflow: hidden; background: var(--eng-surface); }
+  &__visual img { display: block; width: 100%; height: 100%; min-height: 480px; object-fit: cover; }
+  &__visual figcaption { position: absolute; bottom: 24px; left: 24px; right: 24px; display: flex; align-items: center; gap: 16px; padding: 20px 24px; border-radius: 16px; background: var(--color-bg-brand); color: var(--color-text-inverted); font-size: 15px; line-height: 1.5; }
+  &__visual figcaption svg { flex-shrink: 0; color: var(--color-bg-accent); }
+  &--careers { gap: 0; background: var(--color-bg-brand); color: var(--color-text-inverted); border-radius: 28px; overflow: hidden; }
+  &--careers .eng-hero__copy { padding: 64px 48px; }
+  &--careers h1 > span { color: var(--color-bg-accent); }
+  &--careers .eng-hero__copy > p { color: var(--color-text-card-muted); }
+  &--careers .eng-hero__visual { border-radius: 0; }
+  &--careers .eng-hero__visual img { min-height: 560px; }
+  &--careers .eng-hero__visual figcaption { background: var(--color-bg-accent); color: var(--eng-accent-ink); }
+  &--careers .eng-button { background: var(--color-bg-accent); color: var(--eng-accent-ink); }
+  &--careers .eng-button:hover { background: var(--color-text-inverted); }
+  &--careers .eng-button--secondary { background: transparent; color: var(--color-text-inverted); border-color: var(--color-text-secondary); }
+  &--careers .eng-button--secondary:hover { background: var(--color-bg-brand-strong); }
+  &--vacancy { grid-template-columns: 1.25fr 1fr; }
+  &--vacancy h1 { font-size: clamp(40px, 4.6vw, 72px); max-width: 19ch; }
+  &--vacancy .eng-hero__visual, &--vacancy .eng-hero__visual img { min-height: 400px; }
+}
+.eng-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.eng-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 48px; padding: 12px 24px;
+  border: 1px solid transparent; border-radius: 12px; background: var(--color-bg-brand); color: var(--color-text-inverted);
+  font: 600 14px / 1.5 var(--font-family-base); text-decoration: none; cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+  svg { flex-shrink: 0; }
+  &:hover { background: var(--color-bg-brand-strong); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+  &--secondary { color: var(--color-text-strong); background: transparent; border-color: var(--color-border-muted); }
+  &--secondary:hover { background: var(--color-bg-soft); border-color: var(--color-text-secondary); }
+}
+.eng-page a.eng-button { color: var(--color-text-inverted); }
+.eng-page a.eng-button--secondary { color: var(--color-text-strong); }
+.eng-hero--careers a.eng-button--secondary { color: var(--color-text-inverted); }
+.eng-text-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 14px; font-weight: 600; text-decoration: underline; }
+.eng-text-link:hover { text-decoration-thickness: 2px; }
+.eng-partner-hero {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 48px 32px; padding: 48px 32px 0;
+  h1 { grid-column: 1 / -1; font-size: clamp(72px, 8vw, 160px); font-weight: 500; line-height: 1.03; letter-spacing: -0.04em; }
+  &__lead { display: block; }
+  &__accent { display: block; margin: 12px 0 0; font: italic 500 0.9em / 1.08 "Engagement Lora", Georgia, serif; text-align: right; }
+  &__intro { grid-column: 1 / 6; grid-row: 2; align-self: start; padding: 40px 0; }
+  &__intro > p { max-width: 30rem; color: var(--color-text-secondary); font-size: 18px; line-height: 1.65; }
+  .eng-actions { gap: 12px; }
+  figure { grid-column: 6 / -1; grid-row: 2; border-radius: 40px; overflow: hidden; }
+  img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; object-position: center top; }
+}
+.eng-career-hero {
+  padding-top: 48px;
+  h1 { padding: 0 32px 40px; font-size: clamp(72px, 8vw, 160px); font-weight: 500; line-height: 1.03; letter-spacing: -0.04em; }
+  &__lead { display: block; }
+  &__accent { display: block; margin-top: 12px; font: italic 500 0.9em / 1.08 "Engagement Lora", Georgia, serif; text-align: right; }
+  &__scene { position: relative; border-radius: 40px; overflow: hidden; background: var(--color-bg-brand); }
+  &__scene > img { display: block; width: 100%; height: clamp(480px, 30vw, 600px); object-fit: cover; object-position: 50% 40%; }
+  &__intro { position: absolute; left: 0; bottom: 0; width: min(38%, 480px); min-width: 360px; padding: 32px; border-radius: 0 28px 0 0; background: var(--color-bg-brand); color: var(--color-text-inverted); }
+  &__intro p { max-width: 28rem; font-size: 16px; line-height: 1.65; }
+  .eng-actions { align-items: center; margin-top: 24px; }
+  .eng-button { background: var(--color-bg-surface); color: var(--color-text-strong); }
+  .eng-button:hover { background: var(--color-border-muted); }
+}
+.eng-partner-benefits {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; margin-top: 120px; padding: 56px; background: var(--eng-surface); border-radius: 28px;
+  h2 { max-width: 18ch; font-size: clamp(36px, 3.6vw, 56px); font-weight: 500; line-height: 1.08; letter-spacing: -0.035em; }
+  &__heading > p { margin-top: 24px; color: var(--color-text-secondary); max-width: 30rem; }
+  &__heading .eng-button { margin-top: 32px; }
+  &__responsibilities { height: 100%; display: grid; grid-template-rows: 1fr 1fr; }
+  &__responsibilities article { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-content: center; gap: 24px; padding: 32px 0; }
+  &__responsibilities article + article { border-top: 1px solid var(--color-border-muted); }
+  h3 { font-size: 26px; font-weight: 500; line-height: 1.2; letter-spacing: -0.025em; }
+  article p { margin-top: 12px; color: var(--color-text-secondary); max-width: 30rem; }
+}
+@media (min-width: 1440px) {
+  .eng-partner-hero h1 > span, .eng-career-hero h1 > span { white-space: nowrap; }
+}
+.eng-handoff {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 48px; padding: 32px 0; border-top: 1px solid var(--color-border-muted); border-bottom: 1px solid var(--color-border-muted);
+  > div { display: flex; gap: 20px; align-items: flex-start; }
+  svg { flex-shrink: 0; margin-top: 4px; }
+  strong, span { display: block; }
+  strong { margin-bottom: 4px; font-weight: 600; }
+  span { color: var(--color-text-secondary); font-size: 14px; }
+}
+.eng-section {
+  margin-top: 96px; padding: 0 32px; min-width: 0; scroll-margin-top: 32px;
+  &__heading { margin-bottom: 32px; }
+  &__heading h2 { max-width: 22ch; font-size: clamp(32px, 3.5vw, 52px); font-weight: 500; line-height: 1.12; letter-spacing: -0.035em; }
+  &__heading > p { margin-top: 16px; color: var(--color-text-secondary); }
+  &__body { min-width: 0; }
+  &--split { display: grid; grid-template-columns: 0.9fr 1.3fr; gap: 80px; }
+  &--split .eng-section__heading { margin-bottom: 0; }
+  &--benefits .eng-section__heading, &--vacancies .eng-section__heading { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 40px; }
+  &--benefits .eng-section__heading > p, &--vacancies .eng-section__heading > p { margin: 0; max-width: 32rem; }
+}
+.eng-benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+.eng-benefit {
+  border-top: 1px solid var(--color-border-muted); padding-top: 24px;
+  h3 { font-size: 24px; font-weight: 500; line-height: 1.3; letter-spacing: -0.02em; margin-bottom: 12px; }
+  p { color: var(--color-text-secondary); }
+  .eng-item-icon { margin-bottom: 20px; }
+}
+.eng-item-icon { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 40px; width: 40px; height: 40px; color: var(--color-text-strong); }
+.eng-shared-order {
+  display: grid; grid-template-columns: 1fr 1fr; margin-top: 96px; background: var(--color-bg-brand); color: var(--color-text-inverted); border-radius: 28px; overflow: hidden;
+  &__visual { position: relative; min-height: 520px; }
+  &__visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  &__visual figcaption { position: absolute; inset: auto 0 0; padding: 16px 24px; background: var(--color-bg-brand); color: var(--color-text-card-muted); font-size: 13px; }
+  &__copy { padding: 64px; align-self: center; }
+  h2 { font-size: clamp(36px, 3.8vw, 60px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 500; }
+  h2 span { display: block; color: var(--color-bg-accent); font: italic 500 1em / 1.2 "Engagement Lora", Georgia, serif; }
+  p { margin-top: 24px; color: var(--color-text-card-muted); }
+  .eng-text-link { margin-top: 24px; color: var(--color-text-inverted); }
+  .eng-button { margin: 32px 20px 0 0; background: var(--color-bg-accent); color: var(--eng-accent-ink); }
+  .eng-button:hover { background: var(--color-text-inverted); }
+}
+.eng-partner-process {
+  background: transparent !important; padding: 0 32px !important; gap: 96px;
+  .eng-section__heading { align-self: start; position: sticky; top: 32px; }
+  .eng-section__heading .eng-button { margin-top: 28px; }
+  .eng-step { padding: 32px 0; }
+  .eng-step:first-child { padding-top: 0; }
+}
+.eng-process {
+  display: grid; grid-template-columns: 0.9fr 1.2fr; gap: 80px; padding: 56px; border-radius: 28px; background: var(--color-bg-brand); color: var(--color-text-inverted);
+  .eng-section__heading { margin: 0; }
+  .eng-section__heading > p, .eng-step p { color: var(--color-text-card-muted); }
+  .eng-item-icon { color: var(--color-bg-accent); }
+  .eng-step { border-color: var(--color-text-secondary); }
+  &--light { background: var(--color-bg-soft-strong); color: var(--color-text-strong); }
+  &--light .eng-section__heading > p, &--light .eng-step p { color: var(--color-text-secondary); }
+  &--light .eng-item-icon { color: var(--color-text-strong); }
+  &--light .eng-step { border-color: var(--color-border-muted); }
+}
+.eng-steps { margin: 0; padding: 0; list-style: none; }
+.eng-step {
+  display: flex; align-items: flex-start; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--color-border-muted);
+  &:first-child { padding-top: 0; }
+  &:last-child { border-bottom: 0; padding-bottom: 0; }
+  h3 { margin-bottom: 8px; font-size: 22px; font-weight: 500; line-height: 1.4; }
+  p { color: var(--color-text-secondary); }
+  .eng-item-icon { font-size: 24px; line-height: 1.5; font-weight: 500; }
+}

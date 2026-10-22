@@ -107,6 +107,7 @@ function DirectoryPagination({ pagination, pageSizeOptions, onPageChange, onPage
             value={String(pagination.pageSize)}
             onChange={(event) => onPageSizeChange(event.target.value)}
             aria-label="Restaurants per page"
+            size="compact"
           >
             {pageSizeOptions.map((size) => <option key={size} value={size}>{size}</option>)}
           </AdminSelect>
@@ -168,6 +169,7 @@ export function RestaurantDirectory({
             onChange={(event) => onStateChange({ search: event.target.value, page: 1 })}
             placeholder="Search by restaurant name, cuisine or location..."
             aria-label="Search restaurants"
+            className="admin-table-search"
           />
           <AdminSelect value={state.partnership} onChange={(event) => onStateChange({ partnership: event.target.value, page: 1 })} aria-label="Partnership status">
             {partnershipOptions.map((option) => <option key={option}>{option}</option>)}

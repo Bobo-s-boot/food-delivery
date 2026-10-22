@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { CheckCircle2, CircleAlert, X } from "lucide-react";
 import "./AppToast.scss";
 
-export function AppToast({ notification, onDismiss }) {
+export function AppToast({ notification, onDismiss, className = "" }) {
   const [isVisible, setIsVisible] = useState(false);
   const dismissTimerRef = useRef(null);
   const exitTimerRef = useRef(null);
@@ -39,7 +39,7 @@ export function AppToast({ notification, onDismiss }) {
     <div
       className={`app-toast app-toast--${notification.tone || "success"} ${
         isVisible ? "app-toast--visible" : ""
-      }`}
+      } ${className}`}
       role={notification.tone === "error" ? "alert" : "status"}
       aria-live={notification.tone === "error" ? "assertive" : "polite"}
       onMouseEnter={() => clearTimeout(dismissTimerRef.current)}

@@ -10,6 +10,8 @@ import { HeaderNav } from "./components/HeaderNav.jsx";
 import { HeaderSearchBox } from "./components/HeaderSearchBox.jsx";
 import { HeaderSearchDropdown } from "./components/HeaderSearchDropdown.jsx";
 import { HeaderButtons } from "./components/HeaderButtons.jsx";
+import { HeaderLanguageSwitcher } from "./components/HeaderLanguageSwitcher.jsx";
+import { Search, X } from "lucide-react";
 import "./Header.scss";
 
 export function Header() {
@@ -23,7 +25,10 @@ export function Header() {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const searchRef = useRef(null);
+  const searchInputRef = useRef(null);
+  const searchToggleRef = useRef(null);
   const debouncedSearchValue = useDebounce(searchValue, 400);
 
   const handleLogout = () => {
@@ -82,6 +87,7 @@ export function Header() {
     const handleClickOutside = (event) => {
       if (!searchRef.current?.contains(event.target)) {
         setIsOpen(false);
+        setIsSearchExpanded(false);
       }
     };
 
@@ -99,12 +105,13 @@ export function Header() {
     setSearchValue("");
     setResults([]);
     setIsOpen(false);
+    setIsSearchExpanded(false);
   };
 
   const showDropdown = isOpen && searchValue.trim().length > 0;
 
   return (
-    <header className="header">
+    <header className="header header--with-language">
       <div className="header__start">
         <div
           className="header__brand"
@@ -116,8 +123,26 @@ export function Header() {
       </div>
 
       <div className="header__actions">
-        <div ref={searchRef} className="header__search">
+        <div ref={searchRef} className={`header__search${isSearchExpanded ? " header__search--expanded" : ""}`}
+          onKeyDown={(event) => {
+            if (event.key === "Escape" && isSearchExpanded) {
+              setIsSearchExpanded(false);
+              setIsOpen(false);
+              searchToggleRef.current?.focus();
+            }
+          }}>
+          <button ref={searchToggleRef} type="button" className="header__search-toggle"
+            aria-label={t("nav.searchPlaceholder")} aria-expanded={isSearchExpanded} aria-controls="header-search-panel"
+            onClick={() => {
+              setIsSearchExpanded((expanded) => !expanded);
+              if (!isSearchExpanded) requestAnimationFrame(() => searchInputRef.current?.focus());
+              else setIsOpen(false);
+            }}>
+            {isSearchExpanded ? <X size={20} aria-hidden="true" /> : <Search size={20} aria-hidden="true" />}
+          </button>
+          <div className="header__search-panel" id="header-search-panel">
           <HeaderSearchBox
+            inputRef={searchInputRef}
             value={searchValue}
             onChange={setSearchValue}
             onFocus={() => setIsOpen(true)}
@@ -132,7 +157,10 @@ export function Header() {
               translate={t}
             />
           )}
+          </div>
         </div>
+
+        <HeaderLanguageSwitcher />
 
         <HeaderButtons
           totals={totals}

@@ -109,6 +109,7 @@ function MenuEditor({
           Platform category
           <AdminSelect
             name="platformCategory"
+            aria-label="Platform category"
             defaultValue={item?.platformCategory || "Burgers"}
             fluid
             disabled={isSubmitting}
@@ -144,6 +145,7 @@ function MenuEditor({
           Availability
           <AdminSelect
             name="availability"
+            aria-label="Availability"
             defaultValue={item?.availability || "Available"}
             fluid
             disabled={isSubmitting}
@@ -268,6 +270,7 @@ export function MenuTab({
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Search menu items..."
+            className="admin-table-search"
           />
           <AdminSelect
             value={category}

@@ -1,0 +1,46 @@
+.hiring-list-update { display: block; margin-top: 4px; font-size: 12px; color: var(--color-text-secondary); }
+.hiring-wizard-status { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 20px 0; font-size: 13px; color: var(--color-text-secondary); }
+.hiring-steps {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 24px 0;
+  > button { justify-content: flex-start; text-align: left; padding: 14px; background: transparent; border-color: transparent; font-weight: 400; }
+  > button[aria-current="step"] { background: var(--color-bg-surface); border-color: var(--color-border-muted); color: var(--color-text-strong); }
+  strong, small { display: block; }
+  strong { font-size: 13px; font-weight: 600; }
+  small { margin-top: 3px; color: var(--color-text-secondary); font-size: 12px; }
+  &__number { display: grid; place-items: center; flex-shrink: 0; width: 30px; height: 30px; border: 1px solid var(--color-border-muted); border-radius: 50%; font-size: 13px; }
+  [aria-current="step"] &__number { background: var(--color-text-strong); border-color: var(--color-text-strong); color: var(--color-bg-surface); }
+}
+.hiring-wizard-panel {
+  .hiring-field { margin-bottom: 6px; }
+  .hiring-field select { min-height: 48px; width: 100%; box-sizing: border-box; border: 1px solid var(--color-border-muted); border-radius: 12px; background: var(--color-bg-surface); color: var(--color-text-primary); padding: 12px; font: inherit; font-size: 14px; }
+  textarea { line-height: 1.65; }
+  .hiring-form-grid > p { margin: 0; }
+}
+.hiring-wizard-heading { margin-bottom: 28px; h2 { font-size: 22px; line-height: 1.3; margin: 0; } p { margin: 8px 0 0; max-width: 65ch; font-size: 14px; color: var(--color-text-secondary); } h2:focus { outline: none; } }
+.hiring-wizard-help { max-width: 70ch; font-size: 14px; line-height: 1.65; color: var(--color-text-secondary); margin: 0 0 24px; }
+.hiring-wizard-count { display: block; text-align: right; font-size: 12px; color: var(--color-text-secondary); margin-top: 6px; }
+.hiring-wizard-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 20px 0; margin: 12px 0; border-bottom: 1px solid var(--color-border-muted); > div { display: flex; flex-wrap: wrap; gap: 10px; } }
+.hiring-publication-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+.hiring-image-choice { display: flex; flex-wrap: wrap; border: 0; padding: 0; gap: 16px 28px; margin: 0 0 20px; legend { font-weight: 600; font-size: 15px; margin-bottom: 16px; } label { display: inline-flex; gap: 10px; align-items: center; font-size: 14px; cursor: pointer; } }
+.hiring-media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px; margin-bottom: 24px; }
+.hiring-upload { min-width: 0; padding: 20px; border: 1px dashed var(--color-border-muted); border-radius: 12px; h3 { margin: 0 0 16px; font-size: 16px; } img { width: 100%; max-height: 240px; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 16px; } input { display: block; width: 100%; font: inherit; font-size: 13px; } button { margin-top: 14px; } input::file-selector-button { border: 1px solid var(--color-border-muted); border-radius: 8px; padding: 10px 12px; background: var(--color-bg-soft); color: var(--color-text-strong); font: inherit; margin-right: 10px; cursor: pointer; } }
+.hiring-wizard-switches { display: grid; gap: 16px; margin-bottom: 24px; }
+.hiring-faq-editor { padding: 24px 0; border-top: 1px solid var(--color-border-muted); h4 { margin: 0 0 16px; font-size: 14px; } &__heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; h3 { margin: 0; font-size: 17px; } > div { display: flex; flex-wrap: wrap; gap: 8px; } button { padding: 8px 12px; } } }
+.hiring-review-languages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-bottom: 28px; > section { padding: 20px 0; border-top: 1px solid var(--color-border-muted); } h3 { margin: 0; font-size: 18px; } p { color: var(--color-text-secondary); font-size: 14px; } label { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.6; margin-top: 20px; cursor: pointer; } input { margin-top: 5px; flex-shrink: 0; } }
+.hiring-review-gaps { margin: 24px 0; padding: 20px; border-radius: 12px; background: var(--color-bg-soft); h3 { margin: 0 0 12px; font-size: 16px; } ul { padding-left: 20px; } button { min-height: 36px; padding: 4px 0; border: 0; background: transparent; font-size: 13px; font-weight: 400; text-align: left; justify-content: flex-start; text-decoration: underline; text-underline-offset: 3px; } }
+.hiring-publish-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 28px; span { max-width: 48ch; font-size: 13px; color: var(--color-text-secondary); } }
+.hiring-hover-help { position: relative; display: inline-flex; flex-shrink: 0; > button { min-height: 28px; min-width: 28px; padding: 4px; border: 0; background: transparent; color: var(--color-text-secondary); } > small { position: absolute; top: 100%; right: 0; width: min(320px, 75vw); z-index: 50; padding: 14px; background: var(--color-bg-surface); color: var(--color-text-primary); border: 1px solid var(--color-border-muted); border-radius: 10px; font-size: 13px; line-height: 1.6; box-shadow: 0 8px 24px rgba(13, 26, 45, 0.12); font-weight: 400; } }
+.hiring-preview-dialog {
+  padding: 0; width: min(1280px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); border: 1px solid var(--color-border-muted); border-radius: 16px; background: var(--color-bg-surface); color: var(--color-text-primary);
+  &::backdrop { background: rgba(13, 26, 45, 0.5); }
+  .hiring-preview-toolbar { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 18px 24px; border-bottom: 1px solid var(--color-border-muted); background: var(--color-bg-surface); z-index: 20; strong { display: block; font-size: 16px; } small { display: block; color: var(--color-text-secondary); margin-top: 4px; font-size: 12px; } button { min-height: 40px; padding: 8px 14px; } button[aria-pressed="true"] { background: var(--color-text-strong); color: var(--color-bg-surface); } }
+  .hiring-preview-body { padding: 24px; }
+  .eng-page { margin: 0 auto; }
+  .eng-role-sidebar { position: static; }
+  .eng-job-hero { padding: 32px; }
+  .eng-job-hero h1 { font-size: clamp(30px, 4vw, 64px); }
+  .eng-role-layout { gap: 32px; padding: 0; }
+  .eng-form-section { grid-template-columns: 1fr; }
+}
+@media (max-width: 1050px) { .hiring-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .hiring-preview-dialog .eng-role-layout { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .hiring-steps { gap: 4px; > button { padding: 10px 8px; gap: 8px; } strong { font-size: 12px; } } .hiring-review-languages { grid-template-columns: 1fr; gap: 8px; } .hiring-faq-editor__heading { align-items: flex-start; flex-direction: column; } .hiring-preview-dialog { width: calc(100vw - 12px); max-height: calc(100dvh - 12px); .hiring-preview-body { padding: 12px; } .hiring-preview-toolbar { padding: 12px; } .eng-job-hero { padding: 24px 16px; grid-template-columns: 1fr; } } }

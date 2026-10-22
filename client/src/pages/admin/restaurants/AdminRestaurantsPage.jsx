@@ -108,6 +108,7 @@ function RestaurantCreateDialog({
               Restaurant
               <AdminSelect
                 value={selectedRestaurant}
+                aria-label="Restaurant"
                 onChange={(event) => setSelectedRestaurant(event.target.value)}
                 fluid
               >
@@ -178,6 +179,7 @@ function RestaurantCreateDialog({
               Partnership status
               <AdminSelect
                 name="status"
+                aria-label="Partnership status"
                 defaultValue="Pending approval"
                 fluid
                 disabled={isSubmitting}

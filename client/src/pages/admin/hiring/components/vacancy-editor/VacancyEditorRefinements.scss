@@ -1,0 +1,86 @@
+// Vacancy-editor-specific refinements; shared controls live in AdminSelectControl.scss.
+.hiring-vacancy-editor {
+  .hiring-field > :is(input, textarea):focus,
+  .engagement-select > button:focus,
+  .engagement-select > button[aria-expanded="true"] {
+    outline: none;
+    outline-offset: 0;
+    box-shadow: none;
+    border-color: var(--color-text-strong);
+  }
+  .hiring-field > :is(input, textarea)[aria-invalid="true"],
+  .engagement-select > button[aria-invalid="true"] {
+    border-color: var(--danger-border);
+  }
+  .hiring-heading { margin-bottom: 20px; }
+  .hiring-editor-toolbar {
+    position: sticky;
+    top: 12px;
+    z-index: 40;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-muted);
+    border-radius: 16px;
+    > * { min-width: 0; }
+    button, .hiring-button { min-height: 42px; padding: 10px 14px; font-size: 13px; }
+  }
+  .hiring-editor-status { flex: 0 0 150px; }
+  .hiring-editor-status .engagement-select > button { font-weight: 600; }
+  .hiring-editor-view-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .hiring-editor-save { margin-left: auto; }
+  .hiring-editor-save__buttons { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 8px; }
+  .hiring-editor-more {
+    position: relative;
+    flex: 0 0 auto;
+    summary { display: flex; align-items: center; justify-content: center; width: 42px; min-height: 42px; box-sizing: border-box; padding: 10px; border: 1px solid var(--color-border-muted); cursor: pointer; border-radius: 12px; list-style: none; color: var(--color-text-strong); }
+    summary::-webkit-details-marker { display: none; }
+    summary:hover, &[open] summary { background: var(--color-bg-soft); }
+    summary[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+    > div { position: absolute; top: calc(100% + 8px); right: 0; width: min(240px, calc(100vw - 48px)); box-sizing: border-box; padding: 6px; border: 1px solid var(--color-border-muted); background: var(--color-bg-surface); border-radius: 12px; box-shadow: 0 8px 24px rgba(13, 26, 45, 0.07); }
+    button { width: 100%; justify-content: flex-start; text-align: left; background: transparent; border: 0; border-radius: 8px; }
+    button:hover { background: var(--color-bg-soft); }
+    .hiring-editor-delete { color: var(--danger-text); }
+    .hiring-editor-delete:not(:first-child) { margin-top: 6px; border-top: 1px solid var(--color-border-muted); border-radius: 0 0 8px 8px; }
+  }
+  .hiring-steps {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin: 16px 0;
+    gap: 4px;
+    > button { padding: 10px 8px; gap: 8px; align-items: flex-start; }
+    strong { font-size: 12px; line-height: 1.4; }
+    small { margin-top: 2px; font-size: 11px; }
+    .hiring-steps__number { width: 24px; height: 24px; font-size: 12px; }
+  }
+  .hiring-wizard-heading { margin-bottom: 20px; h2 { font-size: 20px; } p { margin-top: 6px; } }
+  .hiring-wizard-panel textarea { height: 200px; min-height: 200px; resize: vertical; box-sizing: border-box; }
+  .hiring-wizard-panel .hiring-field { margin-bottom: 0; }
+  .hiring-wizard-panel .engagement-select { width: 100%; }
+  .hiring-review-languages input[aria-invalid="true"] { outline: 2px solid var(--danger-border); outline-offset: 2px; }
+  .hiring-wizard-footer { border-bottom: 0; margin: 0; padding: 20px 0 8px; align-items: center; }
+}
+.hiring-toast {
+  border: 1px solid var(--color-border-muted);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(13, 26, 45, 0.1);
+  font-family: var(--font-family-base);
+  .app-toast__copy strong { color: var(--color-text-strong); }
+}
+@media (max-width: 1150px) {
+  .hiring-vacancy-editor .hiring-editor-view-actions { order: 4; flex: 1 1 100%; }
+  .hiring-vacancy-editor .hiring-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .hiring-vacancy-editor .hiring-editor-toolbar { position: relative; top: 0; padding: 10px; gap: 8px; }
+  .hiring-vacancy-editor .hiring-editor-status { flex: 1 1 90px; }
+  .hiring-vacancy-editor .hiring-editor-save { flex: 1 1 110px; margin-left: 0; }
+  .hiring-vacancy-editor .hiring-editor-save__buttons { gap: 4px; }
+  .hiring-vacancy-editor .hiring-editor-save__buttons > button { flex: 1; padding: 10px 8px; }
+  .hiring-vacancy-editor .hiring-editor-view-actions > * { flex: 1; }
+  .hiring-vacancy-editor .hiring-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hiring-vacancy-editor .hiring-wizard-footer > div { flex: 1; }
+  .hiring-vacancy-editor .hiring-wizard-footer button { padding: 10px 12px; }
+}

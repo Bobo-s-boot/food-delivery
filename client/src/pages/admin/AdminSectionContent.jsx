@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { AdminDashboardPage } from "./dashboard/AdminDashboardPage";
 import { AdminFinancePage } from "./finance/AdminFinancePage";
 import { LegacyDishesSection } from "./live/LegacyDishesSection";
@@ -5,6 +6,13 @@ import { AdminOrdersPage } from "./orders/AdminOrdersPage";
 import { AdminRestaurantsPage } from "./restaurants/AdminRestaurantsPage";
 import { AdminSupportPage } from "./support/AdminSupportPage";
 import { AdminUsersPage } from "./users/AdminUsersPage";
+
+const AdminHiringPage = lazy(() =>
+  import("./hiring/AdminHiringPage").then((module) => ({ default: module.AdminHiringPage })),
+);
+const AdminPartnerships = lazy(() =>
+  import("./partnerships/AdminPartnerships").then((module) => ({ default: module.AdminPartnerships })),
+);
 
 export function AdminSectionContent({ section, workspace }) {
   return (
@@ -45,6 +53,16 @@ export function AdminSectionContent({ section, workspace }) {
       )}
       {section === "finance" && <AdminFinancePage />}
       {section === "support" && <AdminSupportPage />}
+      {section === "hiring" && (
+        <Suspense fallback={<p role="status">Loading Hiring…</p>}>
+          <AdminHiringPage />
+        </Suspense>
+      )}
+      {section === "partnerships" && (
+        <Suspense fallback={<p role="status">Loading Partnerships…</p>}>
+          <AdminPartnerships />
+        </Suspense>
+      )}
     </>
   );
 }

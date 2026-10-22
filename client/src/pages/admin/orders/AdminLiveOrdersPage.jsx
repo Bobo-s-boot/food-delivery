@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, ShoppingBag, MapPin } from "lucide-react";
 import { LiveOrdersTable } from "../components/LiveOrdersTable";
+import { AdminSelect } from "../components/ui/AdminSelect/AdminSelect";
 import "../Admin.scss";
 
 const orderFilters = [
@@ -233,26 +234,18 @@ function OrderDetailsModal({ order, onClose, onUpdateStatus }) {
           >
             Статус заказа:
           </label>
-          <select
+          <AdminSelect
             value={order.status}
             onChange={(e) => onUpdateStatus?.(order.id, e.target.value)}
-            style={{
-              width: "100%",
-              padding: "8px 12px",
-              borderRadius: "6px",
-              border: "1px solid #d1d5db",
-              backgroundColor: "#fff",
-              fontSize: "0.9rem",
-              fontWeight: "500",
-              cursor: "pointer",
-            }}
+            aria-label="Order status"
+            fluid
           >
             <option value="pending">pending (В ожидании)</option>
             <option value="preparing">preparing (Готовится)</option>
             <option value="delivering">delivering (В пути)</option>
             <option value="delivered">delivered (Доставлен)</option>
             <option value="cancelled">cancelled (Отменен)</option>
-          </select>
+          </AdminSelect>
         </div>
 
         {/* Подвал с итоговой суммой */}

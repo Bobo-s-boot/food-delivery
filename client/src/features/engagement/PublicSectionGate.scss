@@ -1,0 +1,42 @@
+.eng-section-state {
+  display: flex;
+  min-height: 55vh;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 64px 32px 80px;
+
+  &__code {
+    margin-bottom: 16px;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  h1 {
+    margin-bottom: 24px;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  > p {
+    color: var(--color-text-secondary);
+  }
+}
+
+@media (max-width: 767px) {
+  .eng-section-state {
+    padding: 48px 16px 64px;
+
+    h1 {
+      font-size: 32px;
+    }
+
+    .eng-actions {
+      width: 100%;
+    }
+  }
+}

@@ -24,6 +24,12 @@ const routePatterns = [
   "/:username/checkout",
   PATH_PAGE.ACCOUNT,
   "/:username/profile",
+  "/for-restaurants",
+  "/:username/for-restaurants",
+  "/careers",
+  "/:username/careers",
+  "/careers/*",
+  "/:username/careers/*",
 ];
 
 export function Layout({ children }) {

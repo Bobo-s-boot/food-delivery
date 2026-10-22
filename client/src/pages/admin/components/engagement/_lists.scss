@@ -1,0 +1,180 @@
+// Shared admin list presentation. Includes retain the original cascade positions.
+@mixin base {
+.engagement-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  > .engagement-select { flex: 1 1 160px; }
+}
+.engagement-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 2 1 240px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border-muted);
+  border-radius: 12px;
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  &:focus-within { border-color: var(--color-text-strong); }
+  input {
+    min-width: 0;
+    width: 100%;
+    padding: 12px 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--color-text-strong);
+    font: inherit;
+    font-size: 14px;
+  }
+  input:focus-visible { outline: 0; }
+  svg { flex-shrink: 0; }
+}
+.engagement-reset { flex: 0 0 auto; }
+.engagement-table {
+  margin-top: 0;
+  .admin-table {
+    border-spacing: 0;
+  }
+  .admin-table__header-cell {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+  }
+  tbody tr {
+    position: relative;
+  }
+  tbody td {
+    border-top: 1px solid var(--color-border-muted);
+    transition: background-color 120ms ease;
+  }
+  tbody tr:hover td,
+  tbody tr:focus-within td {
+    background: var(--color-bg-soft-strong);
+  }
+  td:first-child {
+    min-width: 176px;
+  }
+}
+.engagement-record-link {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 600;
+  text-decoration: none;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    cursor: pointer;
+  }
+  svg {
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+  &:focus-visible {
+    outline: 0;
+    &::after {
+      outline: 3px solid var(--color-info);
+      outline-offset: -3px;
+      border-radius: 8px;
+    }
+  }
+  &:hover span {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+.engagement-row-actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 168px;
+}
+.engagement-row-action,
+.engagement-inline-link {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border-muted);
+  border-radius: 8px;
+  background: var(--color-bg-surface);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  &:hover {
+    background: var(--color-bg-soft);
+  }
+}
+.engagement-row-action--quiet {
+  border-color: transparent;
+  background: transparent;
+}
+
+}
+
+@mixin mobile-filters {
+  .engagement-filters > .engagement-search {
+    flex-basis: 100%;
+  }
+  .engagement-filters > .engagement-select {
+    flex-basis: calc(50% - 6px);
+    min-width: 0;
+  }
+
+}
+
+@mixin mobile-table {
+  .engagement-table.admin-table-wrapper--cards {
+    overflow: visible;
+    .admin-table {
+      display: block;
+      thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+      }
+      tbody {
+        display: grid;
+        gap: 12px;
+      }
+      tr {
+        display: block;
+        padding: 16px;
+        border: 1px solid var(--color-border-muted);
+        border-radius: 12px;
+      }
+      td {
+        display: grid;
+        gap: 4px;
+        padding: 8px 0;
+        border: 0;
+      }
+      td::before {
+        content: attr(data-label);
+        display: block;
+        color: var(--color-text-secondary);
+        font-size: 11px;
+        font-weight: 400;
+      }
+    }
+  }
+}

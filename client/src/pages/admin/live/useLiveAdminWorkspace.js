@@ -31,7 +31,7 @@ import {
   buildAdminErrorMessage,
 } from "../../../errors/error.js";
 
-const STATIC_ADMIN_SECTIONS = new Set(["dashboard", "finance", "support"]);
+const STATIC_ADMIN_SECTIONS = new Set(["dashboard", "finance", "support", "hiring", "partnerships"]);
 
 export function useLiveAdminWorkspace({ section }) {
   const navigate = useNavigate();

@@ -1,0 +1,107 @@
+// Shared admin dropdown: the Hiring reference, with one visual/interaction owner.
+.engagement-select {
+  position: relative;
+  min-width: 0;
+  font-family: var(--font-family-base);
+  > button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    min-height: 48px;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    border: 1px solid var(--color-border-muted);
+    border-radius: 12px;
+    background: var(--color-bg-surface);
+    color: var(--color-text-strong);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: left;
+    cursor: pointer;
+    > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    svg { flex-shrink: 0; transition: transform 140ms ease; }
+    &:hover:not(:disabled) { background: var(--color-bg-soft); }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+  }
+  &.is-filtered > button {
+    background: var(--color-bg-brand);
+    color: var(--color-text-inverted);
+    border-color: var(--color-bg-brand);
+    &:hover:not(:disabled),
+    &:active:not(:disabled),
+    &[aria-expanded="true"] {
+      background: var(--color-bg-brand-strong);
+      color: var(--color-text-inverted);
+      border-color: var(--color-bg-brand-strong);
+    }
+  }
+  &.is-open > button { border-color: var(--color-text-strong); svg { transform: rotate(180deg); } }
+  &.engagement-select--compact > button { min-height: 32px; padding: 6px 10px; font-size: 12px; }
+  &__menu {
+    position: absolute;
+    z-index: 1000;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding: 8px;
+    background: var(--color-bg-surface);
+    color: var(--color-text-strong);
+    border: 1px solid var(--color-border-muted);
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(13, 26, 45, 0.07);
+    font: inherit;
+    font-weight: 400;
+  }
+  &__options {
+    max-height: 280px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior: contain;
+    &::-webkit-scrollbar { width: 0; height: 0; display: none; }
+    &::-webkit-scrollbar-button { display: none; }
+  }
+  &__option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    min-height: 40px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: var(--color-text-strong);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    svg { flex-shrink: 0; }
+    &[aria-selected="true"] { font-weight: 600; }
+    &.is-highlighted { background: var(--color-bg-soft); }
+    &[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+  }
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px 8px;
+    border-bottom: 1px solid var(--color-border-muted);
+    margin-bottom: 8px;
+    color: var(--color-text-secondary);
+    input { width: 100%; min-width: 0; min-height: 40px; padding: 8px 0; font: inherit; font-size: 13px; font-weight: 400; color: var(--color-text-strong); border: 0; background: transparent; }
+    input:focus { outline: none; box-shadow: none; }
+    &:focus-within { border-color: var(--color-text-strong); }
+  }
+  &__empty { margin: 0; padding: 16px; font-size: 13px; color: var(--color-text-secondary); }
+}
+.admin-layout .engagement-select > button:focus { outline: none; outline-offset: 0; box-shadow: none; border-color: var(--color-text-strong); }
+.admin-layout .engagement-select > button[aria-invalid="true"] { border-color: var(--danger-border, #be123c); }
+@media (prefers-reduced-motion: reduce) { .engagement-select > button svg { transition: none; } }

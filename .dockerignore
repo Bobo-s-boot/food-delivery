@@ -1,0 +1,2 @@
+# Stage 0: local login-shortcut archive must not enter the Docker build context.
+docs/dev-tools/login-shortcuts/

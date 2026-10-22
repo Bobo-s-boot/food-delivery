@@ -139,6 +139,7 @@ export function MenuCatalog({
             }
             placeholder="Search menu items..."
             aria-label="Search menu items"
+            className="admin-table-search"
           />
           <AdminSelect
             value={state.restaurant}
@@ -379,6 +380,7 @@ export function MenuCatalog({
             <label>
               Per page
               <AdminSelect
+                size="compact"
                 value={String(pagination.pageSize)}
                 onChange={(event) =>
                   onStateChange({

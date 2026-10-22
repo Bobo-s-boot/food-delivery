@@ -44,6 +44,7 @@ export function AdminHeader({ navItems, activeSection }) {
                 <button
                   key={item}
                   type="button"
+                  data-admin-navigation
                   onClick={() => handleNavItemClick(item)}
                   className={`admin-header__nav-item ${
                     isTabActive(item) ? "admin-header__nav-item--active" : ""

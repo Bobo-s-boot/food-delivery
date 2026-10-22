@@ -111,7 +111,7 @@ export function AdminUsersPage({ users: liveUsers = [], orders = [] }) {
             value={filters.searchValue}
             onChange={(event) => setManualFilter({ searchValue: event.target.value })}
             placeholder="Search by name or email..."
-            className="admin-users-filters__search"
+            className="admin-users-filters__search admin-table-search"
           />
 
           <AdminSelect

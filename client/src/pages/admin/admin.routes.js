@@ -39,6 +39,18 @@ const adminSectionRoutes = [
     relativePath: "support",
     navLabel: "Support",
   },
+  {
+    section: "hiring",
+    relativePath: "hiring/*",
+    navPath: "hiring",
+    navLabel: "Hiring",
+  },
+  {
+    section: "partnerships",
+    relativePath: "partnerships/*",
+    navPath: "partnerships",
+    navLabel: "Partnerships",
+  },
 ];
 
 const joinAdminPath = (basePath, relativePath) =>

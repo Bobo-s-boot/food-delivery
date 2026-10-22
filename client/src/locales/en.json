@@ -12,7 +12,6 @@
     "login": "Login",
     "logout": "Logout"
   },
-
   "catalog": {
     "freeDeliveryWeekend": "Free Delivery Weekend",
     "stayInTreatYourself": "Stay in and treat yourself. Enjoy $0 delivery fees on all orders from top-rated restaurants this weekend.",
@@ -25,7 +24,6 @@
     "exploreLocalRestaurants": "Explore Local Restaurants",
     "cravingPlaceholder": "What are you craving right now?",
     "browseDescription": "Browse our carefully curated list of top-rated local spots. Whether you are looking for a quick bite, a healthy lunch, or a premium dinner, we deliver the best food in the city straight to your door, fast and fresh.",
-
     "categories": {
       "all": "All",
       "topRated": "Top Rated",
@@ -36,7 +34,6 @@
       "limitedTime": "Limited Time"
     }
   },
-
   "home": {
     "hero": {
       "titleLine1": "Explore Remarkable Restaurants Today",
@@ -47,42 +44,35 @@
       "noteLine1": "Highly rated by local foodies.",
       "noteLine2": "Get real results."
     },
-
     "highlights": {
       "handpickedselection": {
         "title": "Handpicked Selection",
         "description": "We partner only with the best local kitchens and highly-rated chefs to guarantee a premium and delicious experience every time."
       },
-
       "real-timetracking": {
         "title": "Real-Time Tracking",
         "description": "Track your order from the kitchen straight to your door. Fast, seamless, and perfectly tailored to your cravings."
       },
-
       "24/7customersupport": {
         "title": "24/7 Customer Support",
         "description": "Hungry at 2 AM? We’ve got you covered. Our support team is always online to resolve any issues and ensure your food arrives hot."
       },
-
       "sectionData": {
         "headingLine1": "Why Thousands of Foodies Choose",
         "headingLine2": "Defilicious Every Single Day?",
         "description": "From local hidden gems to top-rated restaurants, we make ordering your favorite meals fast, fresh, and hassle-free. Discover new flavors with seamless delivery and round-the-clock support."
       },
-
       "stats": {
         "happyFoodies": "Happy Foodies",
         "averageDeliveryTime": "Average Delivery Time",
         "topRatedRestaurants": "Top-Rated Restaurants"
       }
     },
-
     "trending": {
       "heading": "Trending Now",
       "description": "From cozy local cafes to premium dining spots, discover the best places to satisfy your cravings right now.",
       "buttonLabel": "View all restaurants"
     },
-
     "faq": {
       "title": "Frequently Asked Questions",
       "description": "Find quick answers about Defilicious, restaurants, offers, delivery, student discounts, and your account.",
@@ -142,7 +132,6 @@
       }
     }
   },
-
   "about": {
     "hero": {
       "label": "About service",
@@ -155,14 +144,12 @@
       "restaurantsTitle": "For restaurants",
       "restaurantsText": "Menu, stop-list, order, kitchen process, and sales analytics management."
     },
-
     "mission": {
       "label": "OUR MISSION",
       "title": "Our goal is to remove chaos from food ordering.",
       "firstText": "<strong>Defilicious</strong> was created to make delivery clear for every participant: the customer sees what is happening with the order, the restaurant quickly manages the menu and kitchen, and the system helps avoid unnecessary mistakes.",
       "secondText": "We want users to avoid wasting time on long choices, stop worrying about delivery status, and order food in the most convenient way. For businesses, this means less chaos in operations, faster menu updates, and transparent performance analytics."
     },
-
     "audience": {
       "label": "Audience",
       "title": "Who Defilicious is made for",
@@ -193,7 +180,6 @@
     "team": {
       "label": "Team",
       "title": "Development team",
-
       "members": {
         "denis": {
           "name": "Denis Korzhyk",
@@ -203,7 +189,6 @@
             "Has 6 years of design experience and works at the intersection of UX/UI, business analysis, and product strategy. Specializes in creating clear user flows, optimizing funnels, automating processes, and improving business metrics through design."
           ]
         },
-
         "bohdan": {
           "name": "Bohdan Shevchenko",
           "role": "Senior Developer",
@@ -212,7 +197,6 @@
             "Has 4 years of experience creating websites and web applications, worked with commercial products and large companies. Understands the full development cycle: from application structure to feature implementation, code optimization, and preparing the product for scaling."
           ]
         },
-
         "artem": {
           "name": "Artem Hrebeniuk",
           "role": "Developer",
@@ -221,7 +205,6 @@
             "Has experience with different types of projects, from dynamic web services to systems connected with transactions, analytics, and high reliability requirements. Understands the importance of security, data accuracy, and stable interaction between product components."
           ]
         },
-
         "mykola": {
           "name": "Mykola Hitis",
           "role": "Lead Engineer | QA Engineer",
@@ -232,12 +215,10 @@
         }
       }
     },
-
     "stack": {
       "label": "Stack",
       "title": "Technology stack",
       "description": "To build Defilicious, we use a modern JavaScript stack that helps us develop the interface quickly, build server logic, work with the database, and support project scalability.",
-
       "groups": {
         "frontend": {
           "title": "Frontend",
@@ -252,7 +233,6 @@
             "motion": "Motion"
           }
         },
-
         "backend": {
           "title": "Backend",
           "items": {
@@ -267,7 +247,6 @@
             "dotenv": "dotenv"
           }
         },
-
         "tools": {
           "title": "Tools",
           "items": {
@@ -279,7 +258,6 @@
         }
       }
     },
-
     "methodology": {
       "label": "Methodology",
       "buildTitle": "How we build",
@@ -297,7 +275,6 @@
       "statement": "Build. Test. Improve. Repeat."
     }
   },
-
   "bages": {
     "freeDeliveryWeekend": "Free Delivery Weekend",
     "stayInTreatYourself": "Stay in and treat yourself. Enjoy $0 delivery fees on all orders from top-rated restaurants this weekend.",
@@ -317,7 +294,6 @@
       "beverages": "Beverages"
     }
   },
-
   "auth": {
     "welcomeBack": "Welcome back!",
     "createAccount": "Create an account",
@@ -341,7 +317,6 @@
     "or": "or",
     "switchMode": "Switch to {mode}"
   },
-
   "menu": {
     "title": "Menu",
     "description": "Choose your meal",
@@ -364,7 +339,6 @@
       "beverages": "Beverages"
     }
   },
-
   "specials": {
     "hero": {
       "imageAlt": "Special food deals",
@@ -375,7 +349,6 @@
     },
     "filtersTitle": "Find the right offer",
     "filtersDescription": "Browse delivery promos, restaurant discounts and meal bundles designed for busy days.",
-
     "filters": {
       "all": "All",
       "freeDelivery": "Free Delivery",
@@ -386,7 +359,6 @@
       "limitedTime": "Limited Time",
       "bestValue": "Best Value"
     },
-
     "featured": {
       "imageAlt": "Free delivery weekend",
       "badge": "Limited Time",
@@ -395,14 +367,12 @@
       "conditions": "Valid until Sunday - Selected restaurants only",
       "button": "Order now"
     },
-
     "student": {
       "label": "Student deals",
       "title": "Student deals made for busy days",
       "description": "Get exclusive discounts on selected meals, lunch combos and delivery offers with your student account.",
       "button": "Browse student deals"
     },
-
     "deals": {
       "burgers": {
         "title": "Free Delivery on Burgers",
@@ -410,35 +380,30 @@
         "category": "Free Delivery",
         "restaurant": "The Burger Joint"
       },
-
       "sushi": {
         "title": "20% Off Sushi Sets",
         "description": "Save on selected sushi sets, rolls and combo boxes today.",
         "category": "Limited Time",
         "restaurant": "Kyoto Sushi & Wok"
       },
-
       "student": {
         "title": "Student Lunch Combo",
         "description": "Healthy bowl, drink and dessert at a special student price.",
         "category": "Student Deal",
         "restaurant": "Green Bowl Oasis"
       },
-
       "pizza": {
         "title": "Pizza Night Special",
         "description": "Buy one wood-fired pizza and get the second one 50% off.",
         "category": "Limited Time",
         "restaurant": "Luigi's Woodfire"
       },
-
       "family": {
         "title": "Family Dinner Set",
         "description": "A full dinner set for 3-4 people with curry, rice, naan and drinks.",
         "category": "Family Sets",
         "restaurant": "Tikka Masala House"
       },
-
       "sweet": {
         "title": "Sweet Weekend Box",
         "description": "Fresh cookies, tiramisu and pastries in one weekend dessert box.",
@@ -446,9 +411,7 @@
         "restaurant": "Bakery & Sweets"
       }
     },
-
     "stepsTitle": "How specials work",
-
     "steps": {
       "choose": {
         "title": "Choose a deal",
@@ -464,7 +427,6 @@
       }
     }
   },
-
   "delivery": {
     "hero": {
       "imageAlt": "Food delivery",
@@ -586,7 +548,6 @@
       }
     }
   },
-
   "support": {
     "title": "Help & Support",
     "description": "Tell us what happened and our support team will review your request.",
@@ -705,7 +666,6 @@
       "preserved": "Your information has not been lost. Please try again."
     }
   },
-
   "studentDiscount": {
     "page": {
       "eyebrow": "Payments & discounts",
@@ -872,7 +832,6 @@
       "close": "Close notification"
     }
   },
-
   "privacyPolicy": {
     "eyebrow": "Legal & privacy",
     "title": "Privacy Policy",
@@ -901,7 +860,6 @@
     },
     "contactSupport": "Contact support"
   },
-
   "footer": {
     "dealsTitle": "Get exclusive deals & student discounts",
     "dealsDescription": "Subscribe to our newsletter and get 15% off your next order.",
@@ -916,13 +874,455 @@
       "trackOrder": "Track Order",
       "studentDiscounts": "Student Discounts",
       "faq": "FAQ",
-      "addRestaurant": "Add your restaurant",
-      "becomeCourier": "Become a courier",
-      "partnerPortal": "Partner portal",
+      "forRestaurants": "For Restaurants",
+      "careers": "Careers",
       "aboutUs": "About Us",
       "privacyPolicy": "Privacy Policy",
       "termsOfService": "Terms of Service",
       "cookiePolicy": "Cookie Policy"
+    }
+  },
+  "engagement": {
+    "hiring": {
+      "locale": "en",
+      "previewForm": "Preview only. Applications cannot be submitted from the admin preview.",
+      "storageUnavailable": "Vacancy data is temporarily unavailable in this browser. Please try again.",
+      "imageLoading": "Loading image…",
+      "imageUnavailable": "Image unavailable",
+      "untitled": "Untitled vacancy",
+      "employment": {
+        "full_time": "Full-time",
+        "part_time": "Part-time",
+        "contract": "Contract",
+        "internship": "Internship"
+      },
+      "workMode": {
+        "onsite": "On-site",
+        "hybrid": "Hybrid",
+        "remote": "Remote"
+      },
+      "emptyTitle": "No open roles right now",
+      "emptyBody": "Thanks for thinking of us. Please check back for new opportunities.",
+      "draftPreview": "Draft preview",
+      "draftPreviewBody": "Only administrators can see this working copy. Applications are disabled."
+    },
+    "common": {
+      "navigation": "Explore Defilicious",
+      "language": "Page language",
+      "loading": "Loading the latest information…",
+      "loadError": "We couldn’t load the latest information. Please try again.",
+      "retry": "Try again",
+      "faq": "Good questions. Clear answers.",
+      "more": "View role",
+      "breadcrumb": "Breadcrumb",
+      "allRoles": "All vacancies",
+      "previewCity": "Kyiv",
+      "cityNames": {
+        "kyiv": "Kyiv",
+        "lviv": "Lviv",
+        "odesa": "Odesa",
+        "dnipro": "Dnipro"
+      },
+      "home": "Home",
+      "moreQuestions": "Still thinking it over?",
+      "questionHelp": "Leave your question in the application form. We’ll help with the details."
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you’re looking for isn’t available. Return home or explore restaurants near you.",
+      "home": "Back to home",
+      "restaurants": "Browse restaurants"
+    },
+    "partnership": {
+      "title": "Food worth finding",
+      "titleAccent": "We help it reach the table",
+      "description": "Let people discover your restaurant on Defilicious. You prepare the food. Our team brings the order to their door.",
+      "apply": "Discuss a partnership",
+      "how": "See how it works",
+      "benefitsTitle": "Delivery without your own couriers",
+      "benefitsAlt": "Pizza, a burger and a salad shared around one table.",
+      "benefitsDescription": "You prepare orders for collection. Defilicious handles pickup and delivery, so your team can stay focused on the kitchen.",
+      "benefits": [
+        [
+          "Your kitchen",
+          "Prepare the dishes and pack each order ready for collection."
+        ],
+        [
+          "Our delivery team",
+          "We collect it from your restaurant and bring it to the customer’s door."
+        ]
+      ],
+      "processTitle": "From your first hello to your first order.",
+      "processDescription": "A practical plan for getting your restaurant ready. We work through the details together before launch.",
+      "steps": [
+        [
+          "Tell us what’s cooking",
+          "Share your restaurant name, city and a contact number. Add your website or a question if there’s something you’d like us to look at first."
+        ],
+        [
+          "Find your delivery fit",
+          "We review your location and talk through collection, delivery and commercial terms. You get a clear picture of how Defilicious would work for your kitchen."
+        ],
+        [
+          "Get ready to go live",
+          "Once the terms are agreed, we plan your menu, restaurant page and order handover together. Your team knows what to prepare; ours knows where to collect."
+        ]
+      ],
+      "formTitle": "Let’s talk food.",
+      "formDescription": "Your restaurant, your city and the best way to reach you. Tell us the basics and our partnerships team will take it from there.",
+      "formNote": "Have a question about delivery or your menu? Add it to your message.",
+      "faqDescription": "Delivery, terms and getting started. The things you need to know before getting in touch.",
+      "faq": [
+        [
+          "Do we need our own delivery team?",
+          "No. Defilicious organises collection and delivery for orders placed through the service. Your restaurant prepares the food for collection."
+        ],
+        [
+          "What are the fees and partnership terms?",
+          "We discuss commercial terms individually after reviewing your inquiry, before onboarding begins."
+        ],
+        [
+          "Which cities can we join in?",
+          "Include your city in the inquiry. Our team will confirm whether partnership and delivery are available for your location; submitting the form does not confirm coverage."
+        ],
+        [
+          "What do we need for the first inquiry?",
+          "Your restaurant name, city, contact person and phone number. A website, email and comment are optional. There is no need to prepare a menu or upload documents."
+        ],
+        [
+          "Does an inquiry mean we have signed up?",
+          "No. It is a request to discuss a partnership. Onboarding only follows once the details and terms have been agreed."
+        ]
+      ],
+      "youTitle": "Your kitchen, your food",
+      "youBody": "Prepare the dishes that make your restaurant yours.",
+      "weTitle": "Delivery, handled by us",
+      "weBody": "We organise collection and delivery of Defilicious orders.",
+      "sharedTitle": "Different kitchens.",
+      "sharedAccent": "One shared meal.",
+      "sharedDescription": "Someone wants pizza. Someone wants a burger. Someone’s going green. With Defilicious, different tastes can come together in one order—and your restaurant can be part of it.",
+      "explore": "Explore the restaurant catalogue",
+      "foodLabels": [
+        "For the burger lover",
+        "For the pizza person",
+        "Something fresh"
+      ],
+      "formReassurance": [
+        "No menu or documents to prepare",
+        "Website and extra details are optional",
+        "No account to create"
+      ],
+      "faqAction": "Start a partnership inquiry",
+      "imageAlt": "A chef hands a packed restaurant order to a courier.",
+      "sharedAlt": "Pizza, a burger and fresh salad shared around one table.",
+      "benefitsAccent": "A bigger table.",
+      "benefitsLead": "Great food deserves more than one way to reach people.",
+      "sharedDetail": "The group doesn’t have to agree on one restaurant for your food to make their evening. We bring their choices together for delivery.",
+      "processAction": "Let’s get started"
+    },
+    "careers": {
+      "title": "Bring your good energy",
+      "titleAccent": "Make every order matter",
+      "description": "Bring your care, curiosity and good judgement. Help customers, restaurants and our delivery team make every order work.",
+      "apply": "Find your role",
+      "courierAction": "Deliver with us",
+      "aside": "Restaurants, customers and delivery. You help it all come together.",
+      "network": [
+        "Restaurants",
+        "Our team",
+        "Customers"
+      ],
+      "directionsTitle": "Find your direction",
+      "directionsDescription": "On the move or behind the scenes — explore where you could make a difference.",
+      "courierTitle": "Good energy.",
+      "courierDescription": "Know your streets. Meet your neighbours. Bring a little of what makes the city good to someone’s door.",
+      "courierLink": "Explore courier work",
+      "courierInfo": "About courier work",
+      "closed": "Recruitment is currently closed.",
+      "teamTitle": "At Defilicious",
+      "teamDescription": "Customer support, restaurant partnerships, operations, marketing and technology. Different roles that keep the service moving.",
+      "teamLink": "View open vacancies",
+      "workTitle": "Make everyday food moments work.",
+      "workDescription": "A meal on the table is a lot of small things done well. Your work helps them click into place.",
+      "work": [
+        [
+          "For the person waiting",
+          "A useful answer can change the mood of an evening. Help customers understand what’s happening with their order and what comes next."
+        ],
+        [
+          "For the kitchen behind it",
+          "Restaurants have plenty on their plate. Help partners get the details right, solve the daily questions and keep the handover running smoothly."
+        ],
+        [
+          "For everyone in between",
+          "Connect the people preparing, collecting and waiting for the food. Notice the loose ends, take ownership and bring the right people together."
+        ]
+      ],
+      "rolesTitle": "Find your place.",
+      "rolesDescription": "Start with the work you want to do. Explore the role, the requirements and what to send with your application.",
+      "search": "Search by role",
+      "department": "Direction",
+      "allDepartments": "All directions",
+      "city": "City",
+      "allCities": "All cities",
+      "noRoles": "There are no open vacancies at the moment. Check back later — new opportunities will appear here.",
+      "noMatches": "No vacancies match your filters.",
+      "reset": "Reset filters",
+      "paused": "Applications are paused",
+      "globalClosed": "We’re temporarily not accepting new applications. Check the careers page for updates.",
+      "processTitle": "Know what comes next.",
+      "processDescription": "You can apply directly. No account, no guessing which materials to send.",
+      "process": [
+        [
+          "Find the right role",
+          "Read the responsibilities and requirements. Location, working arrangements and required materials are listed on the role page."
+        ],
+        [
+          "Tell us about yourself",
+          "Leave your contact details and the CV or portfolio links requested for the role. You can add a short note about your experience."
+        ],
+        [
+          "Continue the conversation",
+          "The team reviews your application. If it matches our current needs, we contact you to discuss the role and next steps."
+        ]
+      ],
+      "faqDescription": "A little clarity before your next career move.",
+      "faq": [
+        [
+          "Do I need an account to apply?",
+          "No. Open a vacancy and complete its application form directly. The form explains which details are required."
+        ],
+        [
+          "Do I need to send a CV?",
+          "The individual role page tells you whether a CV is required. Share an accessible link; the application does not accept file uploads."
+        ],
+        [
+          "Where can I find salary and working arrangements?",
+          "Location and working arrangements are listed on each role page. We discuss the role’s pay and other terms during recruitment."
+        ],
+        [
+          "What happens after I apply?",
+          "The team reviews your application. If your experience matches the current role, we contact you using the details you provided."
+        ]
+      ],
+      "imageAlt": "A chef, restaurant colleague and courier preparing an order together at a restaurant counter.",
+      "courierAlt": "A bicycle courier outside a neighbourhood restaurant.",
+      "workAlt": "Dishes from different kitchens shared around one table.",
+      "workClosing": "You don’t have to cook the meal to make someone’s day. Bring your judgement, your care and a little of your own flavour.",
+      "courierAccent": "Put it in motion.",
+      "courierDetail": "Pick up packed orders and be the person everyone is glad to see. Explore courier work and apply where recruitment is open."
+    },
+    "courier": {
+      "crumb": "Courier work",
+      "title": "Your city.",
+      "description": "Connect the kitchen and the doorstep. Find out what courier work involves and apply when recruitment is open in your city.",
+      "apply": "Apply to deliver",
+      "tasksTitle": "From the kitchen to the doorstep.",
+      "tasks": [
+        [
+          "Get the delivery details",
+          "Receive assignments through the process agreed with the team, so you know where to collect and deliver."
+        ],
+        [
+          "Collect the prepared food",
+          "Pick up packed orders from restaurants and check the collection details."
+        ],
+        [
+          "Complete the delivery",
+          "Bring the order to the customer following the delivery instructions."
+        ]
+      ],
+      "conditionsTitle": "Let’s talk about the practical side.",
+      "conditions": "Your city, your transport and the time you can give shape how you deliver. We’ll talk through pay, routes and working arrangements with you during recruitment.",
+      "cities": "Recruiting in",
+      "audienceTitle": "Bring your local know-how.",
+      "audience": "Enjoy being out in the city, take care with each order and keep people informed along the way. Tell us where you’d like to deliver and how to reach you.",
+      "processTitle": "How to apply",
+      "process": [
+        [
+          "Complete the form",
+          "Leave your contact details and select a city with open recruitment."
+        ],
+        [
+          "We review your application",
+          "The team reviews your information against current recruitment needs."
+        ],
+        [
+          "Discuss the next steps",
+          "If there’s a suitable opening, we’ll get in touch."
+        ]
+      ],
+      "formTitle": "Your next route starts here.",
+      "faq": [
+        [
+          "Where are you recruiting?",
+          "Current recruitment cities are listed on this page and in the form. If no cities are listed, recruitment isn’t available yet."
+        ],
+        [
+          "Do I need documents for the first stage?",
+          "Contact details are enough for the first application. Please don’t send passport information or bank details."
+        ],
+        [
+          "What delivery options are available?",
+          "Available transport options and working arrangements are discussed according to the confirmed terms of current recruitment."
+        ]
+      ],
+      "titleAccent": "Your next delivery.",
+      "tasksDescription": "Three parts of an order, with people depending on each one.",
+      "noCities": "Courier recruitment is currently closed.",
+      "formDescription": "Choose an available city and leave your contact details. The team reviews applications against current recruitment needs.",
+      "formReassurance": [
+        "No account needed",
+        "Only currently available cities are listed",
+        "Working arrangements discussed with the team"
+      ],
+      "faqDescription": "What to know before applying to deliver.",
+      "imageAlt": "A bicycle courier with a delivery backpack on a city street."
+    },
+    "vacancy": {
+      "unavailable": "This vacancy is unavailable",
+      "loadError": "We couldn’t load this vacancy. Please try again.",
+      "loading": "Loading vacancy…",
+      "otherRoles": "Explore other vacancies",
+      "responsibilities": "What you’ll do",
+      "requirements": "What matters for this role",
+      "conditions": "Working arrangements",
+      "formTitle": "Your next step starts here.",
+      "resumeRequired": "Leave your contact details and a link to your CV.",
+      "resumeOptional": "Leave your contact details. A CV is optional.",
+      "atGlance": "The role at a glance",
+      "department": "Team",
+      "location": "Location",
+      "format": "Working arrangements",
+      "cvRequired": "A link to your CV is required.",
+      "cvOptional": "A CV is optional for this role.",
+      "sidebarTitle": "Can you see yourself here?",
+      "sidebarBody": "Tell us about the experience you’d bring. Start with a few details in the form below.",
+      "formNote": "Your application goes to the team reviewing this role. Use the comment field for anything you’d like us to know.",
+      "aboutTitle": "About the role",
+      "aboutBody": "Defilicious connects restaurants, customers and our delivery team around one good meal. We’re looking for people who take ownership, communicate clearly and care about the details that make the service work.",
+      "processTitle": "Let’s get to know each other.",
+      "processDescription": "Room to talk about your experience, the work itself and what you want from your next role.",
+      "process": [
+        [
+          "Make your introduction",
+          "Send your application with the materials requested for this role. Tell us which part of your experience you’d like us to pay attention to."
+        ],
+        [
+          "Talk through the work",
+          "If there’s a match, we’ll invite you to talk about real situations from the role. You can meet the team’s way of thinking and bring questions of your own."
+        ],
+        [
+          "Get clear on the details",
+          "We’ll discuss responsibilities, pay, schedule and next steps together, so you have the information you need to consider an offer."
+        ]
+      ],
+      "schedule": "Schedule",
+      "applicationTitle": "Bring your point of view.",
+      "applicationDescription": "Tell us what you’ve worked on, what you’re good at and why this role caught your eye.",
+      "applicationHelp": [
+        [
+          "Help us see your experience",
+          "Share the CV or portfolio requested for this role. A short example of a problem you helped solve tells us more than a perfect cover letter."
+        ],
+        [
+          "Got a question? Ask it.",
+          "Tell us what you’d like to know about the team, the day-to-day work or the schedule. This is your next move, too."
+        ]
+      ],
+      "imageAlt": "Colleagues discussing an order around a laptop."
+    },
+    "form": {
+      "fields": {
+        "restaurant_name": [
+          "Restaurant name",
+          "e.g. Pizzeria Roma"
+        ],
+        "city": [
+          "City",
+          "Where is your restaurant based?"
+        ],
+        "contact_name": [
+          "Contact person",
+          "How should we address you?"
+        ],
+        "applicant_name": [
+          "Full name",
+          "Your first and last name"
+        ],
+        "phone": [
+          "Phone number",
+          "+380 XX XXX XX XX"
+        ],
+        "email": [
+          "Email",
+          "name@example.com"
+        ],
+        "website": [
+          "Website or social media",
+          "https://your-restaurant.com"
+        ],
+        "comment": [
+          "Comment",
+          "Anything else you’d like us to know"
+        ],
+        "resume_url": [
+          "Link to your CV",
+          "https://…"
+        ],
+        "portfolio_url": [
+          "Portfolio",
+          "https://…"
+        ]
+      },
+      "selectCity": "Choose a recruitment city",
+      "optional": "optional",
+      "required": "* Required fields",
+      "consent": "I agree to the processing of my personal data to review this application, in accordance with the",
+      "privacy": "Privacy Policy",
+      "resumeHelp": "Share an accessible link to your CV. File uploads are not supported.",
+      "unavailable": "Applications are temporarily unavailable. Please try again later.",
+      "sending": "Sending…",
+      "submit": "Send application",
+      "submitTeam": "Send application",
+      "stale": "The form has changed. Refresh this page and try again.",
+      "reload": "Refresh this page and try sending again.",
+      "failure": "We couldn’t send your application. Check your connection and try again.",
+      "successTitle": "Thank you! Application sent",
+      "partnershipSuccess": "We’ve received your restaurant details. Our team will review your inquiry and contact you using the details you provided.",
+      "courierSuccess": "We’ve received your application to deliver in {{city}}. If recruitment is open and there’s a suitable match, we’ll contact you.",
+      "teamSuccess": "We’ve received your application for {{title}}. If your profile is a match, the Defilicious team will contact you.",
+      "home": "Back to home",
+      "back": "Back to vacancies",
+      "errors": {
+        "required": "Complete this field",
+        "phone": "Enter a valid Ukrainian phone number",
+        "email": "Enter a valid email address",
+        "url": "Enter a valid link starting with http:// or https://",
+        "consent": "Confirm your consent to data processing",
+        "length": "Use no more than {{count}} characters",
+        "invalid": "Check this field"
+      },
+      "restaurantGroup": "Your restaurant",
+      "contactGroup": "How to reach you",
+      "experienceGroup": "Your experience",
+      "optionalDetails": "Add a website or a question (optional)",
+      "optionalNote": "Add a note or a question (optional)",
+      "toastPartnershipTitle": "Message sent",
+      "toastPartnershipDescription": "We’ll call you back if we need more details.",
+      "toastApplicationTitle": "Application sent",
+      "toastApplicationDescription": "We’ll contact you if your experience matches the role.",
+      "toastClose": "Dismiss notification"
+    },
+    "availability": {
+      "closed": "This vacancy is closed.",
+      "globalClosed": "We’re temporarily not accepting new applications. Check the careers page for updates.",
+      "courierClosed": "Courier recruitment is currently closed.",
+      "noCities": "Courier recruitment is currently closed.",
+      "cityClosed": "Recruitment isn’t open in your city yet.",
+      "teamClosed": "Applications for this vacancy are temporarily paused.",
+      "rateLimit": "Too many attempts. Please wait a moment and try again.",
+      "notFound": "This vacancy could not be found."
     }
   }
 }

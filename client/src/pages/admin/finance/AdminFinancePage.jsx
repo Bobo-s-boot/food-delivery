@@ -47,7 +47,7 @@ export function AdminFinancePage() {
 
   return (
     <div className="admin-finance">
-      <div className="admin-finance__intro">
+      <div className="admin-finance__intro admin-page-heading">
         <div className="admin-page-intro admin-page-intro--nested">
           <h1>Finance</h1>
           <p>Monitor revenue, payouts, refunds and promotion impact.</p>
