@@ -28,6 +28,33 @@ export const loginUser = async (userData) => {
   }
 };
 
+export const forgotPassword = async (username, lang = "uk") => {
+  try {
+    const response = await axios.post(`${API_URL}/forgot-password`, {
+      username,
+      lang,
+    });
+    return response.data;
+  } catch (error) {
+    throw (
+      error.response?.data?.message ||
+      CLIENT_ERROR_MESSAGES.FAILED_TO_REQUEST_RESET
+    );
+  }
+};
+
+export const resetPassword = async (payload) => {
+  try {
+    const response = await axios.post(`${API_URL}/reset-password`, payload);
+    return response.data;
+  } catch (error) {
+    throw (
+      error.response?.data?.message ||
+      CLIENT_ERROR_MESSAGES.FAILED_TO_RESET_PASSWORD
+    );
+  }
+};
+
 export const isTokenActive = () => {
   try {
     const token = getAuthToken();

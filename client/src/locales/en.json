@@ -339,7 +339,26 @@
     "oauthParseError": "Failed to parse user from OAuth callback.",
     "genericError": "Something went wrong",
     "or": "or",
-    "switchMode": "Switch to {mode}"
+    "switchMode": "Switch to {mode}",
+    "forgotPasswordTitle": "Reset Password",
+    "forgotPasswordSubtitle": "Enter your email address to receive a verification code.",
+    "enterCodeSubtitle": "Enter the 6-digit verification code from your email and set your new password.",
+    "codeSentToEmail": "A 6-digit verification code has been sent to {{email}}. Please check your inbox and spam folder.",
+    "resendCodeCountdown": "Resend code in {{count}}s",
+    "changeEmail": "Change email address",
+    "resetCodePrompt": "A 6-digit verification code was sent to your email.",
+    "resetCodeLabel": "Verification Code",
+    "enterResetCode": "Enter 6-digit code",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "sendResetCode": "Send Verification Code",
+    "resetPasswordSubmit": "Reset Password",
+    "backToLogin": "Back to login",
+    "resendCode": "Resend code",
+    "passwordTooShort": "Password must be at least 4 characters",
+    "usernameRequired": "Please enter your email or username",
+    "emailOrUsername": "Email or Username",
+    "passwordResetSuccess": "Password changed successfully! You can now log in."
   },
 
   "menu": {

@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "Backend for FoodExpress",
+  "description": "Backend for Defilicious",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.5.0",
     "multer": "^2.2.0",
+    "nodemailer": "^10.0.15",
     "passport": "^0.7.0",
     "passport-apple": "^2.0.2",
     "passport-facebook": "^3.0.0",
