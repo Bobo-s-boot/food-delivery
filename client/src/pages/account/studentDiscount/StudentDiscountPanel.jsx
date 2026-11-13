@@ -24,11 +24,15 @@ export function StudentDiscountPanel({ user, verificationState }) {
     const date = new Date(value);
     return Number.isNaN(date.getTime())
       ? "—"
-      : new Intl.DateTimeFormat(i18n.language, { dateStyle: "medium" }).format(date);
+      : new Intl.DateTimeFormat(i18n.language, { dateStyle: "medium" }).format(
+          date,
+        );
   };
 
   const handleSubmit = async (payload) => {
-    if (["action_required", "rejected", "expired"].includes(verification.status)) {
+    if (
+      ["action_required", "rejected", "expired"].includes(verification.status)
+    ) {
       await updateVerification(payload);
     } else {
       await submitVerification(payload);
@@ -55,7 +59,10 @@ export function StudentDiscountPanel({ user, verificationState }) {
     >
       <div className="student-discount-main">
         {isLoading ? (
-          <section className="account-card student-discount-loading" role="status">
+          <section
+            className="account-card student-discount-loading"
+            role="status"
+          >
             {t("studentDiscount.loading")}
           </section>
         ) : isFormOpen ? (
@@ -74,18 +81,32 @@ export function StudentDiscountPanel({ user, verificationState }) {
             onContactSupport={contactSupport}
             onExploreOffers={() => navigate("/specials")}
             onOpenForm={openForm}
-            onToggleDetails={() => setShowVerifiedDetails((current) => !current)}
+            onToggleDetails={() =>
+              setShowVerifiedDetails((current) => !current)
+            }
           />
         )}
       </div>
 
-      <aside className="student-discount-aside" aria-label={t("studentDiscount.aside.label")}>
+      <aside
+        className="student-discount-aside"
+        aria-label={t("studentDiscount.aside.label")}
+      >
         <section className="account-card student-discount-info-card">
           <h2>{t("studentDiscount.aside.how.title")}</h2>
           <ol>
-            <li><span>1</span>{t("studentDiscount.aside.how.step1")}</li>
-            <li><span>2</span>{t("studentDiscount.aside.how.step2")}</li>
-            <li><span>3</span>{t("studentDiscount.aside.how.step3")}</li>
+            <li>
+              <span>1</span>
+              {t("studentDiscount.aside.how.step1")}
+            </li>
+            <li>
+              <span>2</span>
+              {t("studentDiscount.aside.how.step2")}
+            </li>
+            <li>
+              <span>3</span>
+              {t("studentDiscount.aside.how.step3")}
+            </li>
           </ol>
         </section>
 
@@ -108,7 +129,10 @@ export function StudentDiscountPanel({ user, verificationState }) {
         </section>
       </aside>
 
-      <AppToast notification={notification} onDismiss={() => setNotification(null)} />
+      <AppToast
+        notification={notification}
+        onDismiss={() => setNotification(null)}
+      />
     </div>
   );
 }
@@ -128,17 +152,29 @@ function StudentVerificationStatusCard({
   if (status === "not_verified") {
     return (
       <section className="account-card student-verification-card">
-        <span className="account-eyebrow">{t("studentDiscount.statusCard.eyebrow")}</span>
+        <span className="account-eyebrow">
+          {t("studentDiscount.statusCard.eyebrow")}
+        </span>
         <StudentStatusBadge status={status} />
         <h2>{t("studentDiscount.states.notVerified.title")}</h2>
         <p>{t("studentDiscount.states.notVerified.description")}</p>
-        <button type="button" className="account-button account-button--primary" onClick={onOpenForm}>
+        <button
+          type="button"
+          className="account-button account-button--primary"
+          onClick={onOpenForm}
+        >
           {t("studentDiscount.actions.verify")}
         </button>
         <div className="student-discount-benefits">
-          <Benefit icon={GraduationCap} text={t("studentDiscount.benefits.offers")} />
+          <Benefit
+            icon={GraduationCap}
+            text={t("studentDiscount.benefits.offers")}
+          />
           <Benefit icon={Link2} text={t("studentDiscount.benefits.account")} />
-          <Benefit icon={CalendarClock} text={t("studentDiscount.benefits.validity")} />
+          <Benefit
+            icon={CalendarClock}
+            text={t("studentDiscount.benefits.validity")}
+          />
         </div>
       </section>
     );
@@ -151,11 +187,18 @@ function StudentVerificationStatusCard({
         title={t("studentDiscount.states.pending.title")}
         description={t("studentDiscount.states.pending.description")}
       >
-        <VerificationSummary verification={verification} formatDate={formatDate} />
+        <VerificationSummary
+          verification={verification}
+          formatDate={formatDate}
+        />
         <p className="student-verification-card__note">
           {t("studentDiscount.states.pending.note")}
         </p>
-        <button type="button" className="account-button account-button--secondary" onClick={onContactSupport}>
+        <button
+          type="button"
+          className="account-button account-button--secondary"
+          onClick={onContactSupport}
+        >
           {t("studentDiscount.actions.contactSupport")}
         </button>
       </StatusShell>
@@ -170,15 +213,27 @@ function StudentVerificationStatusCard({
         description={t("studentDiscount.states.verified.description")}
       >
         <div className="student-verification-card__actions">
-          <button type="button" className="account-button account-button--primary" onClick={onExploreOffers}>
+          <button
+            type="button"
+            className="account-button account-button--primary"
+            onClick={onExploreOffers}
+          >
             {t("studentDiscount.actions.exploreOffers")}
           </button>
-          <button type="button" className="account-button account-button--secondary" onClick={onToggleDetails}>
+          <button
+            type="button"
+            className="account-button account-button--secondary"
+            onClick={onToggleDetails}
+          >
             {t("studentDiscount.actions.viewDetails")}
           </button>
         </div>
         {showVerifiedDetails && (
-          <VerificationSummary verification={verification} formatDate={formatDate} verified />
+          <VerificationSummary
+            verification={verification}
+            formatDate={formatDate}
+            verified
+          />
         )}
       </StatusShell>
     );
@@ -197,10 +252,12 @@ function StudentVerificationStatusCard({
         title={t("studentDiscount.states.actionRequired.title")}
         description={t("studentDiscount.states.actionRequired.description")}
       >
-        <p className="student-verification-card__message">
-          {adminComment}
-        </p>
-        <StateActions primary={t("studentDiscount.actions.update")} onPrimary={onOpenForm} onSupport={onContactSupport} />
+        <p className="student-verification-card__message">{adminComment}</p>
+        <StateActions
+          primary={t("studentDiscount.actions.update")}
+          onPrimary={onOpenForm}
+          onSupport={onContactSupport}
+        />
       </StatusShell>
     );
   }
@@ -218,7 +275,11 @@ function StudentVerificationStatusCard({
         title={t("studentDiscount.states.rejected.title")}
         description={rejectionReason}
       >
-        <StateActions primary={t("studentDiscount.actions.tryAgain")} onPrimary={onOpenForm} onSupport={onContactSupport} />
+        <StateActions
+          primary={t("studentDiscount.actions.tryAgain")}
+          onPrimary={onOpenForm}
+          onSupport={onContactSupport}
+        />
       </StatusShell>
     );
   }
@@ -229,8 +290,15 @@ function StudentVerificationStatusCard({
       title={t("studentDiscount.states.expired.title")}
       description={t("studentDiscount.states.expired.description")}
     >
-      <VerificationSummary verification={verification} formatDate={formatDate} />
-      <button type="button" className="account-button account-button--primary" onClick={onOpenForm}>
+      <VerificationSummary
+        verification={verification}
+        formatDate={formatDate}
+      />
+      <button
+        type="button"
+        className="account-button account-button--primary"
+        onClick={onOpenForm}
+      >
         {t("studentDiscount.actions.verifyAgain")}
       </button>
     </StatusShell>
@@ -242,7 +310,9 @@ function StatusShell({ status, title, description, children }) {
 
   return (
     <section className="account-card student-verification-card">
-      <span className="account-eyebrow">{t("studentDiscount.statusCard.eyebrow")}</span>
+      <span className="account-eyebrow">
+        {t("studentDiscount.statusCard.eyebrow")}
+      </span>
       <StudentStatusBadge status={status} />
       <h2>{title}</h2>
       <p>{description}</p>
@@ -273,7 +343,9 @@ function VerificationSummary({ verification, formatDate, verified = false }) {
         ["submittedDate", formatDate(verification.submittedAt)],
         [
           "verificationMethod",
-          t(`studentDiscount.summary.methods.${verification.verificationMethod || "student_email"}`),
+          t(
+            `studentDiscount.summary.methods.${verification.verificationMethod || "student_email"}`,
+          ),
         ],
       ];
 
@@ -293,8 +365,18 @@ function StateActions({ primary, onPrimary, onSupport }) {
   const { t } = useTranslation();
   return (
     <div className="student-verification-card__actions">
-      <button type="button" className="account-button account-button--primary" onClick={onPrimary}>{primary}</button>
-      <button type="button" className="account-button account-button--secondary" onClick={onSupport}>
+      <button
+        type="button"
+        className="account-button account-button--primary"
+        onClick={onPrimary}
+      >
+        {primary}
+      </button>
+      <button
+        type="button"
+        className="account-button account-button--secondary"
+        onClick={onSupport}
+      >
         {t("studentDiscount.actions.contactSupport")}
       </button>
     </div>

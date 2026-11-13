@@ -1,18 +1,29 @@
 import Dish from "../models/dish.js";
 import Restaurant from "../models/restaurant.js";
-import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
+import { SERVER_ERORR_MESSAGE } from "../errors/error.js";
+import {
+  createDishSchema,
+  dishesQuerySchema,
+  dishIdSchema,
+  updateDishSchema,
+} from "../validation/dish.js";
 
 export const getDishes = async (req, res) => {
   try {
-    const { restaurantId, q, limit } = req.query;
-    const parsedLimit = Number(limit);
-    const search = typeof q === "string" ? q.trim() : "";
-    const hasSearch = Boolean(search);
+    const validation = dishesQuerySchema.safeParse(req.query);
+    if (!validation.success) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.DISH_FETCH_SERVER_ERROR,
+        errors: validation.error.flatten(),
+      });
+    }
+
+    const { restaurantId, q: search, limit } = validation.data;
     const filter = {};
 
     if (restaurantId) {
       const numericRestaurantId = Number(restaurantId);
-      if (Number.isFinite(numericRestaurantId)) {
+      if (Number.isSafeInteger(numericRestaurantId)) {
         const restaurant = await Restaurant.findOne({
           id: numericRestaurantId,
         });
@@ -26,17 +37,18 @@ export const getDishes = async (req, res) => {
       }
     }
 
-    if (hasSearch) {
+    if (search) {
+      const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       filter.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
-        { category: { $regex: search, $options: "i" } },
+        { name: { $regex: escapedSearch, $options: "i" } },
+        { description: { $regex: escapedSearch, $options: "i" } },
+        { category: { $regex: escapedSearch, $options: "i" } },
       ];
     }
 
     let query = Dish.find(filter).populate("restaurantId", "id name");
-    if (Number.isFinite(parsedLimit) && parsedLimit > 0) {
-      query = query.limit(parsedLimit);
+    if (limit) {
+      query = query.limit(limit);
     }
     const dishes = await query;
     res.status(200).json(dishes);
@@ -50,11 +62,15 @@ export const getDishes = async (req, res) => {
 
 export const getDishById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const isObjectId = id && id.length === 24 && /^[0-9a-fA-F]{24}$/.test(id);
-    const query = isObjectId ? { _id: id } : { id: Number(id) || id };
+    const validation = dishIdSchema.safeParse(req.params.id);
+    if (!validation.success) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND,
+        errors: validation.error.flatten(),
+      });
+    }
 
-    const dish = await Dish.findOne(query).populate(
+    const dish = await Dish.findById(validation.data).populate(
       "restaurantId",
       "name id",
     );
@@ -67,28 +83,51 @@ export const getDishById = async (req, res) => {
 
     res.status(200).json(dish);
   } catch (error) {
+    console.error(SERVER_ERORR_MESSAGE.DISH_SERVER_ERROR, error);
     res.status(500).json({ message: SERVER_ERORR_MESSAGE.DISH_SERVER_ERROR });
   }
 };
 
 export const createDish = async (req, res) => {
   try {
-    const newDish = await Dish.create(req.body);
+    const validation = createDishSchema.safeParse(req.body);
+    if (!validation.success) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR,
+        errors: validation.error.flatten(),
+      });
+    }
+
+    const restaurantExists = await Restaurant.exists({
+      _id: validation.data.restaurantId,
+    });
+    if (!restaurantExists) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR,
+      });
+    }
+
+    const newDish = await Dish.create(validation.data);
     res.status(201).json(newDish);
   } catch (error) {
     console.error(SERVER_ERORR_MESSAGE.DISH_CREATE_ERROR, error);
-    res
-      .status(400)
-      .json({
-        message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR,
-        error: error.message,
-      });
+    res.status(400).json({
+      message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR,
+    });
   }
 };
 
 export const deleteDish = async (req, res) => {
   try {
-    const dish = await Dish.findByIdAndDelete(req.params.id);
+    const validation = dishIdSchema.safeParse(req.params.id);
+    if (!validation.success) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND,
+        errors: validation.error.flatten(),
+      });
+    }
+
+    const dish = await Dish.findByIdAndDelete(validation.data);
 
     if (!dish) {
       return res
@@ -107,7 +146,34 @@ export const deleteDish = async (req, res) => {
 
 export const updateDish = async (req, res) => {
   try {
-    const dish = await Dish.findByIdAndUpdate(req.params.id, req.body, {
+    const idValidation = dishIdSchema.safeParse(req.params.id);
+    if (!idValidation.success) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.DISH_NOT_FOUND,
+        errors: idValidation.error.flatten(),
+      });
+    }
+
+    const validation = updateDishSchema.safeParse(req.body);
+    if (!validation.success) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR,
+        errors: validation.error.flatten(),
+      });
+    }
+
+    if (validation.data.restaurantId) {
+      const restaurantExists = await Restaurant.exists({
+        _id: validation.data.restaurantId,
+      });
+      if (!restaurantExists) {
+        return res.status(400).json({
+          message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR,
+        });
+      }
+    }
+
+    const dish = await Dish.findByIdAndUpdate(idValidation.data, validation.data, {
       new: true,
       runValidators: true,
     });
@@ -123,7 +189,6 @@ export const updateDish = async (req, res) => {
     console.error(SERVER_ERORR_MESSAGE.DISH_CREATE_ERROR, error);
     res.status(400).json({
       message: SERVER_ERORR_MESSAGE.DISH_VALIDATION_ERROR,
-      error: error.message,
     });
   }
 };

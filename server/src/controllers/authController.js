@@ -1,25 +1,25 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
+import { SERVER_ERORR_MESSAGE } from "../errors/error.js";
 import User from "../models/user.js";
+import { generateToken } from "../config/auth.js";
+import { nextSequenceValue, synchronizeSequence } from "../utils/sequences.js";
+import { loginSchema, registerSchema } from "../validation/auth.js";
 
-const generateToken = (user) => {
-  return jwt.sign(
-    { id: user.id, username: user.username, role: user.role },
-    process.env.SESSION_SECRET || "super_secret_jwt_key",
-    { expiresIn: "30d" },
-  );
+export const initializeUserIdSequence = async () => {
+  const lastUser = await User.findOne().sort({ id: -1 }).select("id");
+  await synchronizeSequence("user", lastUser?.id ?? 0);
 };
 
 export const register = async (req, res) => {
   try {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-      return res
-        .status(400)
-        .json({ message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY });
+    const validation = registerSchema.safeParse(req.body);
+    if (!validation.success) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY,
+        errors: validation.error.flatten(),
+      });
     }
+    const { username, password } = validation.data;
 
     const existingUser = await User.findOne({ username });
     if (existingUser) {
@@ -32,7 +32,7 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = await User.create({
-      id: Date.now(),
+      id: await nextSequenceValue("user"),
       username,
       password: hashedPassword,
       role: "user",
@@ -46,21 +46,28 @@ export const register = async (req, res) => {
       user: { username, role: newUser.role, token },
     });
   } catch (error) {
+    if (error.code === 11000) {
+      return res
+        .status(400)
+        .json({ message: SERVER_ERORR_MESSAGE.USERER_ALREADY_EXISTS });
+    }
+    console.error(SERVER_ERORR_MESSAGE.ERROR_IN_LOGIN, error);
     res
       .status(500)
-      .json({ message: error.message || SERVER_ERORR_MESSAGE.ERROR_IN_LOGIN });
+      .json({ message: SERVER_ERORR_MESSAGE.ERROR_IN_LOGIN });
   }
 };
 
 export const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-      return res
-        .status(400)
-        .json({ message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY });
+    const validation = loginSchema.safeParse(req.body);
+    if (!validation.success) {
+      return res.status(400).json({
+        message: SERVER_ERORR_MESSAGE.FIELD_REGISTER_EMPTY,
+        errors: validation.error.flatten(),
+      });
     }
+    const { username, password } = validation.data;
 
     const user = await User.findOne({ username });
 
@@ -86,8 +93,9 @@ export const login = async (req, res) => {
       .status(200)
       .json({ user: { username: user.username, role: user.role, token } });
   } catch (error) {
+    console.error(SERVER_ERORR_MESSAGE.ERROR_IN_LOGIN, error);
     res
       .status(500)
-      .json({ message: error.message || SERVER_ERORR_MESSAGE.ERROR_IN_LOGIN });
+      .json({ message: SERVER_ERORR_MESSAGE.ERROR_IN_LOGIN });
   }
 };

@@ -4,6 +4,7 @@ import { Strategy as FacebookStrategy } from "passport-facebook";
 import AppleStrategy from "passport-apple";
 import TwitterStrategy from "@superfaceai/passport-twitter-oauth2";
 import User from "../models/user.js";
+import { nextSequenceValue } from "../utils/sequences.js";
 
 // Helper function to find or create user
 const findOrCreateUser = async (provider, profile, done) => {
@@ -19,7 +20,7 @@ const findOrCreateUser = async (provider, profile, done) => {
       if (!user) {
         const username = email || `${provider}_user_${profile.id}`;
         user = await User.create({
-          id: Date.now(),
+          id: await nextSequenceValue("user"),
           username,
           provider,
           providerId: profile.id,

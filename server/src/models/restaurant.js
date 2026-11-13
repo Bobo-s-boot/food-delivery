@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const restaurantSchema = new mongoose.Schema(
   {
-    id: { type: Number, required: true },
+    id: { type: Number, required: true, unique: true },
     name: { type: String, required: true },
     cuisine: { type: String, required: true },
     title: { type: String },

@@ -1,21 +1,12 @@
 import express from "express";
 import passport from "passport";
 import { login, register } from "../controllers/authController.js";
+import { generateToken } from "../config/auth.js";
 
 const router = express.Router();
 
 router.post("/register", register);
 router.post("/login", login);
-
-import jwt from "jsonwebtoken";
-
-const generateToken = (user) => {
-  return jwt.sign(
-    { id: user.id, username: user.username },
-    process.env.SESSION_SECRET || "super_secret_jwt_key",
-    { expiresIn: "30d" }
-  );
-};
 
 const oauthCallback = (req, res) => {
   if (req.user) {

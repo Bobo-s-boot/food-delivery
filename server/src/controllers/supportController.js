@@ -4,6 +4,14 @@ import path from "node:path";
 import mongoose from "mongoose";
 import SupportTicket from "../models/supportTicket.js";
 import User from "../models/user.js";
+import {
+  createSupportTicketSchema,
+  supportAttachmentIdSchema,
+  supportAttachmentsSchema,
+  supportTicketIdSchema,
+  supportTimelineSchema,
+  updateSupportTicketSchema,
+} from "../validation/support.js";
 
 const SUPPORT_UPLOAD_DIR = path.resolve("uploads", "support");
 const CATEGORY_LABELS = {
@@ -43,6 +51,24 @@ export const createSupportTicket = async (req, res) => {
   const storedNames = [];
 
   try {
+    const bodyValidation = createSupportTicketSchema.safeParse(req.body);
+    if (!bodyValidation.success) {
+      return res.status(400).json({
+        message: "Invalid support request.",
+        errors: bodyValidation.error.flatten(),
+      });
+    }
+
+    const filesValidation = supportAttachmentsSchema.safeParse(req.files || []);
+    if (!filesValidation.success) {
+      return res.status(400).json({
+        message: "Invalid attachments.",
+        errors: filesValidation.error.flatten(),
+      });
+    }
+
+    const body = bodyValidation.data;
+    const files = filesValidation.data;
     const user = await User.findOne({
       $or: [
         { id: req.user.id },
@@ -55,35 +81,19 @@ export const createSupportTicket = async (req, res) => {
       return res.status(401).json({ message: "A valid user account is required." });
     }
 
-    const category = cleanText(req.body.category, 50);
-    const subject = cleanText(req.body.subject, 120);
-    const description = cleanText(req.body.description, 1500);
+    const category = body.category;
+    const subject = cleanText(body.subject, 120);
+    const description = cleanText(body.description, 1500);
     const requesterEmail = cleanText(user.email || user.username, 254);
 
-    if (!CATEGORY_LABELS[category]) {
-      return res.status(400).json({ message: "Select an issue category." });
-    }
-    if (subject.length < 5) {
-      return res.status(400).json({ message: "Subject must contain at least 5 characters." });
-    }
-    if (description.length < 20) {
-      return res.status(400).json({ message: "Describe the problem in at least 20 characters." });
-    }
     if (!/^\S+@\S+\.\S+$/.test(requesterEmail)) {
       return res.status(400).json({ message: "A valid account email is required." });
     }
 
-    const relatedRestaurantId = cleanText(req.body.relatedRestaurantId, 80);
-    if (
-      relatedRestaurantId &&
-      !mongoose.Types.ObjectId.isValid(relatedRestaurantId)
-    ) {
-      return res.status(400).json({ message: "The selected restaurant is invalid." });
-    }
-
-    const studentStatus = STUDENT_STATUSES.has(req.body.studentStatus)
-      ? req.body.studentStatus
-      : user.studentStatus || "Not verified";
+    const relatedRestaurantId = body.relatedRestaurantId;
+    const studentStatus = STUDENT_STATUSES.has(user.studentStatus)
+      ? user.studentStatus
+      : "Not verified";
     const ticket = new SupportTicket({
       ticketId: "PENDING",
       userId: user._id,
@@ -93,17 +103,17 @@ export const createSupportTicket = async (req, res) => {
       category,
       subject,
       description,
-      relatedOrderId: cleanText(req.body.relatedOrderId, 100),
+      relatedOrderId: cleanText(body.relatedOrderId, 100),
       relatedRestaurantId: relatedRestaurantId || null,
-      relatedOfferId: cleanText(req.body.relatedOfferId, 120),
+      relatedOfferId: cleanText(body.relatedOfferId, 120),
       studentStatus,
       clientMetadata: {
-        route: cleanText(req.body.route, 500),
-        affectedFeature: cleanText(req.body.affectedFeature, 80),
-        userAgent: cleanText(req.body.userAgent, 500),
-        platform: cleanText(req.body.platform, 120),
-        language: cleanText(req.body.language, 40),
-        viewport: cleanText(req.body.viewport, 40),
+        route: cleanText(body.route, 500),
+        affectedFeature: cleanText(body.affectedFeature, 80),
+        userAgent: cleanText(body.userAgent, 500),
+        platform: cleanText(body.platform, 120),
+        language: cleanText(body.language, 40),
+        viewport: cleanText(body.viewport, 40),
       },
       status: "Open",
       source: "User website",
@@ -112,10 +122,10 @@ export const createSupportTicket = async (req, res) => {
 
     ticket.ticketId = `SUP-${ticket._id.toString().slice(-8).toUpperCase()}`;
 
-    if (req.files?.length) {
+    if (files.length) {
       await mkdir(SUPPORT_UPLOAD_DIR, { recursive: true });
 
-      for (const file of req.files) {
+      for (const file of files) {
         const extension = path.extname(file.originalname).toLowerCase();
         const storedName = `${ticket.ticketId}-${randomUUID()}${extension}`;
         await writeFile(path.join(SUPPORT_UPLOAD_DIR, storedName), file.buffer);
@@ -215,21 +225,20 @@ export const getUserSupportTickets = async (req, res) => {
 
 export const updateSupportTicketStatus = async (req, res) => {
   try {
-    const { ticketId } = req.params;
-    const { status, note } = req.body;
-
-    const validStatuses = [
-      "New",
-      "Open",
-      "Waiting for customer",
-      "Waiting for restaurant",
-      "Waiting for internal action",
-      "Resolved",
-    ];
-
-    if (!validStatuses.includes(status)) {
-      return res.status(400).json({ message: "Invalid ticket status." });
+    const idValidation = supportTicketIdSchema.safeParse(req.params.ticketId);
+    if (!idValidation.success) {
+      return res.status(400).json({ message: "Invalid ticket ID." });
     }
+
+    const bodyValidation = updateSupportTicketSchema.safeParse(req.body);
+    if (!bodyValidation.success) {
+      return res.status(400).json({
+        message: "Invalid ticket update.",
+        errors: bodyValidation.error.flatten(),
+      });
+    }
+    const { status, note } = bodyValidation.data;
+    const ticketId = idValidation.data;
 
     const ticket = await SupportTicket.findOne({
       $or: [
@@ -246,7 +255,7 @@ export const updateSupportTicketStatus = async (req, res) => {
     if (note) {
       ticket.conversation.push({
         author: req.user?.username ? `Admin (${req.user.username})` : "Support team",
-        text: note,
+        text: cleanText(note, 1500),
         timestamp: new Date(),
       });
     } else if (status === "Resolved") {
@@ -275,12 +284,20 @@ export const updateSupportTicketStatus = async (req, res) => {
 
 export const addSupportTicketTimelineEntry = async (req, res) => {
   try {
-    const { ticketId } = req.params;
-    const { author, text } = req.body;
-
-    if (!text || text.trim() === "") {
-      return res.status(400).json({ message: "Message text is required." });
+    const idValidation = supportTicketIdSchema.safeParse(req.params.ticketId);
+    if (!idValidation.success) {
+      return res.status(400).json({ message: "Invalid ticket ID." });
     }
+
+    const bodyValidation = supportTimelineSchema.safeParse(req.body);
+    if (!bodyValidation.success) {
+      return res.status(400).json({
+        message: "Invalid timeline entry.",
+        errors: bodyValidation.error.flatten(),
+      });
+    }
+    const { text } = bodyValidation.data;
+    const ticketId = idValidation.data;
 
     const ticket = await SupportTicket.findOne({
       $or: [
@@ -294,7 +311,10 @@ export const addSupportTicketTimelineEntry = async (req, res) => {
     }
 
     const entry = {
-      author: cleanText(author || req.user?.username || "Support team", 80),
+      author: cleanText(
+        req.user?.username ? `Admin (${req.user.username})` : "Support team",
+        80,
+      ),
       text: cleanText(text, 1500),
       timestamp: new Date(),
     };
@@ -313,8 +333,20 @@ export const addSupportTicketTimelineEntry = async (req, res) => {
 
 export const downloadSupportAttachment = async (req, res) => {
   try {
-    const ticket = await SupportTicket.findOne({ ticketId: req.params.ticketId });
-    const attachment = ticket?.attachments.id(req.params.attachmentId);
+    const ticketIdValidation = supportTicketIdSchema.safeParse(
+      req.params.ticketId,
+    );
+    const attachmentIdValidation = supportAttachmentIdSchema.safeParse(
+      req.params.attachmentId,
+    );
+    if (!ticketIdValidation.success || !attachmentIdValidation.success) {
+      return res.status(400).json({ message: "Invalid attachment reference." });
+    }
+
+    const ticket = await SupportTicket.findOne({
+      ticketId: ticketIdValidation.data,
+    });
+    const attachment = ticket?.attachments.id(attachmentIdValidation.data);
 
     if (!attachment) {
       return res.status(404).json({ message: "Attachment not found." });
@@ -333,4 +365,3 @@ export const downloadSupportAttachment = async (req, res) => {
 };
 
 export { CATEGORY_LABELS };
-

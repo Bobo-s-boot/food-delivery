@@ -12,10 +12,14 @@ import orderRoutes from "./src/routes/orderRoutes.js";
 import stripeRoutes from "./src/routes/stripeRoutes.js";
 import supportRoutes from "./src/routes/supportRoutes.js";
 import { connectDB } from "./db/connection.js";
+import { initializeUserIdSequence } from "./src/controllers/authController.js";
 import { initializeRestaurantsFromFile } from "./src/controllers/restaurantController.js";
-import { SERVER_ERORR_MESSAGE } from "./src/errors/erorr.js";
+import { initializeOrderNumberSequence } from "./src/controllers/orderController.js";
+import { SERVER_ERORR_MESSAGE } from "./src/errors/error.js";
+import { getSessionSecret } from "./src/config/auth.js";
 
 const app = express();
+const sessionSecret = getSessionSecret();
 
 app.use(
   cors({
@@ -32,7 +36,7 @@ app.use("/api/stripe", stripeRoutes);
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "fallback_secret_key",
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false },
@@ -52,7 +56,9 @@ app.use("/api/support", supportRoutes);
 const startServer = async () => {
   try {
     await connectDB();
+    await initializeUserIdSequence();
     await initializeRestaurantsFromFile();
+    await initializeOrderNumberSequence();
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`🚀 Сервер запущен на порту http://localhost:${PORT}`);
