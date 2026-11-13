@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dns from "node:dns";
-import { SERVER_ERORR_MESSAGE } from "../src/errors/erorr.js";
+import { SERVER_ERORR_MESSAGE } from "../src/errors/error.js";
 
 export const connectDB = async () => {
   dns.setServers(["8.8.8.8", "1.1.1.1"]);

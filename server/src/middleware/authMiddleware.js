@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-import { SERVER_ERORR_MESSAGE } from "../errors/erorr.js";
+import { SERVER_ERORR_MESSAGE } from "../errors/error.js";
+import { getSessionSecret } from "../config/auth.js";
 
 export const protect = (req, res, next) => {
   let token;
@@ -11,10 +12,7 @@ export const protect = (req, res, next) => {
     try {
       token = req.headers.authorization.split(" ")[1];
 
-      const decoded = jwt.verify(
-        token,
-        process.env.SESSION_SECRET || "super_secret_jwt_key",
-      );
+      const decoded = jwt.verify(token, getSessionSecret());
 
       req.user = decoded;
       next();
